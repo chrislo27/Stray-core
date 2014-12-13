@@ -168,9 +168,7 @@ public class World implements TileBasedMap {
 			}
 
 			if ((Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W))) {
-				if (getPlayer().currentForme != null) {
-					getPlayer().currentForme.activate();
-				}
+				
 			}
 
 			if ((Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A))) {
@@ -179,9 +177,6 @@ public class World implements TileBasedMap {
 				getPlayer().moveRight();
 			}
 
-			if (Gdx.input.isKeyJustPressed(Keys.R) && getPlayer().currentForme != null) {
-				getPlayer().setForme(null);
-			}
 		}
 
 		if (Gdx.input.isKeyPressed(Keys.I)) {

@@ -7,11 +7,7 @@ import java.util.Map.Entry;
 import stray.Main;
 import stray.World;
 import stray.entity.Entity;
-import stray.entity.EntityPlayer;
 import stray.entity.EntityZaborinox;
-import stray.forme.Forme;
-import stray.forme.FormeGuillotine;
-import stray.forme.FormeTurtle;
 
 public class Blocks {
 
@@ -72,22 +68,6 @@ public class Blocks {
 		put("platform", new BlockPlatform("images/blocks/platform/platform").useConTextures());
 		put("cameramagnet", new BlockCameraMagnet("images/blocks/magnet"));
 		put("electrode", new BlockElectrode("images/blocks/electrode/electrode"));
-
-		// formes
-		put("formeturtle", new BlockForme("images/blocks/formes/turtle") {
-
-			@Override
-			public Forme getForme(Entity e) {
-				return new FormeTurtle(e);
-			}
-		});
-		put("formeguillotine", new BlockForme("images/blocks/formes/guillotine") {
-
-			@Override
-			public Forme getForme(Entity e) {
-				return new FormeGuillotine(e);
-			}
-		});
 		
 		// spawners
 		put("spawnerplayer", new BlockPlayerSpawner("images/entity/player/player"));

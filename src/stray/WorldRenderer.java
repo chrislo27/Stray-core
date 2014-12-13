@@ -96,9 +96,6 @@ public class WorldRenderer {
 
 	public void renderUi() {
 		if (world.getPlayer() == null) return;
-		if ((world.getPlayer().currentForme == null)) {
-			formedataout = 0;
-		}
 
 		batch.begin();
 		Color c;
@@ -133,70 +130,6 @@ public class WorldRenderer {
 			batch.draw(main.manager.get(AssetMap.get("vignette"), Texture.class), 0, 0,
 					Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			batch.setColor(Color.WHITE);
-		}
-		batch.flush();
-		batch.setColor(0, 0, 0, 0.6f);
-		if (world.getPlayer().currentForme != null) {
-			if (formedataout < 1) {
-				formedataout += Gdx.graphics.getDeltaTime() * 3 * (1 - formedataout);
-				if (formedataout > 1 || (1 - formedataout) < 0.005f) formedataout = 1;
-			}
-			main.fillRect(
-					Gdx.graphics.getWidth()
-							- ((main.manager.get(
-									AssetMap.get(world.getPlayer().currentForme.getUiTexture()),
-									Texture.class).getWidth() + 2) * formedataout),
-					0,
-					main.manager.get(AssetMap.get(world.getPlayer().currentForme.getUiTexture()),
-							Texture.class).getWidth() + 4,
-					main.manager.get(AssetMap.get(world.getPlayer().currentForme.getUiTexture()),
-							Texture.class).getHeight() + 4);
-			batch.setColor(1, 1, 1, 1);
-			batch.draw(main.manager.get(
-					AssetMap.get(world.getPlayer().currentForme.getUiTexture()), Texture.class),
-					(Gdx.graphics.getWidth() - ((main.manager.get(
-							AssetMap.get(world.getPlayer().currentForme.getUiTexture()),
-							Texture.class).getWidth()) * formedataout)), 0);
-			batch.setColor(0, 0, 0, 0.6f);
-
-			float textwidth = main.font.getBounds(Translator.getMsg("ui.disposeforme")).width;
-			main.drawTextBg(
-					Translator.getMsg("ui.disposeforme"),
-					Gdx.graphics.getWidth()
-							- ((textwidth) * formedataout)
-							- ((main.manager.get(
-									AssetMap.get(world.getPlayer().currentForme.getUiTexture()),
-									Texture.class).getWidth()) * formedataout) - 4, 14);
-
-			if (world.getPlayer().currentForme.getActionText() != null) {
-				textwidth = main.font.getBounds(Translator.getMsg(world.getPlayer().currentForme
-						.getActionText())).width;
-				main.drawTextBg(
-						Translator.getMsg(world.getPlayer().currentForme.getActionText()),
-						Gdx.graphics.getWidth()
-								- ((textwidth) * formedataout)
-								- ((main.manager.get(
-										AssetMap.get(world.getPlayer().currentForme.getUiTexture()),
-										Texture.class).getWidth()) * formedataout) - 4, 34);
-			}
-
-			if (Gdx.input.getX() > Gdx.graphics.getWidth()
-					- 2
-					- (main.manager.get(
-							AssetMap.get(world.getPlayer().currentForme.getUiTexture()),
-							Texture.class).getWidth() * formedataout)) {
-				if (Gdx.input.getY() > Gdx.graphics.getHeight()
-						- 2
-						- (main.manager.get(
-								AssetMap.get(world.getPlayer().currentForme.getUiTexture()),
-								Texture.class).getHeight())) {
-					float width = main.font.getBounds("\""
-							+ Translator.getMsg(world.getPlayer().currentForme.name) + "\"").width;
-					main.drawTextBg(
-							"\"" + Translator.getMsg(world.getPlayer().currentForme.name) + "\"",
-							Gdx.input.getX() - width - 5, Main.convertY(Gdx.input.getY() - 20));
-				}
-			}
 		}
 		batch.setColor(1, 1, 1, 1);
 		renderHealth();
@@ -256,7 +189,6 @@ public class WorldRenderer {
 		}
 	}
 
-	public float formedataout = 0f;
 
 	public void renderDebug(int starting) {
 		if (world.getPlayer() == null) return;
@@ -281,11 +213,8 @@ public class WorldRenderer {
 				Main.convertY(starting + 105));
 		main.font.draw(batch, "playerjump: " + world.getPlayer().jump, 5,
 				Main.convertY(starting + 120));
-		main.font.draw(batch, "playerforme: "
-				+ (world.getPlayer().currentForme == null ? null
-						: world.getPlayer().currentForme.name), 5, Main.convertY(starting + 135));
 		main.font.draw(batch, "time: " + Utils.formatMs(System.currentTimeMillis() - world.time),
-				5, Main.convertY(starting + 150));
+				5, Main.convertY(starting + 135));
 
 	}
 
