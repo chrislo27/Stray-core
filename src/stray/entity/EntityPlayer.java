@@ -6,7 +6,6 @@ import stray.World;
 import stray.ai.BaseAI;
 import stray.entity.types.Enemy;
 import stray.entity.types.Weighted;
-import stray.forme.Forme;
 import stray.util.AssetMap;
 import stray.util.MathHelper;
 
@@ -20,25 +19,11 @@ public class EntityPlayer extends EntityLiving implements Weighted {
 
 	}
 
-	public Forme currentForme = null;
 	private float portalglow = 0;
 	private float colourFade = 0f;
 	public String currentSprite = "player";
 	private String lastSprite = "player";
 
-	public void setForme(Forme forme) {
-		currentForme = forme;
-		portalglow = 0.5f;
-		world.renderer.formedataout = 0;
-		if (forme != null) {
-			lastSprite = currentSprite;
-			currentSprite = forme.getSprite();
-		} else {
-			lastSprite = currentSprite;
-			currentSprite = "player";
-		}
-		colourFade = 1;
-	}
 
 	@Override
 	public void prepare() {
@@ -92,9 +77,6 @@ public class EntityPlayer extends EntityLiving implements Weighted {
 		if (health <= 0) return;
 
 		drawSprite(x, y);
-		if (currentForme != null) {
-			currentForme.render();
-		}
 		if (colourFade > 0) {
 			colourFade -= Gdx.graphics.getDeltaTime();
 			if (colourFade < 0) colourFade = 0;
@@ -116,18 +98,6 @@ public class EntityPlayer extends EntityLiving implements Weighted {
 	@Override
 	public void tickUpdate() {
 		super.tickUpdate();
-		if (currentForme != null) currentForme.tickUpdate();
-
-		
-		Entity collide = entityColliding();
-		if (collide != null) {
-			if (collide instanceof Enemy && !collide.isDead()) {
-				do {
-					if (currentForme != null) if (!currentForme.allowDamage()) break;
-					damage(((Enemy) collide).getDamageDealt());
-				} while (false);
-			}
-		}
 	}
 
 	@Override
