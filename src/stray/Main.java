@@ -85,7 +85,7 @@ public class Main extends Game implements Consumer {
 	public static boolean showFPS = true;
 	public static boolean debug = false;
 
-	public static final String version = "alpha 1.2.2";
+	public static final String version = "alpha 1.3";
 
 	public AssetManager manager;
 
