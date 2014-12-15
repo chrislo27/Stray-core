@@ -67,12 +67,12 @@ import com.badlogic.gdx.utils.Array;
  */
 public class Main extends Game implements Consumer {
 
-	OrthographicCamera camera;
+	public OrthographicCamera camera;
 	public SpriteBatch batch;
 	public SpriteBatch maskRenderer;
 	public SpriteBatch blueprintrenderer;
 	public BitmapFont font;
-	BitmapFont arial;
+	public BitmapFont arial;
 
 	private static Color rainbow = new Color();
 	private static Color inverseRainbow = new Color();
@@ -171,7 +171,7 @@ public class Main extends Game implements Consumer {
 		font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		arial = new BitmapFont();
 		arial.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
+		
 		normalProjection = new Matrix4().setToOrtho2D(0, 0, Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
 
