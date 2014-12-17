@@ -2,12 +2,12 @@ package stray.entity;
 
 import stray.Difficulty;
 import stray.Main;
-import stray.World;
 import stray.ai.BaseAI;
 import stray.entity.types.Enemy;
 import stray.entity.types.Weighted;
 import stray.util.AssetMap;
 import stray.util.MathHelper;
+import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

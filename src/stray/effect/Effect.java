@@ -3,7 +3,7 @@ package stray.effect;
 import java.util.concurrent.TimeUnit;
 
 import stray.Main;
-import stray.World;
+import stray.world.World;
 
 public class Effect {
 

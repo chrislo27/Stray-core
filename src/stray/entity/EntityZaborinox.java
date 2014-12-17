@@ -1,11 +1,11 @@
 package stray.entity;
 
-import stray.World;
 import stray.ai.AIDumbEnemy;
 import stray.ai.BaseAI;
 import stray.entity.types.Enemy;
 import stray.entity.types.Weighted;
 import stray.util.AssetMap;
+import stray.world.World;
 
 import com.badlogic.gdx.graphics.Texture;
 

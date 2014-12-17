@@ -1,6 +1,6 @@
 package stray.entity;
 
-import stray.World;
+import stray.world.World;
 
 public abstract class EntityBullet extends Entity {
 

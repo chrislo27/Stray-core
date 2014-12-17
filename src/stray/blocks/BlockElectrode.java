@@ -1,9 +1,9 @@
 package stray.blocks;
 
 import stray.Main;
-import stray.World;
 import stray.entity.Entity;
 import stray.entity.EntityLiving;
+import stray.world.World;
 
 
 public class BlockElectrode extends Block{

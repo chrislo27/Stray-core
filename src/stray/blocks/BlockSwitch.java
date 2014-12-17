@@ -1,10 +1,10 @@
 package stray.blocks;
 
 import stray.Main;
-import stray.World;
 import stray.entity.Entity;
 import stray.entity.types.Weighted;
 import stray.util.AssetMap;
+import stray.world.World;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;

@@ -2,9 +2,9 @@ package stray.blocks;
 
 import stray.Levels;
 import stray.Main;
-import stray.World;
 import stray.transition.FadeIn;
 import stray.transition.FadeOut;
+import stray.world.World;
 
 import com.badlogic.gdx.graphics.Color;
 

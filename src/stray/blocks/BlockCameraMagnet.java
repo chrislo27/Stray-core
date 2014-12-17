@@ -1,7 +1,7 @@
 package stray.blocks;
 
 import stray.Main;
-import stray.World;
+import stray.world.World;
 
 public class BlockCameraMagnet extends Block {
 

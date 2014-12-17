@@ -4,6 +4,7 @@ import stray.util.AssetMap;
 import stray.util.CoordPool;
 import stray.util.Coordinate;
 import stray.util.MathHelper;
+import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -16,7 +17,7 @@ public class Particle implements Poolable {
 	float y = 0;
 	float velox = 0;
 	float veloy = 0;
-	float lifetime = -1;
+	public float lifetime = -1;
 	float prelife = 0;
 
 	float tintr = 1;

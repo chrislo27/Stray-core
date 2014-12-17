@@ -1,11 +1,11 @@
 package stray.util;
 
 import stray.Main;
-import stray.World;
 import stray.blocks.Blocks;
 import stray.transition.Eat;
 import stray.transition.FadeOut;
 import stray.transition.Spiral;
+import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;

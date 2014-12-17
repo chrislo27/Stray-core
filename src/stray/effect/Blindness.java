@@ -1,7 +1,7 @@
 package stray.effect;
 
-import stray.World;
 import stray.util.AssetMap;
+import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

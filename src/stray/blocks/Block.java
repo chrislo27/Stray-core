@@ -3,11 +3,11 @@ package stray.blocks;
 import java.util.HashMap;
 
 import stray.Main;
-import stray.World;
 import stray.entity.Entity;
 import stray.util.AssetMap;
 import stray.util.MathHelper;
 import stray.util.Utils;
+import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;

@@ -1,8 +1,8 @@
 package stray.blocks;
 
-import stray.World;
 import stray.entity.Entity;
 import stray.entity.EntityPlayer;
+import stray.world.World;
 
 
 public class BlockPlayerSpawner extends BlockSpawner{

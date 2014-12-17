@@ -2,9 +2,9 @@ package stray.blocks;
 
 import stray.Main;
 import stray.Translator;
-import stray.World;
 import stray.conversation.Conversations;
 import stray.util.AssetMap;
+import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;

@@ -1,9 +1,9 @@
 package stray.blocks;
 
-import stray.World;
 import stray.entity.Entity;
 import stray.entity.EntityLiving;
 import stray.util.MathHelper;
+import stray.world.World;
 
 
 public class BlockSpike extends Block {

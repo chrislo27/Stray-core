@@ -7,6 +7,7 @@ import stray.blocks.Block;
 import stray.blocks.Blocks;
 import stray.util.AssetLogger;
 import stray.util.Gears;
+import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

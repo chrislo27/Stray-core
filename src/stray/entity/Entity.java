@@ -1,12 +1,12 @@
 package stray.entity;
 
 import stray.Main;
-import stray.World;
 import stray.blocks.BlockPlatform;
 import stray.util.Coordinate;
 import stray.util.EntityMover;
 import stray.util.MathHelper;
 import stray.util.Sizeable;
+import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

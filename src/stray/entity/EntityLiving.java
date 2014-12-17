@@ -3,8 +3,8 @@ package stray.entity;
 import stray.Main;
 import stray.Particle;
 import stray.ParticlePool;
-import stray.World;
 import stray.ai.BaseAI;
+import stray.world.World;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;

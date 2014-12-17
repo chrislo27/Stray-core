@@ -5,9 +5,9 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import stray.Main;
-import stray.World;
 import stray.entity.Entity;
 import stray.entity.EntityZaborinox;
+import stray.world.World;
 
 public class Blocks {
 

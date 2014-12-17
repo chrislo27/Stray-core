@@ -1,7 +1,7 @@
 package stray.blocks;
 
-import stray.World;
 import stray.entity.Entity;
+import stray.world.World;
 
 
 public abstract class BlockSpawner extends Block{

@@ -1,5 +1,7 @@
 package stray;
 
+import stray.world.World;
+
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 

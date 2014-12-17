@@ -1,8 +1,8 @@
 package stray.pathfinding;
 
-import stray.World;
 import stray.blocks.Block;
 import stray.pathfinding.heuristics.ClosestHeuristic;
+import stray.world.World;
 
 import com.badlogic.gdx.utils.Array;
 

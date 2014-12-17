@@ -1,6 +1,6 @@
 package stray.blocks;
 
-import stray.World;
+import stray.world.World;
 
 
 public class BlockPlatform extends Block{

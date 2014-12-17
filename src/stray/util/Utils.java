@@ -3,7 +3,7 @@ package stray.util;
 import java.util.concurrent.TimeUnit;
 
 import stray.Main;
-import stray.World;
+import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
