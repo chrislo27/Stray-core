@@ -16,7 +16,8 @@ public class Chunk {
 	Block[][] blocks = new Block[chunkSize][chunkSize];
 	String[][] meta = new String[chunkSize][chunkSize];
 	
-	int chunkX = 0, chunkY = 0;
+	int chunkX = 0;
+	int chunkY = 0;
 	
 	public Chunk(int x, int y){
 		chunkX = x;
