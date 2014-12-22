@@ -13,10 +13,11 @@ public class Chunk {
 	
 	public static final int chunkSize = 16;
 	
-	Block[][] blocks = new Block[chunkSize][chunkSize];
-	String[][] meta = new String[chunkSize][chunkSize];
+	private Block[][] blocks = new Block[chunkSize][chunkSize];
+	private String[][] meta = new String[chunkSize][chunkSize];
 	
-	int chunkX = 0, chunkY = 0;
+	private int chunkX = 0;
+	private int chunkY = 0;
 	
 	public Chunk(int x, int y){
 		chunkX = x;
@@ -28,6 +29,50 @@ public class Chunk {
 				meta[bx][by] = null;
 			}
 		}
+	}
+	
+	/**
+	 * 
+	 * @param x chunk x
+	 * @param y chunk y
+	 * @return
+	 */
+	public Block getBlock(int x, int y){
+		if(x < 0 || y < 0 || x >= chunkSize || y >= chunkSize) return Blocks.defaultBlock();
+		return blocks[x][y];
+	}
+	
+	/**
+	 * 
+	 * @param x chunk x
+	 * @param y chunk y
+	 * @return
+	 */
+	public String getMeta(int x, int y){
+		if(x < 0 || y < 0 || x >= chunkSize || y >= chunkSize) return null;
+		return meta[x][y];
+	}
+	
+	/**
+	 * 
+	 * @param x chunk x
+	 * @param y chunk y
+	 * @return
+	 */
+	public void setBlock(Block b, int x, int y){
+		if(x < 0 || y < 0 || x >= chunkSize || y >= chunkSize) return;
+		blocks[x][y] = b;
+	}
+	
+	/**
+	 * 
+	 * @param x chunk x
+	 * @param y chunk y
+	 * @return
+	 */
+	public void setMeta(String m, int x, int y){
+		if(x < 0 || y < 0 || x >= chunkSize || y >= chunkSize) return;
+		meta[x][y] = m;
 	}
 	
 }
