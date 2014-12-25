@@ -471,13 +471,13 @@ public abstract class Entity implements EntityMover, Sizeable {
 	}
 
 	public void moveUp() {
-		if (getBlockCollidingUp() == null) {
+		if (getBlockCollidingUp() == null && veloy > -maxspeed) {
 			accelerate(0, -accspeed / Gdx.graphics.getDeltaTime(), true);
 		}
 	}
 
 	public void moveDown() {
-		if (getBlockCollidingDown() == null) {
+		if (getBlockCollidingDown() == null && veloy < maxspeed) {
 			accelerate(0, accspeed / Gdx.graphics.getDeltaTime(), true);
 		}
 	}
