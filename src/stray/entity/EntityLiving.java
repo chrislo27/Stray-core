@@ -160,5 +160,17 @@ public abstract class EntityLiving extends Entity {
 		super.moveRight();
 		facing = Direction.RIGHT;
 	}
+	
+	@Override
+	public void moveUp() {
+		super.moveUp();
+		facing = Direction.UP;
+	}
+
+	@Override
+	public void moveDown() {
+		super.moveDown();
+		facing = Direction.DOWN;
+	}
 
 }
