@@ -49,7 +49,7 @@ public class World implements TileBasedMap {
 	public static final float tilepartx = (1f / tilesizex);
 	public static final float tileparty = (1f / tilesizey);
 
-	public float gravity = 20f;
+	public float gravity = 20f * 0;
 	public float drag = 20f;
 
 	public String background = "levelbgcircuit";
@@ -573,7 +573,7 @@ public class World implements TileBasedMap {
 		for(int x = 0; x < sizex; x++){
 			for(int y = 0; y < sizey; y++){
 				if(getBlock(x, y) instanceof BlockPlayerSpawner){
-					camera.forceCenterOn((x + 0.5f) * tilesizex, (y + 0.5f) * tilesizey);
+					camera.forceCenterOn((x + 0.5f) * tilesizex, (y + 0.5f) * tilesizey - (tilesizey * 3));
 					getBlock(x, y).tickUpdate(this, x, y);
 				}
 			}

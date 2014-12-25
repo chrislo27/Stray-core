@@ -4,6 +4,7 @@ import stray.Main;
 import stray.Particle;
 import stray.ParticlePool;
 import stray.ai.BaseAI;
+import stray.util.Direction;
 import stray.world.World;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -17,7 +18,7 @@ import com.badlogic.gdx.math.MathUtils;
 public abstract class EntityLiving extends Entity {
 
 	protected BaseAI ai;
-	protected boolean facingRight = true;
+	protected Direction facing = Direction.RIGHT;
 
 	public int health = 1;
 	public int maxhealth = 1;
@@ -49,7 +50,7 @@ public abstract class EntityLiving extends Entity {
 		world.batch.draw(sprite, x - (sprite.getWidth() - (sizex * World.tilesizex)) / 2, y
 				- World.tilesizey + (sprite.getHeight() - (sizey * World.tilesizey)) / 2,
 				sprite.getWidth(), sprite.getHeight(), 0, 0, sprite.getWidth(), sprite.getHeight(),
-				!facingRight, false);
+				(facing != Direction.RIGHT), false);
 		world.batch.setColor(1, 1, 1, 1);
 	}
 
@@ -151,13 +152,13 @@ public abstract class EntityLiving extends Entity {
 	@Override
 	public void moveLeft() {
 		super.moveLeft();
-		facingRight = false;
+		facing = Direction.LEFT;
 	}
 
 	@Override
 	public void moveRight() {
 		super.moveRight();
-		facingRight = true;
+		facing = Direction.RIGHT;
 	}
 
 }
