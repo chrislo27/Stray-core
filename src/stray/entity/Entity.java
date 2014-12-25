@@ -460,8 +460,10 @@ public abstract class Entity implements EntityMover, Sizeable {
 		}
 		if (y > 0) {
 			veloy += y + (world.drag / Gdx.graphics.getDeltaTime());
+			//if (dragcalc) if (veloy > maxspeed) veloy = maxspeed;
 		} else if (y < 0) {
 			veloy += y - (world.drag / Gdx.graphics.getDeltaTime());
+			//if (dragcalc) if (veloy < -maxspeed) veloy = -maxspeed;
 		}
 
 	}

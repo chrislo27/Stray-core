@@ -49,7 +49,7 @@ public class World implements TileBasedMap {
 	public static final float tilepartx = (1f / tilesizex);
 	public static final float tileparty = (1f / tilesizey);
 
-	public float gravity = 20f * 0;
+	public float gravity = 20f;
 	public float drag = 20f;
 
 	public String background = "levelbgcircuit";
@@ -168,7 +168,7 @@ public class World implements TileBasedMap {
 			if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 				getPlayer().jump();
 			} else if ((Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S))) {
-
+				
 			}
 
 			if ((Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W))) {
