@@ -228,7 +228,7 @@ public class World implements TileBasedMap {
 		if (p == null) {
 			return;
 		}
-		camera.centerOn(((p.x + (p.sizex / 2f)) * tilesizex + cameramovex), ((p.y + (p.sizey / 2f)) * tilesizey + cameramovey));
+		camera.centerOn(((p.x + (p.sizex / 2f)) * tilesizex + cameramovex), ((p.y + (p.sizey / 2f)) * tilesizey + cameramovey) - (tilesizey * 3));
 		for (int x = (int) (p.x - ((Gdx.graphics.getWidth() / 2) / tilesizex)); x < (int) (p.x + ((Gdx.graphics
 				.getWidth() / 2) / tilesizex)); x++) {
 			for (int y = (int) (p.y - ((Gdx.graphics.getHeight() / 2) / tilesizey)) - 3; y < (int) (p.y + ((Gdx.graphics

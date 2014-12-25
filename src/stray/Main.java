@@ -147,11 +147,7 @@ public class Main extends Game implements Consumer {
 	public void create() {
 		progress = getPref("progress");
 		resetTitle();
-		PrintStream ps = System.out;
-		output = new CaptureStream(this, ps);
-		printstrm = new PrintStream(output);
-		resetConsole();
-		setSystemOut();
+		redirectSysOut();
 
 		for (int i = 0; i < lastFPS.length; i++) {
 			lastFPS[i] = 0;
@@ -304,6 +300,14 @@ public class Main extends Game implements Consumer {
 
 		}
 	}
+	
+	public void redirectSysOut(){
+		PrintStream ps = System.out;
+		output = new CaptureStream(this, ps);
+		printstrm = new PrintStream(output);
+		resetConsole();
+		System.setOut(printstrm);
+	}
 
 	public Conversation getConv() {
 		return currentConvo;
@@ -324,9 +328,6 @@ public class Main extends Game implements Consumer {
 		System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
 	}
 
-	public void setSystemOut() {
-		System.setOut(printstrm);
-	}
 
 	@Override
 	public void appendText(final String text) {
@@ -799,9 +800,6 @@ public class Main extends Game implements Consumer {
 
 		// entities
 		manager.load(AssetMap.add("player", "images/entity/player/player.png"), Texture.class);
-		manager.load(AssetMap.add("playerturtle", "images/entity/player/turtle.png"), Texture.class);
-		manager.load(AssetMap.add("playerguillotine", "images/entity/player/guillotine.png"),
-				Texture.class);
 		manager.load(AssetMap.add("smallasteroid", "images/entity/smallasteroid.png"),
 				Texture.class);
 		manager.load(AssetMap.add("entityzaborinox", "images/entity/zaborinox.png"), Texture.class);

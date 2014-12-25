@@ -11,6 +11,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import stray.blocks.Block;
 import stray.blocks.Blocks;
+import stray.entity.Entity;
 import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
@@ -145,6 +146,12 @@ public class LevelEditor extends Updateable {
 	}
 
 	private void save() {
+		for(Entity e : world.entities){
+			if(e == world.getPlayer()){
+				world.entities.removeValue(e, true);
+				break;
+			}
+		}
 		if (lastFile != null) {
 			world.save(new FileHandle(lastFile));
 		} else {
