@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import stray.Main;
+import stray.blocks.fluid.BlockFluid;
 import stray.entity.Entity;
 import stray.entity.EntityZaborinox;
 import stray.world.World;
@@ -74,6 +75,19 @@ public class Blocks {
 		put("spawnerzaborinox", new BlockSpawner("images/entity/zaborinox"){
 			public Entity getEntity(World world, int x, int y){
 				return new EntityZaborinox(world, x, y);
+			}
+		});
+		
+		// fluids
+		put("fluidtest", new BlockFluid("aodkawfoa/aowa"){
+			@Override
+			public int getGravityDirection(){
+				return 1;
+			}
+			
+			@Override
+			public int getTickRate(){
+				return 30;
 			}
 		});
 

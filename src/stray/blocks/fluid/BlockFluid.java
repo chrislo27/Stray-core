@@ -14,15 +14,17 @@ public class BlockFluid extends Block {
 	public BlockFluid(String path) {
 		super(path);
 	}
-	
+
 	@Override
-	public void tickUpdate(World world, int x, int y){
-		// first in the checklist: go down/up and merge with any possible fluids down
-		
-		if(!attemptGravity(world, x, y));
-		
+	public void tickUpdate(World world, int x, int y) {
+		// first in the checklist: go down/up and merge with any possible fluids
+		// down
+
+		if (!attemptGravity(world, x, y))
+		;
+
 	}
-	
+
 	/**
 	 * 
 	 * @param world
@@ -30,74 +32,83 @@ public class BlockFluid extends Block {
 	 * @param y
 	 * @return true if successful
 	 */
-	protected boolean attemptGravity(World world, int x, int y){
-		if(world.getBlock(x, y + getGravityDirection()) == Blocks.instance().getBlock("empty") || world.getBlock(x, y + getGravityDirection()) == null){
-			addFluid(world, x, y, getAmountPerFall());
-			if(world.getBlock(x, y + getGravityDirection()) == this){
-				if((((BlockFluid) world.getBlock(x, y + getGravityDirection())).getFluidLevel(world, x, y + getGravityDirection())) > 8){
-					int leftovers = 8 - ((((BlockFluid) world.getBlock(x, y + getGravityDirection()))).getFluidLevel(world, x, y + getGravityDirection()));
-					(((BlockFluid) world.getBlock(x, y + getGravityDirection()))).addFluid(world, x, y + getGravityDirection(), getAmountPerFall());
+	protected boolean attemptGravity(World world, int x, int y) {
+		if (world.getBlock(x, y + getGravityDirection()) == Blocks.instance().getBlock("empty")
+				|| world.getBlock(x, y + getGravityDirection()) == null
+				|| world.getBlock(x, y + getGravityDirection()) == this) {
+			addFluid(world, x, y, -getAmountPerFall());
+			if (world.getBlock(x, y + getGravityDirection()) == this) {
+				if ((((BlockFluid) world.getBlock(x, y + getGravityDirection())).getFluidLevel(
+						world, x, y + getGravityDirection())) > 8) {
+					int leftovers = 8 - ((((BlockFluid) world
+							.getBlock(x, y + getGravityDirection()))).getFluidLevel(world, x, y
+							+ getGravityDirection()));
+					(((BlockFluid) world.getBlock(x, y + getGravityDirection()))).addFluid(world,
+							x, y + getGravityDirection(), getAmountPerFall());
 					setFluidLevel(world, x, y, leftovers);
-				}else{
-					(((BlockFluid) world.getBlock(x, y + getGravityDirection()))).addFluid(world, x, y + getGravityDirection(), getAmountPerFall());
+				} else {
+					(((BlockFluid) world.getBlock(x, y + getGravityDirection()))).addFluid(world,
+							x, y + getGravityDirection(), getAmountPerFall());
 				}
 				return true;
-			}else{
+			} else {
 				world.setBlock(this, x, y + getGravityDirection());
-				((BlockFluid) world.getBlock(x, y + getGravityDirection())).setFluidLevel(world, x, y + getGravityDirection(), getAmountPerFall());
+				((BlockFluid) world.getBlock(x, y + getGravityDirection())).setFluidLevel(world, x,
+						y + getGravityDirection(), getAmountPerFall());
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * 
 	 * @return 1 if it goes down, -1 if it goes up
 	 */
-	public int getGravityDirection(){
+	public int getGravityDirection() {
 		return 1;
 	}
-	
+
 	/**
 	 * 
 	 * @return the number of layers to fall each update
 	 */
-	public int getAmountPerFall(){
-		return 1;
+	public int getAmountPerFall() {
+		return 8;
 	}
-	
-	public int getFluidLevel(World world, int x, int y){
-		if(world.getMeta(x, y) == null){
-			setFluidLevel(world, x, y, 8);
+
+	public int getFluidLevel(World world, int x, int y) {
+		if (world.getMeta(x, y) == null) {
+			return 8;
 		}
-		
+
 		return MathUtils.clamp(Integer.parseInt(world.getMeta(x, y)), 1, 8);
 	}
-	
-	public void setFluidLevel(World world, int x, int y, int level){
+
+	public void setFluidLevel(World world, int x, int y, int level) {
+		if(level <= 0){
+			world.setMeta(null, x, y);
+			world.setBlock(null, x, y);
+			return;
+		}
+		
 		world.setMeta(MathUtils.clamp(level, 1, 8) + "", x, y);
 	}
-	public void addFluid(World world, int x, int y, int add){
+
+	public void addFluid(World world, int x, int y, int add) {
 		setFluidLevel(world, x, y, getFluidLevel(world, x, y) + add);
 	}
+	
 
 	@Override
 	public void render(World world, int x, int y) {
 		if (usingMissingTex) {
 			world.batch.draw(
-					world.main.manager.get(AssetMap.get("blockmissingtexture"), Texture.class),
-					x,
-					y,
-					World.tilesizex,
-					World.tilesizey,
-					0,
-					0,
-					world.main.manager.get(AssetMap.get("blockmissingtexture"), Texture.class)
-							.getWidth(),
-					(int) (world.main.manager.get(AssetMap.get("blockmissingtexture"),
-							Texture.class).getHeight() / (getFluidLevel(world, x, y) - 9f)), false, false);
+					world.main.manager.get(AssetMap.get("blockmissingtexture"), Texture.class), x
+							* World.tilesizex - world.camera.camerax,
+					Main.convertY(y * World.tilesizey - world.camera.cameray) - World.tilesizey,
+					World.tilesizex, (int) (World.tilesizey * (getFluidLevel(world, x, y) / 8f)));
 			return;
 		}
 		if (animationlink != null) {
@@ -122,7 +133,8 @@ public class BlockFluid extends Block {
 								world.main.manager.get(sprites.get("defaulttex"), Texture.class)
 										.getWidth(),
 								(int) (world.main.manager.get(sprites.get("defaulttex"),
-										Texture.class).getHeight() / (getFluidLevel(world, x, y) - 9f)), false, false);
+										Texture.class).getHeight() / (getFluidLevel(world, x, y) - 9f)),
+								false, false);
 			} else {
 				world.batch.draw(
 						world.main.manager.get(
@@ -142,7 +154,8 @@ public class BlockFluid extends Block {
 						(int) (world.main.manager.get(
 								sprites.get("defaulttex"
 										+ ((variantNum(world, x, y)) & (varianttypes - 1))),
-								Texture.class).getHeight() / (getFluidLevel(world, x, y) - 9f)), false, false);
+								Texture.class).getHeight() / (getFluidLevel(world, x, y) - 9f)),
+						false, false);
 			}
 		} else {
 			drawConnectedTexture(world, x, y,
