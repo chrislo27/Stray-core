@@ -163,16 +163,16 @@ public class World implements TileBasedMap {
 
 	public void inputUpdate() {
 		if (main.getConv() != null) return;
-		if(getPlayer() == null) return;
+		if (getPlayer() == null) return;
 		if (getPlayer().health > 0) {
 			if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 				getPlayer().jump();
 			} else if ((Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S))) {
-				
+
 			}
 
 			if ((Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W))) {
-				
+
 			}
 
 			if ((Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A))) {
@@ -228,7 +228,9 @@ public class World implements TileBasedMap {
 		if (p == null) {
 			return;
 		}
-		camera.centerOn(((p.x + (p.sizex / 2f)) * tilesizex + cameramovex), ((p.y + (p.sizey / 2f)) * tilesizey + cameramovey) - (tilesizey * 3));
+		camera.centerOn(((p.x + (p.sizex / 2f)) * tilesizex + cameramovex), ((p.y + (p.sizey / 2f))
+				* tilesizey + cameramovey)
+				- (tilesizey * 3));
 		for (int x = (int) (p.x - ((Gdx.graphics.getWidth() / 2) / tilesizex)); x < (int) (p.x + ((Gdx.graphics
 				.getWidth() / 2) / tilesizex)); x++) {
 			for (int y = (int) (p.y - ((Gdx.graphics.getHeight() / 2) / tilesizey)) - 3; y < (int) (p.y + ((Gdx.graphics
@@ -303,6 +305,7 @@ public class World implements TileBasedMap {
 		checkpointx = getPlayer().x;
 		checkpointy = getPlayer().y;
 	}
+
 	public void setCheckpoint(float x, float y) {
 		checkpointx = x;
 		checkpointy = y;
@@ -321,6 +324,9 @@ public class World implements TileBasedMap {
 
 		for (int x = 0; x < sizex; x++) {
 			for (int y = 0; y < sizey; y++) {
+				if (getBlock(x, y).getTickRate() < 1) continue;
+				if (getBlock(x, y).getTickRate() > 1) if (tickTime % getBlock(x, y).getTickRate() != 0) continue;
+
 				getBlock(x, y).tickUpdate(this, x, y);
 			}
 		}
@@ -563,17 +569,18 @@ public class World implements TileBasedMap {
 		}
 
 		entities.clear();
-		
-		if(getPlayer() == null){
+
+		if (getPlayer() == null) {
 			this.addPlayer();
 			getPlayer().x = -8;
 			getPlayer().y = -8;
 		}
-		
-		for(int x = 0; x < sizex; x++){
-			for(int y = 0; y < sizey; y++){
-				if(getBlock(x, y) instanceof BlockPlayerSpawner){
-					camera.forceCenterOn((x + 0.5f) * tilesizex, (y + 0.5f) * tilesizey - (tilesizey * 3));
+
+		for (int x = 0; x < sizex; x++) {
+			for (int y = 0; y < sizey; y++) {
+				if (getBlock(x, y) instanceof BlockPlayerSpawner) {
+					camera.forceCenterOn((x + 0.5f) * tilesizex, (y + 0.5f) * tilesizey
+							- (tilesizey * 3));
 					getBlock(x, y).tickUpdate(this, x, y);
 				}
 			}
