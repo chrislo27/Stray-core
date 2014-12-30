@@ -1,16 +1,27 @@
 package stray.blocks.fluid;
 
-import com.badlogic.gdx.graphics.Texture;
-
 import stray.Main;
 import stray.blocks.Block;
 import stray.util.AssetMap;
 import stray.world.World;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
+
 public class BlockFluid extends Block {
 
 	public BlockFluid(String path) {
 		super(path);
+	}
+	
+	
+	
+	public int getFluidLevel(World world, int x, int y){
+		if(world.getMeta(x, y) == null){
+			world.setMeta(8 + "", x, y);
+		}
+		
+		return MathUtils.clamp(Integer.parseInt(world.getMeta(x, y)), 1, 8);
 	}
 
 	@Override
@@ -27,14 +38,14 @@ public class BlockFluid extends Block {
 					world.main.manager.get(AssetMap.get("blockmissingtexture"), Texture.class)
 							.getWidth(),
 					(int) (world.main.manager.get(AssetMap.get("blockmissingtexture"),
-							Texture.class).getHeight() / 1f), false, false);
+							Texture.class).getHeight() / (getFluidLevel(world, x, y) - 9f)), false, false);
 			return;
 		}
 		if (animationlink != null) {
 			world.batch.draw(world.main.animations.get(animationlink).getCurrentFrame(), x
 					* world.tilesizex - world.camera.camerax,
 					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey),
-					World.tilesizex, (World.tilesizey / 1f));
+					World.tilesizex, (World.tilesizey / (getFluidLevel(world, x, y) - 9f)));
 			return;
 		}
 		if (path == null) return;
@@ -52,7 +63,7 @@ public class BlockFluid extends Block {
 								world.main.manager.get(sprites.get("defaulttex"), Texture.class)
 										.getWidth(),
 								(int) (world.main.manager.get(sprites.get("defaulttex"),
-										Texture.class).getHeight() / 1f), false, false);
+										Texture.class).getHeight() / (getFluidLevel(world, x, y) - 9f)), false, false);
 			} else {
 				world.batch.draw(
 						world.main.manager.get(
@@ -72,7 +83,7 @@ public class BlockFluid extends Block {
 						(int) (world.main.manager.get(
 								sprites.get("defaulttex"
 										+ ((variantNum(world, x, y)) & (varianttypes - 1))),
-								Texture.class).getHeight() / 1f), false, false);
+								Texture.class).getHeight() / (getFluidLevel(world, x, y) - 9f)), false, false);
 			}
 		} else {
 			drawConnectedTexture(world, x, y,
