@@ -103,7 +103,7 @@ public class Main extends Game implements Consumer {
 	public static NewGame NEWGAME = null;
 	public static Backstory BACKSTORY = null;
 
-	private Texture filltex;
+	public static Texture filltex;
 
 	private Conversation currentConvo = null;
 
@@ -481,6 +481,17 @@ public class Main extends Game implements Consumer {
 			return (random(1, (y * 2) + 1) - (y + 1));
 		}
 		return rand.nextInt((y - x) + 1) + x;
+	}
+	
+	public static float random(float x, float y){
+		return random(x, y, random);
+	}
+	
+	public static float random(float x, float y, Random rand) {
+		if (x == y) {
+			return x;
+		}
+		return rand.nextFloat() * (x - y) + x;
 	}
 
 	/**
