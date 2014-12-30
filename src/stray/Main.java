@@ -29,6 +29,7 @@ import stray.transition.TransitionScreen;
 import stray.util.AssetMap;
 import stray.util.CaptureStream;
 import stray.util.CaptureStream.Consumer;
+import stray.util.ElectricityRenderer;
 import stray.util.Gears;
 import stray.util.Logger;
 import stray.util.MathHelper;
@@ -698,6 +699,8 @@ public class Main extends Game implements Consumer {
 								.getMsg(currentConvo.getCurrent().text).length()));
 			}
 		}
+		
+		ElectricityRenderer.drawP2PLightning(batch, 100, 100, 300, 300, 64, 2, 3, 1, ElectricityRenderer.getDefaultColor(1));
 
 		if (this.getScreen() != null) {
 			if (debug) ((Updateable) this.getScreen()).renderDebug(this.renderDebug());

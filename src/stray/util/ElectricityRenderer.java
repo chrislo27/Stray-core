@@ -62,10 +62,10 @@ public class ElectricityRenderer {
 	 * @param y1
 	 * @param x2
 	 * @param y2
-	 * @param displace how far away between each bolt
-	 * @param detail
-	 * @param thickness default 3
-	 * @param numberOfBolts default 3
+	 * @param displace how far away between each bolt in pixels
+	 * @param detail default 2, the greater the number, the less "detailed" the bolts are
+	 * @param thickness default 3, in pixels
+	 * @param numberOfBolts 
 	 * @param colour floatbits colour
 	 */
 	public static void drawP2PLightning(SpriteBatch batch, float x1, float y1, float x2, float y2,
@@ -85,16 +85,9 @@ public class ElectricityRenderer {
 	}
 
 	/**
-	 * same as drawP2PLightning but only draws one bolt
+	 * same as drawP2PLightning but only draws one set of bolts
 	 * 
-	 * @param batch
-	 * @param x1
-	 * @param y1
-	 * @param x2
-	 * @param y2
-	 * @param displace
-	 * @param detail
-	 * @param thickness
+	 * @see drawP2PLightning
 	 */
 	public static void drawSingleP2PLightning(SpriteBatch batch, float x1, float y1, float x2,
 			float y2, float displace, float detail, float thickness) {
