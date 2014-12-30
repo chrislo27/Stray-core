@@ -65,6 +65,10 @@ public class Block {
 	public void dispose() {
 
 	}
+	
+	public int getTickRate(){
+		return 1;
+	}
 
 	/**
 	 * turns off connected textures too
