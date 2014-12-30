@@ -699,8 +699,6 @@ public class Main extends Game implements Consumer {
 								.getMsg(currentConvo.getCurrent().text).length()));
 			}
 		}
-		
-		ElectricityRenderer.drawP2PLightning(batch, 100, 100, 300, 300, 64, 2, 3, 1, ElectricityRenderer.getDefaultColor(1));
 
 		if (this.getScreen() != null) {
 			if (debug) ((Updateable) this.getScreen()).renderDebug(this.renderDebug());
@@ -873,12 +871,6 @@ public class Main extends Game implements Consumer {
 				false));
 		animations.put("portal", new SynchedAnimation(0.05f, 32, "images/blocks/portal/portal",
 				".png", true).setRegionTile(32, 32));
-		animations.put("electric-ver", new SynchedAnimation(0.05f, 4,
-				"images/blocks/electrode/electric-ver", ".png", true).setRegionTile(64, 64));
-		animations.put("electric-hor", new SynchedAnimation(0.05f, 4,
-				"images/blocks/electrode/electric-hor", ".png", true).setRegionTile(64, 64));
-		animations.put("electric-all", new SynchedAnimation(0.05f, 4,
-				"images/blocks/electrode/electric-all", ".png", true).setRegionTile(64, 64));
 
 		// load animations
 		Iterator it = animations.entrySet().iterator();
