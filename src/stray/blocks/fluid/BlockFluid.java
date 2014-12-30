@@ -2,6 +2,7 @@ package stray.blocks.fluid;
 
 import stray.Main;
 import stray.blocks.Block;
+import stray.blocks.Blocks;
 import stray.util.AssetMap;
 import stray.world.World;
 
@@ -16,8 +17,39 @@ public class BlockFluid extends Block {
 	
 	@Override
 	public void tickUpdate(World world, int x, int y){
-		// first in the checklist: go down and merge with any possible fluids down
+		// first in the checklist: go down/up and merge with any possible fluids down
 		
+		if(!attemptGravity(world, x, y));
+		
+	}
+	
+	/**
+	 * 
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @return true if successful
+	 */
+	protected boolean attemptGravity(World world, int x, int y){
+		if(world.getBlock(x, y + getGravityDirection()) == Blocks.instance().getBlock("empty") || world.getBlock(x, y + getGravityDirection()) == null){
+			addFluid(world, x, y, getAmountPerFall());
+			if(world.getBlock(x, y + getGravityDirection()) == this){
+				if((((BlockFluid) world.getBlock(x, y + getGravityDirection())).getFluidLevel(world, x, y + getGravityDirection())) > 8){
+					int leftovers = 8 - ((((BlockFluid) world.getBlock(x, y + getGravityDirection()))).getFluidLevel(world, x, y + getGravityDirection()));
+					(((BlockFluid) world.getBlock(x, y + getGravityDirection()))).addFluid(world, x, y + getGravityDirection(), getAmountPerFall());
+					setFluidLevel(world, x, y, leftovers);
+				}else{
+					(((BlockFluid) world.getBlock(x, y + getGravityDirection()))).addFluid(world, x, y + getGravityDirection(), getAmountPerFall());
+				}
+				return true;
+			}else{
+				world.setBlock(this, x, y + getGravityDirection());
+				((BlockFluid) world.getBlock(x, y + getGravityDirection())).setFluidLevel(world, x, y + getGravityDirection(), getAmountPerFall());
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -25,6 +57,14 @@ public class BlockFluid extends Block {
 	 * @return 1 if it goes down, -1 if it goes up
 	 */
 	public int getGravityDirection(){
+		return 1;
+	}
+	
+	/**
+	 * 
+	 * @return the number of layers to fall each update
+	 */
+	public int getAmountPerFall(){
 		return 1;
 	}
 	
@@ -38,6 +78,9 @@ public class BlockFluid extends Block {
 	
 	public void setFluidLevel(World world, int x, int y, int level){
 		world.setMeta(MathUtils.clamp(level, 1, 8) + "", x, y);
+	}
+	public void addFluid(World world, int x, int y, int add){
+		setFluidLevel(world, x, y, getFluidLevel(world, x, y) + add);
 	}
 
 	@Override
