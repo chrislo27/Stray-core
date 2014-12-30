@@ -434,7 +434,7 @@ public class World implements TileBasedMap {
 	}
 
 	public Block getBlock(int x, int y) {
-		if (x < 0 || y < 0 || x >= sizex || y >= sizey) return Blocks.instance().getBlock("space");
+		if (x < 0 || y < 0 || x >= sizex || y >= sizey) return Blocks.defaultBlock();
 		if (blocks[x][y] == null) return Blocks.defaultBlock();
 		return blocks[x][y];
 	}
