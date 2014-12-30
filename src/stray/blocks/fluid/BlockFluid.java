@@ -14,14 +14,26 @@ public class BlockFluid extends Block {
 		super(path);
 	}
 	
+	@Override
+	public void tickUpdate(World world, int x, int y){
+		
+	}
 	
+	
+	public boolean isGravityDown(){
+		return true;
+	}
 	
 	public int getFluidLevel(World world, int x, int y){
 		if(world.getMeta(x, y) == null){
-			world.setMeta(8 + "", x, y);
+			setFluidLevel(world, x, y, 8);
 		}
 		
 		return MathUtils.clamp(Integer.parseInt(world.getMeta(x, y)), 1, 8);
+	}
+	
+	public void setFluidLevel(World world, int x, int y, int level){
+		world.setMeta(MathUtils.clamp(level, 1, 8) + "", x, y);
 	}
 
 	@Override
