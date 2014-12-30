@@ -16,12 +16,16 @@ public class BlockFluid extends Block {
 	
 	@Override
 	public void tickUpdate(World world, int x, int y){
+		// first in the checklist: go down and merge with any possible fluids down
 		
 	}
 	
-	
-	public boolean isGravityDown(){
-		return true;
+	/**
+	 * 
+	 * @return 1 if it goes down, -1 if it goes up
+	 */
+	public int getGravityDirection(){
+		return 1;
 	}
 	
 	public int getFluidLevel(World world, int x, int y){
