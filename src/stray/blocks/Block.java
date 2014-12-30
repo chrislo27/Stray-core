@@ -29,12 +29,12 @@ public class Block {
 
 	public static final int globalMagicNumber = Main.getRandomInst().nextInt();
 
-	boolean connectedTextures = false;
-	boolean variants = false;
-	String animationlink = null;
-	int varianttypes = 4;
+	protected boolean connectedTextures = false;
+	protected boolean variants = false;
+	protected String animationlink = null;
+	protected int varianttypes = 4;
 	protected boolean solid = false;
-	private boolean usingMissingTex = false;
+	protected boolean usingMissingTex = false;
 
 	public void tickUpdate(World world, int x, int y) {
 
@@ -165,9 +165,9 @@ public class Block {
 	 * only used for connected textures connected: full, corner, edgehor,
 	 * edgever
 	 */
-	HashMap<String, String> sprites;
+	protected HashMap<String, String> sprites;
 
-	String path = "";
+	protected String path = "";
 
 	private int getVarFromTime() {
 
