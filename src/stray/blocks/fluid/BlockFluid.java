@@ -20,8 +20,10 @@ public class BlockFluid extends Block {
 		// first in the checklist: go down/up and merge with any possible fluids
 		// down
 
-		if (!attemptGravity(world, x, y))
-		;
+		if (!attemptGravity(world, x, y)) {
+			if (!attemptSpread(world, x, y))
+			;
+		}
 
 	}
 
@@ -62,6 +64,60 @@ public class BlockFluid extends Block {
 		return false;
 	}
 
+	protected boolean attemptSpread(World world, int x, int y) {
+		if (world.getBlock(x + 1, y) == Blocks.instance().getBlock("empty")
+				|| world.getBlock(x + 1, y) == null || world.getBlock(x + 1, y) == this) {
+			if (world.getBlock(x, y + getGravityDirection()) == this) {
+				if ((((BlockFluid) world.getBlock(x, y + getGravityDirection())).getFluidLevel(
+						world, x, y + getGravityDirection())) > 8) {
+					int leftovers = 8 - ((((BlockFluid) world
+							.getBlock(x, y + getGravityDirection()))).getFluidLevel(world, x, y
+							+ getGravityDirection()));
+					(((BlockFluid) world.getBlock(x, y + getGravityDirection()))).addFluid(world,
+							x, y + getGravityDirection(), getAmountPerFall());
+					setFluidLevel(world, x, y, leftovers);
+				} else {
+					(((BlockFluid) world.getBlock(x, y + getGravityDirection()))).addFluid(world,
+							x, y + getGravityDirection(), getAmountPerFall());
+				}
+				return true;
+			} else {
+				world.setBlock(this, x, y + getGravityDirection());
+				((BlockFluid) world.getBlock(x, y + getGravityDirection())).setFluidLevel(world, x,
+						y + getGravityDirection(), getAmountPerFall());
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected boolean canFlowTo(World world, int x, int y) {
+		if (world.getBlock(x, y) == this) {
+			if (((BlockFluid) world.getBlock(x, y)).getFluidLevel(world, x, y) < 8) return true;
+		}
+		return (world.getBlock(x, y) == Blocks.instance().getBlock("empty") || world.getBlock(x, y) == null);
+	}
+
+	protected void flowTo(World world, int startx, int starty, int tox, int toy, int amount) {
+		if (canFlowTo(world, tox, toy)) {
+			if (world.getBlock(tox, toy) == this) {
+				int leftovers = 8 - ((((BlockFluid) world
+						.getBlock(tox, toy))).getFluidLevel(world, tox, toy));
+				(((BlockFluid) world.getBlock(tox, toy))).addFluid(world,
+						tox, toy, getAmountPerFall());
+				setFluidLevel(world, startx, starty, leftovers);
+			} else {
+				if (world.getBlock(tox, toy) == Blocks.instance().getBlock("empty")
+						|| world.getBlock(tox, toy) == null) {
+					world.setBlock(this, tox, toy);
+					((BlockFluid) world.getBlock(tox, toy)).addFluid(world, tox, toy, getAmountPerFall());
+					((BlockFluid) world.getBlock(startx, starty)).addFluid(world, startx, starty, -getAmountPerFall());
+				}
+			}
+		}
+	}
+
 	/**
 	 * 
 	 * @return 1 if it goes down, -1 if it goes up
@@ -87,19 +143,18 @@ public class BlockFluid extends Block {
 	}
 
 	public void setFluidLevel(World world, int x, int y, int level) {
-		if(level <= 0){
+		if (level <= 0) {
 			world.setMeta(null, x, y);
 			world.setBlock(null, x, y);
 			return;
 		}
-		
+
 		world.setMeta(MathUtils.clamp(level, 1, 8) + "", x, y);
 	}
 
 	public void addFluid(World world, int x, int y, int add) {
 		setFluidLevel(world, x, y, getFluidLevel(world, x, y) + add);
 	}
-	
 
 	@Override
 	public void render(World world, int x, int y) {
