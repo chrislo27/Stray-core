@@ -18,11 +18,12 @@ public class BlockUpdate implements Poolable{
 		
 	}
 	
-	public void init(int x, int y, Block b, String m){
+	public BlockUpdate init(int x, int y, Block b, String m){
 		this.x = x;
 		this.y = y;
 		block = b;
 		meta = m;
+		return this;
 	}
 	
 
