@@ -86,10 +86,10 @@ public class BlockFluid extends Block {
 
 				if (getFluidLevel(world, tox, toy) + amount > 8) {
 					addFluid(world, startx, starty, -(8 - getFluidLevel(world, tox, toy)));
-					world.scheduledUpdates.add(new BlockUpdate(tox, toy, this, "8"));
+					world.scheduledUpdates.add(world.buPool.obtain().init(tox, toy, this, "8"));
 				} else {
 					addFluid(world, startx, starty, -amount);
-					world.scheduledUpdates.add(new BlockUpdate(tox, toy, this, (getFluidLevel(
+					world.scheduledUpdates.add(world.buPool.obtain().init(tox, toy, this, (getFluidLevel(
 							world, tox, toy) + amount) + ""));
 				}
 
@@ -99,15 +99,8 @@ public class BlockFluid extends Block {
 						|| world.getBlock(tox, toy) == null) {
 					if (world.getBlock(startx, starty) != this) return false;
 					if (getFluidLevel(world, startx, starty) == 1) return false;
-
-					world.scheduledUpdates.add(new BlockUpdate(tox, toy, this, 0 + "") {
-
-						@Override
-						public void tick(World world) {
-							if (world.getBlock(x, y) != block) return;
-							((BlockFluid) world.getBlock(x, y)).addFluid(world, x, y, amount - 1);
-						}
-					});
+					world.scheduledUpdates.add(world.buPool.obtain().init(tox, toy, this, (getFluidLevel(
+							world, tox, toy) + amount - 1) + ""));
 
 					if (getFluidLevel(world, startx, starty) == 1) {
 						world.setBlock(null, startx, starty);
