@@ -229,6 +229,8 @@ public class World implements TileBasedMap {
 		if (p == null) {
 			return;
 		}
+		if(p.health <= 0) return;
+		
 		camera.centerOn(((p.x + (p.sizex / 2f)) * tilesizex + cameramovex), ((p.y + (p.sizey / 2f))
 				* tilesizey + cameramovey)
 				- (tilesizey * 3));

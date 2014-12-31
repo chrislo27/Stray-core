@@ -61,8 +61,12 @@ public class BlockFluid extends Block {
 		return true;
 	}
 
+	/**
+	 * should return 1 otherwise there may be issues, increase ticktime for more flow
+	 * @return 
+	 */
 	protected int getFluidViscosity() {
-		return 3;
+		return 1;
 	}
 
 	protected boolean canFlowTo(World world, int x, int y) {

@@ -87,7 +87,7 @@ public class Blocks {
 			
 			@Override
 			public int getTickRate(){
-				return 15;
+				return 5;
 			}
 		});
 
