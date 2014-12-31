@@ -592,7 +592,6 @@ public class World implements TileBasedMap {
 				if (getBlock(x, y) instanceof BlockPlayerSpawner) {
 					camera.forceCenterOn((x + 0.5f) * tilesizex, (y + 0.5f) * tilesizey
 							- (tilesizey * 3));
-					getBlock(x, y).tickUpdate(this, x, y);
 				}
 			}
 		}
