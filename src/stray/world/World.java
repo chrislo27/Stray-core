@@ -56,6 +56,7 @@ public class World implements TileBasedMap {
 
 	public Block[][] blocks;
 	public String[][] meta;
+	public Array<BlockUpdate> scheduledUpdates = new Array<BlockUpdate>();
 
 	public Array<Entity> entities;
 
@@ -322,6 +323,8 @@ public class World implements TileBasedMap {
 
 		renderer.tickUpdate();
 
+		
+		
 		for (int x = 0; x < sizex; x++) {
 			for (int y = sizey - 1; y > -1; y--) {
 				if (getBlock(x, y).getTickRate() < 1) continue;
@@ -330,6 +333,14 @@ public class World implements TileBasedMap {
 				getBlock(x, y).tickUpdate(this, x, y);
 			}
 		}
+		
+		for(BlockUpdate b : scheduledUpdates){
+			setBlock(b.block, b.x, b.y);
+			setMeta(b.meta, b.x, b.y);
+			b.tick(this);
+		}
+		scheduledUpdates.clear();
+		
 		if (canRespawnIn > 0) {
 			canRespawnIn--;
 			if (canRespawnIn == 0) {

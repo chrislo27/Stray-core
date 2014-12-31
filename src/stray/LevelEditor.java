@@ -302,11 +302,8 @@ public class LevelEditor extends Updateable {
 					}
 				} else if (Gdx.input.isKeyJustPressed(Keys.T)) {
 					if (lastFile != null) {
-						save();
 						Main.TESTLEVEL.world.load(new FileHandle(lastFile));
 						main.setScreen(Main.TESTLEVEL);
-					} else {
-						save();
 					}
 				}
 			}

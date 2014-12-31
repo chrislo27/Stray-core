@@ -4,8 +4,10 @@ import stray.Main;
 import stray.blocks.Block;
 import stray.blocks.Blocks;
 import stray.util.AssetMap;
+import stray.world.BlockUpdate;
 import stray.world.World;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 
@@ -46,42 +48,71 @@ public class BlockFluid extends Block {
 	 * @return false if the fluid was trapped on both sides
 	 */
 	protected boolean attemptSpread(World world, int x, int y) {
-		if(!canFlowTo(world, x - 1, y) && !canFlowTo(world, x + 1, y)) return false;
-		
-		flowTo(world, x, y, x - 1, y, 1);
-		flowTo(world, x, y, x + 1, y, 1);
-		
+		if (!canFlowTo(world, x - 1, y) && !canFlowTo(world, x + 1, y)) return false;
+
+		if (Main.getRandomInst().nextBoolean()) {
+			flowTo(world, x, y, x - 1, y, getFluidViscosity());
+			flowTo(world, x, y, x + 1, y, getFluidViscosity());
+		} else {
+			flowTo(world, x, y, x + 1, y, getFluidViscosity());
+			flowTo(world, x, y, x - 1, y, getFluidViscosity());
+		}
+
 		return true;
+	}
+	
+	protected int getFluidViscosity(){
+		return 3;
 	}
 
 	protected boolean canFlowTo(World world, int x, int y) {
+		if (x < 0 || y < 0 || x >= world.sizex || y >= world.sizey) return false;
+
 		if (world.getBlock(x, y) == this) {
-			if (((BlockFluid) world.getBlock(x, y)).getFluidLevel(world, x, y) < 8) return true;
+			if(getFluidLevel(world, x, y) < 8) return true;
 		}
 		return (world.getBlock(x, y) == Blocks.instance().getBlock("empty") || world.getBlock(x, y) == null);
 	}
 
-	protected boolean flowTo(World world, int startx, int starty, int tox, int toy, int amount) {
+	protected boolean flowTo(World world, int startx, int starty, int tox, int toy, final int amount) {
 		if (canFlowTo(world, tox, toy)) {
 			if (world.getBlock(tox, toy) == this) {
-				int leftovers = 8 - ((((BlockFluid) world
-						.getBlock(tox, toy))).getFluidLevel(world, tox, toy));
-				(((BlockFluid) world.getBlock(tox, toy))).addFluid(world,
-						tox, toy, getAmountPerFall());
-				setFluidLevel(world, startx, starty, leftovers);
+				if(starty == toy) if (getFluidLevel(world, tox, toy) >= getFluidLevel(world, startx, starty)) return false;
+					
+					if(getFluidLevel(world, tox, toy) + amount > 8){
+						addFluid(world, startx, starty, -(8 - getFluidLevel(world, tox, toy)));
+						world.scheduledUpdates.add(new BlockUpdate(tox, toy, this, "8"));
+					}else{
+					addFluid(world, startx, starty, -amount);
+					world.scheduledUpdates.add(new BlockUpdate(tox, toy, this, (getFluidLevel(
+							world, tox, toy) + amount) + ""));
+					}
+				
 				return true;
 			} else {
 				if (world.getBlock(tox, toy) == Blocks.instance().getBlock("empty")
 						|| world.getBlock(tox, toy) == null) {
-					world.setBlock(this, tox, toy);
-					world.setMeta(1 + "", tox, toy);
-					((BlockFluid) world.getBlock(tox, toy)).addFluid(world, tox, toy, getAmountPerFall() - 1);
-					((BlockFluid) world.getBlock(startx, starty)).addFluid(world, startx, starty, -getAmountPerFall());
+					if (world.getBlock(startx, starty) != this) return false;
+					if (getFluidLevel(world, startx, starty) == 1) return false;
+
+					world.scheduledUpdates.add(new BlockUpdate(tox, toy, this, 0 + "") {
+
+						@Override
+						public void tick(World world) {
+							if (world.getBlock(x, y) != block) return;
+							((BlockFluid) world.getBlock(x, y)).addFluid(world, x, y, amount - 1);
+						}
+					});
+
+					if (getFluidLevel(world, startx, starty) == 1) {
+						world.setBlock(null, startx, starty);
+						world.setMeta(null, startx, starty);
+					} else addFluid(world, startx, starty, -amount);
 					return true;
 				}
 				return false;
 			}
-		}else return false;
+		} else return false;
 	}
 
 	/**
@@ -121,6 +152,12 @@ public class BlockFluid extends Block {
 	public void addFluid(World world, int x, int y, int add) {
 		setFluidLevel(world, x, y, getFluidLevel(world, x, y) + add);
 	}
+	
+	private float getRenderingCoefficient(World world, int x, int y){
+		if(world.getBlock(x, y - getGravityDirection()) == this) return 1;
+		
+		return (getFluidLevel(world, x, y) / 8f);
+	}
 
 	@Override
 	public void render(World world, int x, int y) {
@@ -129,14 +166,15 @@ public class BlockFluid extends Block {
 					world.main.manager.get(AssetMap.get("blockmissingtexture"), Texture.class), x
 							* World.tilesizex - world.camera.camerax,
 					Main.convertY(y * World.tilesizey - world.camera.cameray) - World.tilesizey,
-					World.tilesizex, (int) (World.tilesizey * (getFluidLevel(world, x, y) / 8f)));
+					World.tilesizex, (int) (World.tilesizey * getRenderingCoefficient(world, x, y)));
 			return;
 		}
 		if (animationlink != null) {
-			world.batch.draw(world.main.animations.get(animationlink).getCurrentFrame(), x
-					* world.tilesizex - world.camera.camerax,
-					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey),
-					World.tilesizex, (World.tilesizey / (getFluidLevel(world, x, y) - 9f)));
+			world.batch.draw(
+					world.main.animations.get(animationlink).getCurrentFrame(), x
+							* World.tilesizex - world.camera.camerax,
+					Main.convertY(y * World.tilesizey - world.camera.cameray) - World.tilesizey,
+					World.tilesizex, (int) (World.tilesizey * getRenderingCoefficient(world, x, y)));
 			return;
 		}
 		if (path == null) return;
