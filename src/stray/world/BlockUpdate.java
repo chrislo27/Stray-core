@@ -1,25 +1,35 @@
 package stray.world;
 
+import com.badlogic.gdx.utils.Pool.Poolable;
+
 import stray.blocks.Block;
 import stray.blocks.Blocks;
 
 
-public class BlockUpdate {
+public class BlockUpdate implements Poolable{
+	
 	protected int x;
-
 	protected int y = 0;
 	
 	protected Block block = Blocks.defaultBlock();
-	String meta = null;
+	protected String meta = null;
 	
-	public BlockUpdate(int x, int y, Block b, String m){
+	public BlockUpdate(){
+		
+	}
+	
+	public void init(int x, int y, Block b, String m){
 		this.x = x;
 		this.y = y;
 		block = b;
 		meta = m;
 	}
 	
-	public void tick(World world){
-		
+
+	@Override
+	public void reset() {
+		meta = null;
+		block = Blocks.defaultBlock();
+		x = y = 0;
 	}
 }

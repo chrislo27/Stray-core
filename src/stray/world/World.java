@@ -32,6 +32,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.badlogic.gdx.utils.XmlWriter;
@@ -56,6 +58,8 @@ public class World implements TileBasedMap {
 
 	public Block[][] blocks;
 	public String[][] meta;
+	
+	public Pool<BlockUpdate> buPool = Pools.get(BlockUpdate.class);
 	public Array<BlockUpdate> scheduledUpdates = new Array<BlockUpdate>();
 
 	public Array<Entity> entities;
@@ -339,9 +343,15 @@ public class World implements TileBasedMap {
 		for(BlockUpdate b : scheduledUpdates){
 			setBlock(b.block, b.x, b.y);
 			setMeta(b.meta, b.x, b.y);
-			b.tick(this);
 		}
-		scheduledUpdates.clear();
+		BlockUpdate b;
+		for(int i = scheduledUpdates.size; --i >= 0;){
+			b = scheduledUpdates.get(i);
+			setBlock(b.block, b.x, b.y);
+			setMeta(b.meta, b.x, b.y);
+			scheduledUpdates.removeIndex(i);
+			buPool.free(b);
+		}
 		
 		if (canRespawnIn > 0) {
 			canRespawnIn--;
