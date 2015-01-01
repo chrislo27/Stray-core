@@ -75,7 +75,8 @@ public class LevelEditor extends Updateable {
 								File selectedFile = fileChooser.getSelectedFile();
 								lastFile = selectedFile;
 								world.load(new FileHandle(selectedFile));
-								if(world.getPlayer() != null) world.camera.forceCenterOn(world.getPlayer().x, world.getPlayer().y);
+								if (world.getPlayer() != null) world.camera.forceCenterOn(
+										world.getPlayer().x, world.getPlayer().y);
 								world.entities.clear();
 							}
 						}
@@ -140,14 +141,12 @@ public class LevelEditor extends Updateable {
 				Gdx.graphics.getHeight() - 95);
 		main.batch.end();
 
-		
-
 		world.camera.clamp();
 	}
 
 	private void save() {
-		for(Entity e : world.entities){
-			if(e == world.getPlayer()){
+		for (Entity e : world.entities) {
+			if (e == world.getPlayer()) {
 				world.entities.removeValue(e, true);
 				break;
 			}
@@ -214,7 +213,9 @@ public class LevelEditor extends Updateable {
 					|| Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT) ? 32 : 16)
 					* (Gdx.graphics.getDeltaTime() * World.tilesizey);
 			world.camera.clamp();
-		} else if (Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S)) {
+		} else if ((Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S))
+				&& !(Gdx.input.isKeyPressed(Keys.ALT_LEFT) || Gdx.input
+						.isKeyPressed(Keys.ALT_RIGHT))) {
 			world.camera.cameray += (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)
 					|| Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT) ? 32 : 16)
 					* (Gdx.graphics.getDeltaTime() * World.tilesizey);
