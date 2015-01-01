@@ -11,6 +11,7 @@ import stray.blocks.Block;
 import stray.blocks.BlockCameraMagnet;
 import stray.blocks.BlockPlayerSpawner;
 import stray.blocks.Blocks;
+import stray.blocks.fluid.BlockFluid;
 import stray.effect.Blindness;
 import stray.effect.Effect;
 import stray.effect.EffectArray;
@@ -58,7 +59,7 @@ public class World implements TileBasedMap {
 
 	public Block[][] blocks;
 	public String[][] meta;
-	
+
 	public Pool<BlockUpdate> buPool = Pools.get(BlockUpdate.class);
 	public Array<BlockUpdate> scheduledUpdates = new Array<BlockUpdate>();
 
@@ -233,8 +234,8 @@ public class World implements TileBasedMap {
 		if (p == null) {
 			return;
 		}
-		if(p.health <= 0) return;
-		
+		if (p.health <= 0) return;
+
 		camera.centerOn(((p.x + (p.sizex / 2f)) * tilesizex + cameramovex), ((p.y + (p.sizey / 2f))
 				* tilesizey + cameramovey)
 				- (tilesizey * 3));
@@ -330,28 +331,17 @@ public class World implements TileBasedMap {
 		renderer.tickUpdate();
 
 		executeBlockUpdates();
-		
-		for (int x = 0; x < sizex; x++) {
-			for (int y = 0; y < sizey; y++) {
+
+		for (int y = sizey - 1; y >= 0; y--) {
+			for (int x = (BlockFluid.movementDirection() ? 0 : sizex - 1); (BlockFluid.movementDirection() ? x++ < sizex : --x >= 0);) {
+				executeBlockUpdates();
 				if (getBlock(x, y).getTickRate() < 1) continue;
 				if (getBlock(x, y).getTickRate() > 1) if (tickTime % getBlock(x, y).getTickRate() != 0) continue;
-				boolean shouldSkip = false;
-				for(BlockUpdate b : scheduledUpdates){
-					if(b.x == x && b.y == y){
-						shouldSkip = true;
-						break;
-					}
-				}
-				if(shouldSkip){
-					executeBlockUpdates();
-					continue;
-				}
+
 				getBlock(x, y).tickUpdate(this, x, y);
 			}
 		}
-		
-		
-		
+
 		if (canRespawnIn > 0) {
 			canRespawnIn--;
 			if (canRespawnIn == 0) {
@@ -387,10 +377,10 @@ public class World implements TileBasedMap {
 		}
 
 	}
-	
-	public void executeBlockUpdates(){
+
+	public void executeBlockUpdates() {
 		BlockUpdate b;
-		for(int i = scheduledUpdates.size; --i >= 0;){
+		for (int i = scheduledUpdates.size; --i >= 0;) {
 			b = scheduledUpdates.get(i);
 			setBlock(b.block, b.x, b.y);
 			setMeta(b.meta, b.x, b.y);

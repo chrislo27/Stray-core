@@ -4,6 +4,7 @@ import stray.Main;
 import stray.blocks.Block;
 import stray.blocks.Blocks;
 import stray.util.AssetMap;
+import stray.util.MathHelper;
 import stray.world.BlockUpdate;
 import stray.world.World;
 
@@ -40,6 +41,10 @@ public class BlockFluid extends Block {
 	protected boolean attemptGravity(World world, int x, int y) {
 		return flowTo(world, x, y, x, y + getGravityDirection(), getAmountPerFall());
 	}
+	
+	public static boolean movementDirection(){
+		return MathHelper.getNthDigit(System.currentTimeMillis(), 3) < 5;
+	}
 
 	/**
 	 * 
@@ -50,23 +55,61 @@ public class BlockFluid extends Block {
 	 */
 	protected boolean attemptSpread(World world, int x, int y) {
 		if (!canFlowTo(world, x - 1, y) && !canFlowTo(world, x + 1, y)) return false;
-		if (getFluidLevel(world, x, y) <= 1) return false;
 
-		int left = getFluidLevel(world, x - 1, y) + 9001;
+		int left = getFluidLevel(world, x - 1, y);
 		int right = getFluidLevel(world, x + 1, y);
 
-		if (left < right && (canFlowTo(world, x - 1, y)) && left < getFluidLevel(world, x, y)) {
-			flowTo(world, x, y, x - 1, y, getFluidViscosity());
-		} else if (right < left && (canFlowTo(world, x + 1, y)) && right < getFluidLevel(world, x, y)) {
-			flowTo(world, x, y, x + 1, y, getFluidViscosity());
+		if (movementDirection()) {
+			if (left < right && (canFlowTo(world, x - 1, y)) && left < getFluidLevel(world, x, y)) {
+				return flowTo(world, x, y, x - 1, y, getFluidViscosity());
+			} else if (right < left && (canFlowTo(world, x + 1, y))
+					&& right < getFluidLevel(world, x, y)) {
+				return flowTo(world, x, y, x + 1, y, getFluidViscosity());
+			} else {
+				if (movementDirection()) {
+					if (left <= getFluidLevel(world, x, y) && (canFlowTo(world, x - 1, y))) {
+						return flowTo(world, x, y, x - 1, y, getFluidViscosity());
+					}else if(movementDirection()) return false;
+					if (right <= getFluidLevel(world, x, y) && (canFlowTo(world, x + 1, y))) {
+						return flowTo(world, x, y, x + 1, y, getFluidViscosity());
+					}
+					return false;
+				} else {
+					if (right <= getFluidLevel(world, x, y) && (canFlowTo(world, x + 1, y))) {
+						return flowTo(world, x, y, x + 1, y, getFluidViscosity());
+					}else if(movementDirection()) return false;
+					if (left <= getFluidLevel(world, x, y) && (canFlowTo(world, x - 1, y))) {
+						return flowTo(world, x, y, x - 1, y, getFluidViscosity());
+					}
+					return false;
+				}
+			}
 		} else {
-			if (left < getFluidLevel(world, x, y) && (canFlowTo(world, x - 1, y))) {
-				flowTo(world, x, y, x - 1, y, getFluidViscosity());
-			} else if (right < getFluidLevel(world, x, y) && (canFlowTo(world, x + 1, y))) {
-				flowTo(world, x, y, x + 1, y, getFluidViscosity());
-			} else return false;
+			if (right < left && (canFlowTo(world, x + 1, y)) && right < getFluidLevel(world, x, y)) {
+				return flowTo(world, x, y, x + 1, y, getFluidViscosity());
+			} else if (left < right && (canFlowTo(world, x - 1, y))
+					&& left < getFluidLevel(world, x, y)) {
+				return flowTo(world, x, y, x - 1, y, getFluidViscosity());
+			} else {
+				if (movementDirection()) {
+					if (left <= getFluidLevel(world, x, y) && (canFlowTo(world, x - 1, y))) {
+						return flowTo(world, x, y, x - 1, y, getFluidViscosity());
+					}else if(movementDirection()) return false;
+					if (right <= getFluidLevel(world, x, y) && (canFlowTo(world, x + 1, y))) {
+						return flowTo(world, x, y, x + 1, y, getFluidViscosity());
+					}
+					return false;
+				} else {
+					if (right <= getFluidLevel(world, x, y) && (canFlowTo(world, x + 1, y))) {
+						return flowTo(world, x, y, x + 1, y, getFluidViscosity());
+					}else if(movementDirection()) return false;
+					if (left <= getFluidLevel(world, x, y) && (canFlowTo(world, x - 1, y))) {
+						return flowTo(world, x, y, x - 1, y, getFluidViscosity());
+					}
+					return false;
+				}
+			}
 		}
-		return true;
 	}
 
 	protected int getFluidViscosity() {
