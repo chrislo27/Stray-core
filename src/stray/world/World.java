@@ -329,29 +329,28 @@ public class World implements TileBasedMap {
 
 		renderer.tickUpdate();
 
-		
+		executeBlockUpdates();
 		
 		for (int x = 0; x < sizex; x++) {
-			for (int y = sizey - 1; y > -1; y--) {
+			for (int y = 0; y < sizey; y++) {
 				if (getBlock(x, y).getTickRate() < 1) continue;
 				if (getBlock(x, y).getTickRate() > 1) if (tickTime % getBlock(x, y).getTickRate() != 0) continue;
-
+				boolean shouldSkip = false;
+				for(BlockUpdate b : scheduledUpdates){
+					if(b.x == x && b.y == y){
+						shouldSkip = true;
+						break;
+					}
+				}
+				if(shouldSkip){
+					executeBlockUpdates();
+					continue;
+				}
 				getBlock(x, y).tickUpdate(this, x, y);
 			}
 		}
 		
-		for(BlockUpdate b : scheduledUpdates){
-			setBlock(b.block, b.x, b.y);
-			setMeta(b.meta, b.x, b.y);
-		}
-		BlockUpdate b;
-		for(int i = scheduledUpdates.size; --i >= 0;){
-			b = scheduledUpdates.get(i);
-			setBlock(b.block, b.x, b.y);
-			setMeta(b.meta, b.x, b.y);
-			scheduledUpdates.removeIndex(i);
-			buPool.free(b);
-		}
+		
 		
 		if (canRespawnIn > 0) {
 			canRespawnIn--;
@@ -387,6 +386,17 @@ public class World implements TileBasedMap {
 			msgs.get(i).timer--;
 		}
 
+	}
+	
+	public void executeBlockUpdates(){
+		BlockUpdate b;
+		for(int i = scheduledUpdates.size; --i >= 0;){
+			b = scheduledUpdates.get(i);
+			setBlock(b.block, b.x, b.y);
+			setMeta(b.meta, b.x, b.y);
+			scheduledUpdates.removeIndex(i);
+			buPool.free(b);
+		}
 	}
 
 	private int getEntitiesType(Class<? extends Entity> cls) {
