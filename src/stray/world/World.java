@@ -330,8 +330,6 @@ public class World implements TileBasedMap {
 
 		renderer.tickUpdate();
 
-		executeBlockUpdates();
-
 		for (int y = sizey - 1; y >= 0; y--) {
 			for (int x = (BlockFluid.movementDirection() ? 0 : sizex - 1); (BlockFluid.movementDirection() ? x++ < sizex : --x >= 0);) {
 				executeBlockUpdates();
@@ -341,6 +339,8 @@ public class World implements TileBasedMap {
 				getBlock(x, y).tickUpdate(this, x, y);
 			}
 		}
+		
+		executeBlockUpdates();
 
 		if (canRespawnIn > 0) {
 			canRespawnIn--;
