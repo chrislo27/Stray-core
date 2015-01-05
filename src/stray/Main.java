@@ -24,6 +24,7 @@ import stray.animation.SynchedAnimation;
 import stray.blocks.Blocks;
 import stray.conversation.Conversation;
 import stray.conversation.Conversations;
+import stray.offenses.Offenses;
 import stray.transition.Transition;
 import stray.transition.TransitionScreen;
 import stray.util.AssetMap;
@@ -760,6 +761,7 @@ public class Main extends Game implements Consumer {
 		Achievements.instance();
 		Translator.instance();
 		Conversations.instance();
+		Offenses.instance();
 		Blocks.instance().addBlockTextures(this);
 		manager.load(AssetMap.add("blockmissingtexture", "images/blocks/missing/missing.png"),
 				Texture.class);
