@@ -3,7 +3,7 @@ package stray.offenses;
 
 public abstract class Offense {
 
-	private static final String defaultName = "offense.default";
+	protected static final String defaultName = "offense.default";
 	
 	public String getUnlocalizedName(){
 		return defaultName;

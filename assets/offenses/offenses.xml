@@ -1,0 +1,6 @@
+
+<offenses>
+    
+    <offense id="test" name="offense.test" level=1 />
+    
+</offenses>
