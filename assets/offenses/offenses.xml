@@ -2,6 +2,5 @@
 <offenses>
     
     <offense id="test" name="offense.test" level=1 />
-    <offense id="yourmother" name="offense.yourmother" level=9001 />
     
 </offenses>
