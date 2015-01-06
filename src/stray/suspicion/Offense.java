@@ -1,4 +1,4 @@
-package stray.offenses;
+package stray.suspicion;
 
 
 public abstract class Offense {

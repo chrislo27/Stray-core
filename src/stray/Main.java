@@ -24,7 +24,7 @@ import stray.animation.SynchedAnimation;
 import stray.blocks.Blocks;
 import stray.conversation.Conversation;
 import stray.conversation.Conversations;
-import stray.offenses.Offenses;
+import stray.suspicion.Offenses;
 import stray.transition.Transition;
 import stray.transition.TransitionScreen;
 import stray.util.AssetMap;
