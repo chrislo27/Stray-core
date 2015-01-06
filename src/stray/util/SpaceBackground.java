@@ -111,16 +111,21 @@ public class SpaceBackground {
 		}
 
 		if (Gdx.input.isButtonPressed(Buttons.LEFT) && cooldown == 0) {
-			for (VisualAsteroid ast : asteroids) {
-				if (Gdx.input.getX() >= ast.x && Gdx.input.getX() <= (ast.x + (ast.size * 32))) {
-					if (Gdx.input.getY() <= ast.y && Gdx.input.getY() >= (ast.y - (ast.size * 32))) {
-						if (ast.colour) {
-							main.awardAchievement("secret");
-							ast.colour = false;
-							cooldown = (int) (Gdx.graphics.getFramesPerSecond() * 1.5f);
-							main.transition(new Spiral(3), new FadeOut(), Main.COLOUR);
+			if (krakenx < Gdx.graphics.getWidth() && krakenx > -Gdx.graphics.getWidth()) {
+				main.awardAchievement("kraken");
+			} else {
+				for (VisualAsteroid ast : asteroids) {
+					if (Gdx.input.getX() >= ast.x && Gdx.input.getX() <= (ast.x + (ast.size * 32))) {
+						if (Gdx.input.getY() <= ast.y
+								&& Gdx.input.getY() >= (ast.y - (ast.size * 32))) {
+							if (ast.colour) {
+								main.awardAchievement("secret");
+								ast.colour = false;
+								cooldown = (int) (Gdx.graphics.getFramesPerSecond() * 1.5f);
+								main.transition(new Spiral(3), new FadeOut(), Main.COLOUR);
 
-							return;
+								return;
+							}
 						}
 					}
 				}
@@ -131,7 +136,6 @@ public class SpaceBackground {
 		timewatched += Gdx.graphics.getRawDeltaTime();
 		if (timewatched >= (600) && krakenx > -Gdx.graphics.getWidth()) {
 			krakenx -= Gdx.graphics.getDeltaTime() * 64;
-			main.awardAchievement("kraken");
 		}
 	}
 
