@@ -768,11 +768,6 @@ public class Main extends Game implements Consumer {
 
 		// missing
 		manager.load(AssetMap.add("missingtexture", "images/missing.png"), Texture.class);
-
-		// forme ui
-		manager.load(AssetMap.add("formeuiturtle", "images/formeui/turtle.png"), Texture.class);
-		manager.load(AssetMap.add("formeuiguillotine", "images/formeui/guillotine.png"), Texture.class);
-		manager.load(AssetMap.add("formeuihoop", "images/formeui/hoop.png"), Texture.class);
 		
 		// ui
 		manager.load(AssetMap.add("spacekraken", "images/ui/misc.png"), Texture.class);
