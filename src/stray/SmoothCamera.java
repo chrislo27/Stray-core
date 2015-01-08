@@ -39,9 +39,6 @@ public class SmoothCamera {
 		shakeFades = fades;
 	}
 	
-	/**
-	 * call once per render, before rendering thingies
-	 */
 	public void update(){
 		if(Math.abs(wantedx - camerax) > 0.005f){
 			velox = (float) ((SPEED) * ((wantedx - camerax)));
