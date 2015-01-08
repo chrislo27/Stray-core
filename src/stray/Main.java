@@ -70,6 +70,8 @@ public class Main extends Game implements Consumer {
 
 	public OrthographicCamera camera;
 	
+	public ShaderProgram defaultShader;
+	
 	public SpriteBatch batch;
 	public SpriteBatch maskRenderer;
 	public SpriteBatch blueprintrenderer;
@@ -148,6 +150,7 @@ public class Main extends Game implements Consumer {
 
 	@Override
 	public void create() {
+		defaultShader = SpriteBatch.createDefaultShader();
 		progress = getPref("progress");
 		resetTitle();
 		redirectSysOut();
@@ -170,6 +173,7 @@ public class Main extends Game implements Consumer {
 		font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		arial = new BitmapFont();
 		arial.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
 		
 		normalProjection = new Matrix4().setToOrtho2D(0, 0, Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
@@ -195,7 +199,7 @@ public class Main extends Game implements Consumer {
 		toonshader = new ShaderProgram(Shaders.VERTTOON, Shaders.FRAGTOON);
 
 		greyshader = new ShaderProgram(Shaders.VERTGREY, Shaders.FRAGGREY);
-	
+		
 
 		loadUnmanagedAssets();
 		loadAssets();

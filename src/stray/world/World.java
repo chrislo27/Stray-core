@@ -264,17 +264,19 @@ public class World implements TileBasedMap {
 	}
 
 	public void renderOnly() {
+
+		batch.setShader(main.defaultShader);
+
 		batch.begin();
 		main.batch.draw(main.manager.get(AssetMap.get(background), Texture.class), 0, 0,
 				Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		batch.end();
+		batch.flush();
 
 		renderer.renderBlocks();
 		// entities
 		renderer.renderEntities();
 
 		// particles
-		batch.begin();
 		if (particles.size > 0) {
 			for (Particle p : particles) {
 				p.render(this, main);
@@ -300,9 +302,9 @@ public class World implements TileBasedMap {
 		renderOnly();
 
 		batch.begin();
-		if(voidTime > 0) renderer.renderVoid();
+		if (voidTime > 0) renderer.renderVoid();
 		batch.end();
-		
+
 		renderer.renderUi();
 
 		Particle item;
@@ -343,7 +345,8 @@ public class World implements TileBasedMap {
 		renderer.tickUpdate();
 
 		for (int y = sizey - 1; y >= 0; y--) {
-			for (int x = (BlockFluid.movementDirection() ? 0 : sizex - 1); (BlockFluid.movementDirection() ? x++ < sizex : --x >= 0);) {
+			for (int x = (BlockFluid.movementDirection() ? 0 : sizex - 1); (BlockFluid
+					.movementDirection() ? x++ < sizex : --x >= 0);) {
 				executeBlockUpdates();
 				if (getBlock(x, y).getTickRate() < 1) continue;
 				if (getBlock(x, y).getTickRate() > 1) if (tickTime % getBlock(x, y).getTickRate() != 0) continue;
@@ -351,7 +354,7 @@ public class World implements TileBasedMap {
 				getBlock(x, y).tickUpdate(this, x, y);
 			}
 		}
-		
+
 		executeBlockUpdates();
 
 		if (canRespawnIn > 0) {
@@ -389,14 +392,16 @@ public class World implements TileBasedMap {
 		}
 
 	}
-	
+
 	/**
 	 * 
-	 * @return -1 if void time is 0 or less, the distance in blocks of the void otherwise
+	 * @return -1 if void time is 0 or less, the distance in blocks of the void
+	 *         otherwise
 	 */
-	public float getVoidDistance(){
-		if(voidTime <= 0) return -1;
-		return MathUtils.clamp(((((System.currentTimeMillis() - msTime) / 1000f) / voidTime) * sizex), -1, sizex);
+	public float getVoidDistance() {
+		if (voidTime <= 0) return -1;
+		return MathUtils.clamp(
+				((((System.currentTimeMillis() - msTime) / 1000f) / voidTime) * sizex), -1, sizex);
 	}
 
 	public void executeBlockUpdates() {

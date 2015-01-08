@@ -34,7 +34,6 @@ public class WorldRenderer {
 	public boolean showGrid = false;
 
 	public void renderBlocks() {
-		batch.begin();
 		main.font.setColor(Color.BLACK);
 		float maxx = world.sizex;
 		float maxy = world.sizey;
@@ -68,7 +67,7 @@ public class WorldRenderer {
 			}
 		}
 		
-		batch.end();
+		batch.flush();
 
 	}
 	
@@ -79,7 +78,7 @@ public class WorldRenderer {
 	}
 
 	public void renderEntities() {
-		batch.begin();
+		
 		for (Entity e : world.entities) {
 			e.render(Gdx.graphics.getDeltaTime());
 			if (Main.debug) {
@@ -92,9 +91,7 @@ public class WorldRenderer {
 				batch.setColor(Color.WHITE);
 			}
 		}
-		batch.end();
-		batch.begin();
-		batch.end();
+		batch.flush();
 	}
 
 	public void tickUpdate() {
@@ -104,7 +101,7 @@ public class WorldRenderer {
 	public void renderUi() {
 		if (world.getPlayer() == null) return;
 
-		batch.begin();
+		
 		Color c;
 		int offsety = 0;
 		for (int i = world.msgs.size - 1; i >= 0; i--) {
@@ -143,7 +140,7 @@ public class WorldRenderer {
 		for (GearPart part : gearparts) {
 			part.render(main);
 		}
-		batch.end();
+		batch.flush();
 
 		GearPart item;
 		for (int i = gearparts.size; --i >= 0;) {
