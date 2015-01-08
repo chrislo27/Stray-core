@@ -759,12 +759,14 @@ public class Main extends Game implements Consumer {
 		Achievements.instance();
 		Translator.instance();
 		Conversations.instance();
-		Blocks.instance().addBlockTextures(this);
-		manager.load(AssetMap.add("blockmissingtexture", "images/blocks/missing/missing.png"),
-				Texture.class);
 
 		// missing
+		manager.load(AssetMap.add("blockmissingtexture", "images/blocks/missing/missing.png"),
+				Texture.class);
 		manager.load(AssetMap.add("missingtexture", "images/missing.png"), Texture.class);
+		
+		// blocks
+		Blocks.instance().addBlockTextures(this);
 		
 		// ui
 		manager.load(AssetMap.add("spacekraken", "images/ui/misc.png"), Texture.class);
