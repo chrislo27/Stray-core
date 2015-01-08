@@ -339,8 +339,7 @@ public class World implements TileBasedMap {
 	public void tickUpdate() {
 		++tickTime;
 
-		centerCamera();
-		camera.update();
+		
 
 		renderer.tickUpdate();
 
@@ -391,7 +390,8 @@ public class World implements TileBasedMap {
 			msgs.get(i).timer--;
 		}
 		
-		
+		centerCamera();
+		camera.update();
 
 	}
 

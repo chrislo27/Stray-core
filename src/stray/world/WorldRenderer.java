@@ -66,19 +66,24 @@ public class WorldRenderer {
 				}
 			}
 		}
-		
+
 		batch.flush();
 
 	}
-	
-	public void renderVoid(){
+
+	public void renderVoid() {
 		batch.setColor(0, 0, 0, 1);
-		main.fillRect(-2, 0, World.tilesizex * (world.getVoidDistance() - (world.camera.camerax / World.tilesizex)), Gdx.graphics.getHeight());
+		main.fillRect(-2, 0, ((world.getVoidDistance() * World.tilesizex) - world.camera.camerax),
+				Gdx.graphics.getHeight());
+		batch.draw(main.manager.get(AssetMap.get("voidend"), Texture.class),
+				((world.getVoidDistance() * World.tilesizex) - world.camera.camerax), 0,
+				main.manager.get(AssetMap.get("voidend"), Texture.class).getWidth(),
+				Gdx.graphics.getHeight());
 		batch.setColor(1, 1, 1, 1);
 	}
 
 	public void renderEntities() {
-		
+
 		for (Entity e : world.entities) {
 			e.render(Gdx.graphics.getDeltaTime());
 			if (Main.debug) {
@@ -101,7 +106,6 @@ public class WorldRenderer {
 	public void renderUi() {
 		if (world.getPlayer() == null) return;
 
-		
 		Color c;
 		int offsety = 0;
 		for (int i = world.msgs.size - 1; i >= 0; i--) {
@@ -193,7 +197,6 @@ public class WorldRenderer {
 		}
 	}
 
-
 	public void renderDebug(int starting) {
 		if (world.getPlayer() == null) return;
 		main.font.setColor(Color.WHITE);
@@ -219,8 +222,8 @@ public class WorldRenderer {
 				Main.convertY(starting + 120));
 		main.font.draw(batch, "time: " + Utils.formatMs(System.currentTimeMillis() - world.msTime),
 				5, Main.convertY(starting + 135));
-		main.font.draw(batch, "voidDistance: " + String.format("%.3f", world.getVoidDistance()),
-				5, Main.convertY(starting + 150));
+		main.font.draw(batch, "voidDistance: " + String.format("%.3f", world.getVoidDistance()), 5,
+				Main.convertY(starting + 150));
 
 	}
 
