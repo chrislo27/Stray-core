@@ -139,6 +139,8 @@ public class LevelEditor extends Updateable {
 				Gdx.graphics.getHeight() - 80);
 		main.drawInverse("ALT+T - TEST LEVEL", Gdx.graphics.getWidth() - 5,
 				Gdx.graphics.getHeight() - 95);
+		main.drawInverse("- / + - ADJUST VOID TIME (" + world.voidTime + " s)",
+				Gdx.graphics.getWidth() - 5, Gdx.graphics.getHeight() - 110);
 		main.batch.end();
 
 		world.camera.clamp();
@@ -270,6 +272,20 @@ public class LevelEditor extends Updateable {
 			world.sizex += 2;
 			world.prepare();
 			lastFile = null;
+		}
+		if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
+			if (Gdx.input.isKeyJustPressed(Keys.PLUS)) {
+				world.voidTime += 5;
+			} else if (Gdx.input.isKeyJustPressed(Keys.MINUS)) {
+				world.voidTime -= 5;
+				if(world.voidTime < -1) world.voidTime = -1;
+			}
+		}else{
+			if (Gdx.input.isKeyJustPressed(Keys.PLUS)) {
+				world.voidTime++;
+			} else if (Gdx.input.isKeyJustPressed(Keys.MINUS)) {
+				if (world.voidTime > -1) world.voidTime--;
+			}
 		}
 
 		if (Gdx.input.isKeyPressed(Keys.ALT_LEFT) || Gdx.input.isKeyPressed(Keys.ALT_RIGHT)) {
