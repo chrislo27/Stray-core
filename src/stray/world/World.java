@@ -75,7 +75,7 @@ public class World implements TileBasedMap {
 	public long tickTime = -1;
 	public int canRespawnIn = 0;
 	public long time = 0;
-	public float voidTime = -1f;
+	public int voidTime = -1;
 
 	public WorldRenderer renderer;
 
@@ -577,7 +577,7 @@ public class World implements TileBasedMap {
 		Element essentials = root.getChildByName("essentials");
 		sizex = Integer.parseInt(essentials.getAttribute("sizex"));
 		sizey = Integer.parseInt(essentials.getAttribute("sizey"));
-		voidTime = Float.parseFloat(essentials.getAttribute("voidTime", "-1"));
+		voidTime = Integer.parseInt(essentials.getAttribute("voidTime", "-1"));
 		tickTime = -1;
 		background = essentials.getAttribute("bg", "levelbgcircuit");
 
