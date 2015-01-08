@@ -55,7 +55,6 @@ public class SmoothCamera {
 			cameray = wantedy;
 		}
 		clamp();
-		world.main.camera.update();
 		if(shakeTime > 0){
 			shakeTime -= Gdx.graphics.getDeltaTime();
 			if(shakeTime < 0){

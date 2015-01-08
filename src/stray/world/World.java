@@ -290,7 +290,7 @@ public class World implements TileBasedMap {
 	}
 
 	public void render() {
-		centerCamera();
+		
 
 		if (vignettecolour.a > 0) {
 			vignettecolour.a -= Gdx.graphics.getDeltaTime();
@@ -304,8 +304,6 @@ public class World implements TileBasedMap {
 		renderer.renderUi();
 		batch.end();
 
-		
-
 		Particle item;
 		for (int i = particles.size; --i >= 0;) {
 			item = particles.get(i);
@@ -314,6 +312,8 @@ public class World implements TileBasedMap {
 				ParticlePool.instance().getPool().free(item);
 			}
 		}
+		
+		
 
 	}
 
@@ -339,6 +339,7 @@ public class World implements TileBasedMap {
 	public void tickUpdate() {
 		++tickTime;
 
+		centerCamera();
 		camera.update();
 
 		renderer.tickUpdate();
@@ -389,6 +390,8 @@ public class World implements TileBasedMap {
 			}
 			msgs.get(i).timer--;
 		}
+		
+		
 
 	}
 
