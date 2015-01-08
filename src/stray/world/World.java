@@ -32,6 +32,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
@@ -298,6 +299,10 @@ public class World implements TileBasedMap {
 
 		renderOnly();
 
+		batch.begin();
+		if(voidTime > 0) renderer.renderVoid();
+		batch.end();
+		
 		renderer.renderUi();
 
 		Particle item;
@@ -387,11 +392,11 @@ public class World implements TileBasedMap {
 	
 	/**
 	 * 
-	 * @return -1 if void time is 0 or less, the distance of the void otherwise
+	 * @return -1 if void time is 0 or less, the distance in blocks of the void otherwise
 	 */
 	public float getVoidDistance(){
 		if(voidTime <= 0) return -1;
-		return (((msTime)));
+		return MathUtils.clamp(((((System.currentTimeMillis() - msTime) / 1000f) / voidTime) * sizex), -1, sizex);
 	}
 
 	public void executeBlockUpdates() {

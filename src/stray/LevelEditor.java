@@ -274,14 +274,14 @@ public class LevelEditor extends Updateable {
 			lastFile = null;
 		}
 		if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
-			if (Gdx.input.isKeyJustPressed(Keys.PLUS)) {
+			if (Gdx.input.isKeyJustPressed(Keys.PLUS) || Gdx.input.isKeyJustPressed(Keys.EQUALS)) {
 				world.voidTime += 5;
 			} else if (Gdx.input.isKeyJustPressed(Keys.MINUS)) {
 				world.voidTime -= 5;
 				if(world.voidTime < -1) world.voidTime = -1;
 			}
 		}else{
-			if (Gdx.input.isKeyJustPressed(Keys.PLUS)) {
+			if (Gdx.input.isKeyJustPressed(Keys.PLUS) || Gdx.input.isKeyJustPressed(Keys.EQUALS)) {
 				world.voidTime++;
 			} else if (Gdx.input.isKeyJustPressed(Keys.MINUS)) {
 				if (world.voidTime > -1) world.voidTime--;

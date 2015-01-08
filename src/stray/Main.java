@@ -55,6 +55,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
@@ -68,9 +69,11 @@ import com.badlogic.gdx.utils.Array;
 public class Main extends Game implements Consumer {
 
 	public OrthographicCamera camera;
+	
 	public SpriteBatch batch;
 	public SpriteBatch maskRenderer;
 	public SpriteBatch blueprintrenderer;
+	
 	public BitmapFont font;
 	public BitmapFont arial;
 
@@ -192,6 +195,7 @@ public class Main extends Game implements Consumer {
 		toonshader = new ShaderProgram(Shaders.VERTTOON, Shaders.FRAGTOON);
 
 		greyshader = new ShaderProgram(Shaders.VERTGREY, Shaders.FRAGGREY);
+	
 
 		loadUnmanagedAssets();
 		loadAssets();

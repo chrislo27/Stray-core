@@ -67,9 +67,15 @@ public class WorldRenderer {
 				}
 			}
 		}
-
+		
 		batch.end();
 
+	}
+	
+	public void renderVoid(){
+		batch.setColor(0, 0, 0, 1);
+		main.fillRect(-2, 0, World.tilesizex * (world.getVoidDistance() - (world.camera.camerax / World.tilesizex)), Gdx.graphics.getHeight());
+		batch.setColor(1, 1, 1, 1);
 	}
 
 	public void renderEntities() {
@@ -214,8 +220,10 @@ public class WorldRenderer {
 				Main.convertY(starting + 105));
 		main.font.draw(batch, "playerjump: " + world.getPlayer().jump, 5,
 				Main.convertY(starting + 120));
-		main.font.draw(batch, "time: " + Utils.formatMs(System.currentTimeMillis() - world.time),
+		main.font.draw(batch, "time: " + Utils.formatMs(System.currentTimeMillis() - world.msTime),
 				5, Main.convertY(starting + 135));
+		main.font.draw(batch, "voidDistance: " + String.format("%.3f", world.getVoidDistance()),
+				5, Main.convertY(starting + 150));
 
 	}
 
