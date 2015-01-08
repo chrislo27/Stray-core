@@ -265,8 +265,6 @@ public class World implements TileBasedMap {
 
 	public void renderOnly() {
 
-		batch.setShader(main.defaultShader);
-
 		batch.begin();
 		main.batch.draw(main.manager.get(AssetMap.get(background), Texture.class), 0, 0,
 				Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -303,9 +301,10 @@ public class World implements TileBasedMap {
 
 		batch.begin();
 		if (voidTime > 0) renderer.renderVoid();
+		renderer.renderUi();
 		batch.end();
 
-		renderer.renderUi();
+		
 
 		Particle item;
 		for (int i = particles.size; --i >= 0;) {
