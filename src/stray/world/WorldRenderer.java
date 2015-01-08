@@ -51,7 +51,7 @@ public class WorldRenderer {
 				if (world.getBlock(x, y) != null) {
 					world.getBlock(x, y).render(world, x, y);
 				} else {
-					Blocks.instance().getBlock("space").render(world, x, y);
+					Blocks.defaultBlock().render(world, x, y);
 				}
 				if (showGrid) {
 					main.batch.setColor(1, 1, 1, 0.5f);
