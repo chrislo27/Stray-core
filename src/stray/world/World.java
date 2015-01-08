@@ -72,9 +72,15 @@ public class World implements TileBasedMap {
 	public SmoothCamera camera;
 	private float cameramovex = 0, cameramovey = 0;
 
+	/**
+	 * number of ticks since creation
+	 */
 	public long tickTime = -1;
 	public int canRespawnIn = 0;
-	public long time = 0;
+	/**
+	 * millisecond time since show() was called
+	 */
+	public long msTime = 0;
 	public int voidTime = -1;
 
 	public WorldRenderer renderer;
@@ -105,7 +111,7 @@ public class World implements TileBasedMap {
 	}
 
 	public void prepare() {
-		time = 1;
+		msTime = System.currentTimeMillis();
 		global.clear();
 		blocks = new Block[sizex][sizey];
 		meta = new String[sizex][sizey];
@@ -378,6 +384,15 @@ public class World implements TileBasedMap {
 		}
 
 	}
+	
+	/**
+	 * 
+	 * @return -1 if void time is 0 or less, the distance of the void otherwise
+	 */
+	public float getVoidDistance(){
+		if(voidTime <= 0) return -1;
+		return (((msTime)));
+	}
 
 	public void executeBlockUpdates() {
 		BlockUpdate b;
@@ -419,7 +434,7 @@ public class World implements TileBasedMap {
 	}
 
 	public void show() {
-		time = System.currentTimeMillis();
+		msTime = System.currentTimeMillis();
 	}
 
 	public void hide() {

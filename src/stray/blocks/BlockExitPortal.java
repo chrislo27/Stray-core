@@ -34,7 +34,7 @@ public class BlockExitPortal extends Block {
 		if (Block.entityIntersects(world, x, y, world.getPlayer())
 				&& !world.global.getValue("completedLevel").equals("done!")) {
 			world.global.setValue("completedLevel", "done!");
-			long lasttime = System.currentTimeMillis() - world.time;
+			long lasttime = System.currentTimeMillis() - world.msTime;
 
 			if (lasttime < world.main.progress.getLong(world.levelfile + "-besttime", Long.MAX_VALUE - 1)) {
 				world.main.progress.putLong(world.levelfile + "-besttime", lasttime)
