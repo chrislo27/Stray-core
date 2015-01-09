@@ -1,6 +1,7 @@
 package stray.world;
 
 import stray.Main;
+import stray.ParticlePool;
 import stray.blocks.Blocks;
 import stray.effect.Effect;
 import stray.entity.Entity;
@@ -82,7 +83,7 @@ public class WorldRenderer {
 				Gdx.graphics.getHeight());
 		batch.setColor(1, 1, 1, 1);
 		for (int i = 0; i < 3; i++) {
-			if (Main.random(1, 16) == 1) {
+			if (Main.random(1, 12) == 1) {
 				float location = Main.random(1, Gdx.graphics.getHeight());
 				ElectricityRenderer.drawP2PLightning(
 						batch,
@@ -93,6 +94,19 @@ public class WorldRenderer {
 						location + Main.random(-8, 8), 24, 1.5f, 3, 3, Color.PURPLE.toFloatBits());
 			}
 		}
+		int ylevel = Main.random(-World.tilesizex, Gdx.graphics.getHeight() + World.tilesizey);
+		world.particles
+				.add(ParticlePool
+						.obtain()
+						.setTexture("magnetglow")
+						.setTint(0, 0, 0, 1)
+						.setLifetime(1.5f)
+						.setVelocity(-2, (ylevel > (Gdx.graphics.getHeight() / 2f) ? -4 : 4))
+						.setPosition(
+								(((world.getVoidDistance())) + 2 + Main
+										.random(0.5f, 1.5f)),
+								(world.camera.cameray + ylevel) / World.tilesizey));
+
 	}
 
 	public void renderEntities() {
