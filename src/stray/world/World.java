@@ -305,8 +305,8 @@ public class World implements TileBasedMap {
 		renderOnly();
 
 		batch.begin();
-		if (voidTime > 0) renderer.renderVoid();
-		renderer.renderUi();
+		if (voidTime > 0 && getVoidDistance() > 0f) renderer.renderVoid();
+		if(!background.equalsIgnoreCase("spacebackground")) renderer.renderUi();
 		batch.end();
 
 		Particle item;

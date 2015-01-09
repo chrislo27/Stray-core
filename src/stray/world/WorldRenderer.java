@@ -6,6 +6,7 @@ import stray.blocks.Blocks;
 import stray.effect.Effect;
 import stray.entity.Entity;
 import stray.util.AssetMap;
+import stray.util.Colors;
 import stray.util.ElectricityRenderer;
 import stray.util.MathHelper;
 import stray.util.Message;
@@ -91,21 +92,26 @@ public class WorldRenderer {
 						location,
 						((world.getVoidDistance() * World.tilesizex) - world.camera.camerax)
 								+ Main.random(World.tilesizex * 1.25f, World.tilesizex * 2.25f),
-						location + Main.random(-8, 8), 24, 1.5f, 3, 3, Color.PURPLE.toFloatBits());
+						location + Main.random(-8, 8), 24, 1.5f, 3, 3,
+						Colors.voidPurple.toFloatBits());
 			}
 		}
 		int ylevel = Main.random(-World.tilesizex, Gdx.graphics.getHeight() + World.tilesizey);
-		world.particles
-				.add(ParticlePool
-						.obtain()
-						.setTexture("magnetglow")
-						.setTint(0, 0, 0, 1)
-						.setLifetime(1.5f)
-						.setVelocity(-2, (ylevel > (Gdx.graphics.getHeight() / 2f) ? -4 : 4))
-						.setPosition(
-								(((world.getVoidDistance())) + 2 + Main
-										.random(0.5f, 1.5f)),
-								(world.camera.cameray + ylevel) / World.tilesizey));
+		float velo = 0;
+		if(ylevel > Gdx.graphics.getHeight() / 2f){
+			velo = MathUtils.clamp(-(((ylevel - (Gdx.graphics.getHeight() / 2f)) / (Gdx.graphics.getHeight() / 2f)) * 4), -4f, 4f);
+		}else{
+			velo = MathUtils.clamp(4 - ((ylevel / (Gdx.graphics.getHeight() / 2f)) * 4), -4f, 4f);
+		}
+		
+		world.particles.add(ParticlePool
+				.obtain()
+				.setTexture("magnetglow")
+				.setTint(0, 0, 0, 1)
+				.setLifetime(1.5f)
+				.setVelocity(-2, velo)
+				.setPosition((((world.getVoidDistance())) + 2 + Main.random(0.5f, 1.5f)),
+						(world.camera.cameray + ylevel) / World.tilesizey));
 
 	}
 
