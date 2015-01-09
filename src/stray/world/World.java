@@ -130,7 +130,7 @@ public class World implements TileBasedMap {
 		entities = new Array<Entity>(32);
 		particles = new Array<Particle>();
 		addPlayer();
-		camera.forceCenterOn(getPlayer().x, getPlayer().y);
+		//camera.forceCenterOn(getPlayer().x, getPlayer().y);
 		setCheckpoint();
 	}
 
@@ -584,7 +584,7 @@ public class World implements TileBasedMap {
 
 	public void load(FileHandle file) {
 		if (!file.exists()) {
-			System.out.println("WARNING: level + \"" + file.path() + "\" does not exist!");
+			Main.logger.warn("level + \"" + file.path() + "\" does not exist!");
 			return;
 		}
 
