@@ -5,6 +5,7 @@ import stray.blocks.Blocks;
 import stray.effect.Effect;
 import stray.entity.Entity;
 import stray.util.AssetMap;
+import stray.util.ElectricityRenderer;
 import stray.util.MathHelper;
 import stray.util.Message;
 import stray.util.Utils;
@@ -73,13 +74,25 @@ public class WorldRenderer {
 
 	public void renderVoid() {
 		batch.setColor(0, 0, 0, 1);
-		main.fillRect(-2, 0, ((world.getVoidDistance() * World.tilesizex) - world.camera.camerax),
+		main.fillRect(0, 0, ((world.getVoidDistance() * World.tilesizex) - world.camera.camerax),
 				Gdx.graphics.getHeight());
 		batch.draw(main.manager.get(AssetMap.get("voidend"), Texture.class),
 				((world.getVoidDistance() * World.tilesizex) - world.camera.camerax), 0,
 				main.manager.get(AssetMap.get("voidend"), Texture.class).getWidth(),
 				Gdx.graphics.getHeight());
 		batch.setColor(1, 1, 1, 1);
+		for (int i = 0; i < 3; i++) {
+			if (Main.random(1, 16) == 1) {
+				float location = Main.random(1, Gdx.graphics.getHeight());
+				ElectricityRenderer.drawP2PLightning(
+						batch,
+						((world.getVoidDistance() * World.tilesizex) - world.camera.camerax),
+						location,
+						((world.getVoidDistance() * World.tilesizex) - world.camera.camerax)
+								+ Main.random(World.tilesizex * 1.25f, World.tilesizex * 2.25f),
+						location + Main.random(-8, 8), 24, 1.5f, 3, 3, Color.PURPLE.toFloatBits());
+			}
+		}
 	}
 
 	public void renderEntities() {
