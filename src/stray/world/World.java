@@ -24,6 +24,7 @@ import stray.util.GlobalVariables;
 import stray.util.MathHelper;
 import stray.util.Message;
 import stray.util.Sizeable;
+import stray.util.SpaceBackground;
 import stray.util.Utils;
 
 import com.badlogic.gdx.Gdx;
@@ -266,8 +267,12 @@ public class World implements TileBasedMap {
 	public void renderOnly() {
 
 		batch.begin();
-		main.batch.draw(main.manager.get(AssetMap.get(background), Texture.class), 0, 0,
-				Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		if(background.equalsIgnoreCase("spacebackground")){
+			SpaceBackground.instance().render(main);
+		}else{
+			main.batch.draw(main.manager.get(AssetMap.get(background), Texture.class), 0, 0,
+					Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		}
 		batch.flush();
 
 		renderer.renderBlocks();

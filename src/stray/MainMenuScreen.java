@@ -7,6 +7,7 @@ import stray.ui.Button;
 import stray.ui.ExitButton;
 import stray.ui.LanguageButton;
 import stray.util.SpaceBackground;
+import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -17,7 +18,10 @@ public strictfp class MainMenuScreen extends Updateable {
 	public MainMenuScreen(Main m) {
 		super(m);
 		versionwidth = Math.round(main.font.getBounds(Main.version).width);
-
+		world = new World(main);
+		world.load(Gdx.files.internal("levels/mainmenu.xml"));
+		world.voidTime = -1;
+		
 		container.elements.add(new Button((Gdx.graphics.getWidth() / 2) - 80, 64, 160, 32,
 				"menu.new") {
 
@@ -66,6 +70,8 @@ public strictfp class MainMenuScreen extends Updateable {
 	private int versionwidth;
 
 	boolean hasSave = false;
+	
+	private World world;
 
 	@Override
 	public void render(float delta) {
@@ -73,9 +79,9 @@ public strictfp class MainMenuScreen extends Updateable {
 		Gdx.gl20.glClearColor(0, 0, 0, 1);
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		world.render();
+		
 		main.batch.begin();
-
-		SpaceBackground.instance().render(main);
 
 		main.font.setColor(Color.WHITE);
 		main.font.setScale(1.5f);
@@ -87,14 +93,13 @@ public strictfp class MainMenuScreen extends Updateable {
 		container.render(main);
 		main.font.setColor(Color.WHITE);
 		main.batch.setColor(1, 1, 1, 1);
-
+		
 		main.batch.end();
-
 	}
 
 	@Override
 	public void tickUpdate() {
-
+		world.tickUpdate();
 	}
 
 	@Override
@@ -129,6 +134,7 @@ public strictfp class MainMenuScreen extends Updateable {
 
 	@Override
 	public void renderUpdate() {
+		world.renderUpdate();
 	}
 
 }
