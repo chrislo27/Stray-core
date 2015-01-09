@@ -6,7 +6,6 @@ import stray.blocks.Blocks;
 import stray.effect.Effect;
 import stray.entity.Entity;
 import stray.util.AssetMap;
-import stray.util.Colors;
 import stray.util.ElectricityRenderer;
 import stray.util.MathHelper;
 import stray.util.Message;
@@ -14,9 +13,9 @@ import stray.util.Utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 
@@ -93,11 +92,11 @@ public class WorldRenderer {
 						((world.getVoidDistance() * World.tilesizex) - world.camera.camerax)
 								+ Main.random(World.tilesizex * 1.25f, World.tilesizex * 2.25f),
 						location + Main.random(-8, 8), 24, 1.5f, 3, 3,
-						Colors.voidPurple.toFloatBits());
+						Colors.get("VOID_PURPLE").toFloatBits());
 			}
 		}
 		int ylevel = Main.random(-World.tilesizex, Gdx.graphics.getHeight() + World.tilesizey);
-
+		
 		world.particles.add(ParticlePool
 				.obtain()
 				.setTexture("magnetglow")

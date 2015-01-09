@@ -47,6 +47,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -69,13 +70,13 @@ import com.badlogic.gdx.utils.Array;
 public class Main extends Game implements Consumer {
 
 	public OrthographicCamera camera;
-	
+
 	public ShaderProgram defaultShader;
-	
+
 	public SpriteBatch batch;
 	public SpriteBatch maskRenderer;
 	public SpriteBatch blueprintrenderer;
-	
+
 	public BitmapFont font;
 	public BitmapFont arial;
 
@@ -171,10 +172,11 @@ public class Main extends Game implements Consumer {
 		font = new BitmapFont(Gdx.files.internal("fonts/couriernewbold.fnt"),
 				Gdx.files.internal("fonts/couriernewbold.png"), false);
 		font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		font.setMarkupEnabled(true);
 		arial = new BitmapFont();
 		arial.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
-		
+		arial.setMarkupEnabled(true);
+
 		normalProjection = new Matrix4().setToOrtho2D(0, 0, Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
 
@@ -199,7 +201,6 @@ public class Main extends Game implements Consumer {
 		toonshader = new ShaderProgram(Shaders.VERTTOON, Shaders.FRAGTOON);
 
 		greyshader = new ShaderProgram(Shaders.VERTGREY, Shaders.FRAGGREY);
-		
 
 		loadUnmanagedAssets();
 		loadAssets();
@@ -308,8 +309,8 @@ public class Main extends Game implements Consumer {
 
 		}
 	}
-	
-	public void redirectSysOut(){
+
+	public void redirectSysOut() {
 		PrintStream ps = System.out;
 		output = new CaptureStream(this, ps);
 		printstrm = new PrintStream(output);
@@ -335,7 +336,6 @@ public class Main extends Game implements Consumer {
 	public void resetSystemOut() {
 		System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
 	}
-
 
 	@Override
 	public void appendText(final String text) {
@@ -490,11 +490,11 @@ public class Main extends Game implements Consumer {
 		}
 		return rand.nextInt((y - x) + 1) + x;
 	}
-	
-	public static float random(float x, float y){
+
+	public static float random(float x, float y) {
 		return random(x, y, random);
 	}
-	
+
 	public static float random(float x, float y, Random rand) {
 		if (x == y) {
 			return x;
@@ -659,8 +659,8 @@ public class Main extends Game implements Consumer {
 
 		return ((totalavgFPS) / (lastFPS.length * 1f));
 	}
-	
-	public void drawTextBg(String text, float x, float y){
+
+	public void drawTextBg(String text, float x, float y) {
 		batch.setColor(0, 0, 0, 0.6f);
 		fillRect(x, y, font.getBounds(text).width + 2, 17);
 		font.draw(batch, text, x + 1, y + 15);
@@ -760,22 +760,21 @@ public class Main extends Game implements Consumer {
 		Gdx.gl20.glClearColor(r / 255f, g / 255f, b / 255f, 1f);
 	}
 
-	
-
 	private void loadAssets() {
 		AssetMap.instance(); // load asset map namer thing
 		Achievements.instance();
 		Translator.instance();
 		Conversations.instance();
+		addColors();
 
 		// missing
 		manager.load(AssetMap.add("blockmissingtexture", "images/blocks/missing/missing.png"),
 				Texture.class);
 		manager.load(AssetMap.add("missingtexture", "images/missing.png"), Texture.class);
-		
+
 		// blocks
 		Blocks.instance().addBlockTextures(this);
-		
+
 		// ui
 		manager.load(AssetMap.add("spacekraken", "images/ui/misc.png"), Texture.class);
 		manager.load(AssetMap.add("guilanguage", "images/ui/button/language.png"), Texture.class);
@@ -849,11 +848,14 @@ public class Main extends Game implements Consumer {
 		// sfx
 		manager.load(AssetMap.add("questcomplete", "sounds/questcomplete.ogg"), Sound.class);
 		manager.load(AssetMap.add("switchsfx", "sounds/switch.ogg"), Sound.class);
-		
+
 		// voice (assetmap -> "voice-<name>")
-		//manager.load(AssetMap.add("voice-child0", "sounds/voice/child/child0.ogg"), Sound.class);
-		//manager.load(AssetMap.add("voice-child1", "sounds/voice/child/child1.ogg"), Sound.class);
-		//manager.load(AssetMap.add("voice-child2", "sounds/voice/child/child2.ogg"), Sound.class);
+		// manager.load(AssetMap.add("voice-child0",
+		// "sounds/voice/child/child0.ogg"), Sound.class);
+		// manager.load(AssetMap.add("voice-child1",
+		// "sounds/voice/child/child1.ogg"), Sound.class);
+		// manager.load(AssetMap.add("voice-child2",
+		// "sounds/voice/child/child2.ogg"), Sound.class);
 
 		// colour
 		manager.load(AssetMap.add("colour200pts", "sounds/colour/200pts.ogg"), Sound.class);
@@ -883,6 +885,10 @@ public class Main extends Game implements Consumer {
 			((SynchedAnimation) ((Entry) it.next()).getValue()).load();
 		}
 
+	}
+	
+	private void addColors(){
+		Colors.put("VOID_PURPLE", new Color(123f / 255f, 0, 1, 1));
 	}
 
 	public Texture getCurrentShine() {
