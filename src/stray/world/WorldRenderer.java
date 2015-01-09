@@ -97,19 +97,18 @@ public class WorldRenderer {
 			}
 		}
 		int ylevel = Main.random(-World.tilesizex, Gdx.graphics.getHeight() + World.tilesizey);
-		float velo = 0;
-		if(ylevel > Gdx.graphics.getHeight() / 2f){
-			velo = MathUtils.clamp(-(((ylevel - (Gdx.graphics.getHeight() / 2f)) / (Gdx.graphics.getHeight() / 2f)) * 4), -4f, 4f);
-		}else{
-			velo = MathUtils.clamp(4 - ((ylevel / (Gdx.graphics.getHeight() / 2f)) * 4), -4f, 4f);
-		}
-		
+
 		world.particles.add(ParticlePool
 				.obtain()
 				.setTexture("magnetglow")
 				.setTint(0, 0, 0, 1)
 				.setLifetime(1.5f)
-				.setVelocity(-2, velo)
+				.setVelocity(
+						-2,
+						((ylevel > Gdx.graphics.getHeight() / 2f) ? MathUtils.clamp(
+								-(((ylevel - (Gdx.graphics.getHeight() / 2f)) / (Gdx.graphics
+										.getHeight() / 2f)) * 4), -4f, 4f) : MathUtils.clamp(
+								4 - ((ylevel / (Gdx.graphics.getHeight() / 2f)) * 4), -4f, 4f)))
 				.setPosition((((world.getVoidDistance())) + 2 + Main.random(0.5f, 1.5f)),
 						(world.camera.cameray + ylevel) / World.tilesizey));
 
