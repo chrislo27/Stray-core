@@ -16,19 +16,13 @@ public class MainInputProcessor implements InputProcessor {
 	public boolean keyDown(int keycode) {
 		if (main.getConv() != null) {
 			if (keycode == Keys.SPACE || keycode == Keys.ENTER) {
-				if (main.currentConvText
-						.equals(Translator.getMsg(main.getConv().getCurrent().text))) {
-					if (main.getConv().next()) {
-						main.setConv(null);
-					} else {
-						main.getConv().talk(main, 1 / 3f);
-					}
-					if (main.getScreen() instanceof CutsceneScreen) {
-						((CutsceneScreen) main.getScreen()).onConvNext();
-					}
-					main.currentConvText = "";
-				}else{
-					main.currentConvText = Translator.getMsg(main.getConv().getCurrent().text);
+				if (main.getConv().next()) {
+					main.setConv(null);
+				} else {
+					main.getConv().talk(main, 1 / 3f);
+				}
+				if (main.getScreen() instanceof CutsceneScreen) {
+					((CutsceneScreen) main.getScreen()).onConvNext();
 				}
 				return true;
 			}

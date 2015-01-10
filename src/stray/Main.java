@@ -352,7 +352,6 @@ public class Main extends Game implements Consumer {
 		if (currentConvo != null) {
 			currentConvo.talk(this, 1 / 3f);
 		}
-		currentConvText = "";
 	}
 
 	public void transition(Transition from, Transition to, Screen next) {
@@ -646,9 +645,6 @@ public class Main extends Game implements Consumer {
 		}
 	}
 
-	public String currentConvText = "";
-	public static final int convTextIncrement = 2;
-
 	private int totalavgFPS = 0;
 	private float fpstimer = 0;
 
@@ -699,15 +695,9 @@ public class Main extends Game implements Consumer {
 			if (currentConvo.getCurrent().speaker != null) font.draw(batch,
 					Translator.getMsg("conv.name." + currentConvo.getCurrent().speaker) + ": ", 10,
 					120);
-			font.drawWrapped(batch, currentConvText, 10, 100, Gdx.graphics.getWidth() - 20);
+			font.drawWrapped(batch, Translator.getMsg(currentConvo.getCurrent().text), 10, 100, Gdx.graphics.getWidth() - 20);
 			drawInverse(Translator.getMsg("conversation.next"), Gdx.graphics.getWidth() - 8, 20);
 			batch.setColor(Color.WHITE);
-			if (!currentConvText.equals(Translator.getMsg(currentConvo.getCurrent().text))) {
-				currentConvText = Translator.getMsg(currentConvo.getCurrent().text).substring(
-						0,
-						MathUtils.clamp(currentConvText.length() + convTextIncrement, 0, Translator
-								.getMsg(currentConvo.getCurrent().text).length()));
-			}
 		}
 
 		if (this.getScreen() != null) {
@@ -894,9 +884,9 @@ public class Main extends Game implements Consumer {
 		Colors.put("VOID_PURPLE", new Color(123f / 255f, 0, 1, 1));
 		
 		// text related
-		Colors.put("OBJECTIVE", new Color(37 / 255f, 217 / 255f, 217 / 255f, 1));
-		Colors.put("ENEMY", new Color(1, 0, 0, 1));
-		//Colors.put("", new Color(0, 0, 0, 1));
+		Colors.put("POI", new Color(37 / 255f, 217 / 255f, 217 / 255f, 1));
+		Colors.put("DANGER", new Color(1, 0, 0, 1));
+		Colors.put("MAINOBJ", new Color(1, 217 / 255f, 0, 1));
 	}
 
 	public Texture getCurrentShine() {
