@@ -172,10 +172,10 @@ public class Main extends Game implements Consumer {
 		font = new BitmapFont(Gdx.files.internal("fonts/couriernewbold.fnt"),
 				Gdx.files.internal("fonts/couriernewbold.png"), false);
 		font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		font.setMarkupEnabled(true);
+		
 		arial = new BitmapFont();
 		arial.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		arial.setMarkupEnabled(true);
+		
 
 		normalProjection = new Matrix4().setToOrtho2D(0, 0, Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
@@ -671,7 +671,7 @@ public class Main extends Game implements Consumer {
 		batch.begin();
 
 		font.setColor(Color.WHITE);
-
+		
 		font.draw(
 				batch,
 				"FPS: "
