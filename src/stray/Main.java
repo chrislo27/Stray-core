@@ -892,6 +892,11 @@ public class Main extends Game implements Consumer {
 	
 	private void addColors(){
 		Colors.put("VOID_PURPLE", new Color(123f / 255f, 0, 1, 1));
+		
+		// text related
+		Colors.put("OBJECTIVE", new Color(37 / 255f, 217 / 255f, 217 / 255f, 1));
+		Colors.put("ENEMY", new Color(1, 0, 0, 1));
+		//Colors.put("", new Color(0, 0, 0, 1));
 	}
 
 	public Texture getCurrentShine() {
