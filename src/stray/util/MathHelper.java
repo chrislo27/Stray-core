@@ -89,7 +89,7 @@ public class MathHelper {
 
 	public static boolean checkPowerOfTwo(int number) {
 		if (number <= 0) {
-			throw new IllegalArgumentException("number: " + number);
+			throw new IllegalArgumentException("Number is less than zero: " + number);
 		}
 		return ((number & (number - 1)) == 0);
 	}
