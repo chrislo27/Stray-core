@@ -42,41 +42,37 @@ public class Shaders {
 			+ "	//interpolate the colours based on the mask\n"
 			+ "	gl_FragColor = vColor * mix(texColor0, texColor1, mask);\n" + "}";
 
-	public static final String VERTBLUEPRINT = "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE
-			+ ";\n" + "attribute vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" + "attribute vec2 "
-			+ ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" +
+	public static final String VERTBLUEPRINT = "attribute vec4 a_position;\r\n" + 
+			"attribute vec4 a_color;\r\n" + 
+			"attribute vec2 a_texCoord0;\r\n" + 
+			"\r\n" + 
+			"uniform mat4 u_projTrans;\r\n" + 
+			"\r\n" + 
+			"varying vec4 v_color;\r\n" + 
+			"varying vec2 v_texCoords;\r\n" + 
+			"\r\n" + 
+			"void main() {\r\n" + 
+			"    v_color = a_color;\r\n" + 
+			"    v_texCoords = a_texCoord0;\r\n" + 
+			"    gl_Position = u_projTrans * a_position;\r\n" + 
+			"}";
 
-			"uniform mat4 u_projTrans;\n" + " \n" + "varying vec4 vColor;\n"
-			+ "varying vec2 vTexCoord;\n" +
-
-			"void main() {\n" + "       vColor = " + ShaderProgram.COLOR_ATTRIBUTE + ";\n"
-			+ "       vTexCoord = " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n"
-			+ "       gl_Position =  u_projTrans * " + ShaderProgram.POSITION_ATTRIBUTE + ";\n"
-			+ "}";
-
-	public static final String FRAGBLUEPRINT = "uniform sampler2D tex;\r\n" + "\r\n"
-			+ "float threshold(in float thr1, in float thr2 , in float val) {\r\n"
-			+ " if (val < thr1) {return 0.0;}\r\n" + " if (val > thr2) {return 1.0;}\r\n"
-			+ " return val;\r\n" + "}\r\n" + "\r\n"
-			+ "// averaged pixel intensity from 3 color channels\r\n"
-			+ "float avg_intensity(in vec4 pix) {\r\n" + " return (pix.r + pix.g + pix.b)/3.;\r\n"
-			+ "}\r\n" + "\r\n" + "vec4 get_pixel(in vec2 coords, in float dx, in float dy) {\r\n"
-			+ " return texture2D(tex,coords + vec2(dx, dy));\r\n" + "}\r\n" + "\r\n"
-			+ "// returns pixel color\r\n" + "float IsEdge(in vec2 coords){\r\n"
-			+ "  float dxtex = 1.0 / 512.0 /*image width*/;\r\n"
-			+ "  float dytex = 1.0 / 512.0 /*image height*/;\r\n" + "  float pix[9];\r\n"
-			+ "  int k = -1;\r\n" + "  float delta;\r\n" + "\r\n"
-			+ "  // read neighboring pixel intensities\r\n" + "  for (int i=-1; i<2; i++) {\r\n"
-			+ "   for(int j=-1; j<2; j++) {\r\n" + "    k++;\r\n"
-			+ "    pix[k] = avg_intensity(get_pixel(coords,float(i)*dxtex,\r\n"
-			+ "                                          float(j)*dytex));\r\n" + "   }\r\n"
-			+ "  }\r\n" + "\r\n" + "  // average color differences around neighboring pixels\r\n"
-			+ "  delta = (abs(pix[1]-pix[7])+\r\n" + "          abs(pix[5]-pix[3]) +\r\n"
-			+ "          abs(pix[0]-pix[8])+\r\n" + "          abs(pix[2]-pix[6])\r\n"
-			+ "           )/4.;\r\n" + "\r\n"
-			+ "  return threshold(0.25,0.4,clamp(1.8*delta,0.0,1.0));\r\n" + "}\r\n" + "\r\n"
-			+ "void main()\r\n" + "{\r\n" + "  vec4 color = vec4(0.0,0.0,0.0,1.0);\r\n"
-			+ "  color.g = IsEdge(gl_TexCoord[0].xy);\r\n" + "  gl_FragColor = color;\r\n" + "}";
+	public static final String FRAGBLUEPRINT = "#ifdef GL_ES\r\n" + 
+			"    precision mediump float;\r\n" + 
+			"#endif\r\n" + 
+			"\r\n" + 
+			"varying vec4 v_color;\r\n" + 
+			"varying vec2 v_texCoords;\r\n" + 
+			"uniform sampler2D u_texture;\r\n" + 
+			"uniform mat4 u_projTrans;\r\n" + 
+			"\r\n" + 
+			"void main() {\r\n" + 
+			"        vec3 color = texture2D(u_texture, v_texCoords).rgb;\r\n" + 
+			"        float gray = (color.r + color.g + color.b) / 3.0;\r\n" + 
+			"        vec3 grayscale = vec3(gray);\r\n" + 
+			"		 grayscale.b = grayscale.b + 0.25;\r\n" + 
+			"        gl_FragColor = vec4(grayscale, texture2D(u_texture, v_texCoords).a);\r\n" + 
+			"}";
 
 	public static final String FRAGBLUEPRINT2 =
 	// GL ES specific stuff

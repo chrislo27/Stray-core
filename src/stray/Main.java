@@ -194,7 +194,7 @@ public class Main extends Game implements Consumer {
 		maskshader.end();
 		maskRenderer.setShader(maskshader);
 
-		blueprintshader = new ShaderProgram(Shaders.VERTBAKE, Shaders.FRAGBLUEPRINT);
+		blueprintshader = new ShaderProgram(Shaders.VERTBLUEPRINT, Shaders.FRAGBLUEPRINT);
 		blueprintshader.begin();
 		blueprintshader.end();
 		blueprintrenderer.setShader(blueprintshader);
