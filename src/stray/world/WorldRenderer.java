@@ -82,21 +82,20 @@ public class WorldRenderer {
 				main.manager.get(AssetMap.get("voidend"), Texture.class).getWidth(),
 				Gdx.graphics.getHeight());
 		batch.setColor(1, 1, 1, 1);
-		for (int i = 0; i < 3; i++) {
-			if (Main.random(1, 12) == 1) {
-				float location = Main.random(1, Gdx.graphics.getHeight());
-				ElectricityRenderer.drawP2PLightning(
-						batch,
-						((world.getVoidDistance() * World.tilesizex) - world.camera.camerax),
-						location,
-						((world.getVoidDistance() * World.tilesizex) - world.camera.camerax)
-								+ Main.random(World.tilesizex * 1.25f, World.tilesizex * 2.25f),
-						location + Main.random(-8, 8), 24, 1.5f, 3, 3,
-						Colors.get("VOID_PURPLE").toFloatBits());
-			}
+		if (Main.random(1, 6) == 1) {
+			float location = Main.random(1, Gdx.graphics.getHeight());
+			ElectricityRenderer.drawP2PLightning(
+					batch,
+					((world.getVoidDistance() * World.tilesizex) - world.camera.camerax),
+					location,
+					((world.getVoidDistance() * World.tilesizex) - world.camera.camerax)
+							+ Main.random(World.tilesizex * 1.75f, World.tilesizex * 2.75f),
+					location + Main.random(-16, 16), 24, 1.5f, 3, 3, Colors.get("VOID_PURPLE")
+							.toFloatBits());
 		}
+
 		int ylevel = Main.random(-World.tilesizex, Gdx.graphics.getHeight() + World.tilesizey);
-		
+
 		world.particles.add(ParticlePool
 				.obtain()
 				.setTexture("magnetglow")
