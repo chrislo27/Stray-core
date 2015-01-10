@@ -116,37 +116,37 @@ public class Shaders {
 			+ "    float factor = toonify(max(color.r, max(color.g, color.b)));\r\n"
 			+ "    gl_FragColor = vec4(factor*color.rgb, color.a);\r\n" + "}";
 
-	public static final String VERTGREY = "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE
-			+ ";\n" + "attribute vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" + "attribute vec2 "
-			+ ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" +
+	public static final String VERTGREY = "attribute vec4 a_position;\r\n" + 
+			"attribute vec4 a_color;\r\n" + 
+			"attribute vec2 a_texCoord0;\r\n" + 
+			"\r\n" + 
+			"uniform mat4 u_projTrans;\r\n" + 
+			"\r\n" + 
+			"varying vec4 v_color;\r\n" + 
+			"varying vec2 v_texCoords;\r\n" + 
+			"\r\n" + 
+			"void main() {\r\n" + 
+			"    v_color = a_color;\r\n" + 
+			"    v_texCoords = a_texCoord0;\r\n" + 
+			"    gl_Position = u_projTrans * a_position;\r\n" + 
+			"}";
 
-			"uniform mat4 u_projTrans;\n" + " \n" + "varying vec4 vColor;\n"
-			+ "varying vec2 vTexCoord;\n" +
-
-			"void main() {\n" + "       vColor = " + ShaderProgram.COLOR_ATTRIBUTE + ";\n"
-			+ "       vTexCoord = " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n"
-			+ "       gl_Position =  u_projTrans * " + ShaderProgram.POSITION_ATTRIBUTE + ";\n"
-			+ "}";
-
-	public static final String FRAGGREY =
-	// GL ES specific stuff
-	"#ifdef GL_ES\n" //
-			+ "#define LOWP lowp\n" //
-			+ "precision mediump float;\n" //
-			+ "#else\n" //
-			+ "#define LOWP \n" //
-			+ "#endif\n"
-			+ //
-			"varying LOWP vec4 vColor;\n"
-			+ "varying vec2 vTexCoord;\n"
-			+ "uniform sampler2D u_texture;\n"
-			+ "void main() {\n"
-			+ "       vec4 texColor = texture2D(u_texture, vTexCoord);\n"
-			+ "       \n"
-			+ "       float gray = dot(texColor.rgb, vec3(0.299, 0.587, 0.114));\n"
-			+ "       texColor.rgb = mix(vec3(gray), texColor.rgb, 0.04);\n"
-			+ "       \n"
-			+ "       gl_FragColor = texColor * vColor;\n" + "}";
+	public static final String FRAGGREY = "#ifdef GL_ES\r\n" + 
+			"    precision mediump float;\r\n" + 
+			"#endif\r\n" + 
+			"\r\n" + 
+			"varying vec4 v_color;\r\n" + 
+			"varying vec2 v_texCoords;\r\n" + 
+			"uniform sampler2D u_texture;\r\n" + 
+			"uniform mat4 u_projTrans;\r\n" + 
+			"\r\n" + 
+			"void main() {\r\n" + 
+			"        vec3 color = texture2D(u_texture, v_texCoords).rgb;\r\n" + 
+			"        float gray = (color.r + color.g + color.b) / 3.0;\r\n" + 
+			"        vec3 grayscale = vec3(gray);\r\n" + 
+			"\r\n" + 
+			"        gl_FragColor = vec4(grayscale, texture2D(u_texture, v_texCoords).a);\r\n" + 
+			"}";
 	
 	public static final String VERTBLUR = "//combined projection and view matrix\r\n" + 
 			"uniform mat4 u_projView;\r\n" + 
