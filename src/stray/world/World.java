@@ -265,7 +265,7 @@ public class World implements TileBasedMap {
 	}
 
 	public void renderOnly() {
-
+		main.buffer.begin();
 		batch.begin();
 		if(background.equalsIgnoreCase("spacebackground")){
 			SpaceBackground.instance().render(main);
@@ -286,8 +286,33 @@ public class World implements TileBasedMap {
 			}
 		}
 		batch.end();
-
-		batch.begin();
+		main.buffer.end();
+		
+		main.batch.begin();
+		
+		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), main.buffer.getWidth(), -main.buffer.getHeight());
+		batch.flush();
+		
+		main.buffer.begin();
+		batch.setShader(main.blurshader);
+		main.blurshader.setUniformf("radius", 2f);
+		main.blurshader.setUniformf("dir", 1f, 0f);
+		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), main.buffer.getWidth(), -main.buffer.getHeight());
+		batch.setShader(null);
+		batch.flush();
+		main.buffer.end();
+		
+		main.buffer.begin();
+		batch.setShader(main.blurshader);
+		main.blurshader.setUniformf("dir", 0f, 1f);
+		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), main.buffer.getWidth(), -main.buffer.getHeight());
+		batch.setShader(null);
+		batch.flush();
+		main.buffer.end();
+		
+		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), main.buffer.getWidth(), -main.buffer.getHeight());
+		batch.flush();
+		
 		for (Effect e : effects) {
 			e.render(this);
 		}
@@ -295,8 +320,6 @@ public class World implements TileBasedMap {
 	}
 
 	public void render() {
-		
-
 		if (vignettecolour.a > 0) {
 			vignettecolour.a -= Gdx.graphics.getDeltaTime();
 			if (vignettecolour.a < 0) vignettecolour.a = 0;

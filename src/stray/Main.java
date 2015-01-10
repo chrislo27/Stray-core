@@ -58,7 +58,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.Array;
 
@@ -76,6 +75,8 @@ public class Main extends Game implements Consumer {
 	public SpriteBatch batch;
 	public SpriteBatch maskRenderer;
 	public SpriteBatch blueprintrenderer;
+	
+	public FrameBuffer buffer;
 
 	public BitmapFont font;
 	public BitmapFont arial;
@@ -117,6 +118,8 @@ public class Main extends Game implements Consumer {
 	public ShaderProgram blueprintshader;
 	public ShaderProgram toonshader;
 	public ShaderProgram greyshader;
+	public ShaderProgram warpshader;
+	public ShaderProgram blurshader;
 
 	public HashMap<String, SynchedAnimation> animations = new HashMap<String, SynchedAnimation>();
 	public HashMap<String, Texture> textures = new HashMap<String, Texture>();
@@ -186,6 +189,8 @@ public class Main extends Game implements Consumer {
 		pix.fill();
 		filltex = new Texture(pix);
 		pix.dispose();
+		
+		buffer = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 
 		maskshader = new ShaderProgram(Shaders.VERTBAKE, Shaders.FRAGBAKE);
 		maskshader.begin();
@@ -202,7 +207,20 @@ public class Main extends Game implements Consumer {
 		toonshader = new ShaderProgram(Shaders.VERTTOON, Shaders.FRAGTOON);
 
 		greyshader = new ShaderProgram(Shaders.VERTGREY, Shaders.FRAGGREY);
+		
+		warpshader = new ShaderProgram(Shaders.VERTWARP, Shaders.FRAGWARP);
+		warpshader.begin();
+		warpshader.setUniformf("screen", 1.77f);
+		warpshader.setUniformf("offset", 55f, 55f);
+		warpshader.end();
 
+		blurshader = new ShaderProgram(Shaders.VERTBLUR, Shaders.FRAGBLUR);
+		blurshader.begin();
+		blurshader.setUniformf("dir", 1f, 0f);
+		blurshader.setUniformf("resolution", Gdx.graphics.getWidth());
+		blurshader.setUniformf("radius", 2f);
+		blurshader.end();
+		
 		loadUnmanagedAssets();
 		loadAssets();
 
@@ -263,7 +281,9 @@ public class Main extends Game implements Consumer {
 		maskshader.dispose();
 		blueprintshader.dispose();
 		toonshader.dispose();
+		warpshader.dispose();
 		maskRenderer.dispose();
+		blurshader.dispose();
 		blueprintrenderer.dispose();
 
 		Iterator it = animations.entrySet().iterator();
