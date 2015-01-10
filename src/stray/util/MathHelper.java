@@ -18,9 +18,9 @@ public class MathHelper {
 	}
 
 	public static float calcRotationAngleInDegrees(float x, float y, float tx, float ty) {
-		float theta = (float) Math.atan2(tx - x, ty - y);
+		float theta = MathUtils.atan2(tx - x, ty - y);
 
-		float angle = (float) Math.toDegrees(theta);
+		float angle = theta * MathUtils.radiansToDegrees;
 
 		if (angle < 0) {
 			angle += 360;
@@ -31,7 +31,7 @@ public class MathHelper {
 	}
 
 	public static float calcRotationAngleInRadians(float x, float y, float tx, float ty) {
-		return (float) Math.toRadians(calcRotationAngleInDegrees(x, y, tx, ty));
+		return calcRotationAngleInDegrees(x, y, tx, ty) * MathUtils.degreesToRadians;
 	}
 
 	public static double calcRadiansDiff(float x, float y, float tx, float ty) {
