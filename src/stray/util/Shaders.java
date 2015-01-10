@@ -134,14 +134,14 @@ public class Shaders {
 			"varying vec4 v_color;\r\n" + 
 			"varying vec2 v_texCoords;\r\n" + 
 			"uniform sampler2D u_texture;\r\n" + 
-			"uniform mat4 u_projTrans;\r\n" + 
+			"uniform mat4 u_projTrans;\r\n uniform float intensity;" + 
 			"\r\n" + 
 			"void main() {\r\n" + 
-			"        vec3 color = texture2D(u_texture, v_texCoords).rgb;\r\n" + 
+			"        vec4 color = texture2D(u_texture, v_texCoords);\r\n" + 
 			"        float gray = (color.r + color.g + color.b) / 3.0;\r\n" + 
-			"        vec3 grayscale = vec3(gray);\r\n" + 
-			"\r\n" + 
-			"        gl_FragColor = vec4(grayscale, texture2D(u_texture, v_texCoords).a);\r\n" + 
+			"        vec3 grayscale = vec3(gray, gray, gray);\r\n" + 
+			"		 vec3 finalcolor = mix(v_color.rgb, grayscale, intensity);\r\n" + 
+			"        gl_FragColor = vec4(color.rgb, intensity);\r\n" + 
 			"}";
 	
 	public static final String VERTBLUR = "//combined projection and view matrix\r\n" + 
