@@ -1,5 +1,7 @@
 package stray.world;
 
+import org.lwjgl.input.Mouse;
+
 import stray.Main;
 import stray.ParticlePool;
 import stray.blocks.Blocks;
@@ -15,6 +17,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
@@ -27,6 +30,8 @@ public class WorldRenderer {
 
 	Array<GearPart> gearparts = new Array<GearPart>();
 
+	private Sprite detection;
+	
 	public WorldRenderer(World world) {
 		this.world = world;
 		batch = world.batch;
@@ -170,6 +175,12 @@ public class WorldRenderer {
 			batch.setColor(Color.WHITE);
 		}
 		batch.setColor(1, 1, 1, 1);
+		
+		if(detection == null){
+			detection = new Sprite(main.manager.get(AssetMap.get("detectionarrow"), Texture.class));
+			detection.setOriginCenter();
+		}
+		
 		renderHealth();
 		for (GearPart part : gearparts) {
 			part.render(main);
