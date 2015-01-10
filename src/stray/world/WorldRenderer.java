@@ -96,7 +96,7 @@ public class WorldRenderer {
 
 		int ylevel = Main.random(-World.tilesizex, Gdx.graphics.getHeight() + World.tilesizey);
 
-		world.particles.add(ParticlePool
+		if (Main.random(1, 3) < 3) world.particles.add(ParticlePool
 				.obtain()
 				.setTexture("magnetglow")
 				.setTint(0, 0, 0, 1)
