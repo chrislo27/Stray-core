@@ -103,6 +103,8 @@ public class Main extends Game implements Consumer {
 	public static final int currentVersionNumber = 1;
 	public static String latestVersion = "";
 	public static int latestVersionNumber = 0;
+	public static long startVersionCheck = 0;
+	public static final long versionCheckTimeout = 10000;
 
 	public AssetManager manager;
 
@@ -267,7 +269,7 @@ public class Main extends Game implements Consumer {
 
 			public void run() {
 				final String path = "https://raw.githubusercontent.com/chrislo27/Stray-core/master/version.txt";
-
+				Main.startVersionCheck = System.currentTimeMillis();
 				try {
 					BufferedReader br = new BufferedReader(new InputStreamReader(new URL(path)
 							.openConnection().getInputStream()));
@@ -283,6 +285,9 @@ public class Main extends Game implements Consumer {
 
 					Main.latestVersionNumber = value.getInt("version_number", 0);
 					Main.latestVersion = value.getString("version", "");
+					
+					Main.logger.info("Finished getting version, took " + (System.currentTimeMillis() - Main.startVersionCheck) + " ms");
+					if(Main.debug) Main.logger.debug("JSON obtained from host: " + file.toString());
 				} catch (MalformedURLException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
