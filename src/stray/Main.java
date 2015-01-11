@@ -793,9 +793,9 @@ public class Main extends Game implements Consumer {
 		font.setColor(Color.WHITE);
 		font.draw(batch, "version: "
 				+ Main.version
-				+ ", build "
+				+ ", release #"
 				+ Main.currentVersionNumber
-				+ (latestVersion.equals("") ? "" : "; latest: " + Main.latestVersion + ", build "
+				+ (latestVersion.equals("") ? "" : "; latest: " + Main.latestVersion + ", release #"
 						+ Main.latestVersionNumber), 5, Main.convertY(30 + offset));
 		font.draw(batch, "Memory: "
 				+ NumberFormat.getInstance().format(MemoryUtils.getUsedMemory()) + " KB / "
