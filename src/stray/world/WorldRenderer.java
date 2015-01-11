@@ -105,7 +105,7 @@ public class WorldRenderer {
 				.obtain()
 				.setTexture("magnetglow")
 				.setTint(0, 0, 0, 1)
-				.setLifetime(1.5f)
+				.setLifetime(1.25f)
 				.setVelocity(
 						-2,
 						((ylevel > Gdx.graphics.getHeight() / 2f) ? MathUtils.clamp(
@@ -114,7 +114,6 @@ public class WorldRenderer {
 								4 - ((ylevel / (Gdx.graphics.getHeight() / 2f)) * 4), -4f, 4f)))
 				.setPosition((((world.getVoidDistance())) + 2 + Main.random(0.5f, 1.5f)),
 						(world.camera.cameray + ylevel) / World.tilesizey));
-
 	}
 
 	public void renderEntities() {
