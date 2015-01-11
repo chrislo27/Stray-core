@@ -295,21 +295,7 @@ public class World implements TileBasedMap {
 				main.buffer.getWidth(), -main.buffer.getHeight());
 		batch.flush();
 
-		//if (background.equalsIgnoreCase("spacebackground")) PostProcessing.twoPassBlur(batch, main.buffer, main.blurshader, 2f);
-		
-		float sat = 0.4f;
-		float displace = 12;
-		batch.setColor(Main.getRainbow(1, sat).r, Main.getRainbow(1, sat).g, Main.getRainbow(1, sat).b, sat);
-		batch.draw(main.buffer.getColorBufferTexture(), (displace * MathHelper.clampHalf(1f)), Gdx.graphics.getHeight(),
-				main.buffer.getWidth(), -main.buffer.getHeight());
-		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight() + (displace * MathHelper.clampHalf(1f)),
-				main.buffer.getWidth(), -main.buffer.getHeight());
-		batch.draw(main.buffer.getColorBufferTexture(), (-displace * MathHelper.clampHalf(1f)), Gdx.graphics.getHeight(),
-				main.buffer.getWidth(), -main.buffer.getHeight());
-		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight() - (displace * MathHelper.clampHalf(1f)),
-				main.buffer.getWidth(), -main.buffer.getHeight());
-		batch.flush();
-		batch.setColor(1, 1, 1, 1);
+		if (background.equalsIgnoreCase("spacebackground")) PostProcessing.twoPassBlur(batch, main.buffer, main.blurshader, 2f);
 
 		for (Effect e : effects) {
 			e.render(this);
