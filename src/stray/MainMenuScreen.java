@@ -17,7 +17,6 @@ public strictfp class MainMenuScreen extends Updateable {
 
 	public MainMenuScreen(Main m) {
 		super(m);
-		versionwidth = Math.round(main.font.getBounds(Main.version).width);
 		world = new World(main);
 		world.load(Gdx.files.internal("levels/mainmenu.xml"));
 		world.voidTime = -1;
@@ -57,7 +56,6 @@ public strictfp class MainMenuScreen extends Updateable {
 		container.elements.add(new LanguageButton(5, 5));
 		container.elements.add(new ExitButton(Gdx.graphics.getWidth() - 37, Gdx.graphics
 				.getHeight() - 37) {
-
 			@Override
 			public boolean onLeftClick() {
 				Gdx.app.exit();
@@ -66,8 +64,6 @@ public strictfp class MainMenuScreen extends Updateable {
 			}
 		});
 	}
-
-	private int versionwidth;
 
 	boolean hasSave = false;
 	
@@ -89,7 +85,12 @@ public strictfp class MainMenuScreen extends Updateable {
 				Main.convertY(200));
 		main.font.setScale(1);
 
-		main.font.draw(main.batch, Main.version, Gdx.graphics.getWidth() - versionwidth - 5, 20);
+		main.drawInverse(Main.version, Gdx.graphics.getWidth() - 5, 20);
+		if(Main.latestVersionNumber > Main.currentVersionNumber){
+			main.font.setColor(1, 0, 0, 1);
+			main.drawInverse(Translator.getMsg("menu.newversion") + Main.latestVersion, Gdx.graphics.getWidth() - 5, 20);
+			main.font.setColor(1, 1, 1, 1);
+		}
 		container.render(main);
 		main.font.setColor(Color.WHITE);
 		main.batch.setColor(1, 1, 1, 1);
