@@ -20,7 +20,7 @@ public strictfp class MainMenuScreen extends Updateable {
 		world = new World(main);
 		world.load(Gdx.files.internal("levels/mainmenu.xml"));
 		world.voidTime = -1;
-		
+
 		container.elements.add(new Button((Gdx.graphics.getWidth() / 2) - 80, 64, 160, 32,
 				"menu.new") {
 
@@ -29,7 +29,7 @@ public strictfp class MainMenuScreen extends Updateable {
 				Main.CUTSCENE.prepare(Conversations.instance().convs.get("dev"), new FadeIn(),
 						new FadeOut(), Main.NEWGAME);
 				main.transition(new FadeIn(Color.BLACK, 0.5f), null, Main.CUTSCENE);
-				
+
 				Runtime.getRuntime().gc();
 				return true;
 			}
@@ -56,6 +56,7 @@ public strictfp class MainMenuScreen extends Updateable {
 		container.elements.add(new LanguageButton(5, 5));
 		container.elements.add(new ExitButton(Gdx.graphics.getWidth() - 37, Gdx.graphics
 				.getHeight() - 37) {
+
 			@Override
 			public boolean onLeftClick() {
 				Gdx.app.exit();
@@ -66,7 +67,7 @@ public strictfp class MainMenuScreen extends Updateable {
 	}
 
 	boolean hasSave = false;
-	
+
 	private World world;
 
 	@Override
@@ -76,7 +77,7 @@ public strictfp class MainMenuScreen extends Updateable {
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		world.render();
-		
+
 		main.batch.begin();
 
 		main.font.setColor(Color.WHITE);
@@ -86,15 +87,28 @@ public strictfp class MainMenuScreen extends Updateable {
 		main.font.setScale(1);
 
 		main.drawInverse(Main.version, Gdx.graphics.getWidth() - 5, 20);
-		if(Main.latestVersionNumber > Main.currentVersionNumber){
-			main.font.setColor(1, 0, 0, 1);
-			main.drawInverse(Translator.getMsg("menu.newversion") + Main.latestVersion, Gdx.graphics.getWidth() - 5, 20);
-			main.font.setColor(1, 1, 1, 1);
+		if (!Main.latestVersion.equals("")) {
+			if (Main.latestVersionNumber > Main.currentVersionNumber) {
+				main.font.setColor(1, 0, 0, 1);
+				main.drawInverse(Translator.getMsg("menu.newversion") + Main.latestVersion,
+						Gdx.graphics.getWidth() - 5, 35);
+				main.font.setColor(1, 1, 1, 1);
+			} else if (Main.latestVersionNumber == Main.currentVersionNumber) {
+				main.font.setColor(0, 1, 0, 1);
+				main.drawInverse(Translator.getMsg("menu.uptodate"), Gdx.graphics.getWidth() - 5,
+						35);
+				main.font.setColor(1, 1, 1, 1);
+			} else if (Main.latestVersionNumber < Main.currentVersionNumber) {
+				main.font.setColor(0, 0, 1, 1);
+				main.drawInverse(Translator.getMsg("menu.versionahead"), Gdx.graphics.getWidth() - 5,
+						35);
+				main.font.setColor(1, 1, 1, 1);
+			}
 		}
 		container.render(main);
 		main.font.setColor(Color.WHITE);
 		main.batch.setColor(1, 1, 1, 1);
-		
+
 		main.batch.end();
 	}
 
