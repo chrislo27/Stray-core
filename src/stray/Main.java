@@ -380,23 +380,23 @@ public class Main extends Game implements Consumer {
 	}
 
 	public static Color getRainbow() {
-		return getRainbow(1);
+		return getRainbow(1, 1);
 	}
 
 	public static Color getInverseRainbow() {
-		return getRainbow(1);
+		return getRainbow(1, 1);
 	}
 
-	public static Color getRainbow(float s) {
+	public static Color getRainbow(float s, float saturation) {
 		return rainbow.set(
 				Utils.HSBtoRGBA8888(MathHelper.getNumberFromTime(System.currentTimeMillis(), s),
-						1f, 0.75f)).clamp();
+						saturation, 0.75f)).clamp();
 	}
 
-	public static Color getInverseRainbow(float s) {
+	public static Color getInverseRainbow(float s, float saturation) {
 		return inverseRainbow.set(
 				Utils.HSBtoRGBA8888(
-						1.0f - MathHelper.getNumberFromTime(System.currentTimeMillis(), s), 1f,
+						1.0f - MathHelper.getNumberFromTime(System.currentTimeMillis(), s), saturation,
 						0.75f)).clamp();
 	}
 

@@ -83,7 +83,7 @@ public class EntityPlayer extends EntityLiving implements Weighted {
 		}
 
 		if (portalglow > 0) {
-			world.batch.setColor(Main.getRainbow(0.5f));
+			world.batch.setColor(Main.getRainbow(0.5f,1));
 			world.batch.setColor(world.batch.getColor().r, world.batch.getColor().b,
 					world.batch.getColor().g, portalglow);
 			world.batch.draw(world.main.animations.get("portal").getCurrentFrame(), 0, 0,

@@ -16,14 +16,14 @@ public class BlockExitPortal extends Block {
 
 	@Override
 	public void render(World world, int x, int y) {
-		world.batch.setColor(Main.getRainbow(2.5f));
+		world.batch.setColor(Main.getRainbow(2.5f, 1));
 		super.render(world, x, y);
 		world.batch.setColor(Color.WHITE);
 	}
 
 	@Override
 	public void renderPlain(Main main, float camerax, float cameray, int x, int y, int magic) {
-		main.batch.setColor(Main.getRainbow(2.5f));
+		main.batch.setColor(Main.getRainbow(2.5f, 1));
 		super.renderPlain(main, camerax, cameray, x, y, magic);
 		main.batch.setColor(Color.WHITE);
 	}
