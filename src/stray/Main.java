@@ -84,6 +84,7 @@ public class Main extends Game implements Consumer {
 	public SpriteBatch blueprintrenderer;
 
 	public FrameBuffer buffer;
+	public FrameBuffer buffer2;
 
 	public BitmapFont font;
 	public BitmapFont arial;
@@ -202,6 +203,8 @@ public class Main extends Game implements Consumer {
 		pix.dispose();
 
 		buffer = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(),
+				Gdx.graphics.getHeight(), true);
+		buffer2 = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight(), true);
 
 		maskshader = new ShaderProgram(Shaders.VERTBAKE, Shaders.FRAGBAKE);
@@ -334,6 +337,9 @@ public class Main extends Game implements Consumer {
 		maskRenderer.dispose();
 		blurshader.dispose();
 		blueprintrenderer.dispose();
+		
+		buffer.dispose();
+		buffer2.dispose();
 
 		Iterator it = animations.entrySet().iterator();
 		while (it.hasNext()) {

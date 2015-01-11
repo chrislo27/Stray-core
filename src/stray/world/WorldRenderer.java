@@ -1,7 +1,5 @@
 package stray.world;
 
-import org.lwjgl.input.Mouse;
-
 import stray.Main;
 import stray.ParticlePool;
 import stray.blocks.Blocks;
@@ -11,6 +9,8 @@ import stray.util.AssetMap;
 import stray.util.ElectricityRenderer;
 import stray.util.MathHelper;
 import stray.util.Message;
+import stray.util.PostProcessing;
+import stray.util.SpaceBackground;
 import stray.util.Utils;
 
 import com.badlogic.gdx.Gdx;
@@ -19,6 +19,7 @@ import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 
@@ -31,6 +32,9 @@ public class WorldRenderer {
 	Array<GearPart> gearparts = new Array<GearPart>();
 
 	private Sprite detection;
+	
+	protected float flip = 1f;
+	protected boolean rightside = true;
 	
 	public WorldRenderer(World world) {
 		this.world = world;
@@ -76,6 +80,36 @@ public class WorldRenderer {
 
 		batch.flush();
 
+	}
+	
+	public void renderBackground(){
+		if (world.background.equalsIgnoreCase("spacebackground")) {
+			SpaceBackground.instance().render(main);
+		} else {
+			main.batch.draw(main.manager.get(AssetMap.get(world.background), Texture.class), 0, 0,
+					Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		}
+	}
+	
+	public void renderBuffer(){
+//		batch.setColor(0, 0, 0, 1);
+//		main.fillRect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		main.buffer2.begin();
+		renderBackground();
+		main.buffer2.end();
+		batch.setColor(1, 1, 1, 1);
+		batch.draw(main.buffer2.getColorBufferTexture(), (rightside ? 0 : Gdx.graphics.getWidth()), Gdx.graphics.getHeight(),
+				main.buffer2.getWidth() * (rightside ? 1 : -1), -main.buffer2.getHeight());
+		
+		batch.draw(main.buffer.getColorBufferTexture(), (Gdx.graphics.getWidth() / 2f) - ((main.buffer.getWidth() * flip) / 2f), Gdx.graphics.getHeight(),
+				main.buffer.getWidth() * flip, -main.buffer.getHeight());
+		
+		
+		if(rightside){
+			flip = MathUtils.clamp(flip + Gdx.graphics.getRawDeltaTime() * 2, -1f, 1f);
+		}else{
+			flip = MathUtils.clamp(flip - Gdx.graphics.getRawDeltaTime() * 2, -1f, 1f);
+		}
 	}
 
 	public void renderVoid() {
