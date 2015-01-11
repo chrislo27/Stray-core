@@ -131,7 +131,7 @@ public class World implements TileBasedMap {
 		entities = new Array<Entity>(32);
 		particles = new Array<Particle>();
 		addPlayer();
-		//camera.forceCenterOn(getPlayer().x, getPlayer().y);
+		// camera.forceCenterOn(getPlayer().x, getPlayer().y);
 		setCheckpoint();
 	}
 
@@ -267,9 +267,9 @@ public class World implements TileBasedMap {
 	public void renderOnly() {
 		main.buffer.begin();
 		batch.begin();
-		if(background.equalsIgnoreCase("spacebackground")){
+		if (background.equalsIgnoreCase("spacebackground")) {
 			SpaceBackground.instance().render(main);
-		}else{
+		} else {
 			main.batch.draw(main.manager.get(AssetMap.get(background), Texture.class), 0, 0,
 					Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		}
@@ -287,36 +287,46 @@ public class World implements TileBasedMap {
 		}
 		batch.end();
 		main.buffer.end();
-		
+
 		main.batch.begin();
-		
-		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), main.buffer.getWidth(), -main.buffer.getHeight());
+
+		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(),
+				main.buffer.getWidth(), -main.buffer.getHeight());
 		batch.flush();
-		
-		main.buffer.begin();
-		batch.setShader(main.blurshader);
-		main.blurshader.setUniformf("radius", 2f);
-		main.blurshader.setUniformf("dir", 1f, 0f);
-		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), main.buffer.getWidth(), -main.buffer.getHeight());
-		batch.setShader(null);
-		batch.flush();
-		main.buffer.end();
-		
-		main.buffer.begin();
-		batch.setShader(main.blurshader);
-		main.blurshader.setUniformf("dir", 0f, 1f);
-		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), main.buffer.getWidth(), -main.buffer.getHeight());
-		batch.setShader(null);
-		batch.flush();
-		main.buffer.end();
-		
-		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), main.buffer.getWidth(), -main.buffer.getHeight());
-		batch.flush();
-		
+
+		if (background.equalsIgnoreCase("spacebackground")) renderBlur(Gdx.graphics.getWidth(),
+				Gdx.graphics.getHeight());
+
 		for (Effect e : effects) {
 			e.render(this);
 		}
 		batch.end();
+	}
+	
+	protected void renderBlur(int width, int height) {
+
+		main.buffer.begin();
+		batch.setShader(main.blurshader);
+		main.blurshader.setUniformf("radius", 2f);
+		main.blurshader.setUniformf("dir", 1f, 0f);
+		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(),
+				width, -height, 0, 0, width, height, false, false);
+		batch.setShader(null);
+		batch.flush();
+		main.buffer.end();
+
+		main.buffer.begin();
+		batch.setShader(main.blurshader);
+		main.blurshader.setUniformf("dir", 0f, 1f);
+		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(),
+				width, -height, 0, 0, width, height, false, false);
+		batch.setShader(null);
+		batch.flush();
+		main.buffer.end();
+
+		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(),
+				main.buffer.getWidth(), -main.buffer.getHeight());
+		batch.flush();
 	}
 
 	public void render() {
@@ -329,7 +339,7 @@ public class World implements TileBasedMap {
 
 		batch.begin();
 		if (voidTime > 0 && getVoidDistance() > 0f) renderer.renderVoid();
-		if(!background.equalsIgnoreCase("spacebackground")) renderer.renderUi();
+		if (!background.equalsIgnoreCase("spacebackground")) renderer.renderUi();
 		batch.end();
 
 		Particle item;
@@ -340,8 +350,6 @@ public class World implements TileBasedMap {
 				ParticlePool.instance().getPool().free(item);
 			}
 		}
-		
-		
 
 	}
 
@@ -366,8 +374,6 @@ public class World implements TileBasedMap {
 
 	public void tickUpdate() {
 		++tickTime;
-
-		
 
 		renderer.tickUpdate();
 
@@ -417,7 +423,7 @@ public class World implements TileBasedMap {
 			}
 			msgs.get(i).timer--;
 		}
-		
+
 		centerCamera();
 		camera.update();
 
