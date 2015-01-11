@@ -1,8 +1,13 @@
 package stray;
 
+import java.io.BufferedReader;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -60,6 +65,8 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 
 /**
  * 
@@ -75,7 +82,7 @@ public class Main extends Game implements Consumer {
 	public SpriteBatch batch;
 	public SpriteBatch maskRenderer;
 	public SpriteBatch blueprintrenderer;
-	
+
 	public FrameBuffer buffer;
 
 	public BitmapFont font;
@@ -93,6 +100,9 @@ public class Main extends Game implements Consumer {
 	public static boolean debug = false;
 
 	public static final String version = "alpha 1.3";
+	public static final int currentVersionNumber = 1;
+	public static String latestVersion = "";
+	public static int latestVersionNumber = 0;
 
 	public AssetManager manager;
 
@@ -176,10 +186,9 @@ public class Main extends Game implements Consumer {
 				Gdx.files.internal("fonts/couriernewbold.png"), false);
 		font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		font.setMarkupEnabled(true);
-		
+
 		arial = new BitmapFont();
 		arial.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
 
 		normalProjection = new Matrix4().setToOrtho2D(0, 0, Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
@@ -189,8 +198,9 @@ public class Main extends Game implements Consumer {
 		pix.fill();
 		filltex = new Texture(pix);
 		pix.dispose();
-		
-		buffer = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+
+		buffer = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(),
+				Gdx.graphics.getHeight(), true);
 
 		maskshader = new ShaderProgram(Shaders.VERTBAKE, Shaders.FRAGBAKE);
 		maskshader.begin();
@@ -207,7 +217,7 @@ public class Main extends Game implements Consumer {
 		toonshader = new ShaderProgram(Shaders.VERTTOON, Shaders.FRAGTOON);
 
 		greyshader = new ShaderProgram(Shaders.VERTGREY, Shaders.FRAGGREY);
-		
+
 		warpshader = new ShaderProgram(Shaders.VERTWARP, Shaders.FRAGWARP);
 		warpshader.begin();
 		warpshader.setUniformf("screen", 1.77f);
@@ -220,7 +230,7 @@ public class Main extends Game implements Consumer {
 		blurshader.setUniformf("resolution", Gdx.graphics.getWidth());
 		blurshader.setUniformf("radius", 2f);
 		blurshader.end();
-		
+
 		loadUnmanagedAssets();
 		loadAssets();
 
@@ -252,6 +262,40 @@ public class Main extends Game implements Consumer {
 		gcer.setPriority(Thread.MIN_PRIORITY);
 		gcer.setDaemon(true);
 		gcer.start();
+
+		Thread versionchecker = new Thread("Stray-version checker") {
+
+			public void run() {
+				final String path = "https://raw.githubusercontent.com/chrislo27/Stray-core/master/version.txt";
+
+				try {
+					BufferedReader br = new BufferedReader(new InputStreamReader(new URL(path)
+							.openConnection().getInputStream()));
+
+					StringBuilder file = new StringBuilder();
+					String inputline;
+					while ((inputline = br.readLine()) != null)
+						file.append(inputline);
+
+					br.close();
+
+					JsonValue value = new JsonReader().parse(file.toString());
+
+					Main.latestVersionNumber = value.getInt("version_number", 0);
+					Main.latestVersion = value.getString("version", "");
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (NullPointerException e){
+					Main.logger.error("Failed to parse/get latest version info", e);
+				}
+
+			}
+		};
+		versionchecker.setPriority(Thread.MIN_PRIORITY);
+		versionchecker.setDaemon(true);
+		versionchecker.start();
 
 	}
 
@@ -396,8 +440,8 @@ public class Main extends Game implements Consumer {
 	public static Color getInverseRainbow(float s, float saturation) {
 		return inverseRainbow.set(
 				Utils.HSBtoRGBA8888(
-						1.0f - MathHelper.getNumberFromTime(System.currentTimeMillis(), s), saturation,
-						0.75f)).clamp();
+						1.0f - MathHelper.getNumberFromTime(System.currentTimeMillis(), s),
+						saturation, 0.75f)).clamp();
 	}
 
 	public InputMultiplexer getDefaultInput() {
@@ -688,7 +732,7 @@ public class Main extends Game implements Consumer {
 		batch.begin();
 
 		font.setColor(Color.WHITE);
-		
+
 		font.setMarkupEnabled(false);
 		font.draw(
 				batch,
@@ -715,7 +759,8 @@ public class Main extends Game implements Consumer {
 			if (currentConvo.getCurrent().speaker != null) font.draw(batch,
 					Translator.getMsg("conv.name." + currentConvo.getCurrent().speaker) + ": ", 10,
 					120);
-			font.drawWrapped(batch, Translator.getMsg(currentConvo.getCurrent().text), 10, 100, Gdx.graphics.getWidth() - 20);
+			font.drawWrapped(batch, Translator.getMsg(currentConvo.getCurrent().text), 10, 100,
+					Gdx.graphics.getWidth() - 20);
 			drawInverse(Translator.getMsg("conversation.next"), Gdx.graphics.getWidth() - 8, 20);
 			batch.setColor(Color.WHITE);
 		}
@@ -746,7 +791,12 @@ public class Main extends Game implements Consumer {
 		if (MemoryUtils.getUsedMemory() > getMostMemory) getMostMemory = MemoryUtils
 				.getUsedMemory();
 		font.setColor(Color.WHITE);
-		font.draw(batch, "version: " + Main.version, 5, Main.convertY(30 + offset));
+		font.draw(batch, "version: "
+				+ Main.version
+				+ ", build "
+				+ Main.currentVersionNumber
+				+ (latestVersion.equals("") ? "" : "; latest: " + Main.latestVersion + ", build "
+						+ Main.latestVersionNumber), 5, Main.convertY(30 + offset));
 		font.draw(batch, "Memory: "
 				+ NumberFormat.getInstance().format(MemoryUtils.getUsedMemory()) + " KB / "
 				+ NumberFormat.getInstance().format(MemoryUtils.getMaxMemory()) + " KB (max "
@@ -900,10 +950,10 @@ public class Main extends Game implements Consumer {
 		}
 
 	}
-	
-	private void addColors(){
+
+	private void addColors() {
 		Colors.put("VOID_PURPLE", new Color(123f / 255f, 0, 1, 1));
-		
+
 		// text related
 		Colors.put("POI", new Color(37 / 255f, 217 / 255f, 217 / 255f, 1));
 		Colors.put("DANGER", new Color(1, 0, 0, 1));
