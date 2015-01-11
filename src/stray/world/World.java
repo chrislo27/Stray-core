@@ -23,6 +23,7 @@ import stray.util.AssetMap;
 import stray.util.GlobalVariables;
 import stray.util.MathHelper;
 import stray.util.Message;
+import stray.util.PostProcessing;
 import stray.util.Sizeable;
 import stray.util.SpaceBackground;
 import stray.util.Utils;
@@ -294,8 +295,7 @@ public class World implements TileBasedMap {
 				main.buffer.getWidth(), -main.buffer.getHeight());
 		batch.flush();
 
-//		if (background.equalsIgnoreCase("spacebackground")) renderBlur(Gdx.graphics.getWidth(),
-//				Gdx.graphics.getHeight());
+		//if (background.equalsIgnoreCase("spacebackground")) PostProcessing.twoPassBlur(batch, main.buffer, main.blurshader, 2f);
 		
 		float sat = 0.4f;
 		float displace = 12;
@@ -315,32 +315,6 @@ public class World implements TileBasedMap {
 			e.render(this);
 		}
 		batch.end();
-	}
-	
-	protected void renderBlur(int width, int height) {
-
-		main.buffer.begin();
-		batch.setShader(main.blurshader);
-		main.blurshader.setUniformf("radius", 2f);
-		main.blurshader.setUniformf("dir", 1f, 0f);
-		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(),
-				width, -height, 0, 0, width, height, false, false);
-		batch.setShader(null);
-		batch.flush();
-		main.buffer.end();
-
-		main.buffer.begin();
-		batch.setShader(main.blurshader);
-		main.blurshader.setUniformf("dir", 0f, 1f);
-		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(),
-				width, -height, 0, 0, width, height, false, false);
-		batch.setShader(null);
-		batch.flush();
-		main.buffer.end();
-
-		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(),
-				main.buffer.getWidth(), -main.buffer.getHeight());
-		batch.flush();
 	}
 
 	public void render() {
