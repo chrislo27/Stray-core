@@ -84,7 +84,7 @@ public strictfp class MainMenuScreen extends Updateable {
 		main.batch.begin();
 
 		main.font.setColor(Color.WHITE);
-		main.font.setScale(1.5f);
+		main.font.setScale(2.5f);
 		main.drawCentered(Translator.getMsg("gamename").toUpperCase(), Gdx.graphics.getWidth() / 2,
 				Main.convertY(200));
 		main.font.setScale(1);
