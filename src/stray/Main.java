@@ -396,7 +396,7 @@ public class Main extends Game implements Consumer {
 	public static Color getInverseRainbow(float s) {
 		return inverseRainbow.set(
 				Utils.HSBtoRGBA8888(
-						1.0f - MathHelper.getNumberFromTime(System.currentTimeMillis(), 1f), 1f,
+						1.0f - MathHelper.getNumberFromTime(System.currentTimeMillis(), s), 1f,
 						0.75f)).clamp();
 	}
 
