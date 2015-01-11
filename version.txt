@@ -1,4 +1,4 @@
 {
-  "version_number": 2,
-  "version": "alpha 1.4"
+  "version_number": 1,
+  "version": "alpha 1.3"
 }
