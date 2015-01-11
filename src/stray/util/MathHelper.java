@@ -62,8 +62,19 @@ public class MathHelper {
 		return getNumberFromTime(System.currentTimeMillis(), 1);
 	}
 
+	public static float getNumberFromTime(float seconds) {
+		return getNumberFromTime(System.currentTimeMillis(), seconds);
+	}
+	
 	public static float getNumberFromTime(long time, float seconds) {
 		return ((time % Math.round((seconds * 1000))) / (seconds * 1000f));
+	}
+	
+	public static float clampHalf(float seconds){
+		float f = getNumberFromTime(seconds);
+		if(f >= 0.5f){
+			return 1f - f;
+		}else return f;
 	}
 
 	public static int getNthDigit(int number, int n) {
