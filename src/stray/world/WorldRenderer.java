@@ -3,13 +3,11 @@ package stray.world;
 import stray.Main;
 import stray.ParticlePool;
 import stray.blocks.Blocks;
-import stray.effect.Effect;
 import stray.entity.Entity;
 import stray.util.AssetMap;
 import stray.util.ElectricityRenderer;
 import stray.util.MathHelper;
 import stray.util.Message;
-import stray.util.PostProcessing;
 import stray.util.SpaceBackground;
 import stray.util.Utils;
 
@@ -19,7 +17,6 @@ import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 
@@ -191,15 +188,6 @@ public class WorldRenderer {
 		}
 		main.font.setColor(Color.WHITE);
 		batch.setColor(Color.WHITE);
-		int iter = 0;
-		for (Effect e : world.effects) {
-			if (e.hidden) continue;
-			batch.draw(main.manager.get(AssetMap.get(e.texture), Texture.class), 0,
-					Main.convertY(100 + (iter * 32)));
-			main.font.draw(batch, e.getLocalizedTime(), 35, Main.convertY(100 + (iter * 32) - 15));
-			main.font.draw(batch, e.name, 35, Main.convertY(100 + (iter * 32) - 30));
-			iter++;
-		}
 
 		if (world.vignettecolour.a > 0f) {
 			batch.setColor(world.vignettecolour);

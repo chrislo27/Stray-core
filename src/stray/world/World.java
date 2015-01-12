@@ -12,27 +12,21 @@ import stray.blocks.BlockCameraMagnet;
 import stray.blocks.BlockPlayerSpawner;
 import stray.blocks.Blocks;
 import stray.blocks.fluid.BlockFluid;
-import stray.effect.Blindness;
-import stray.effect.Effect;
-import stray.effect.EffectArray;
 import stray.entity.Entity;
 import stray.entity.EntityPlayer;
 import stray.pathfinding.Mover;
 import stray.pathfinding.TileBasedMap;
-import stray.util.AssetMap;
 import stray.util.GlobalVariables;
 import stray.util.MathHelper;
 import stray.util.Message;
 import stray.util.PostProcessing;
 import stray.util.Sizeable;
-import stray.util.SpaceBackground;
 import stray.util.Utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
@@ -89,7 +83,6 @@ public class World implements TileBasedMap {
 	public WorldRenderer renderer;
 
 	Array<Message> msgs = new Array<Message>();
-	public EffectArray effects = new EffectArray();
 
 	public Color vignettecolour = new Color(0, 0, 0, 0);
 
@@ -185,9 +178,7 @@ public class World implements TileBasedMap {
 				getPlayer().jump();
 			} else if ((Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S))) {
 
-			}
-
-			if ((Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W))) {
+			} else if ((Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W))) {
 
 			}
 
@@ -214,8 +205,8 @@ public class World implements TileBasedMap {
 
 		if (Main.debug) {
 			if (Gdx.input.isKeyPressed(Keys.ALT_LEFT) || Gdx.input.isKeyPressed(Keys.ALT_RIGHT)) {
-				if (Gdx.input.isKeyJustPressed(Keys.B)) {
-					effects.add(new Blindness(15 * Main.TICKS));
+				if (Gdx.input.isKeyJustPressed(Keys.F)) {
+					renderer.rightside = !renderer.rightside;
 				}
 			}
 		}
@@ -268,12 +259,7 @@ public class World implements TileBasedMap {
 	public void renderOnly() {
 		main.buffer.begin();
 		batch.begin();
-		if (background.equalsIgnoreCase("spacebackground")) {
-			SpaceBackground.instance().render(main);
-		} else {
-			main.batch.draw(main.manager.get(AssetMap.get(background), Texture.class), 0, 0,
-					Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		}
+		renderer.renderBackground();
 		batch.flush();
 
 		renderer.renderBlocks();
@@ -291,19 +277,18 @@ public class World implements TileBasedMap {
 
 		main.batch.begin();
 
-		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(),
-				main.buffer.getWidth(), -main.buffer.getHeight());
+		renderer.renderBuffer();
 		batch.flush();
 
-		if (background.equalsIgnoreCase("spacebackground")) PostProcessing.twoPassBlur(batch, main.buffer, main.blurshader, 2f);
-
-		for (Effect e : effects) {
-			e.render(this);
-		}
+		if (background.equalsIgnoreCase("spacebackground")
+				&& (main.getScreen() == Main.MAINMENU || main.getScreen() == Main.TRANSITION)) PostProcessing
+				.twoPassBlur(batch, main.buffer, main.blurshader, 2f);
+		
 		batch.end();
 	}
 
 	public void render() {
+
 		if (vignettecolour.a > 0) {
 			vignettecolour.a -= Gdx.graphics.getDeltaTime();
 			if (vignettecolour.a < 0) vignettecolour.a = 0;
@@ -379,14 +364,6 @@ public class World implements TileBasedMap {
 		for (int i = entities.size - 1; i > -1; i--) {
 			if (entities.get(i).isDead()) {
 				if (!entities.get(i).onDeath()) entities.removeIndex(i);
-			}
-		}
-
-		for (int i = effects.size - 1; i > -1; i--) {
-			if (effects.get(i).getTimer() <= 0) {
-				effects.removeIndex(i);
-			} else {
-				effects.get(i).tickUpdate();
 			}
 		}
 
