@@ -17,9 +17,6 @@ public strictfp class MainMenuScreen extends Updateable {
 
 	public MainMenuScreen(Main m) {
 		super(m);
-		world = new World(main);
-		world.load(Gdx.files.internal("levels/mainmenu.xml"));
-		world.voidTime = -1;
 
 		container.elements.add(new Button((Gdx.graphics.getWidth() / 2) - 80, 64, 160, 32,
 				"menu.new") {
@@ -68,15 +65,12 @@ public strictfp class MainMenuScreen extends Updateable {
 
 	boolean hasSave = false;
 
-	private World world;
 
 	@Override
 	public void render(float delta) {
 		Gdx.gl20.glClearColor(0.909803f, 0.909803f, 0.909803f, 1);
 		Gdx.gl20.glClearColor(0, 0, 0, 1);
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		world.render();
 
 		main.batch.begin();
 
@@ -124,7 +118,7 @@ public strictfp class MainMenuScreen extends Updateable {
 
 	@Override
 	public void tickUpdate() {
-		world.tickUpdate();
+		
 	}
 
 	@Override
@@ -159,7 +153,7 @@ public strictfp class MainMenuScreen extends Updateable {
 
 	@Override
 	public void renderUpdate() {
-		world.renderUpdate();
+		
 	}
 
 }
