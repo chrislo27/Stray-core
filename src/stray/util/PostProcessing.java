@@ -60,8 +60,8 @@ public class PostProcessing {
 	 * @param displace default 6
 	 */
 	public static void euphoria(Batch batch, FrameBuffer buffer, float saturation, float displace) {
-		batch.setColor(Main.getRainbow(1, saturation).r, Main.getRainbow(1, saturation).g,
-				Main.getRainbow(1, saturation).b, saturation);
+		batch.setColor(Main.getRainbow(0.5f, saturation).r, Main.getRainbow(0.5f, saturation).g,
+				Main.getRainbow(0.5f, saturation).b, saturation);
 		batch.draw(buffer.getColorBufferTexture(), (displace * 2 * MathHelper.clampHalf(1f)),
 				Gdx.graphics.getHeight(), buffer.getWidth(), -buffer.getHeight());
 		batch.draw(buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight()
