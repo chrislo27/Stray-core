@@ -282,10 +282,6 @@ public class World implements TileBasedMap {
 		renderer.renderBuffer();
 		batch.flush();
 
-		if (background.equalsIgnoreCase("spacebackground")
-				&& (main.getScreen() == Main.MAINMENU || main.getScreen() == Main.TRANSITION)) PostProcessing
-				.twoPassBlur(batch, main.buffer, main.blurshader, 2f);
-
 		batch.end();
 	}
 
