@@ -68,7 +68,7 @@ public class Translator {
 	public int toUse = 0;
 	public Array<String> languageList = new Array<String>();
 
-	public static final String defaultLang = "English (Canada)";
+	public static final String defaultLang = "English";
 
 	private void loadResources() {
 		base = Gdx.files.internal("localization/default");
@@ -76,9 +76,8 @@ public class Translator {
 		languageList.clear();
 		languageList.ordered = true;
 
-		addBundle(defaultLang, I18NBundle.createBundle(base, new Locale("en", "CA")));
-		addBundle("English (US)", I18NBundle.createBundle(base, new Locale("en", "US")));
-		addBundle("English (UK)", I18NBundle.createBundle(base, new Locale("en", "UK")));
+		addBundle(defaultLang, I18NBundle.createBundle(base, new Locale("")));
+		addBundle("Česky", I18NBundle.createBundle(base, new Locale("cz")));
 
 		Preferences settings = Main.getPref("settings");
 		for (int i = 0; i < languageList.size; i++) {
