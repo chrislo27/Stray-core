@@ -78,6 +78,7 @@ public class World implements TileBasedMap {
 	 * millisecond time since show() was called
 	 */
 	public long msTime = 0;
+	private long voidMsTime = System.currentTimeMillis();
 	public int voidTime = -1;
 
 	public WorldRenderer renderer;
@@ -108,6 +109,7 @@ public class World implements TileBasedMap {
 
 	public void prepare() {
 		msTime = System.currentTimeMillis();
+		voidMsTime = System.currentTimeMillis();
 		global.clear();
 		blocks = new Block[sizex][sizey];
 		meta = new String[sizex][sizey];
@@ -283,7 +285,7 @@ public class World implements TileBasedMap {
 		if (background.equalsIgnoreCase("spacebackground")
 				&& (main.getScreen() == Main.MAINMENU || main.getScreen() == Main.TRANSITION)) PostProcessing
 				.twoPassBlur(batch, main.buffer, main.blurshader, 2f);
-		
+
 		batch.end();
 	}
 
@@ -355,6 +357,7 @@ public class World implements TileBasedMap {
 				getPlayer().x = checkpointx;
 				getPlayer().y = checkpointy;
 				getPlayer().health = getPlayer().maxhealth;
+				voidMsTime = System.currentTimeMillis();
 			}
 		}
 
@@ -378,6 +381,11 @@ public class World implements TileBasedMap {
 		centerCamera();
 		camera.update();
 
+		if (getPlayer() != null) {
+			if (getVoidDistance() > (getPlayer().x + getPlayer().sizex)) {
+				getPlayer().damage(9001);
+			}
+		}
 	}
 
 	/**
@@ -388,7 +396,7 @@ public class World implements TileBasedMap {
 	public float getVoidDistance() {
 		if (voidTime <= 0) return -1;
 		return MathUtils.clamp(
-				((((System.currentTimeMillis() - msTime) / 1000f) / voidTime) * sizex), -1, sizex);
+				((((System.currentTimeMillis() - voidMsTime) / 1000f) / voidTime) * sizex), -1, sizex);
 	}
 
 	public void executeBlockUpdates() {
