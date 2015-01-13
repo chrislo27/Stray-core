@@ -5,14 +5,14 @@ import java.util.HashMap;
 public class Difficulty {
 
 	int id = -1;
-	public int health = 1;
+	public float damageMultiplier = 1;
 
 	public Difficulty(int id) {
 		this.id = id;
 	}
 	
-	public Difficulty setHealth(int h){
-		health = h;
+	public Difficulty setDmgMultiplier(float d){
+		damageMultiplier = d;
 		return this;
 	}
 
@@ -31,8 +31,8 @@ public class Difficulty {
 	}
 
 	private static void loadResources() {
-		difficulties.put(EASY_ID, new Difficulty(EASY_ID).setHealth(3));
-		difficulties.put(NORMAL_ID, new Difficulty(NORMAL_ID).setHealth(2));
-		difficulties.put(HARD_ID, new Difficulty(HARD_ID).setHealth(1));
+		difficulties.put(EASY_ID, new Difficulty(EASY_ID).setDmgMultiplier(0.5f));
+		difficulties.put(NORMAL_ID, new Difficulty(NORMAL_ID).setDmgMultiplier(1f));
+		difficulties.put(HARD_ID, new Difficulty(HARD_ID).setDmgMultiplier(2f));
 	}
 }

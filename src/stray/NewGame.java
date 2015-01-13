@@ -73,7 +73,7 @@ public class NewGame extends Updateable {
 		main.font.setColor(Color.WHITE);
 		Difficulty diff = Difficulty.get().get(difficulty.selection);
 		main.drawCentered(Translator.getMsg(difficulty.choices.get(difficulty.selection))
-				+ ": " + Translator.getMsg("menu.difficultysummary", diff.health), Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2 - 7);
+				+ ": " + diff.damageMultiplier + "x " + Translator.getMsg("menu.difficultysummary"), Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2 - 7);
 
 		container.render(main);
 		main.font.setColor(Color.WHITE);
