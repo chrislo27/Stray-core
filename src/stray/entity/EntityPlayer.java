@@ -33,8 +33,9 @@ public class EntityPlayer extends EntityLiving implements Weighted {
 		this.maxspeed = 5f;
 		this.accspeed = this.maxspeed - 0.5f;
 		hasEntityCollision = true;
-		maxhealth = Difficulty.get().get(
-				world.main.progress.getInteger("difficulty", Difficulty.NORMAL_ID)).health;
+//		maxhealth = Difficulty.get().get(
+//				world.main.progress.getInteger("difficulty", Difficulty.NORMAL_ID)).health;
+		maxhealth = 3;
 		health = maxhealth;
 	}
 
