@@ -52,8 +52,16 @@ public class Button implements GuiElement {
 	public void render(Main main) {
 		imageRender(main, "guibg");
 		main.font.setColor(Color.BLACK);
-		main.drawCentered(Translator.getMsg(text), x + (width / 2),
+		renderText(main, Translator.getMsg(text), this.width);
+	}
+	
+	protected void renderText(Main main, String text, float width){
+		if(main.font.getBounds(text).width + 6 > width){
+			main.font.setScale(width / (main.font.getBounds(text).width + 6));
+		}
+		main.drawCentered(text, x + (width / 2),
 				y + (height / 2) + (main.font.getBounds(text).height / 2));
+		main.font.setScale(1f);
 	}
 
 	@Override
