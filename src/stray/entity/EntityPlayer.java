@@ -57,10 +57,10 @@ public class EntityPlayer extends EntityLiving implements Weighted {
 	}
 
 	@Override
-	public boolean damage(int hp) {
-		int originalhealth = health;
-		if (super.damage(hp)) {
-			if (hp > 0 && invincibility == invulnTime * Main.TICKS) {
+	public boolean damage(float dmg) {
+		float originalhealth = health;
+		if (super.damage(dmg * Difficulty.get().get(world.main.getDifficulty()).damageMultiplier)) {
+			if (dmg > 0 && invincibility == invulnTime * Main.TICKS) {
 				world.renderer.onDamagePlayer(originalhealth);
 				if (health == 0) {
 					world.canRespawnIn = Main.TICKS * 2;

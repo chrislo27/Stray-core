@@ -20,8 +20,8 @@ public abstract class EntityLiving extends Entity {
 	protected BaseAI ai;
 	protected Direction facing = Direction.RIGHT;
 
-	public int health = 1;
-	public int maxhealth = 1;
+	public float health = 1;
+	public float maxhealth = 1;
 	public int invincibility = 0;
 	public final float invulnTime = 3;
 
@@ -112,15 +112,15 @@ public abstract class EntityLiving extends Entity {
 
 	/**
 	 * 
-	 * @param hp
+	 * @param dmg
 	 * @return false if cancelled
 	 */
-	public boolean damage(int hp) {
-		if (hp == 0) return false;
-		if (health == 0) return false;
-		if (hp > 0 && invincibility > 0) return false;
-		health = MathUtils.clamp(health - hp, 0, maxhealth);
-		if(hp > 0) invincibility = Math.round(invulnTime * Main.TICKS);
+	public boolean damage(float dmg) {
+		if (dmg <= 0) return false;
+		if (health <= 0) return false;
+		if (dmg > 0 && invincibility > 0) return false;
+		health = MathUtils.clamp(health - dmg, 0f, maxhealth);
+		if(dmg > 0) invincibility = Math.round(invulnTime * Main.TICKS);
 		return true;
 	}
 

@@ -26,8 +26,6 @@ public class WorldRenderer {
 	SpriteBatch batch;
 	Main main;
 
-	Array<GearPart> gearparts = new Array<GearPart>();
-
 	private Sprite detection;
 	
 	protected float flip = 1f;
@@ -203,18 +201,7 @@ public class WorldRenderer {
 		}
 		
 		renderHealth();
-		for (GearPart part : gearparts) {
-			part.render(main);
-		}
 		batch.flush();
-
-		GearPart item;
-		for (int i = gearparts.size; --i >= 0;) {
-			item = gearparts.get(i);
-			if (item.lifetime <= 0) {
-				gearparts.removeIndex(i);
-			}
-		}
 	}
 
 	public void renderHealth() {
@@ -231,34 +218,9 @@ public class WorldRenderer {
 		}
 	}
 
-	public void onDamagePlayer(int original) {
-		for (int i = world.getPlayer().health; i < original; i++) {
-			gearShatter(i);
-		}
-
+	public void onDamagePlayer(float original) {
 		world.vignettecolour.set(1, 0, 0, 1f);
 	}
-
-	private void gearShatter(int section) {
-		float posx = 8 + (section * 32) - (section * 3);
-		float posy = 8 + (section % 2 != 0 ? 7 : 0);
-
-		int dividing = 4;
-
-		for (int x = 0; x < 32 / 4; x++) {
-			for (int y = 0; y < 32 / 4; y++) {
-				if (Main.getRandomInst().nextBoolean()) {
-					GearPart part = new GearPart();
-					part.velox = Main.getRandomInst().nextFloat() - 0.5f;
-					part.veloy = 3f;
-					part.x = posx + x * dividing;
-					part.y = posy + y * dividing;
-					gearparts.add(part);
-				}
-			}
-		}
-	}
-
 	public void renderDebug(int starting) {
 		if (world.getPlayer() == null) return;
 		main.font.setColor(Color.WHITE);
@@ -289,24 +251,5 @@ public class WorldRenderer {
 
 	}
 
-	private static class GearPart {
-
-		float x, y;
-		float velox, veloy;
-		float lifetime = 1.5f;
-		boolean tintWhite = (Main.getRandomInst().nextFloat() > 0.2f);
-
-		public void render(Main main) {
-			main.batch.setColor(1, 1, 1, 1);
-			if (!tintWhite) main.batch.setColor(0, 0, 0, 1);
-			main.fillRect(x, y, 4, 4);
-			main.batch.setColor(1, 1, 1, 1);
-
-			lifetime -= Gdx.graphics.getDeltaTime();
-			x += velox;
-			y += veloy;
-			veloy -= 7.5f * Gdx.graphics.getDeltaTime();
-		}
-	}
 
 }
