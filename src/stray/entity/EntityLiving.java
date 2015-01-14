@@ -23,7 +23,7 @@ public abstract class EntityLiving extends Entity {
 	public int health = 1;
 	public int maxhealth = 1;
 	public int invincibility = 0;
-	public final int invulnTime = 3;
+	public final float invulnTime = 3;
 
 	public EntityLiving(World world, float x, float y) {
 		super(world, x, y);
@@ -120,7 +120,7 @@ public abstract class EntityLiving extends Entity {
 		if (health == 0) return false;
 		if (hp > 0 && invincibility > 0) return false;
 		health = MathUtils.clamp(health - hp, 0, maxhealth);
-		if(hp > 0) invincibility = invulnTime * Main.TICKS;
+		if(hp > 0) invincibility = Math.round(invulnTime * Main.TICKS);
 		return true;
 	}
 
