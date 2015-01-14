@@ -826,6 +826,10 @@ public class Main extends Game implements Consumer {
 		return 75 + 30 + offset;
 	}
 
+	public int getDifficulty(){
+		return progress.getInteger("difficulty", Difficulty.NORMAL_ID);
+	}
+	
 	public static Preferences getPref(String ref) {
 		return Gdx.app.getPreferences("stray-" + ref);
 	}
