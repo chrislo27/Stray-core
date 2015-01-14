@@ -2,12 +2,13 @@ package stray.world;
 
 import stray.Main;
 import stray.ParticlePool;
+import stray.Translator;
 import stray.blocks.Blocks;
 import stray.entity.Entity;
 import stray.util.AssetMap;
 import stray.util.ElectricityRenderer;
-import stray.util.MathHelper;
 import stray.util.Message;
+import stray.util.RandomText;
 import stray.util.SpaceBackground;
 import stray.util.Utils;
 
@@ -18,7 +19,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.Array;
 
 public class WorldRenderer {
 
@@ -27,10 +27,10 @@ public class WorldRenderer {
 	Main main;
 
 	private Sprite detection;
-	
+
 	protected float flip = 1f;
 	protected boolean rightside = true;
-	
+
 	public WorldRenderer(World world) {
 		this.world = world;
 		batch = world.batch;
@@ -76,8 +76,8 @@ public class WorldRenderer {
 		batch.flush();
 
 	}
-	
-	public void renderBackground(){
+
+	public void renderBackground() {
 		if (world.background.equalsIgnoreCase("spacebackground")) {
 			SpaceBackground.instance().render(main);
 		} else {
@@ -85,24 +85,26 @@ public class WorldRenderer {
 					Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		}
 	}
-	
-	public void renderBuffer(){
-//		batch.setColor(0, 0, 0, 1);
-//		main.fillRect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+	public void renderBuffer() {
+		// batch.setColor(0, 0, 0, 1);
+		// main.fillRect(0, 0, Gdx.graphics.getWidth(),
+		// Gdx.graphics.getHeight());
 		main.buffer2.begin();
 		renderBackground();
 		main.buffer2.end();
 		batch.setColor(1, 1, 1, 1);
-		batch.draw(main.buffer2.getColorBufferTexture(), (rightside ? 0 : Gdx.graphics.getWidth()), Gdx.graphics.getHeight(),
-				main.buffer2.getWidth() * (rightside ? 1 : -1), -main.buffer2.getHeight());
-		
-		batch.draw(main.buffer.getColorBufferTexture(), (Gdx.graphics.getWidth() / 2f) - ((main.buffer.getWidth() * flip) / 2f), Gdx.graphics.getHeight(),
+		batch.draw(main.buffer2.getColorBufferTexture(), (rightside ? 0 : Gdx.graphics.getWidth()),
+				Gdx.graphics.getHeight(), main.buffer2.getWidth() * (rightside ? 1 : -1),
+				-main.buffer2.getHeight());
+
+		batch.draw(main.buffer.getColorBufferTexture(), (Gdx.graphics.getWidth() / 2f)
+				- ((main.buffer.getWidth() * flip) / 2f), Gdx.graphics.getHeight(),
 				main.buffer.getWidth() * flip, -main.buffer.getHeight());
-		
-		
-		if(rightside){
+
+		if (rightside) {
 			flip = MathUtils.clamp(flip + Gdx.graphics.getRawDeltaTime() * 2, -1f, 1f);
-		}else{
+		} else {
 			flip = MathUtils.clamp(flip - Gdx.graphics.getRawDeltaTime() * 2, -1f, 1f);
 		}
 	}
@@ -194,33 +196,50 @@ public class WorldRenderer {
 			batch.setColor(Color.WHITE);
 		}
 		batch.setColor(1, 1, 1, 1);
-		
-		if(detection == null){
+
+		if (detection == null) {
 			detection = new Sprite(main.manager.get(AssetMap.get("detectionarrow"), Texture.class));
 			detection.setOriginCenter();
 		}
-		
+
 		renderHealth();
 		batch.flush();
 	}
 
 	public void renderHealth() {
 		if (world.getPlayer() == null) return;
-		batch.setColor(1, 1, 1, 0.1f);
-		main.fillRect(0, 0, 16 + (world.getPlayer().maxhealth * 32), 56);
-		for (int i = 0; i < world.getPlayer().maxhealth; i++) {
-			batch.setColor(1, 1, 1, 1);
-			if (i >= world.getPlayer().health) batch.setColor(0, 0, 0, 0.5f);
-			Utils.drawRotated(batch, main.textures.get("gear"), 8 + (i * 32) - (i * 3),
-					8 + (i % 2 != 0 ? 7 : 0), 32, 32,
-					MathHelper.getNumberFromTime(System.currentTimeMillis(), 5f) * 360, i % 2 == 0);
-			batch.setColor(1, 1, 1, 1);
+
+		batch.setColor(0, 0, 0, 0.3f);
+		main.fillRect(0, 0, 128, 50);
+		
+		batch.setColor(1 * (1 - (world.getPlayer().health / world.getPlayer().maxhealth)), 0,
+				1 * (world.getPlayer().health / world.getPlayer().maxhealth), 0.25f);
+		main.fillRect(8, 8, 112, 12);
+		
+		batch.setColor(batch.getColor().r, batch.getColor().g, batch.getColor().b, 1);
+		main.fillRect(8, 8, 112 * (1 - (world.getPlayer().health / world.getPlayer().maxhealth)),
+				12);
+
+		batch.setColor(1, 1, 1, 1);
+
+		if (world.getPlayer().health / world.getPlayer().maxhealth < 0.5f) {
+			main.font.setColor(Color.RED);
+			main.drawScaled(Translator.getMsg("ui.overheat"), 64, 40, 128, 4);
+		} else if (world.getPlayer().health / world.getPlayer().maxhealth < 1) {
+			main.font.setColor(Color.RED);
+			main.drawScaled(Translator.getMsg("ui.hpwarning"), 64, 40, 128, 4);
+		} else {
+			main.font.setColor(Color.GREEN);
+			main.drawScaled(Translator.getMsg("ui.systemsnominal"), 64, 40, 128, 4);
 		}
+
+		main.font.setColor(Color.WHITE);
 	}
 
 	public void onDamagePlayer(float original) {
 		world.vignettecolour.set(1, 0, 0, 1f);
 	}
+
 	public void renderDebug(int starting) {
 		if (world.getPlayer() == null) return;
 		main.font.setColor(Color.WHITE);
@@ -250,6 +269,5 @@ public class WorldRenderer {
 				Main.convertY(starting + 150));
 
 	}
-
 
 }
