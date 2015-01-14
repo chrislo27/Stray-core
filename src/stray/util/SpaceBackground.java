@@ -134,7 +134,7 @@ public class SpaceBackground {
 
 		if (cooldown > 0) cooldown--;
 		timewatched += Gdx.graphics.getRawDeltaTime();
-		if (timewatched >= (600) && krakenx > -Gdx.graphics.getWidth()) {
+		if (timewatched >= (1800) && krakenx > -Gdx.graphics.getWidth()) {
 			krakenx -= Gdx.graphics.getDeltaTime() * 64;
 		}
 	}
