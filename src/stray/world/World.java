@@ -209,6 +209,8 @@ public class World implements TileBasedMap {
 			if (Gdx.input.isKeyPressed(Keys.ALT_LEFT) || Gdx.input.isKeyPressed(Keys.ALT_RIGHT)) {
 				if (Gdx.input.isKeyJustPressed(Keys.F)) {
 					renderer.rightside = !renderer.rightside;
+				}else if(Gdx.input.isKeyJustPressed(Keys.T)){
+					getPlayer().damage(0.999f);
 				}
 			}
 		}
@@ -296,7 +298,7 @@ public class World implements TileBasedMap {
 
 		batch.begin();
 		if (voidTime > 0 && getVoidDistance() > 0f) renderer.renderVoid();
-		if (!background.equalsIgnoreCase("spacebackground")) renderer.renderUi();
+		renderer.renderUi();
 		batch.end();
 
 		Particle item;
