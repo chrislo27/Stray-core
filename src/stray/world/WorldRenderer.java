@@ -211,13 +211,23 @@ public class WorldRenderer {
 
 		batch.setColor(0, 0, 0, 0.3f);
 		main.fillRect(0, 0, 128, 50);
-		
+
+		main.font.setScale(0.8f);
+		float baroffset = main.font.getBounds(Translator.getMsg("ui.heat")).width - 4;
+		main.font.setColor(1 * (1 - (world.getPlayer().health / world.getPlayer().maxhealth)),
+				1 * (world.getPlayer().health / world.getPlayer().maxhealth),
+				1 * (world.getPlayer().health / world.getPlayer().maxhealth), 1);
+		main.font.draw(batch, Translator.getMsg("ui.heat"), 4, 20);
+		main.font.setColor(1, 1, 1, 1);
+		main.font.setScale(1);
+
 		batch.setColor(1 * (1 - (world.getPlayer().health / world.getPlayer().maxhealth)), 0,
 				1 * (world.getPlayer().health / world.getPlayer().maxhealth), 0.25f);
-		main.fillRect(8, 8, 112, 12);
-		
+		main.fillRect(8 + baroffset, 8, 112 - baroffset, 12);
+
 		batch.setColor(batch.getColor().r, batch.getColor().g, batch.getColor().b, 1);
-		main.fillRect(8, 8, 112 * (1 - (world.getPlayer().health / world.getPlayer().maxhealth)),
+		main.fillRect(8 + baroffset, 8,
+				(112 - baroffset) * (1 - (world.getPlayer().health / world.getPlayer().maxhealth)),
 				12);
 
 		batch.setColor(1, 1, 1, 1);
