@@ -29,7 +29,7 @@ public class BlockElectrode extends Block {
 	public void render(World world, int x, int y) {
 		super.render(world, x, y);
 		
-		for(int searchx = x + 9; searchx > x - 8; searchx--){
+		for(int searchx = x; searchx > x - 8; searchx--){
 			for(int searchy = y + 9; searchy > y - 8; searchy--){
 				if(searchx == x && searchy == y) continue;
 				if(world.getBlock(searchx, searchy) instanceof BlockElectrode){
