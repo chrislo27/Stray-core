@@ -3,7 +3,6 @@ package stray.entity;
 import stray.Difficulty;
 import stray.Main;
 import stray.ai.BaseAI;
-import stray.entity.types.Enemy;
 import stray.entity.types.Weighted;
 import stray.util.AssetMap;
 import stray.util.MathHelper;
@@ -11,6 +10,7 @@ import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 
 public class EntityPlayer extends EntityLiving implements Weighted {
 
@@ -23,7 +23,7 @@ public class EntityPlayer extends EntityLiving implements Weighted {
 	private float colourFade = 0f;
 	public String currentSprite = "player";
 	private String lastSprite = "player";
-
+	public static final float SECONDS_TO_REGEN = 5;
 
 	@Override
 	public void prepare() {
@@ -33,9 +33,7 @@ public class EntityPlayer extends EntityLiving implements Weighted {
 		this.maxspeed = 5f;
 		this.accspeed = this.maxspeed - 0.5f;
 		hasEntityCollision = true;
-//		maxhealth = Difficulty.get().get(
-//				world.main.progress.getInteger("difficulty", Difficulty.NORMAL_ID)).health;
-		maxhealth = 3;
+		maxhealth = 1;
 		health = maxhealth;
 	}
 
@@ -94,6 +92,17 @@ public class EntityPlayer extends EntityLiving implements Weighted {
 			if (portalglow < 0) portalglow = 0;
 		}
 
+	}
+	
+	@Override
+	public void renderUpdate(){
+		super.renderUpdate();
+		if(invincibility == 0){
+			if(health < maxhealth){
+				health += (Gdx.graphics.getRawDeltaTime() / SECONDS_TO_REGEN);
+				health = MathUtils.clamp(health, 0, maxhealth);
+			}
+		}
 	}
 
 	@Override
