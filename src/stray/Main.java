@@ -151,7 +151,7 @@ public class Main extends Game implements Consumer {
 	public static final int TICKS = 30;
 	public static final int MAX_FPS = 60;
 	private int[] lastFPS = new int[5];
-	private static int framesUntilTick = 0;
+	private float deltaUntilTick = 0;
 
 	public static Gears gears;
 
@@ -288,14 +288,16 @@ public class Main extends Game implements Consumer {
 
 					Main.latestVersionNumber = value.getInt("version_number", 0);
 					Main.latestVersion = value.getString("version", "");
-					
-					Main.logger.info("Finished getting version, took " + (System.currentTimeMillis() - Main.startVersionCheck) + " ms");
-					if(Main.debug) Main.logger.debug("JSON obtained from host: " + file.toString());
+
+					Main.logger.info("Finished getting version, took "
+							+ (System.currentTimeMillis() - Main.startVersionCheck) + " ms");
+					if (Main.debug) Main.logger
+							.debug("JSON obtained from host: " + file.toString());
 				} catch (MalformedURLException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
 					e.printStackTrace();
-				} catch (NullPointerException e){
+				} catch (NullPointerException e) {
 					Main.logger.error("Failed to parse/get latest version info", e);
 				}
 
@@ -337,7 +339,7 @@ public class Main extends Game implements Consumer {
 		maskRenderer.dispose();
 		blurshader.dispose();
 		blueprintrenderer.dispose();
-		
+
 		buffer.dispose();
 		buffer2.dispose();
 
@@ -598,16 +600,19 @@ public class Main extends Game implements Consumer {
 
 	@Override
 	public void render() {
+		deltaUntilTick += Gdx.graphics.getRawDeltaTime();
+
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glClearDepthf(1f);
 		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
 
 		try {
-			if (getScreen() != null && framesUntilTick >= (MAX_FPS / TICKS)) {
-				framesUntilTick = 0;
-				((Updateable) getScreen()).tickUpdate();
+			while (deltaUntilTick >= (1.0f / TICKS)) {
+				if (getScreen() != null) ((Updateable) getScreen()).tickUpdate();
 				tickUpdate();
+				deltaUntilTick -= (1.0f / TICKS);
 			}
+
 			if (getScreen() != null) {
 				((Updateable) getScreen()).renderUpdate();
 			}
@@ -637,7 +642,7 @@ public class Main extends Game implements Consumer {
 			Gdx.app.exit();
 			System.exit(1);
 		}
-		++framesUntilTick;
+
 	}
 
 	public void tickUpdate() {
@@ -744,15 +749,23 @@ public class Main extends Game implements Consumer {
 
 		font.setColor(Color.WHITE);
 
-		font.setMarkupEnabled(false);
-		font.draw(
-				batch,
+		font.draw(batch,
 				"FPS: "
-						+ Gdx.graphics.getFramesPerSecond()
-						+ (Main.debug ? " (avg of " + lastFPS.length + " sec: "
-								+ String.format("%.1f", getAvgFPS()) + ") "
-								+ Arrays.toString(lastFPS) : ""), 5, Gdx.graphics.getHeight() - 5);
-		font.setMarkupEnabled(true);
+						+ (Gdx.graphics.getFramesPerSecond() <= (MAX_FPS / 4f) ? "[RED]"
+								: (Gdx.graphics.getFramesPerSecond() <= (MAX_FPS / 2f) ? "[YELLOW]"
+										: ""))  + Gdx.graphics.getFramesPerSecond() + "[]", 5, Gdx.graphics
+						.getHeight() - 5);
+		if (Main.debug) {
+			font.setMarkupEnabled(false);
+			font.draw(
+					batch,
+					"(avg of " + lastFPS.length + " sec: " + String.format("%.1f", getAvgFPS())
+							+ ") " + Arrays.toString(lastFPS),
+					5 + font.getSpaceWidth()
+							+ (font.getBounds("FPS: " + Gdx.graphics.getFramesPerSecond()).width),
+					Gdx.graphics.getHeight() - 5);
+			font.setMarkupEnabled(true);
+		}
 
 		renderAchievements();
 
@@ -806,8 +819,8 @@ public class Main extends Game implements Consumer {
 				+ Main.version
 				+ ", release #"
 				+ Main.currentVersionNumber
-				+ (latestVersion.equals("") ? "" : "; latest: " + Main.latestVersion + ", release #"
-						+ Main.latestVersionNumber), 5, Main.convertY(30 + offset));
+				+ (latestVersion.equals("") ? "" : "; latest: " + Main.latestVersion
+						+ ", release #" + Main.latestVersionNumber), 5, Main.convertY(30 + offset));
 		font.draw(batch, "Memory: "
 				+ NumberFormat.getInstance().format(MemoryUtils.getUsedMemory()) + " KB / "
 				+ NumberFormat.getInstance().format(MemoryUtils.getMaxMemory()) + " KB (max "
@@ -826,10 +839,10 @@ public class Main extends Game implements Consumer {
 		return 75 + 30 + offset;
 	}
 
-	public int getDifficulty(){
+	public int getDifficulty() {
 		return progress.getInteger("difficulty", Difficulty.NORMAL_ID);
 	}
-	
+
 	public static Preferences getPref(String ref) {
 		return Gdx.app.getPreferences("stray-" + ref);
 	}
