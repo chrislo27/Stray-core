@@ -597,6 +597,21 @@ public class Main extends Game implements Consumer {
 	public void drawCentered(String s, float x, float y) {
 		font.draw(batch, s, x - (font.getBounds(s).width / 2), y);
 	}
+	
+	public void drawTextBg(String text, float x, float y) {
+		batch.setColor(0, 0, 0, 0.6f);
+		fillRect(x, y, font.getBounds(text).width + 2, 17);
+		font.draw(batch, text, x + 1, y + 15);
+		batch.setColor(1, 1, 1, 1);
+	}
+	
+	public void drawScaled(String text, float x, float y, float width, float padding){
+		if(font.getBounds(text).width + (padding * 2) > width){
+			font.setScale(width / (font.getBounds(text).width + (padding * 2)));
+		}
+		drawCentered(text, x, y);
+		font.setScale(1);
+	}
 
 	@Override
 	public void render() {
@@ -735,13 +750,6 @@ public class Main extends Game implements Consumer {
 		}
 
 		return ((totalavgFPS) / (lastFPS.length * 1f));
-	}
-
-	public void drawTextBg(String text, float x, float y) {
-		batch.setColor(0, 0, 0, 0.6f);
-		fillRect(x, y, font.getBounds(text).width + 2, 17);
-		font.draw(batch, text, x + 1, y + 15);
-		batch.setColor(1, 1, 1, 1);
 	}
 
 	private void postRender() {
