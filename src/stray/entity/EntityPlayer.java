@@ -23,7 +23,7 @@ public class EntityPlayer extends EntityLiving implements Weighted {
 	private float colourFade = 0f;
 	public String currentSprite = "player";
 	private String lastSprite = "player";
-	public static final float SECONDS_TO_REGEN = 5;
+	public static final float SECONDS_TO_REGEN = 15;
 
 	@Override
 	public void prepare() {
