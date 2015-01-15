@@ -16,15 +16,16 @@ import stray.entity.Entity;
 import stray.entity.EntityPlayer;
 import stray.pathfinding.Mover;
 import stray.pathfinding.TileBasedMap;
+import stray.util.AssetMap;
 import stray.util.GlobalVariables;
 import stray.util.MathHelper;
 import stray.util.Message;
-import stray.util.PostProcessing;
 import stray.util.Sizeable;
 import stray.util.Utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -92,8 +93,9 @@ public class World implements TileBasedMap {
 	public String levelfile = null;
 
 	public float checkpointx, checkpointy;
-	
+
 	protected float timeWithoutInput = 0;
+	private boolean voidSfxPlaying = false;
 
 	public World(Main main) {
 		this(main, 32, 24, Main.getRandomInst().nextLong());
@@ -179,7 +181,7 @@ public class World implements TileBasedMap {
 		if (getPlayer() == null) return;
 		if (getPlayer().health > 0) {
 			timeWithoutInput += Gdx.graphics.getRawDeltaTime();
-			
+
 			if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 				getPlayer().jump();
 				timeWithoutInput = 0;
@@ -195,8 +197,8 @@ public class World implements TileBasedMap {
 			} else if ((Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D))) {
 				getPlayer().moveRight();
 				timeWithoutInput = 0;
-			}else{
-				
+			} else {
+
 			}
 
 		}
@@ -218,7 +220,7 @@ public class World implements TileBasedMap {
 			if (Gdx.input.isKeyPressed(Keys.ALT_LEFT) || Gdx.input.isKeyPressed(Keys.ALT_RIGHT)) {
 				if (Gdx.input.isKeyJustPressed(Keys.F)) {
 					renderer.rightside = !renderer.rightside;
-				}else if(Gdx.input.isKeyJustPressed(Keys.T)){
+				} else if (Gdx.input.isKeyJustPressed(Keys.T)) {
 					getPlayer().damage(0.999f);
 				}
 			}
@@ -306,7 +308,21 @@ public class World implements TileBasedMap {
 		renderOnly();
 
 		batch.begin();
-		if (voidTime > 0 && getVoidDistance() > 0f) renderer.renderVoid();
+		if (voidTime > 0 && getVoidDistance() > 0f
+				&& (camera.camerax / World.tilesizex) - getVoidDistance() < 8) {
+			renderer.renderVoid();
+			if((camera.camerax / World.tilesizex) - getVoidDistance() < 4){
+				if(!voidSfxPlaying){
+					main.manager.get(AssetMap.get("voidambient"), Sound.class).loop(0.75f, 1f, getPan(getVoidDistance()));
+					voidSfxPlaying = true;
+				}
+			}else{
+				if(voidSfxPlaying){
+					main.manager.get(AssetMap.get("voidambient"), Sound.class).stop();
+					voidSfxPlaying = false;
+				}
+			}
+		}
 		renderer.renderUi();
 		batch.end();
 
@@ -404,7 +420,8 @@ public class World implements TileBasedMap {
 	public float getVoidDistance() {
 		if (voidTime <= 0) return -1;
 		return MathUtils.clamp(
-				((((System.currentTimeMillis() - voidMsTime) / 1000f) / voidTime) * sizex), -1, sizex);
+				((((System.currentTimeMillis() - voidMsTime) / 1000f) / voidTime) * sizex), -1,
+				sizex);
 	}
 
 	public void executeBlockUpdates() {
@@ -451,11 +468,13 @@ public class World implements TileBasedMap {
 	}
 
 	public void hide() {
-
+		main.manager.get(AssetMap.get("voidambient"), Sound.class).stop();
+		voidSfxPlaying = false;
 	}
 
 	public void dispose() {
-
+		main.manager.get(AssetMap.get("voidambient"), Sound.class).stop();
+		voidSfxPlaying = false;
 	}
 
 	public void addMessage(String s, int time) {
