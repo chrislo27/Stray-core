@@ -121,7 +121,7 @@ public class Main extends Game implements Consumer {
 	public static LevelEditor LEVELEDITOR = null;
 	public static TestLevel TESTLEVEL = null;
 	public static NewGame NEWGAME = null;
-	public static Backstory BACKSTORY = null;
+	public static BackstoryScreen BACKSTORY = null;
 
 	public static Texture filltex;
 
@@ -322,7 +322,7 @@ public class Main extends Game implements Consumer {
 		LEVELEDITOR = new LevelEditor(this);
 		TESTLEVEL = new TestLevel(this);
 		NEWGAME = new NewGame(this);
-		BACKSTORY = new Backstory(this);
+		BACKSTORY = new BackstoryScreen(this);
 	}
 
 	@Override
