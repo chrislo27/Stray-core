@@ -232,7 +232,7 @@ public class WorldRenderer {
 
 		batch.setColor(1, 1, 1, 1);
 
-		if (world.getPlayer().health / world.getPlayer().maxhealth < 0.5f) {
+		if (world.getPlayer().health / world.getPlayer().maxhealth < 0.25f) {
 			main.font.setColor(Color.RED);
 			main.drawScaled(Translator.getMsg("ui.overheat"), 64, 40, 128, 4);
 		} else if (world.getPlayer().health / world.getPlayer().maxhealth < 1) {
