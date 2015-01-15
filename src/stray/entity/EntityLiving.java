@@ -23,7 +23,7 @@ public abstract class EntityLiving extends Entity {
 	public float health = 1;
 	public float maxhealth = 1;
 	public int invincibility = 0;
-	public final float invulnTime = 3;
+	public final float invulnTime = 1.5f;
 
 	public EntityLiving(World world, float x, float y) {
 		super(world, x, y);
