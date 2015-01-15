@@ -217,7 +217,7 @@ public class WorldRenderer {
 				return;
 			}
 		}
-
+		
 		batch.setColor(0, 0, 0, 0.3f);
 		main.fillRect(0, 0, 128, 50);
 
