@@ -62,7 +62,7 @@ public class EntityPlayer extends EntityLiving implements Weighted {
 				world.renderer.onDamagePlayer(originalhealth);
 				if (health == 0) {
 					world.canRespawnIn = Main.TICKS * 2;
-					invincibility = world.canRespawnIn - 1;
+					invincibility = world.canRespawnIn + 1;
 					poof();
 				}
 			}
