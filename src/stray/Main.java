@@ -100,8 +100,8 @@ public class Main extends Game implements Consumer {
 	public static boolean showFPS = true;
 	public static boolean debug = false;
 
-	public static final String version = "v1.3-alpha";
-	public static final int currentVersionNumber = 1;
+	public static final String version = "v1.3.1-alpha";
+	public static final int currentVersionNumber = 2;
 	public static String latestVersion = "";
 	public static int latestVersionNumber = 0;
 	public static long startVersionCheck = 0;
