@@ -355,6 +355,7 @@ public class World implements TileBasedMap {
 				getPlayer().x = checkpointx;
 				getPlayer().y = checkpointy;
 				getPlayer().health = getPlayer().maxhealth;
+				getPlayer().invincibility = 1;
 				voidMsTime = System.currentTimeMillis();
 			}
 		}
