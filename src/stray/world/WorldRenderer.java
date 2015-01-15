@@ -30,14 +30,16 @@ public class WorldRenderer {
 
 	protected float flip = 1f;
 	protected boolean rightside = true;
+	
+	public boolean showGrid = false;
+	
+	protected float timeSinceFull = 1337;
 
 	public WorldRenderer(World world) {
 		this.world = world;
 		batch = world.batch;
 		main = world.main;
 	}
-
-	public boolean showGrid = false;
 
 	public void renderBlocks() {
 		main.font.setColor(Color.BLACK);
@@ -208,6 +210,13 @@ public class WorldRenderer {
 
 	public void renderHealth() {
 		if (world.getPlayer() == null) return;
+		if (world.getPlayer().health >= world.getPlayer().maxhealth){
+			if(timeSinceFull >= 3 && world.timeWithoutInput < 5) return;
+			timeSinceFull += Gdx.graphics.getRawDeltaTime();
+			if(Math.round(timeSinceFull * 5) % 2 == 0 && timeSinceFull < 1.5f){
+				return;
+			}
+		}
 
 		batch.setColor(0, 0, 0, 0.3f);
 		main.fillRect(0, 0, 128, 50);
@@ -247,6 +256,7 @@ public class WorldRenderer {
 	}
 
 	public void onDamagePlayer(float original) {
+		timeSinceFull = 0;
 		world.vignettecolour.set(1, 0, 0, 1f);
 	}
 

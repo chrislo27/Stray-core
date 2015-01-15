@@ -92,6 +92,8 @@ public class World implements TileBasedMap {
 	public String levelfile = null;
 
 	public float checkpointx, checkpointy;
+	
+	protected float timeWithoutInput = 0;
 
 	public World(Main main) {
 		this(main, 32, 24, Main.getRandomInst().nextLong());
@@ -176,18 +178,25 @@ public class World implements TileBasedMap {
 		if (main.getConv() != null) return;
 		if (getPlayer() == null) return;
 		if (getPlayer().health > 0) {
+			timeWithoutInput += Gdx.graphics.getRawDeltaTime();
+			
 			if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 				getPlayer().jump();
+				timeWithoutInput = 0;
 			} else if ((Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S))) {
-
+				timeWithoutInput = 0;
 			} else if ((Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W))) {
-
+				timeWithoutInput = 0;
 			}
 
 			if ((Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A))) {
 				getPlayer().moveLeft();
+				timeWithoutInput = 0;
 			} else if ((Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D))) {
 				getPlayer().moveRight();
+				timeWithoutInput = 0;
+			}else{
+				
 			}
 
 		}
