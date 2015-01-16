@@ -1,10 +1,10 @@
 package stray.entity;
 
-import stray.Difficulty;
 import stray.Main;
 import stray.ai.BaseAI;
 import stray.entity.types.Weighted;
 import stray.util.AssetMap;
+import stray.util.Difficulty;
 import stray.util.MathHelper;
 import stray.world.World;
 

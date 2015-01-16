@@ -1,9 +1,6 @@
-package stray;
+package stray.util;
 
-import stray.util.AssetMap;
-import stray.util.CoordPool;
-import stray.util.Coordinate;
-import stray.util.MathHelper;
+import stray.Main;
 import stray.world.World;
 
 import com.badlogic.gdx.Gdx;

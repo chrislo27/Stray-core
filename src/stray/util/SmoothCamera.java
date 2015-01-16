@@ -1,5 +1,6 @@
-package stray;
+package stray.util;
 
+import stray.Main;
 import stray.world.World;
 
 import com.badlogic.gdx.Gdx;

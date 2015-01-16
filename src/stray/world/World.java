@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.util.Random;
 
 import stray.Main;
-import stray.Particle;
-import stray.ParticlePool;
-import stray.SmoothCamera;
 import stray.blocks.Block;
 import stray.blocks.BlockCameraMagnet;
 import stray.blocks.BlockPlayerSpawner;
@@ -20,7 +17,10 @@ import stray.util.AssetMap;
 import stray.util.GlobalVariables;
 import stray.util.MathHelper;
 import stray.util.Message;
+import stray.util.Particle;
+import stray.util.ParticlePool;
 import stray.util.Sizeable;
+import stray.util.SmoothCamera;
 import stray.util.Utils;
 
 import com.badlogic.gdx.Gdx;
@@ -95,7 +95,8 @@ public class World implements TileBasedMap {
 	public float checkpointx, checkpointy;
 
 	protected float timeWithoutInput = 0;
-	private boolean voidSfxPlaying = false;
+	private float voidTimer = 0;
+	private static final float VOID_LENGTH = 6f;
 
 	public World(Main main) {
 		this(main, 32, 24, Main.getRandomInst().nextLong());
@@ -312,14 +313,14 @@ public class World implements TileBasedMap {
 				&& (camera.camerax / World.tilesizex) - getVoidDistance() < 8) {
 			renderer.renderVoid();
 			if((camera.camerax / World.tilesizex) - getVoidDistance() < 4){
-				if(!voidSfxPlaying){
-					main.manager.get(AssetMap.get("voidambient"), Sound.class).loop(0.75f, 1f, getPan(getVoidDistance()));
-					voidSfxPlaying = true;
+				if((voidTimer += Gdx.graphics.getRawDeltaTime()) >= VOID_LENGTH){
+					main.manager.get(AssetMap.get("voidambient"), Sound.class).play(0.75f, 1f, getPan(getVoidDistance()));
+					voidTimer -= VOID_LENGTH;
 				}
 			}else{
-				if(voidSfxPlaying){
+				if(voidTimer != 0){
 					main.manager.get(AssetMap.get("voidambient"), Sound.class).stop();
-					voidSfxPlaying = false;
+					voidTimer = 0;
 				}
 			}
 		}
@@ -469,12 +470,12 @@ public class World implements TileBasedMap {
 
 	public void hide() {
 		main.manager.get(AssetMap.get("voidambient"), Sound.class).stop();
-		voidSfxPlaying = false;
+		voidTimer = 0;
 	}
 
 	public void dispose() {
 		main.manager.get(AssetMap.get("voidambient"), Sound.class).stop();
-		voidSfxPlaying = false;
+		voidTimer = 0;
 	}
 
 	public void addMessage(String s, int time) {

@@ -1,4 +1,4 @@
-package stray;
+package stray.util;
 
 import java.util.HashMap;
 

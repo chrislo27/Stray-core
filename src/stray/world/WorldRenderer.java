@@ -1,13 +1,13 @@
 package stray.world;
 
 import stray.Main;
-import stray.ParticlePool;
 import stray.Translator;
 import stray.blocks.Blocks;
 import stray.entity.Entity;
 import stray.util.AssetMap;
 import stray.util.ElectricityRenderer;
 import stray.util.Message;
+import stray.util.ParticlePool;
 import stray.util.RandomText;
 import stray.util.SpaceBackground;
 import stray.util.Utils;

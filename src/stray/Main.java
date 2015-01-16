@@ -34,6 +34,8 @@ import stray.transition.TransitionScreen;
 import stray.util.AssetMap;
 import stray.util.CaptureStream;
 import stray.util.CaptureStream.Consumer;
+import stray.util.Difficulty;
+import stray.util.GameException;
 import stray.util.Gears;
 import stray.util.Logger;
 import stray.util.MathHelper;

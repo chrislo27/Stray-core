@@ -1,10 +1,10 @@
 package stray.entity;
 
 import stray.Main;
-import stray.Particle;
-import stray.ParticlePool;
 import stray.ai.BaseAI;
 import stray.util.Direction;
+import stray.util.Particle;
+import stray.util.ParticlePool;
 import stray.world.World;
 
 import com.badlogic.gdx.graphics.Texture;
