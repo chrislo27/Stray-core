@@ -13,13 +13,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 
-public class NewGame extends Updateable {
+public class NewGameScreen extends Updateable {
 
 	private ChoiceButton difficulty = new ChoiceButton((Gdx.graphics.getWidth() / 2) - 105, 64,
 			210, 32, "menu.difficultyselect", new String[] { "menu.difficulty.easy",
 					"menu.difficulty.normal", "menu.difficulty.hard" });
 
-	public NewGame(Main m) {
+	public NewGameScreen(Main m) {
 		super(m);
 
 		difficulty.selection = Difficulty.NORMAL_ID;

@@ -121,7 +121,7 @@ public class Main extends Game implements Consumer {
 	public static LevelSelectScreen LEVELSELECT = null;
 	public static LevelEditor LEVELEDITOR = null;
 	public static TestLevel TESTLEVEL = null;
-	public static NewGame NEWGAME = null;
+	public static NewGameScreen NEWGAME = null;
 	public static BackstoryScreen BACKSTORY = null;
 
 	public static Texture filltex;
@@ -293,7 +293,7 @@ public class Main extends Game implements Consumer {
 		LEVELSELECT = new LevelSelectScreen(this);
 		LEVELEDITOR = new LevelEditor(this);
 		TESTLEVEL = new TestLevel(this);
-		NEWGAME = new NewGame(this);
+		NEWGAME = new NewGameScreen(this);
 		BACKSTORY = new BackstoryScreen(this);
 	}
 
