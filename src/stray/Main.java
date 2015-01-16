@@ -43,6 +43,7 @@ import stray.util.MathHelper;
 import stray.util.MemoryUtils;
 import stray.util.Splashes;
 import stray.util.Utils;
+import stray.util.VersionGetter;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -273,36 +274,7 @@ public class Main extends Game implements Consumer {
 		Thread versionchecker = new Thread("Stray-version checker") {
 
 			public void run() {
-				final String path = "https://raw.githubusercontent.com/chrislo27/Stray-core/master/version.txt";
-				Main.startVersionCheck = System.currentTimeMillis();
-				try {
-					BufferedReader br = new BufferedReader(new InputStreamReader(new URL(path)
-							.openConnection().getInputStream()));
-
-					StringBuilder file = new StringBuilder();
-					String inputline;
-					while ((inputline = br.readLine()) != null)
-						file.append(inputline);
-
-					br.close();
-
-					JsonValue value = new JsonReader().parse(file.toString());
-
-					Main.latestVersionNumber = value.getInt("version_number", 0);
-					Main.latestVersion = value.getString("version", "");
-
-					Main.logger.info("Finished getting version, took "
-							+ (System.currentTimeMillis() - Main.startVersionCheck) + " ms");
-					if (Main.debug) Main.logger
-							.debug("JSON obtained from host: " + file.toString());
-				} catch (MalformedURLException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (NullPointerException e) {
-					Main.logger.error("Failed to parse/get latest version info", e);
-				}
-
+				VersionGetter.getVersionFromServer();
 			}
 		};
 		versionchecker.setPriority(Thread.MIN_PRIORITY);
