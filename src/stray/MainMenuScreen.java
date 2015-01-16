@@ -65,7 +65,6 @@ public strictfp class MainMenuScreen extends Updateable {
 
 	boolean hasSave = false;
 
-
 	@Override
 	public void render(float delta) {
 		Gdx.gl20.glClearColor(0.909803f, 0.909803f, 0.909803f, 1);
@@ -94,20 +93,13 @@ public strictfp class MainMenuScreen extends Updateable {
 				main.font.setColor(1, 1, 1, 1);
 			} else if (Main.latestVersionNumber < Main.currentVersionNumber) {
 				main.font.setColor(0, 0, 1, 1);
-				main.drawInverse(Translator.getMsg("menu.versionahead") + Main.latestVersion + ")", Gdx.graphics.getWidth() - 5,
-						35);
-				main.font.setColor(1, 1, 1, 1);
-			}
-		}else{
-			if(System.currentTimeMillis() - Main.startVersionCheck > Main.versionCheckTimeout){
-				main.font.setColor(1, 0, 0, 1);
-				main.drawInverse(Translator.getMsg("menu.versionchecktimeout"),
+				main.drawInverse(Translator.getMsg("menu.versionahead") + Main.latestVersion + ")",
 						Gdx.graphics.getWidth() - 5, 35);
 				main.font.setColor(1, 1, 1, 1);
-			}else{
-				main.drawInverse(Translator.getMsg("menu.checkingversion"),
-						Gdx.graphics.getWidth() - 5, 35);
 			}
+		} else {
+			main.drawInverse(Translator.getMsg("menu.checkingversion"),
+					Gdx.graphics.getWidth() - 5, 35);
 		}
 		container.render(main);
 		main.font.setColor(Color.WHITE);
@@ -118,7 +110,7 @@ public strictfp class MainMenuScreen extends Updateable {
 
 	@Override
 	public void tickUpdate() {
-		
+
 	}
 
 	@Override
@@ -153,7 +145,7 @@ public strictfp class MainMenuScreen extends Updateable {
 
 	@Override
 	public void renderUpdate() {
-		
+
 	}
 
 }

@@ -107,8 +107,6 @@ public class Main extends Game implements Consumer {
 	public static final int currentVersionNumber = 2;
 	public static String latestVersion = "";
 	public static int latestVersionNumber = 0;
-	public static long startVersionCheck = 0;
-	public static final long versionCheckTimeout = 10000;
 
 	public AssetManager manager;
 

@@ -19,10 +19,10 @@ public class VersionGetter {
 	 */
 	public static void getVersionFromServer(){
 		final String path = "https://raw.githubusercontent.com/chrislo27/Stray-core/master/version.txt";
-		Main.startVersionCheck = System.currentTimeMillis();
+		long start = System.currentTimeMillis();
 		try {
 			BufferedReader br = new BufferedReader(new InputStreamReader(new URL(path)
-					.openConnection().getInputStream()));
+					.openStream()));
 
 			StringBuilder file = new StringBuilder();
 			String inputline;
@@ -37,7 +37,7 @@ public class VersionGetter {
 			Main.latestVersion = value.getString("version", "");
 
 			Main.logger.info("Finished getting version, took "
-					+ (System.currentTimeMillis() - Main.startVersionCheck) + " ms");
+					+ (System.currentTimeMillis() - start) + " ms");
 			if (Main.debug) Main.logger
 					.debug("JSON obtained from host: " + file.toString());
 		} catch (MalformedURLException e) {
