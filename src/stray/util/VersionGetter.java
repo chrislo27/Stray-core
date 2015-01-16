@@ -30,14 +30,15 @@ public class VersionGetter {
 				file.append(inputline);
 
 			br.close();
-
+			
+			Main.logger.info("Finished getting version, took "
+					+ (System.currentTimeMillis() - start) + " ms");
+			
 			JsonValue value = new JsonReader().parse(file.toString());
 
 			Main.latestVersionNumber = value.getInt("version_number", 0);
 			Main.latestVersion = value.getString("version", "");
 
-			Main.logger.info("Finished getting version, took "
-					+ (System.currentTimeMillis() - start) + " ms");
 			if (Main.debug) Main.logger
 					.debug("JSON obtained from host: " + file.toString());
 		} catch (MalformedURLException e) {
