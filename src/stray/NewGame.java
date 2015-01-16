@@ -7,7 +7,7 @@ import stray.ui.Button;
 import stray.ui.ChoiceButton;
 import stray.ui.ExitButton;
 import stray.util.Difficulty;
-import stray.util.SpaceBackground;
+import stray.util.render.SpaceBackground;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

@@ -1,4 +1,4 @@
-package stray.util;
+package stray.util.render;
 
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 

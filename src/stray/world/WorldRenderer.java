@@ -5,12 +5,12 @@ import stray.Translator;
 import stray.blocks.Blocks;
 import stray.entity.Entity;
 import stray.util.AssetMap;
-import stray.util.ElectricityRenderer;
 import stray.util.Message;
 import stray.util.ParticlePool;
-import stray.util.RandomText;
-import stray.util.SpaceBackground;
 import stray.util.Utils;
+import stray.util.render.ElectricityRenderer;
+import stray.util.render.RandomText;
+import stray.util.render.SpaceBackground;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

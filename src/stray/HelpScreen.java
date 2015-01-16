@@ -1,7 +1,7 @@
 package stray;
 
-import stray.util.SpaceBackground;
 import stray.util.Utils;
+import stray.util.render.SpaceBackground;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;

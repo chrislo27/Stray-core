@@ -5,8 +5,8 @@ import com.badlogic.gdx.math.MathUtils;
 import stray.Main;
 import stray.entity.Entity;
 import stray.entity.EntityLiving;
-import stray.util.ElectricityRenderer;
 import stray.util.MathHelper;
+import stray.util.render.ElectricityRenderer;
 import stray.world.World;
 
 public class BlockElectrode extends Block {

@@ -1,10 +1,12 @@
-package stray.util;
+package stray.util.render;
 
 import stray.Main;
 import stray.blocks.Blocks;
 import stray.transition.Eat;
 import stray.transition.FadeOut;
 import stray.transition.Spiral;
+import stray.util.AssetMap;
+import stray.util.Utils;
 import stray.world.World;
 
 import com.badlogic.gdx.Gdx;

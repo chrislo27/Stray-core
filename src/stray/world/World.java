@@ -20,8 +20,8 @@ import stray.util.Message;
 import stray.util.Particle;
 import stray.util.ParticlePool;
 import stray.util.Sizeable;
-import stray.util.SmoothCamera;
 import stray.util.Utils;
+import stray.util.render.SmoothCamera;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;

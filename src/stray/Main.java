@@ -34,13 +34,13 @@ import stray.transition.TransitionScreen;
 import stray.util.AssetMap;
 import stray.util.CaptureStream;
 import stray.util.CaptureStream.Consumer;
+import stray.util.render.Gears;
+import stray.util.render.Shaders;
 import stray.util.Difficulty;
 import stray.util.GameException;
-import stray.util.Gears;
 import stray.util.Logger;
 import stray.util.MathHelper;
 import stray.util.MemoryUtils;
-import stray.util.Shaders;
 import stray.util.Splashes;
 import stray.util.Utils;
 

@@ -6,7 +6,7 @@ import stray.transition.FadeOut;
 import stray.ui.Button;
 import stray.ui.ExitButton;
 import stray.ui.LanguageButton;
-import stray.util.SpaceBackground;
+import stray.util.render.SpaceBackground;
 import stray.world.World;
 
 import com.badlogic.gdx.Gdx;

@@ -1,6 +1,7 @@
-package stray.util;
+package stray.util.render;
 
 import stray.Main;
+import stray.util.MathHelper;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;

@@ -1,4 +1,4 @@
-package stray.util;
+package stray.util.render;
 
 import stray.Main;
 import stray.world.World;
