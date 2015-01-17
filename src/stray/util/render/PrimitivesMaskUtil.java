@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 public class PrimitivesMaskUtil {
 
 	/**
-	 * call this BEFORE rendering with ShapeRenderer
+	 * call this BEFORE rendering with ShapeRenderer and BEFORE drawing sprites
 	 */
 	public static void prepareMask() {
 		Gdx.gl.glDepthFunc(GL20.GL_LESS);
