@@ -852,6 +852,7 @@ public class Main extends Game implements Consumer {
 		manager.load(AssetMap.add("guibgfalse", "images/ui/button/bgfalse.png"), Texture.class);
 		manager.load(AssetMap.add("guibgtrue", "images/ui/button/bgtrue.png"), Texture.class);
 		manager.load(AssetMap.add("detectionarrow", "images/ui/detection.png"), Texture.class);
+		manager.load(AssetMap.add("alphamask", "images/ui/alphamask.png"), Texture.class);
 
 		// particle
 		manager.load(AssetMap.add("money", "images/particle/money.png"), Texture.class);
