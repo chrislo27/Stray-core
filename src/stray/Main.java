@@ -674,6 +674,7 @@ public class Main extends Game implements Consumer {
 	}
 
 	private void preRender() {
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glClearDepthf(1f);
 		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
@@ -852,7 +853,6 @@ public class Main extends Game implements Consumer {
 		manager.load(AssetMap.add("guibgfalse", "images/ui/button/bgfalse.png"), Texture.class);
 		manager.load(AssetMap.add("guibgtrue", "images/ui/button/bgtrue.png"), Texture.class);
 		manager.load(AssetMap.add("detectionarrow", "images/ui/detection.png"), Texture.class);
-		manager.load(AssetMap.add("alphamask", "images/ui/alphamask.png"), Texture.class);
 
 		// particle
 		manager.load(AssetMap.add("money", "images/particle/money.png"), Texture.class);

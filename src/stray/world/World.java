@@ -29,7 +29,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
@@ -293,7 +292,7 @@ public class World implements TileBasedMap {
 		main.buffer.end();
 
 		batch.begin();
-
+		
 		renderer.renderBuffer();
 
 		batch.end();
