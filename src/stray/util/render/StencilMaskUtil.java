@@ -3,7 +3,7 @@ package stray.util.render;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 
-public class PrimitivesMaskUtil {
+public class StencilMaskUtil {
 
 	/**
 	 * call this BEFORE rendering with ShapeRenderer and BEFORE drawing sprites, and AFTER what you want in the background rendered
