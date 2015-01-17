@@ -21,7 +21,9 @@ import stray.util.Particle;
 import stray.util.ParticlePool;
 import stray.util.Sizeable;
 import stray.util.Utils;
+import stray.util.render.PrimitivesMaskUtil;
 import stray.util.render.SmoothCamera;
+import stray.util.render.SpaceBackground;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -29,6 +31,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
@@ -292,11 +295,11 @@ public class World implements TileBasedMap {
 		main.buffer.end();
 
 		main.batch.begin();
-
+		
 		renderer.renderBuffer();
-		batch.flush();
 
 		batch.end();
+
 	}
 
 	public void render() {
@@ -312,13 +315,14 @@ public class World implements TileBasedMap {
 		if (voidTime > 0 && getVoidDistance() > 0f
 				&& (camera.camerax / World.tilesizex) - getVoidDistance() < 8) {
 			renderer.renderVoid();
-			if((camera.camerax / World.tilesizex) - getVoidDistance() < 4){
-				if((voidTimer += Gdx.graphics.getRawDeltaTime()) >= VOID_LENGTH){
-					main.manager.get(AssetMap.get("voidambient"), Sound.class).play(0.75f, 1f, getPan(getVoidDistance()));
+			if ((camera.camerax / World.tilesizex) - getVoidDistance() < 4) {
+				if ((voidTimer += Gdx.graphics.getRawDeltaTime()) >= VOID_LENGTH) {
+					main.manager.get(AssetMap.get("voidambient"), Sound.class).play(0.75f, 1f,
+							getPan(getVoidDistance()));
 					voidTimer -= VOID_LENGTH;
 				}
-			}else{
-				if(voidTimer != 0){
+			} else {
+				if (voidTimer != 0) {
 					main.manager.get(AssetMap.get("voidambient"), Sound.class).stop();
 					voidTimer = 0;
 				}
@@ -474,7 +478,6 @@ public class World implements TileBasedMap {
 	}
 
 	public void dispose() {
-		main.manager.get(AssetMap.get("voidambient"), Sound.class).stop();
 		voidTimer = 0;
 	}
 
