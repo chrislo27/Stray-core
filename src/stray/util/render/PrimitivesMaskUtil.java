@@ -20,7 +20,7 @@ public class PrimitivesMaskUtil {
 	/**
 	 * call this AFTER batch.begin() and BEFORE drawing sprites
 	 */
-	public static void resetMask() {
+	public static void useMask() {
 		Gdx.gl.glColorMask(true, true, true, true);
 
 		Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
