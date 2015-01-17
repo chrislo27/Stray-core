@@ -197,6 +197,8 @@ public class Main extends Game implements Consumer {
 		pix.fill();
 		filltex = new Texture(pix);
 		pix.dispose();
+		
+		shapes = new ShapeRenderer();
 
 		buffer = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight(), true);
