@@ -1,13 +1,8 @@
 package stray;
 
-import java.io.BufferedReader;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -34,8 +29,6 @@ import stray.transition.TransitionScreen;
 import stray.util.AssetMap;
 import stray.util.CaptureStream;
 import stray.util.CaptureStream.Consumer;
-import stray.util.render.Gears;
-import stray.util.render.Shaders;
 import stray.util.Difficulty;
 import stray.util.GameException;
 import stray.util.Logger;
@@ -44,6 +37,8 @@ import stray.util.MemoryUtils;
 import stray.util.Splashes;
 import stray.util.Utils;
 import stray.util.VersionGetter;
+import stray.util.render.Gears;
+import stray.util.render.Shaders;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -66,10 +61,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.JsonReader;
-import com.badlogic.gdx.utils.JsonValue;
 
 /**
  * 
@@ -80,11 +74,11 @@ public class Main extends Game implements Consumer {
 
 	public OrthographicCamera camera;
 
-	public ShaderProgram defaultShader;
-
 	public SpriteBatch batch;
 	public SpriteBatch maskRenderer;
 	public SpriteBatch blueprintrenderer;
+	
+	public ShapeRenderer shapes;
 
 	public FrameBuffer buffer;
 	public FrameBuffer buffer2;
@@ -134,6 +128,7 @@ public class Main extends Game implements Consumer {
 	public ShaderProgram greyshader;
 	public ShaderProgram warpshader;
 	public ShaderProgram blurshader;
+	public ShaderProgram defaultShader;
 
 	public HashMap<String, SynchedAnimation> animations = new HashMap<String, SynchedAnimation>();
 	public HashMap<String, Texture> textures = new HashMap<String, Texture>();
@@ -311,6 +306,7 @@ public class Main extends Game implements Consumer {
 		maskRenderer.dispose();
 		blurshader.dispose();
 		blueprintrenderer.dispose();
+		shapes.dispose();
 
 		buffer.dispose();
 		buffer2.dispose();
@@ -589,10 +585,6 @@ public class Main extends Game implements Consumer {
 	public void render() {
 		deltaUntilTick += Gdx.graphics.getRawDeltaTime();
 
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		Gdx.gl.glClearDepthf(1f);
-		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
-
 		try {
 			while (deltaUntilTick >= (1.0f / TICKS)) {
 				if (getScreen() != null) ((Updateable) getScreen()).tickUpdate();
@@ -680,6 +672,10 @@ public class Main extends Game implements Consumer {
 	}
 
 	private void preRender() {
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClearDepthf(1f);
+		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
+		
 		camera.update();
 		gears.update(1);
 		if (Gdx.input.isKeyJustPressed(Keys.F12)) {
