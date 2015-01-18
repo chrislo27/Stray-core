@@ -1,16 +1,12 @@
 package stray;
 
-import stray.transition.FadeIn;
-import stray.transition.FadeOut;
-import stray.ui.BooleanButton;
 import stray.ui.BackButton;
-import stray.ui.Button;
-import stray.ui.ChoiceButton;
+import stray.ui.BooleanButton;
 import stray.ui.LanguageButton;
+import stray.ui.Slider;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 
 public class SettingsScreen extends Updateable {
@@ -28,7 +24,7 @@ public class SettingsScreen extends Updateable {
 
 			@Override
 			public boolean onLeftClick() {
-				main.setScreen(Main.MAINMENU);
+				exitScreen();
 				return true;
 			}
 		});
@@ -45,8 +41,15 @@ public class SettingsScreen extends Updateable {
 				return true;
 			}
 		}.setState(Settings.isSmallResolution()));
+		container.elements.add(music.setSlider(Settings.getMusicVolume()));
+		container.elements.add(sound.setSlider(Settings.getSoundVolume()));
 
 	}
+
+	private Slider music = new Slider((Gdx.graphics.getWidth() / 2) - 80,
+			Gdx.graphics.getHeight() - 192, 160, 32);
+	private Slider sound = new Slider((Gdx.graphics.getWidth() / 2) - 80,
+			Gdx.graphics.getHeight() - 240, 160, 32);
 
 	private boolean showRestartMsg = false;
 
@@ -68,6 +71,15 @@ public class SettingsScreen extends Updateable {
 			main.drawScaled(Translator.getMsg("menu.settings.requiresrestart"),
 					(Gdx.graphics.getWidth() / 2), 100, 512, 0);
 		}
+		main.font.setColor(1, 1, 1, 1);
+		main.font.draw(main.batch,
+				Translator.getMsg("menu.settings.musicvol", (int) (music.slider * 100)),
+				(Gdx.graphics.getWidth() / 2) + 80 + (main.font.getSpaceWidth()),
+				Gdx.graphics.getHeight() - 192 + 20);
+		main.font.draw(main.batch,
+				Translator.getMsg("menu.settings.soundvol", (int) (sound.slider * 100)),
+				(Gdx.graphics.getWidth() / 2) + 80 + (main.font.getSpaceWidth()),
+				Gdx.graphics.getHeight() - 240 + 20);
 
 		main.batch.end();
 	}
@@ -77,6 +89,15 @@ public class SettingsScreen extends Updateable {
 		if (Gdx.input.isKeyJustPressed(Keys.R) && Main.debug) {
 			addGuiElements();
 		}
+		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			exitScreen();
+		}
+	}
+
+	private void exitScreen() {
+		main.setScreen(Main.MAINMENU);
+		Settings.getPreferences().putFloat("sound", sound.slider).putFloat("music", music.slider)
+				.flush();
 	}
 
 	@Override
