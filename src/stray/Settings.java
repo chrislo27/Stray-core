@@ -40,4 +40,12 @@ public class Settings {
 		return instance().pref.getBoolean("resolutionsmall", false);
 	}
 	
+	public static float getMusicVolume(){
+		return instance().pref.getFloat("music", 1);
+	}
+	
+	public static float getSoundVolume(){
+		return instance().pref.getFloat("sound", 1);
+	}
+	
 }
