@@ -219,9 +219,7 @@ public class World implements TileBasedMap {
 
 		if (Main.debug) {
 			if (Gdx.input.isKeyPressed(Keys.ALT_LEFT) || Gdx.input.isKeyPressed(Keys.ALT_RIGHT)) {
-				if (Gdx.input.isKeyJustPressed(Keys.F)) {
-					renderer.rightside = !renderer.rightside;
-				} else if (Gdx.input.isKeyJustPressed(Keys.T)) {
+				if (Gdx.input.isKeyJustPressed(Keys.T)) {
 					getPlayer().damage(0.999f);
 				}
 			}

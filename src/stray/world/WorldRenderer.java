@@ -1,6 +1,7 @@
 package stray.world;
 
 import stray.Main;
+import stray.Settings;
 import stray.Translator;
 import stray.blocks.Blocks;
 import stray.entity.Entity;
@@ -28,11 +29,8 @@ public class WorldRenderer {
 
 	private Sprite detection;
 
-	protected float flip = 1f;
-	protected boolean rightside = true;
-	
 	public boolean showGrid = false;
-	
+
 	protected float timeSinceFull = 1337;
 
 	public WorldRenderer(World world) {
@@ -48,9 +46,9 @@ public class WorldRenderer {
 		int prex = (int) MathUtils.clamp(((world.camera.camerax / World.tilesizex) - 1), 0f, maxx);
 		int prey = (int) MathUtils.clamp(((world.camera.cameray / World.tilesizey) - 1), 0f, maxy);
 		int postx = (int) MathUtils.clamp((world.camera.camerax / World.tilesizex) + 2
-				+ (Gdx.graphics.getWidth() / World.tilesizex), 0f, maxx);
+				+ (Settings.DEFAULT_WIDTH / World.tilesizex), 0f, maxx);
 		int posty = (int) MathUtils.clamp((world.camera.cameray / World.tilesizey) + 2
-				+ (Gdx.graphics.getHeight() / World.tilesizex), 0f, maxy);
+				+ (Settings.DEFAULT_HEIGHT / World.tilesizex), 0f, maxy);
 
 		main.font.setColor(Color.WHITE);
 		for (int x = prex; x < postx; x++) {
@@ -89,26 +87,12 @@ public class WorldRenderer {
 	}
 
 	public void renderBuffer() {
-		// batch.setColor(0, 0, 0, 1);
-		// main.fillRect(0, 0, Gdx.graphics.getWidth(),
-		// Gdx.graphics.getHeight());
-		main.buffer2.begin();
-		renderBackground();
-		main.buffer2.end();
-		batch.setColor(1, 1, 1, 1);
-		batch.draw(main.buffer2.getColorBufferTexture(), (rightside ? 0 : Gdx.graphics.getWidth()),
-				Gdx.graphics.getHeight(), main.buffer2.getWidth() * (rightside ? 1 : -1),
-				-main.buffer2.getHeight());
+		batch.setColor(0, 0, 0, 1);
+		main.fillRect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		batch.draw(main.buffer.getColorBufferTexture(), (Gdx.graphics.getWidth() / 2f)
-				- ((main.buffer.getWidth() * flip) / 2f), Gdx.graphics.getHeight(),
-				main.buffer.getWidth() * flip, -main.buffer.getHeight());
-
-		if (rightside) {
-			flip = MathUtils.clamp(flip + Gdx.graphics.getRawDeltaTime() * 2, -1f, 1f);
-		} else {
-			flip = MathUtils.clamp(flip - Gdx.graphics.getRawDeltaTime() * 2, -1f, 1f);
-		}
+				- ((main.buffer.getWidth()) / 2f), Gdx.graphics.getHeight(),
+				Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
 	}
 
 	public void renderVoid() {
@@ -210,14 +194,14 @@ public class WorldRenderer {
 
 	public void renderHealth() {
 		if (world.getPlayer() == null) return;
-		if (world.getPlayer().health >= world.getPlayer().maxhealth){
-			if(timeSinceFull >= 3 && world.timeWithoutInput < 5) return;
+		if (world.getPlayer().health >= world.getPlayer().maxhealth) {
+			if (timeSinceFull >= 3 && world.timeWithoutInput < 5) return;
 			timeSinceFull += Gdx.graphics.getRawDeltaTime();
-			if(Math.round(timeSinceFull * 5) % 2 == 0 && timeSinceFull < 1.5f){
+			if (Math.round(timeSinceFull * 5) % 2 == 0 && timeSinceFull < 1.5f) {
 				return;
 			}
 		}
-		
+
 		batch.setColor(0, 0, 0, 0.3f);
 		main.fillRect(0, 0, 128, 50);
 
