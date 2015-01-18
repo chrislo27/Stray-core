@@ -58,7 +58,7 @@ public strictfp class MainMenuScreen extends Updateable {
 				System.exit(0);
 				return true;
 			}
-		});
+		}.useExitTexture());
 	}
 
 	boolean hasSave = false;
