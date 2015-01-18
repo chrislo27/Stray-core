@@ -7,7 +7,6 @@ import stray.blocks.Blocks;
 import stray.entity.Entity;
 import stray.util.AssetMap;
 import stray.util.MathHelper;
-import stray.util.Message;
 import stray.util.ParticlePool;
 import stray.util.Utils;
 import stray.util.render.ElectricityRenderer;
@@ -31,8 +30,6 @@ public class WorldRenderer {
 	private Sprite detection;
 
 	public boolean showGrid = false;
-
-	protected float timeSinceFull = 1337;
 
 	public WorldRenderer(World world) {
 		this.world = world;
@@ -156,22 +153,7 @@ public class WorldRenderer {
 
 	public void renderUi() {
 		if (world.getPlayer() == null) return;
-
-		Color c;
-		int offsety = 0;
-		for (int i = world.msgs.size - 1; i >= 0; i--) {
-			Message m = world.msgs.get(i);
-			if (offsety % 2 == 0) {
-				c = Main.getRainbow();
-			} else {
-				c = Main.getInverseRainbow();
-			}
-			main.font.setColor(c.r, c.g, c.b, (m.timer > 10 ? 1 : (m.timer / 10f)));
-			main.font.draw(batch, ">", 37, 75 + offsety);
-			main.font.setColor(1, 1, 1, (m.timer > 10 ? 1 : (m.timer / 10f)));
-			main.font.draw(batch, m.msg, 50, 75 + offsety);
-			offsety += 15;
-		}
+		
 		main.font.setColor(Color.WHITE);
 		batch.setColor(Color.WHITE);
 
@@ -196,13 +178,6 @@ public class WorldRenderer {
 
 	public void renderHealth() {
 		if (world.getPlayer() == null) return;
-		if (world.getPlayer().health >= world.getPlayer().maxhealth) {
-			if (timeSinceFull >= 3 && world.timeWithoutInput < 5) return;
-			timeSinceFull += Gdx.graphics.getRawDeltaTime();
-			if (Math.round(timeSinceFull * 5) % 2 == 0 && timeSinceFull < 1.5f) {
-				return;
-			}
-		}
 
 		batch.setColor(0, 0, 0, 0.3f);
 		main.fillRect(0, 0, 128, 50);
@@ -242,17 +217,33 @@ public class WorldRenderer {
 	}
 
 	public void onDamagePlayer(float original) {
-		timeSinceFull = 0;
 		world.vignettecolour.set(1, 0, 0, 1f);
 	}
 
 	public void renderAugments() {
-		for (int i = 0; i < 5; i++) {
-			Utils.drawRotated(batch, main.textures.get("gear"), 8 + (i * 32) - (i * 3),
-					128 + (i % 2 != 0 ? 7 : 0), 32, 32,
-					MathHelper.getNumberFromTime(((MathHelper.getNumberFromTime(2.5f) > 0.65f) ? 0.75f : 5f)) * 360, i % 2 == 0);
+		int augments = 39;
+		
+		batch.setColor(0, 0, 0, 0.3f);
+		main.fillRect(128, 0, 16 + (augments * 29), 50);
+		batch.setColor(1, 1, 1, 1);
+		
+		for (int i = 0; i < augments; i++) {
+			batch.setColor(0, 0, 0, 0.5f);
+			if(i == aug) batch.setColor(((i + 1) * 92) / 255f, ((i + 1) * 32) / 255f, ((i + 1) * 85) / 255f, 1);
+			Utils.drawRotated(batch, main.textures.get("gear"), 135 + (i * 32) - (i * 3),
+					5 + (i % 2 != 0 ? 7 : 0), 32, 32,
+					MathHelper.getNumberFromTime(((false) ? 0.75f : 5f)) * 360, i % 2 == 0);
+		}
+		batch.setColor(1, 1, 1, 1);
+		
+		if(Gdx.input.isKeyJustPressed(Keys.COMMA)){
+			if(aug > 0) aug--;
+		}else if(Gdx.input.isKeyJustPressed(Keys.PERIOD)){
+			if(aug < augments - 1) aug++;
 		}
 	}
+	
+	private int aug = 0;
 
 	public void renderDebug(int starting) {
 		if (world.getPlayer() == null) return;

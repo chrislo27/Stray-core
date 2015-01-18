@@ -17,7 +17,6 @@ import stray.pathfinding.TileBasedMap;
 import stray.util.AssetMap;
 import stray.util.GlobalVariables;
 import stray.util.MathHelper;
-import stray.util.Message;
 import stray.util.Particle;
 import stray.util.ParticlePool;
 import stray.util.Sizeable;
@@ -84,8 +83,6 @@ public class World implements TileBasedMap {
 	public int voidTime = -1;
 
 	public WorldRenderer renderer;
-
-	Array<Message> msgs = new Array<Message>();
 
 	public Color vignettecolour = new Color(0, 0, 0, 0);
 
@@ -394,14 +391,6 @@ public class World implements TileBasedMap {
 			}
 		}
 
-		for (int i = msgs.size - 1; i >= 0; i--) {
-			if (msgs.get(i).timer <= 0) {
-				msgs.removeIndex(i);
-				continue;
-			}
-			msgs.get(i).timer--;
-		}
-
 		centerCamera();
 		camera.update();
 
@@ -474,14 +463,6 @@ public class World implements TileBasedMap {
 
 	public void dispose() {
 		voidTimer = 0;
-	}
-
-	public void addMessage(String s, int time) {
-		msgs.add(new Message(Main.convertStringToSpecial(s), time));
-	}
-
-	public void addMessage(String s) {
-		addMessage(s, 150);
 	}
 
 	/**
