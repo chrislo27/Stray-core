@@ -1,8 +1,8 @@
 package stray.util.render;
 
 import stray.Main;
+import stray.Settings;
 import stray.blocks.Blocks;
-import stray.transition.Eat;
 import stray.transition.FadeOut;
 import stray.transition.Spiral;
 import stray.util.AssetMap;
@@ -90,7 +90,7 @@ public class SpaceBackground {
 				Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		main.font.draw(main.batch, "Did you ever really remove me?", krakenx + 100, 225);
 
-		if (Main.debug) {
+		if (Settings.debug) {
 			if (Gdx.input.isKeyJustPressed(Keys.UP)) {
 				maxAsteroids++;
 				msg = "# of asteroids now: " + maxAsteroids;

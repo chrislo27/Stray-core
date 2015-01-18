@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import stray.Main;
+import stray.Settings;
 
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
@@ -39,7 +40,7 @@ public class VersionGetter {
 			Main.latestVersionNumber = value.getInt("version_number", 0);
 			Main.latestVersion = value.getString("version", "");
 
-			if (Main.debug) Main.logger
+			if (Settings.debug) Main.logger
 					.debug("JSON obtained from host: " + file.toString());
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
