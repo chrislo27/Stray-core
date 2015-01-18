@@ -6,7 +6,7 @@ import stray.conversation.Conversations;
 import stray.transition.FadeIn;
 import stray.transition.FadeOut;
 import stray.ui.Button;
-import stray.ui.ExitButton;
+import stray.ui.BackButton;
 import stray.util.AssetMap;
 import stray.util.Utils;
 
@@ -19,7 +19,7 @@ public class LevelSelectScreen extends Updateable {
 
 	public LevelSelectScreen(Main m) {
 		super(m);
-		container.elements.add(new ExitButton(Gdx.graphics.getWidth() - 37, Gdx.graphics
+		container.elements.add(new BackButton(Gdx.graphics.getWidth() - 37, Gdx.graphics
 				.getHeight() - 37) {
 
 			@Override

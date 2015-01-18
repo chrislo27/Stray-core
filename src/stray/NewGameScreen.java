@@ -5,7 +5,7 @@ import stray.transition.FadeOut;
 import stray.ui.BooleanButton;
 import stray.ui.Button;
 import stray.ui.ChoiceButton;
-import stray.ui.ExitButton;
+import stray.ui.BackButton;
 import stray.util.Difficulty;
 import stray.util.render.SpaceBackground;
 
@@ -49,7 +49,7 @@ public class NewGameScreen extends Updateable {
 			}
 
 		});
-		container.elements.add(new ExitButton(Gdx.graphics.getWidth() - 37, Gdx.graphics
+		container.elements.add(new BackButton(Gdx.graphics.getWidth() - 37, Gdx.graphics
 				.getHeight() - 37) {
 
 			@Override

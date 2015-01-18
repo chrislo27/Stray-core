@@ -4,7 +4,7 @@ import stray.conversation.Conversations;
 import stray.transition.FadeIn;
 import stray.transition.FadeOut;
 import stray.ui.Button;
-import stray.ui.ExitButton;
+import stray.ui.BackButton;
 import stray.ui.SettingsButton;
 
 import com.badlogic.gdx.Gdx;
@@ -49,7 +49,7 @@ public strictfp class MainMenuScreen extends Updateable {
 			}
 		});
 		container.elements.add(new SettingsButton(5, 5));
-		container.elements.add(new ExitButton(Gdx.graphics.getWidth() - 37, Gdx.graphics
+		container.elements.add(new BackButton(Gdx.graphics.getWidth() - 37, Gdx.graphics
 				.getHeight() - 37) {
 
 			@Override
