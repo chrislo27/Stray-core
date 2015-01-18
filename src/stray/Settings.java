@@ -34,6 +34,8 @@ public class Settings {
 		return instance().pref;
 	}
 	
+	// SETTINGS METHODS TO END OF FILE
+	
 	public static boolean isSmallResolution(){
 		return instance().pref.getBoolean("resolutionsmall", false);
 	}
