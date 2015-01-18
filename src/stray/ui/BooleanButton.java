@@ -34,5 +34,10 @@ public class BooleanButton extends Button{
 		state = !state;
 		return true;
 	}
+	
+	public BooleanButton setState(boolean b){
+		state = b;
+		return this;
+	}
 
 }

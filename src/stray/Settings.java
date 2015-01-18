@@ -34,4 +34,8 @@ public class Settings {
 		return instance().pref;
 	}
 	
+	public static boolean isSmallResolution(){
+		return instance().pref.getBoolean("resolutionsmall", false);
+	}
+	
 }

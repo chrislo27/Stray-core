@@ -1,26 +1,40 @@
 package stray;
 
+import stray.transition.FadeIn;
+import stray.transition.FadeOut;
 import stray.ui.BooleanButton;
 import stray.ui.BackButton;
+import stray.ui.Button;
+import stray.ui.ChoiceButton;
 import stray.ui.LanguageButton;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 
-
-public class SettingsScreen extends Updateable{
+public class SettingsScreen extends Updateable {
 
 	public SettingsScreen(Main m) {
 		super(m);
-		
+
 		addGuiElements();
 	}
-	
-	private void addGuiElements(){
+
+	private void addGuiElements() {
 		container.elements.clear();
 		container.elements.add(new LanguageButton(5, 5));
-		container.elements.add(new BooleanButton((Gdx.graphics.getWidth() / 2) - 80, Gdx.graphics.getHeight() - 128, 160, 32, "menu."));
+		container.elements.add(new BooleanButton((Gdx.graphics.getWidth() / 2) - 100, Gdx.graphics
+				.getHeight() - 128, 200, 32, "menu.settings.resolution") {
+
+			@Override
+			public boolean onLeftClick() {
+				super.onLeftClick();
+				Settings.getPreferences()
+						.putBoolean("resolutionsmall", !Settings.isSmallResolution()).flush();
+				return true;
+			}
+		}.setState(Settings.isSmallResolution()));
 		container.elements.add(new BackButton(Gdx.graphics.getWidth() - 37, Gdx.graphics
 				.getHeight() - 37) {
 
@@ -36,17 +50,24 @@ public class SettingsScreen extends Updateable{
 	public void render(float delta) {
 		Gdx.gl20.glClearColor(0, 0, 0, 1);
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
+
 		main.batch.begin();
-		
-		
 		container.render(main);
+
+		main.font.setColor(1, 0, 0, 1);
+		main.font.draw(main.batch, "[RED]*[]", (Gdx.graphics.getWidth() / 2) - 100 - (main.font.getSpaceWidth() * 2), Gdx.graphics
+				.getHeight() - 128 + 20);
+		
+		main.font.setColor(1, 1, 1, 1);
+		main.drawScaled(Translator.getMsg("menu.settings.requiresrestart"),
+				(Gdx.graphics.getWidth() / 2), 100, 512, 0);
+		
 		main.batch.end();
 	}
 
 	@Override
 	public void renderUpdate() {
-		if(Gdx.input.isKeyJustPressed(Keys.R) && Main.debug){
+		if (Gdx.input.isKeyJustPressed(Keys.R) && Main.debug) {
 			addGuiElements();
 		}
 	}
@@ -83,5 +104,4 @@ public class SettingsScreen extends Updateable{
 	public void dispose() {
 	}
 
-	
 }

@@ -279,7 +279,7 @@ public class Main extends Game implements Consumer {
 
 	}
 
-	private void prepareStates() {
+	public void prepareStates() {
 		ASSETLOADING = new AssetLoadingScreen(this);
 		MAINMENU = new MainMenuScreen(this);
 		HELP = new HelpScreen(this);
