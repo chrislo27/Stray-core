@@ -7,7 +7,7 @@ import stray.transition.FadeOut;
 
 import com.badlogic.gdx.graphics.Color;
 
-public class SettingsButton extends Button{
+public class SettingsButton extends Button {
 
 	public SettingsButton(int x, int y) {
 		super(x, y, 48, 48, null);
@@ -16,18 +16,17 @@ public class SettingsButton extends Button{
 	@Override
 	public void render(Main main) {
 		imageRender(main, "guisettings");
-		if(this.main == null) this.main = main;
+		if (this.main == null) this.main = main;
 	}
-	
+
 	private Main main = null;
-	
+
 	@Override
 	public boolean onLeftClick() {
-		if(main == null){
+		if (main == null) {
 			return false;
 		}
-		main.transition(new FadeIn(Color.BLACK, 0.25f), new FadeOut(Color.BLACK, 0.25f),
-				Main.SETTINGS);
+		main.setScreen(Main.SETTINGS);
 		return true;
 	}
 
