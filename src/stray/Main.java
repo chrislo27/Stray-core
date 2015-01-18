@@ -825,6 +825,13 @@ public class Main extends Game implements Consumer {
 		return progress.getInteger("difficulty", Difficulty.NORMAL_ID);
 	}
 
+	/**
+	 * basically appends "stray-" to the beginning of your preference
+	 * 
+	 * Preferences used: settings, achievements, progress
+	 * @param ref
+	 * @return preferences
+	 */
 	public static Preferences getPref(String ref) {
 		return Gdx.app.getPreferences("stray-" + ref);
 	}
