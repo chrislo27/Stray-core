@@ -79,7 +79,7 @@ public class Translator {
 		addBundle(defaultLang, I18NBundle.createBundle(base, new Locale("")));
 		addBundle("Česky", I18NBundle.createBundle(base, new Locale("cz")));
 
-		Preferences settings = Main.getPref("settings");
+		Preferences settings = Settings.getPreferences();
 		for (int i = 0; i < languageList.size; i++) {
 			String lang = languageList.get(i);
 			if (lang.equalsIgnoreCase(settings.getString("language", defaultLang))) {

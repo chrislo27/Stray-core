@@ -1,8 +1,11 @@
 package stray;
 
+import stray.ui.BooleanButton;
+import stray.ui.BackButton;
 import stray.ui.LanguageButton;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 
 
@@ -11,17 +14,41 @@ public class SettingsScreen extends Updateable{
 	public SettingsScreen(Main m) {
 		super(m);
 		
+		addGuiElements();
+	}
+	
+	private void addGuiElements(){
+		container.elements.clear();
 		container.elements.add(new LanguageButton(5, 5));
+		container.elements.add(new BooleanButton((Gdx.graphics.getWidth() / 2) - 80, Gdx.graphics.getHeight() - 128, 160, 32, "menu."));
+		container.elements.add(new BackButton(Gdx.graphics.getWidth() - 37, Gdx.graphics
+				.getHeight() - 37) {
+
+			@Override
+			public boolean onLeftClick() {
+				main.setScreen(Main.MAINMENU);
+				return true;
+			}
+		});
 	}
 
 	@Override
 	public void render(float delta) {
 		Gdx.gl20.glClearColor(0, 0, 0, 1);
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		main.batch.begin();
+		
+		
+		container.render(main);
+		main.batch.end();
 	}
 
 	@Override
 	public void renderUpdate() {
+		if(Gdx.input.isKeyJustPressed(Keys.R) && Main.debug){
+			addGuiElements();
+		}
 	}
 
 	@Override
