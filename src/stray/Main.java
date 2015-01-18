@@ -861,6 +861,7 @@ public class Main extends Game implements Consumer {
 		manager.load(AssetMap.add("guisettings", "images/ui/button/settings.png"), Texture.class);
 		manager.load(AssetMap.add("guibg", "images/ui/button/bg.png"), Texture.class);
 		manager.load(AssetMap.add("guiexit", "images/ui/button/exit.png"), Texture.class);
+		manager.load(AssetMap.add("guiback", "images/ui/button/backbutton.png"), Texture.class);
 		manager.load(AssetMap.add("guibgfalse", "images/ui/button/bgfalse.png"), Texture.class);
 		manager.load(AssetMap.add("guibgtrue", "images/ui/button/bgtrue.png"), Texture.class);
 		manager.load(AssetMap.add("detectionarrow", "images/ui/detection.png"), Texture.class);

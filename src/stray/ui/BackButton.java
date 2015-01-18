@@ -17,7 +17,17 @@ public abstract class BackButton extends Button{
 
 	@Override
 	public void render(Main main) {
-		imageRender(main, "guiexit");
+		imageRender(main, (usesExitTex ? exitpath : backpath));
+	}
+	
+	private static final String exitpath = "guiexit";
+	private static final String backpath = "guiback";
+	
+	private boolean usesExitTex = false;
+	
+	public BackButton useExitTexture(){
+		usesExitTex = true;
+		return this;
 	}
 
 	@Override
