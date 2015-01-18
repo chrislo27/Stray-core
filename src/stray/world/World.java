@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Random;
 
 import stray.Main;
+import stray.Settings;
 import stray.blocks.Block;
 import stray.blocks.BlockCameraMagnet;
 import stray.blocks.BlockPlayerSpawner;
@@ -311,7 +312,7 @@ public class World implements TileBasedMap {
 			renderer.renderVoid();
 			if ((camera.camerax / World.tilesizex) - getVoidDistance() < 4) {
 				if ((voidTimer += Gdx.graphics.getRawDeltaTime()) >= VOID_LENGTH) {
-					main.manager.get(AssetMap.get("voidambient"), Sound.class).play(0.75f, 1f,
+					main.manager.get(AssetMap.get("voidambient"), Sound.class).play(Settings.getSoundVolume(), 1f,
 							getPan(getVoidDistance()));
 					voidTimer -= VOID_LENGTH;
 				}

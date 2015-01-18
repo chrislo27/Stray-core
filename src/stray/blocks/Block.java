@@ -3,6 +3,7 @@ package stray.blocks;
 import java.util.HashMap;
 
 import stray.Main;
+import stray.Settings;
 import stray.entity.Entity;
 import stray.util.AssetMap;
 import stray.util.MathHelper;
@@ -399,7 +400,7 @@ public class Block {
 	public static boolean playSound(int x, int y, float camx, float camy, Sound sound, float vol,
 			float pitch) {
 		if (Block.isBlockVisible(camx, camy, x, y)) {
-			sound.play(vol, pitch, Utils.getSoundPan(x, camx));
+			sound.play(vol * Settings.getSoundVolume(), pitch, Utils.getSoundPan(x, camx));
 			return true;
 		}
 		return false;
