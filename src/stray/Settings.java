@@ -7,6 +7,9 @@ import com.badlogic.gdx.Preferences;
 public class Settings {
 	
 	private static Settings instance;
+	
+	public static final int DEFAULT_WIDTH = 1280;
+	public static final int DEFAULT_HEIGHT = 720;
 
 	private Settings() {
 	}
