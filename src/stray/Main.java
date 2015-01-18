@@ -117,6 +117,7 @@ public class Main extends Game implements Consumer {
 	public static TestLevel TESTLEVEL = null;
 	public static NewGameScreen NEWGAME = null;
 	public static BackstoryScreen BACKSTORY = null;
+	public static SettingsScreen SETTINGS = null;
 
 	public static Texture filltex;
 
@@ -292,6 +293,7 @@ public class Main extends Game implements Consumer {
 		TESTLEVEL = new TestLevel(this);
 		NEWGAME = new NewGameScreen(this);
 		BACKSTORY = new BackstoryScreen(this);
+		SETTINGS = new SettingsScreen(this);
 	}
 
 	@Override
@@ -336,6 +338,7 @@ public class Main extends Game implements Consumer {
 		LEVELEDITOR.dispose();
 		TESTLEVEL.dispose();
 		BACKSTORY.dispose();
+		SETTINGS.dispose();
 
 	}
 
@@ -848,6 +851,7 @@ public class Main extends Game implements Consumer {
 		// ui
 		manager.load(AssetMap.add("spacekraken", "images/ui/misc.png"), Texture.class);
 		manager.load(AssetMap.add("guilanguage", "images/ui/button/language.png"), Texture.class);
+		manager.load(AssetMap.add("guisettings", "images/ui/button/settings.png"), Texture.class);
 		manager.load(AssetMap.add("guibg", "images/ui/button/bg.png"), Texture.class);
 		manager.load(AssetMap.add("guiexit", "images/ui/button/exit.png"), Texture.class);
 		manager.load(AssetMap.add("guibgfalse", "images/ui/button/bgfalse.png"), Texture.class);

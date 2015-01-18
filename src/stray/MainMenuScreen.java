@@ -5,9 +5,7 @@ import stray.transition.FadeIn;
 import stray.transition.FadeOut;
 import stray.ui.Button;
 import stray.ui.ExitButton;
-import stray.ui.LanguageButton;
-import stray.util.render.SpaceBackground;
-import stray.world.World;
+import stray.ui.SettingsButton;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -50,7 +48,7 @@ public strictfp class MainMenuScreen extends Updateable {
 				return hasSave;
 			}
 		});
-		container.elements.add(new LanguageButton(5, 5));
+		container.elements.add(new SettingsButton(5, 5));
 		container.elements.add(new ExitButton(Gdx.graphics.getWidth() - 37, Gdx.graphics
 				.getHeight() - 37) {
 
@@ -67,7 +65,6 @@ public strictfp class MainMenuScreen extends Updateable {
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl20.glClearColor(0.909803f, 0.909803f, 0.909803f, 1);
 		Gdx.gl20.glClearColor(0, 0, 0, 1);
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
