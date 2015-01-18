@@ -77,7 +77,7 @@ public class Main extends Game implements Consumer {
 	public SpriteBatch batch;
 	public SpriteBatch maskRenderer;
 	public SpriteBatch blueprintrenderer;
-	
+
 	public ShapeRenderer shapes;
 
 	public FrameBuffer buffer;
@@ -195,13 +195,13 @@ public class Main extends Game implements Consumer {
 		pix.fill();
 		filltex = new Texture(pix);
 		pix.dispose();
-		
+
 		shapes = new ShapeRenderer();
 
-		buffer = new FrameBuffer(Format.RGBA8888, Settings.DEFAULT_WIDTH,
-				Settings.DEFAULT_HEIGHT, true);
-		buffer2 = new FrameBuffer(Format.RGBA8888, Settings.DEFAULT_WIDTH,
-				Settings.DEFAULT_HEIGHT, true);
+		buffer = new FrameBuffer(Format.RGBA8888, Settings.DEFAULT_WIDTH, Settings.DEFAULT_HEIGHT,
+				true);
+		buffer2 = new FrameBuffer(Format.RGBA8888, Settings.DEFAULT_WIDTH, Settings.DEFAULT_HEIGHT,
+				true);
 
 		maskshader = new ShaderProgram(Shaders.VERTBAKE, Shaders.FRAGBAKE);
 		maskshader.begin();
@@ -357,10 +357,10 @@ public class Main extends Game implements Consumer {
 
 		}
 	}
-	
+
 	@Override
-	public void resize(int x, int y){
-		
+	public void resize(int x, int y) {
+
 	}
 
 	public void redirectSysOut() {
@@ -553,10 +553,10 @@ public class Main extends Game implements Consumer {
 		}
 		return rand.nextFloat() * (x - y) + x;
 	}
-	
+
 	public static boolean useDefaultHeight = false;
-	
-	public static void setUseDefaultHeight(boolean b){
+
+	public static void setUseDefaultHeight(boolean b) {
 		useDefaultHeight = b;
 	}
 
@@ -568,7 +568,8 @@ public class Main extends Game implements Consumer {
 	 * @return the y-down conversion of input
 	 */
 	public static int convertY(float f) {
-		return Math.round((useDefaultHeight ? Settings.DEFAULT_HEIGHT : Gdx.graphics.getHeight()) - f);
+		return Math.round((useDefaultHeight ? Settings.DEFAULT_HEIGHT : Gdx.graphics.getHeight())
+				- f);
 	}
 
 	public void drawInverse(String s, float x, float y) {
@@ -689,7 +690,7 @@ public class Main extends Game implements Consumer {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glClearDepthf(1f);
 		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
-		
+
 		camera.update();
 		gears.update(1);
 		if (Gdx.input.isKeyJustPressed(Keys.F12)) {
@@ -739,12 +740,13 @@ public class Main extends Game implements Consumer {
 
 		font.setColor(Color.WHITE);
 
-		font.draw(batch,
-				"FPS: "
-						+ (Gdx.graphics.getFramesPerSecond() <= (MAX_FPS / 4f) ? "[RED]"
-								: (Gdx.graphics.getFramesPerSecond() <= (MAX_FPS / 2f) ? "[YELLOW]"
-										: "")) + Gdx.graphics.getFramesPerSecond() + "[]", 5,
-				Gdx.graphics.getHeight() - 5);
+		if (Settings.showFPS || Settings.debug) {
+			font.draw(batch, "FPS: "
+					+ (Gdx.graphics.getFramesPerSecond() <= (MAX_FPS / 4f) ? "[RED]"
+							: (Gdx.graphics.getFramesPerSecond() <= (MAX_FPS / 2f) ? "[YELLOW]"
+									: "")) + Gdx.graphics.getFramesPerSecond() + "[]", 5,
+					Gdx.graphics.getHeight() - 5);
+		}
 		if (Settings.debug) {
 			font.setMarkupEnabled(false);
 			font.draw(
@@ -837,6 +839,7 @@ public class Main extends Game implements Consumer {
 	 * basically appends "stray-" to the beginning of your preference
 	 * 
 	 * Preferences used: settings, achievements, progress
+	 * 
 	 * @param ref
 	 * @return preferences
 	 */
@@ -869,7 +872,8 @@ public class Main extends Game implements Consumer {
 		manager.load(AssetMap.add("guisettings", "images/ui/button/settings.png"), Texture.class);
 		manager.load(AssetMap.add("guibg", "images/ui/button/bg.png"), Texture.class);
 		manager.load(AssetMap.add("guislider", "images/ui/button/slider.png"), Texture.class);
-		manager.load(AssetMap.add("guisliderarrow", "images/ui/button/sliderarrow.png"), Texture.class);
+		manager.load(AssetMap.add("guisliderarrow", "images/ui/button/sliderarrow.png"),
+				Texture.class);
 		manager.load(AssetMap.add("guiexit", "images/ui/button/exit.png"), Texture.class);
 		manager.load(AssetMap.add("guiback", "images/ui/button/backbutton.png"), Texture.class);
 		manager.load(AssetMap.add("guibgfalse", "images/ui/button/bgfalse.png"), Texture.class);
@@ -946,7 +950,7 @@ public class Main extends Game implements Consumer {
 		// voice (assetmap -> "voice-<voice in convs>")
 
 		// music
-		
+
 		// colour
 		manager.load(AssetMap.add("colour200pts", "sounds/colour/200pts.ogg"), Sound.class);
 		manager.load(AssetMap.add("colourswap", "sounds/colour/apocalypseSwap.ogg"), Sound.class);
