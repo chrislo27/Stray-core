@@ -5,10 +5,13 @@ import stray.ai.BaseAI;
 import stray.entity.types.Weighted;
 import stray.util.AssetMap;
 import stray.util.Difficulty;
+import stray.util.Direction;
 import stray.util.MathHelper;
+import stray.util.Utils;
 import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 
@@ -20,9 +23,6 @@ public class EntityPlayer extends EntityLiving implements Weighted {
 	}
 
 	private float portalglow = 0;
-	private float colourFade = 0f;
-	public String currentSprite = "player";
-	private String lastSprite = "player";
 	public static final float SECONDS_TO_REGEN = 15;
 
 	@Override
@@ -38,20 +38,29 @@ public class EntityPlayer extends EntityLiving implements Weighted {
 	}
 
 	public void drawSprite(float x, float y) {
-		Texture sprite = world.main.manager.get(AssetMap.get(currentSprite), Texture.class);
+		Texture sprite = world.main.manager.get(AssetMap.get("player"), Texture.class);
+		drawSpriteWithFacing(sprite, x, y);
+		drawGears(x, y);
+	}
 
-		if (colourFade > 0) {
-			world.batch.setColor(1, 1, 1, 1f - colourFade);
-			drawSpriteWithFacing(sprite, x, y);
-
-			sprite = world.main.manager.get(AssetMap.get(lastSprite), Texture.class);
-			world.batch.setColor(1, 1, 1, colourFade);
-			drawSpriteWithFacing(sprite, x, y);
-		} else {
-			sprite = world.main.manager.get(AssetMap.get(currentSprite), Texture.class);
-			drawSpriteWithFacing(sprite, x, y);
+	private void drawGears(float x, float y) {
+		world.batch.setColor(1, 0, 0, 1);
+		if(facing == Direction.LEFT){
+			Utils.drawRotated(world.batch, world.main.textures.get("gear"), x + 5,
+					y - 29, 26, 26,
+					MathHelper.getNumberFromTime(((Gdx.input.isKeyPressed(Keys.E)) ? 0.75f : 5f)) * 360, false);
+			Utils.drawRotated(world.batch, world.main.textures.get("gear"), x + 32,
+					y - 25, 19, 19,
+					MathHelper.getNumberFromTime(((Gdx.input.isKeyPressed(Keys.E)) ? 0.75f : 5f)) * 360, false);
+		}else if(facing == Direction.RIGHT){
+			Utils.drawRotated(world.batch, world.main.textures.get("gear"), x + 31,
+					y - 29, 26, 26,
+					MathHelper.getNumberFromTime(((Gdx.input.isKeyPressed(Keys.E)) ? 0.75f : 5f)) * 360, true);
+			Utils.drawRotated(world.batch, world.main.textures.get("gear"), x + 12,
+					y - 25, 19, 19,
+					MathHelper.getNumberFromTime(((Gdx.input.isKeyPressed(Keys.E)) ? 0.75f : 5f)) * 360, true);
 		}
-
+		world.batch.setColor(1, 1, 1, 1);
 	}
 
 	@Override
@@ -76,13 +85,9 @@ public class EntityPlayer extends EntityLiving implements Weighted {
 		if (health <= 0) return;
 
 		drawSprite(x, y);
-		if (colourFade > 0) {
-			colourFade -= Gdx.graphics.getDeltaTime();
-			if (colourFade < 0) colourFade = 0;
-		}
 
 		if (portalglow > 0) {
-			world.batch.setColor(Main.getRainbow(0.5f,1));
+			world.batch.setColor(Main.getRainbow(0.5f, 1));
 			world.batch.setColor(world.batch.getColor().r, world.batch.getColor().b,
 					world.batch.getColor().g, portalglow);
 			world.batch.draw(world.main.animations.get("portal").getCurrentFrame(), 0, 0,
@@ -93,12 +98,12 @@ public class EntityPlayer extends EntityLiving implements Weighted {
 		}
 
 	}
-	
+
 	@Override
-	public void renderUpdate(){
+	public void renderUpdate() {
 		super.renderUpdate();
-		if(invincibility == 0){
-			if(health < maxhealth){
+		if (invincibility == 0) {
+			if (health < maxhealth) {
 				health += (Gdx.graphics.getRawDeltaTime() / SECONDS_TO_REGEN);
 				health = MathUtils.clamp(health, 0, maxhealth);
 			}

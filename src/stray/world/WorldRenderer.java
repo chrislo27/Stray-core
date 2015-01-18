@@ -229,21 +229,14 @@ public class WorldRenderer {
 		
 		for (int i = 0; i < augments; i++) {
 			batch.setColor(0, 0, 0, 0.5f);
-			if(i == aug) batch.setColor(((i + 1) * 92) / 255f, ((i + 1) * 32) / 255f, ((i + 1) * 85) / 255f, 1);
+			if(i == 3) batch.setColor(1, 0, 0, 1);
 			Utils.drawRotated(batch, main.textures.get("gear"), 135 + (i * 32) - (i * 3),
 					5 + (i % 2 != 0 ? 7 : 0), 32, 32,
-					MathHelper.getNumberFromTime(((false) ? 0.75f : 5f)) * 360, i % 2 == 0);
+					MathHelper.getNumberFromTime(((Gdx.input.isKeyPressed(Keys.E)) ? 0.75f : 5f)) * 360, i % 2 == 0);
 		}
 		batch.setColor(1, 1, 1, 1);
 		
-		if(Gdx.input.isKeyJustPressed(Keys.COMMA)){
-			if(aug > 0) aug--;
-		}else if(Gdx.input.isKeyJustPressed(Keys.PERIOD)){
-			if(aug < augments - 1) aug++;
-		}
 	}
-	
-	private int aug = 0;
 
 	public void renderDebug(int starting) {
 		if (world.getPlayer() == null) return;
