@@ -23,6 +23,15 @@ public class SettingsScreen extends Updateable {
 
 	private void addGuiElements() {
 		container.elements.clear();
+		container.elements.add(new BackButton(Gdx.graphics.getWidth() - 37, Gdx.graphics
+				.getHeight() - 37) {
+
+			@Override
+			public boolean onLeftClick() {
+				main.setScreen(Main.MAINMENU);
+				return true;
+			}
+		});
 		container.elements.add(new LanguageButton(5, 5));
 		container.elements.add(new BooleanButton((Gdx.graphics.getWidth() / 2) - 100, Gdx.graphics
 				.getHeight() - 128, 200, 32, "menu.settings.resolution") {
@@ -35,15 +44,7 @@ public class SettingsScreen extends Updateable {
 				return true;
 			}
 		}.setState(Settings.isSmallResolution()));
-		container.elements.add(new BackButton(Gdx.graphics.getWidth() - 37, Gdx.graphics
-				.getHeight() - 37) {
-
-			@Override
-			public boolean onLeftClick() {
-				main.setScreen(Main.MAINMENU);
-				return true;
-			}
-		});
+		
 	}
 
 	@Override
