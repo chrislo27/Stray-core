@@ -41,11 +41,14 @@ public class SettingsScreen extends Updateable {
 				super.onLeftClick();
 				Settings.getPreferences()
 						.putBoolean("resolutionsmall", !Settings.isSmallResolution()).flush();
+				showRestartMsg = true;
 				return true;
 			}
 		}.setState(Settings.isSmallResolution()));
-		
+
 	}
+
+	private boolean showRestartMsg = false;
 
 	@Override
 	public void render(float delta) {
@@ -55,14 +58,17 @@ public class SettingsScreen extends Updateable {
 		main.batch.begin();
 		container.render(main);
 
-		main.font.setColor(1, 0, 0, 1);
-		main.font.draw(main.batch, "[RED]*[]", (Gdx.graphics.getWidth() / 2) - 100 - (main.font.getSpaceWidth() * 2), Gdx.graphics
-				.getHeight() - 128 + 20);
-		
-		main.font.setColor(1, 1, 1, 1);
-		main.drawScaled(Translator.getMsg("menu.settings.requiresrestart"),
-				(Gdx.graphics.getWidth() / 2), 100, 512, 0);
-		
+		if (showRestartMsg) {
+			main.font.setColor(1, 0, 0, 1);
+			main.font.draw(main.batch, "[RED]*[]",
+					(Gdx.graphics.getWidth() / 2) - 100 - (main.font.getSpaceWidth() * 2),
+					Gdx.graphics.getHeight() - 128 + 20);
+
+			main.font.setColor(1, 1, 1, 1);
+			main.drawScaled(Translator.getMsg("menu.settings.requiresrestart"),
+					(Gdx.graphics.getWidth() / 2), 100, 512, 0);
+		}
+
 		main.batch.end();
 	}
 
