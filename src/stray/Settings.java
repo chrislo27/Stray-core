@@ -31,6 +31,8 @@ public class Settings {
 	
 	private void loadResources() {
 		pref = Main.getPref("settings");
+		
+		showFPS = pref.getBoolean("showFPS", true);
 	}
 	
 	public static Preferences getPreferences(){
