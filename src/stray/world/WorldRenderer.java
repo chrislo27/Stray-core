@@ -72,7 +72,6 @@ public class WorldRenderer {
 				}
 			}
 		}
-
 		batch.flush();
 
 	}
@@ -89,9 +88,9 @@ public class WorldRenderer {
 	public void renderBuffer() {
 		batch.setColor(0, 0, 0, 1);
 		main.fillRect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-		batch.draw(main.buffer.getColorBufferTexture(), (Gdx.graphics.getWidth() / 2f)
-				- ((main.buffer.getWidth()) / 2f), Gdx.graphics.getHeight(),
+		batch.setColor(1, 1, 1, 1);
+		
+		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(),
 				Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
 	}
 
