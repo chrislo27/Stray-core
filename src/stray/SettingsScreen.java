@@ -30,7 +30,7 @@ public class SettingsScreen extends Updateable {
 		});
 		container.elements.add(new LanguageButton(5, 5));
 		container.elements.add(new BooleanButton((Gdx.graphics.getWidth() / 2) - 100, Gdx.graphics
-				.getHeight() - 128, 200, 32, "menu.settings.resolution") {
+				.getHeight() - 144, 200, 32, "menu.settings.resolution") {
 
 			@Override
 			public boolean onLeftClick() {
@@ -43,6 +43,28 @@ public class SettingsScreen extends Updateable {
 		}.setState(Settings.isSmallResolution()));
 		container.elements.add(music.setSlider(Settings.getMusicVolume()));
 		container.elements.add(sound.setSlider(Settings.getSoundVolume()));
+		container.elements.add(new BooleanButton((Gdx.graphics.getWidth() / 2) - 80, Gdx.graphics
+				.getHeight() - 286, 160, 32, "menu.settings.showfps") {
+
+			@Override
+			public boolean onLeftClick() {
+				super.onLeftClick();
+				Settings.showFPS = !Settings.showFPS;
+				Settings.getPreferences()
+						.putBoolean("showFPS", Settings.showFPS).flush();
+				return true;
+			}
+		}.setState(Settings.showFPS));
+		container.elements.add(new BooleanButton((Gdx.graphics.getWidth() / 2) - 80, Gdx.graphics
+				.getHeight() - 332, 160, 32, "menu.settings.debugmode") {
+
+			@Override
+			public boolean onLeftClick() {
+				super.onLeftClick();
+				Settings.debug = !Settings.debug;
+				return true;
+			}
+		}.setState(Settings.debug));
 
 	}
 
@@ -65,7 +87,7 @@ public class SettingsScreen extends Updateable {
 			main.font.setColor(1, 0, 0, 1);
 			main.font.draw(main.batch, "[RED]*[]",
 					(Gdx.graphics.getWidth() / 2) - 100 - (main.font.getSpaceWidth() * 2),
-					Gdx.graphics.getHeight() - 128 + 20);
+					Gdx.graphics.getHeight() - 144 + 20);
 
 			main.font.setColor(1, 1, 1, 1);
 			main.drawScaled(Translator.getMsg("menu.settings.requiresrestart"),
