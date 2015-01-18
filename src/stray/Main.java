@@ -295,6 +295,8 @@ public class Main extends Game implements Consumer {
 
 	@Override
 	public void dispose() {
+		Settings.getPreferences().putBoolean("showFPS", Settings.showFPS).flush();
+		
 		batch.dispose();
 		manager.dispose();
 		font.dispose();
