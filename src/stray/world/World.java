@@ -218,7 +218,7 @@ public class World implements TileBasedMap {
 			cameramovex = World.tilesizex * 1.5f;
 		} else cameramovex = 0;
 
-		if (Main.debug) {
+		if (Settings.debug) {
 			if (Gdx.input.isKeyPressed(Keys.ALT_LEFT) || Gdx.input.isKeyPressed(Keys.ALT_RIGHT)) {
 				if (Gdx.input.isKeyJustPressed(Keys.T)) {
 					getPlayer().damage(0.999f);

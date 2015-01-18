@@ -86,7 +86,7 @@ public class SettingsScreen extends Updateable {
 
 	@Override
 	public void renderUpdate() {
-		if (Gdx.input.isKeyJustPressed(Keys.R) && Main.debug) {
+		if (Gdx.input.isKeyJustPressed(Keys.R) && Settings.debug) {
 			addGuiElements();
 		}
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {

@@ -1,14 +1,13 @@
 package stray.blocks.fluid;
 
 import stray.Main;
+import stray.Settings;
 import stray.blocks.Block;
 import stray.blocks.Blocks;
 import stray.util.AssetMap;
 import stray.util.MathHelper;
-import stray.world.BlockUpdate;
 import stray.world.World;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 
@@ -212,7 +211,7 @@ public class BlockFluid extends Block {
 							Main.convertY(y * World.tilesizey - world.camera.cameray)
 									- World.tilesizey, World.tilesizex,
 							(int) (World.tilesizey * getRenderingCoefficient(world, x, y)));
-			if (Main.debug) {
+			if (Settings.debug) {
 				world.main.drawCentered(world.getMeta(x, y) + "", x * World.tilesizex
 						- world.camera.camerax + 32,
 						Main.convertY(y * World.tilesizey - world.camera.cameray) - World.tilesizey

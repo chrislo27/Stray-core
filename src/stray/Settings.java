@@ -12,6 +12,9 @@ public class Settings {
 	public static final int DEFAULT_HEIGHT = 720;
 	public static final int SMALLER_WIDTH = 864;
 	public static final int SMALLER_HEIGHT = 648;
+	
+	public static boolean showFPS = true;
+	public static boolean debug = false;
 
 	private Settings() {
 	}

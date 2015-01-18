@@ -94,9 +94,6 @@ public class Main extends Game implements Consumer {
 
 	Matrix4 normalProjection;
 
-	public static boolean showFPS = true;
-	public static boolean debug = false;
-
 	public static final String version = "v1.3.1-alpha";
 	public static final int currentVersionNumber = 2;
 	public static String latestVersion = "";
@@ -696,9 +693,9 @@ public class Main extends Game implements Consumer {
 		camera.update();
 		gears.update(1);
 		if (Gdx.input.isKeyJustPressed(Keys.F12)) {
-			debug = !debug;
+			Settings.debug = !Settings.debug;
 		}
-		if (debug) { // console things -> alt + key
+		if (Settings.debug) { // console things -> alt + key
 			if (((Gdx.input.isKeyPressed(Keys.ALT_LEFT) || Gdx.input.isKeyPressed(Keys.ALT_RIGHT)))) {
 				if (Gdx.input.isKeyJustPressed(Keys.C)) {
 					if (consolewindow.isVisible()) {
@@ -748,7 +745,7 @@ public class Main extends Game implements Consumer {
 								: (Gdx.graphics.getFramesPerSecond() <= (MAX_FPS / 2f) ? "[YELLOW]"
 										: "")) + Gdx.graphics.getFramesPerSecond() + "[]", 5,
 				Gdx.graphics.getHeight() - 5);
-		if (Main.debug) {
+		if (Settings.debug) {
 			font.setMarkupEnabled(false);
 			font.draw(
 					batch,
@@ -783,7 +780,7 @@ public class Main extends Game implements Consumer {
 		}
 
 		if (this.getScreen() != null) {
-			if (debug) ((Updateable) this.getScreen()).renderDebug(this.renderDebug());
+			if (Settings.debug) ((Updateable) this.getScreen()).renderDebug(this.renderDebug());
 		}
 		batch.end();
 
@@ -871,6 +868,8 @@ public class Main extends Game implements Consumer {
 		manager.load(AssetMap.add("guilanguage", "images/ui/button/language.png"), Texture.class);
 		manager.load(AssetMap.add("guisettings", "images/ui/button/settings.png"), Texture.class);
 		manager.load(AssetMap.add("guibg", "images/ui/button/bg.png"), Texture.class);
+		manager.load(AssetMap.add("guislider", "images/ui/button/slider.png"), Texture.class);
+		manager.load(AssetMap.add("guisliderarrow", "images/ui/button/sliderarrow.png"), Texture.class);
 		manager.load(AssetMap.add("guiexit", "images/ui/button/exit.png"), Texture.class);
 		manager.load(AssetMap.add("guiback", "images/ui/button/backbutton.png"), Texture.class);
 		manager.load(AssetMap.add("guibgfalse", "images/ui/button/bgfalse.png"), Texture.class);

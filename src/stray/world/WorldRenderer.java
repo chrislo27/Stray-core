@@ -6,14 +6,15 @@ import stray.Translator;
 import stray.blocks.Blocks;
 import stray.entity.Entity;
 import stray.util.AssetMap;
+import stray.util.MathHelper;
 import stray.util.Message;
 import stray.util.ParticlePool;
 import stray.util.Utils;
 import stray.util.render.ElectricityRenderer;
-import stray.util.render.RandomText;
 import stray.util.render.SpaceBackground;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.Texture;
@@ -89,7 +90,7 @@ public class WorldRenderer {
 		batch.setColor(0, 0, 0, 1);
 		main.fillRect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		batch.setColor(1, 1, 1, 1);
-		
+
 		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(),
 				Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
 	}
@@ -136,7 +137,7 @@ public class WorldRenderer {
 
 		for (Entity e : world.entities) {
 			e.render(Gdx.graphics.getDeltaTime());
-			if (Main.debug) {
+			if (Settings.debug) {
 				batch.setColor(Color.MAGENTA.r, Color.MAGENTA.g, Color.MAGENTA.b, 0.1f);
 				main.fillRect(
 						(e.x * World.tilesizex) - world.camera.camerax,
@@ -188,6 +189,8 @@ public class WorldRenderer {
 		}
 
 		renderHealth();
+
+		renderAugments();
 		batch.flush();
 	}
 
@@ -241,6 +244,14 @@ public class WorldRenderer {
 	public void onDamagePlayer(float original) {
 		timeSinceFull = 0;
 		world.vignettecolour.set(1, 0, 0, 1f);
+	}
+
+	public void renderAugments() {
+		for (int i = 0; i < 5; i++) {
+			Utils.drawRotated(batch, main.textures.get("gear"), 8 + (i * 32) - (i * 3),
+					128 + (i % 2 != 0 ? 7 : 0), 32, 32,
+					MathHelper.getNumberFromTime(((MathHelper.getNumberFromTime(2.5f) > 0.65f) ? 0.75f : 5f)) * 360, i % 2 == 0);
+		}
 	}
 
 	public void renderDebug(int starting) {
