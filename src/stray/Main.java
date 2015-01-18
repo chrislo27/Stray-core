@@ -201,10 +201,10 @@ public class Main extends Game implements Consumer {
 		
 		shapes = new ShapeRenderer();
 
-		buffer = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(),
-				Gdx.graphics.getHeight(), true);
-		buffer2 = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(),
-				Gdx.graphics.getHeight(), true);
+		buffer = new FrameBuffer(Format.RGBA8888, Settings.DEFAULT_WIDTH,
+				Settings.DEFAULT_HEIGHT, true);
+		buffer2 = new FrameBuffer(Format.RGBA8888, Settings.DEFAULT_WIDTH,
+				Settings.DEFAULT_HEIGHT, true);
 
 		maskshader = new ShaderProgram(Shaders.VERTBAKE, Shaders.FRAGBAKE);
 		maskshader.begin();
@@ -359,6 +359,11 @@ public class Main extends Game implements Consumer {
 			achievements.save("achievement", getPref("achievements"));
 
 		}
+	}
+	
+	@Override
+	public void resize(int x, int y){
+		
 	}
 
 	public void redirectSysOut() {
@@ -551,6 +556,12 @@ public class Main extends Game implements Consumer {
 		}
 		return rand.nextFloat() * (x - y) + x;
 	}
+	
+	public static boolean useDefaultHeight = false;
+	
+	public static void setUseDefaultHeight(boolean b){
+		useDefaultHeight = b;
+	}
 
 	/**
 	 * converts y-down to y-up
@@ -560,7 +571,7 @@ public class Main extends Game implements Consumer {
 	 * @return the y-down conversion of input
 	 */
 	public static int convertY(float f) {
-		return Math.round(Gdx.graphics.getHeight() - f);
+		return Math.round((useDefaultHeight ? Settings.DEFAULT_HEIGHT : Gdx.graphics.getHeight()) - f);
 	}
 
 	public void drawInverse(String s, float x, float y) {
