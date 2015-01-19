@@ -95,6 +95,8 @@ public class World implements TileBasedMap {
 	protected float timeWithoutInput = 0;
 	private float voidTimer = 0;
 	private static final float VOID_LENGTH = 6f;
+	
+	public int currentAugment = 0;
 
 	public World(Main main) {
 		this(main, 32, 24, Main.getRandomInst().nextLong());

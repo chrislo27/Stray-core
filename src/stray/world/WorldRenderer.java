@@ -3,6 +3,7 @@ package stray.world;
 import stray.Main;
 import stray.Settings;
 import stray.Translator;
+import stray.augment.Augments;
 import stray.blocks.Blocks;
 import stray.entity.Entity;
 import stray.util.AssetMap;
@@ -221,7 +222,9 @@ public class WorldRenderer {
 	}
 
 	public void renderAugments() {
-		int augments = 39;
+		int augments = Augments.getList().size;
+		
+		if(augments <= 0) return;
 		
 		batch.setColor(0, 0, 0, 0.3f);
 		main.fillRect(128, 0, 16 + (augments * 29), 50);
@@ -229,6 +232,7 @@ public class WorldRenderer {
 		
 		for (int i = 0; i < augments; i++) {
 			batch.setColor(0, 0, 0, 0.5f);
+			if(i == world.currentAugment) batch.setColor(Augments.getAugment(world.currentAugment).getColor());
 			if(i == 3) batch.setColor(1, 0, 0, 1);
 			Utils.drawRotated(batch, main.textures.get("gear"), 135 + (i * 32) - (i * 3),
 					5 + (i % 2 != 0 ? 7 : 0), 32, 32,

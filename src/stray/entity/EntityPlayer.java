@@ -2,6 +2,7 @@ package stray.entity;
 
 import stray.Main;
 import stray.ai.BaseAI;
+import stray.augment.Augments;
 import stray.entity.types.Weighted;
 import stray.util.AssetMap;
 import stray.util.Difficulty;
@@ -44,7 +45,7 @@ public class EntityPlayer extends EntityLiving implements Weighted {
 	}
 
 	private void drawGears(float x, float y) {
-		world.batch.setColor(1, 0, 0, 1);
+		world.batch.setColor(Augments.getAugment(world.currentAugment).getColor());
 		if(facing == Direction.LEFT){
 			Utils.drawRotated(world.batch, world.main.textures.get("gear"), x + 5,
 					y - 29, 26, 26,
