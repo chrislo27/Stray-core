@@ -18,3 +18,6 @@ To clone this successfully:
 
 
 To run the game, run DesktopLauncher (in the desktop project).
+
+
+You can try to import as a Gradle Project, but from my testing it may or may not go catastrophically wrong.
