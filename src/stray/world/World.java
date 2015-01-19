@@ -97,6 +97,7 @@ public class World implements TileBasedMap {
 	private static final float VOID_LENGTH = 6f;
 	
 	public int currentAugment = 0;
+	private boolean augmentActivate = false;
 
 	public World(Main main) {
 		this(main, 32, 24, Main.getRandomInst().nextLong());
@@ -201,7 +202,8 @@ public class World implements TileBasedMap {
 			}
 			
 			if(Gdx.input.isKeyJustPressed(Keys.E)){
-				
+				Augments.getAugment(currentAugment).onActivateStart();
+				augmentActivate = true;
 			}else if(Gdx.input.isKeyJustPressed(Keys.Q)){
 				if(Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)){
 					currentAugment--;
@@ -212,7 +214,13 @@ public class World implements TileBasedMap {
 				}
 			}
 			if(Gdx.input.isKeyPressed(Keys.E)){
-				
+				Augments.getAugment(currentAugment).onActivate();
+				augmentActivate = true;
+			}
+			
+			if(!Gdx.input.isKeyJustPressed(Keys.E) && augmentActivate){
+				augmentActivate = false;
+				Augments.getAugment(currentAugment).onActivateEnd();
 			}
 			
 		}
