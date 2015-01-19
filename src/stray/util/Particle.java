@@ -16,6 +16,7 @@ public class Particle implements Poolable {
 	float veloy = 0;
 	public float lifetime = -1;
 	float prelife = 0;
+	boolean destroyOnBlock = false;
 
 	float tintr = 1;
 	float tintg = 1;
@@ -75,6 +76,11 @@ public class Particle implements Poolable {
 		tinta = a;
 		return this;
 	}
+	
+	public Particle setDestroyOnBlock(boolean b){
+		destroyOnBlock = b;
+		return this;
+	}
 
 	@Override
 	public void reset() {
@@ -85,6 +91,7 @@ public class Particle implements Poolable {
 		lifetime = -1;
 		prelife = 0;
 		texture = "poof";
+		destroyOnBlock = false;
 		setTint(Color.WHITE);
 	}
 
@@ -129,6 +136,13 @@ public class Particle implements Poolable {
 			prelife -= Gdx.graphics.getDeltaTime();
 		} else if (prelife <= 0) {
 			lifetime -= Gdx.graphics.getDeltaTime();
+		}
+		
+		if(destroyOnBlock){
+			if(MathHelper.intersects((int) x, (int) y, 1, 1, x, y, 8 * World.tilepartx, 8 * World.tileparty)){
+				lifetime = -1;
+				prelife = -1;
+			}
 		}
 
 	}
