@@ -22,6 +22,8 @@ public abstract class Augment {
 	 */
 	public abstract void onActivateEnd();
 	
+	public abstract String getName();
+	
 	public Color getColor(){
 		return reused.set(1, 1, 1, 1);
 	}

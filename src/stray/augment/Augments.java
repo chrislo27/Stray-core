@@ -32,6 +32,11 @@ public class Augments {
 		@Override
 		public void onActivateEnd() {
 		}
+
+		@Override
+		public String getName() {
+			return "augment.default.name";
+		}
 		
 	};
 	
