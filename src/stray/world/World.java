@@ -202,7 +202,7 @@ public class World implements TileBasedMap {
 			}
 			
 			if(Gdx.input.isKeyJustPressed(Keys.E)){
-				Augments.getAugment(currentAugment).onActivateStart();
+				Augments.getAugment(currentAugment).onActivateStart(this);
 				augmentActivate = true;
 			}else if(Gdx.input.isKeyJustPressed(Keys.Q)){
 				if(Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)){
@@ -215,13 +215,13 @@ public class World implements TileBasedMap {
 				renderer.lastAugmentSwitch = System.currentTimeMillis();
 			}
 			if(Gdx.input.isKeyPressed(Keys.E)){
-				Augments.getAugment(currentAugment).onActivate();
+				Augments.getAugment(currentAugment).onActivate(this);
 				augmentActivate = true;
 			}
 			
 			if(!Gdx.input.isKeyJustPressed(Keys.E) && augmentActivate){
 				augmentActivate = false;
-				Augments.getAugment(currentAugment).onActivateEnd();
+				Augments.getAugment(currentAugment).onActivateEnd(this);
 			}
 			
 		}
