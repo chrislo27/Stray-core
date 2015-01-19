@@ -35,11 +35,9 @@ public class PostProcessing {
 				Gdx.graphics.getWidth(), -Gdx.graphics.getHeight(), 0, 0, Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight(), false, false);
 		batch.flush();
-		batch.setShader(null);
 		buffer.end();
 
 		buffer.begin();
-		batch.setShader(blurshader);
 		blurshader.setUniformf("dir", 0f, 1f);
 		batch.draw(buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(),
 				Gdx.graphics.getWidth(), -Gdx.graphics.getHeight(), 0, 0, Gdx.graphics.getWidth(),
