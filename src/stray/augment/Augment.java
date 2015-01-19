@@ -1,5 +1,7 @@
 package stray.augment;
 
+import stray.world.World;
+
 import com.badlogic.gdx.graphics.Color;
 
 
@@ -10,17 +12,17 @@ public abstract class Augment {
 	/**
 	 * called when the player just presses the activate button (key just pressed)
 	 */
-	public abstract void onActivateStart();
+	public abstract void onActivateStart(World world);
 	
 	/**
 	 * called every frame when the activate button is DOWN
 	 */
-	public abstract void onActivate();
+	public abstract void onActivate(World world);
 	
 	/**
 	 * called when the player releases the activate button
 	 */
-	public abstract void onActivateEnd();
+	public abstract void onActivateEnd(World world);
 	
 	public abstract String getName();
 	

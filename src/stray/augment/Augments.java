@@ -1,5 +1,7 @@
 package stray.augment;
 
+import stray.world.World;
+
 import com.badlogic.gdx.utils.Array;
 
 
@@ -20,22 +22,21 @@ public class Augments {
 
 	private Array<Augment> list = new Array<Augment>();
 	private Augment def = new Augment(){
-
-		@Override
-		public void onActivateStart() {
-		}
-
-		@Override
-		public void onActivate() {
-		}
-
-		@Override
-		public void onActivateEnd() {
-		}
-
 		@Override
 		public String getName() {
 			return "augment.default.name";
+		}
+
+		@Override
+		public void onActivateStart(World world) {
+		}
+
+		@Override
+		public void onActivate(World world) {
+		}
+
+		@Override
+		public void onActivateEnd(World world) {
 		}
 		
 	};
