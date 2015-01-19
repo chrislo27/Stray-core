@@ -222,7 +222,7 @@ public class WorldRenderer {
 	}
 
 	public void renderAugments() {
-		int augments = Augments.getList().size;
+		int augments = Math.min(Augments.getList().size, main.progress.getInteger("augmentsunlocked", 0));
 		
 		if(augments <= 0) return;
 		
