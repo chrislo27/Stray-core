@@ -5,6 +5,7 @@ import java.util.Random;
 
 import stray.Main;
 import stray.Settings;
+import stray.augment.Augments;
 import stray.blocks.Block;
 import stray.blocks.BlockCameraMagnet;
 import stray.blocks.BlockPlayerSpawner;
@@ -92,7 +93,6 @@ public class World implements TileBasedMap {
 
 	public float checkpointx, checkpointy;
 
-	protected float timeWithoutInput = 0;
 	private float voidTimer = 0;
 	private static final float VOID_LENGTH = 6f;
 	
@@ -181,27 +181,40 @@ public class World implements TileBasedMap {
 		if (main.getConv() != null) return;
 		if (getPlayer() == null) return;
 		if (getPlayer().health > 0) {
-			timeWithoutInput += Gdx.graphics.getRawDeltaTime();
 
 			if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 				getPlayer().jump();
-				timeWithoutInput = 0;
 			} else if ((Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S))) {
-				timeWithoutInput = 0;
+				
 			} else if ((Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W))) {
-				timeWithoutInput = 0;
+				
 			}
 
 			if ((Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A))) {
 				getPlayer().moveLeft();
-				timeWithoutInput = 0;
+				
 			} else if ((Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D))) {
 				getPlayer().moveRight();
-				timeWithoutInput = 0;
+				
 			} else {
 
 			}
-
+			
+			if(Gdx.input.isKeyJustPressed(Keys.E)){
+				
+			}else if(Gdx.input.isKeyJustPressed(Keys.Q)){
+				if(Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)){
+					currentAugment--;
+					if(currentAugment < 0) currentAugment = Augments.getList().size - 1;
+				}else{
+					currentAugment++;
+					if(currentAugment >= Augments.getList().size) currentAugment = 0;
+				}
+			}
+			if(Gdx.input.isKeyPressed(Keys.E)){
+				
+			}
+			
 		}
 
 		if (Gdx.input.isKeyPressed(Keys.I)) {
