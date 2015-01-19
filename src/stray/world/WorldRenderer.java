@@ -243,6 +243,7 @@ public class WorldRenderer {
 		batch.setColor(1, 1, 1, 1);
 		
 		if(System.currentTimeMillis() - lastAugmentSwitch <= 2500){
+			main.font.setColor(1, 1, 1, 1);
 			String text = Translator.getMsg("ui.currentaugment") + Translator.getMsg(Augments.getAugment(world.currentAugment).getName());
 			main.drawTextBg(text, Gdx.graphics.getWidth() / 2 - (main.font.getBounds(text).width / 2), 50);
 		}
