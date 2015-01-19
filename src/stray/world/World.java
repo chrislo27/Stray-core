@@ -212,6 +212,7 @@ public class World implements TileBasedMap {
 					currentAugment++;
 					if(currentAugment >= Augments.getList().size) currentAugment = 0;
 				}
+				renderer.lastAugmentSwitch = System.currentTimeMillis();
 			}
 			if(Gdx.input.isKeyPressed(Keys.E)){
 				Augments.getAugment(currentAugment).onActivate();

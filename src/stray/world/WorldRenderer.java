@@ -31,6 +31,8 @@ public class WorldRenderer {
 	private Sprite detection;
 
 	public boolean showGrid = false;
+	
+	protected long lastAugmentSwitch = 0;
 
 	public WorldRenderer(World world) {
 		this.world = world;
@@ -240,6 +242,10 @@ public class WorldRenderer {
 		}
 		batch.setColor(1, 1, 1, 1);
 		
+		if(System.currentTimeMillis() - lastAugmentSwitch <= 2500){
+			String text = Translator.getMsg("ui.currentaugment") + Translator.getMsg(Augments.getAugment(world.currentAugment).getName());
+			main.drawTextBg(text, Gdx.graphics.getWidth() / 2 - (main.font.getBounds(text).width / 2), 50);
+		}
 	}
 
 	public void renderDebug(int starting) {
