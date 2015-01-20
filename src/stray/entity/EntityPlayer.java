@@ -46,20 +46,46 @@ public class EntityPlayer extends EntityLiving implements Weighted {
 
 	private void drawGears(float x, float y) {
 		world.batch.setColor(Augments.getAugment(world.currentAugment).getColor());
-		if(facing == Direction.LEFT){
-			Utils.drawRotated(world.batch, world.main.textures.get("gear"), x + 5,
-					y - 29, 26, 26,
-					MathHelper.getNumberFromTime(((Gdx.input.isKeyPressed(Keys.E)) ? 0.75f : 5f)) * 360, false);
-			Utils.drawRotated(world.batch, world.main.textures.get("gear"), x + 32,
-					y - 25, 19, 19,
-					MathHelper.getNumberFromTime(((Gdx.input.isKeyPressed(Keys.E)) ? 0.75f : 5f)) * 360, true);
-		}else if(facing == Direction.RIGHT){
-			Utils.drawRotated(world.batch, world.main.textures.get("gear"), x + 31,
-					y - 29, 26, 26,
-					MathHelper.getNumberFromTime(((Gdx.input.isKeyPressed(Keys.E)) ? 0.75f : 5f)) * 360, true);
-			Utils.drawRotated(world.batch, world.main.textures.get("gear"), x + 12,
-					y - 25, 19, 19,
-					MathHelper.getNumberFromTime(((Gdx.input.isKeyPressed(Keys.E)) ? 0.75f : 5f)) * 360, false);
+		if (world.main.getAugmentsUnlocked() <= 0) world.batch
+				.setColor(1, 1, 1, 1);
+		if (facing == Direction.LEFT) {
+			Utils.drawRotated(
+					world.batch,
+					world.main.textures.get("gear"),
+					x + 5,
+					y - 29,
+					26,
+					26,
+					MathHelper.getNumberFromTime(((Gdx.input.isKeyPressed(Keys.E)) ? 0.75f : 5f)) * 360,
+					false);
+			Utils.drawRotated(
+					world.batch,
+					world.main.textures.get("gear"),
+					x + 32,
+					y - 25,
+					19,
+					19,
+					MathHelper.getNumberFromTime(((Gdx.input.isKeyPressed(Keys.E)) ? 0.75f : 5f)) * 360,
+					true);
+		} else if (facing == Direction.RIGHT) {
+			Utils.drawRotated(
+					world.batch,
+					world.main.textures.get("gear"),
+					x + 31,
+					y - 29,
+					26,
+					26,
+					MathHelper.getNumberFromTime(((Gdx.input.isKeyPressed(Keys.E)) ? 0.75f : 5f)) * 360,
+					true);
+			Utils.drawRotated(
+					world.batch,
+					world.main.textures.get("gear"),
+					x + 12,
+					y - 25,
+					19,
+					19,
+					MathHelper.getNumberFromTime(((Gdx.input.isKeyPressed(Keys.E)) ? 0.75f : 5f)) * 360,
+					false);
 		}
 		world.batch.setColor(1, 1, 1, 1);
 	}

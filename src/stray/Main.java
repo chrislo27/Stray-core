@@ -21,6 +21,7 @@ import stray.achievements.Achievements;
 import stray.achievements.Appearance;
 import stray.achievements.CompletedAchievements;
 import stray.animation.SynchedAnimation;
+import stray.augment.Augments;
 import stray.blocks.Blocks;
 import stray.conversation.Conversation;
 import stray.conversation.Conversations;
@@ -835,6 +836,10 @@ public class Main extends Game implements Consumer {
 
 	public int getDifficulty() {
 		return progress.getInteger("difficulty", Difficulty.NORMAL_ID);
+	}
+	
+	public int getAugmentsUnlocked(){
+		return Math.min(Augments.getList().size, progress.getInteger("augmentsunlocked", 0));
 	}
 
 	/**
