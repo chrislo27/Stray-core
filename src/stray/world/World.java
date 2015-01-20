@@ -231,7 +231,8 @@ public class World implements TileBasedMap {
 					augmentActivate = true;
 				} else if ((!Gdx.input.isKeyPressed(Keys.E) && augmentActivate)
 						|| (System.currentTimeMillis() - lastAugmentUse > Augments.getAugment(
-								currentAugment).getUseTime() && Gdx.input.isKeyPressed(Keys.E) && augmentActivate)) {
+								currentAugment).getUseTime()
+								&& Gdx.input.isKeyPressed(Keys.E) && augmentActivate)) {
 					augmentActivate = false;
 					Augments.getAugment(currentAugment).onActivateEnd(this);
 				}
@@ -285,9 +286,9 @@ public class World implements TileBasedMap {
 		}
 		if (p.health <= 0) return;
 
-		camera.centerOn(((p.x + (p.sizex / 2f)) * tilesizex + cameramovex), ((p.y + (p.sizey / 2f))
-				* tilesizey + cameramovey)
-				- (tilesizey * 3));
+		camera.centerX(((p.x + (p.sizex / 2f)) * tilesizex + cameramovex));
+		if (p.getBlockCollidingDown() != null) camera
+				.centerY(((p.y + (p.sizey / 2f)) * tilesizey + cameramovey) - (tilesizey * 3));
 		for (int x = (int) (p.x - ((Gdx.graphics.getWidth() / 2) / tilesizex)); x < (int) (p.x + ((Gdx.graphics
 				.getWidth() / 2) / tilesizex)); x++) {
 			for (int y = (int) (p.y - ((Gdx.graphics.getHeight() / 2) / tilesizey)) - 3; y < (int) (p.y + ((Gdx.graphics
