@@ -97,7 +97,7 @@ public class World implements TileBasedMap {
 	private static final float VOID_LENGTH = 6f;
 
 	public int currentAugment = 0;
-	private boolean augmentActivate = false;
+	public boolean augmentActivate = false;
 	long lastAugmentUse = System.currentTimeMillis();
 
 	public World(Main main) {
