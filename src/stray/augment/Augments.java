@@ -48,6 +48,10 @@ public class Augments {
 		public boolean canUse(World world) {
 			return false;
 		}
+
+		@Override
+		public void onActivateTick(World world) {
+		}
 		
 	};
 	

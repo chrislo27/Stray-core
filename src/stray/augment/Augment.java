@@ -24,6 +24,11 @@ public abstract class Augment {
 	 */
 	public abstract void onActivateEnd(World world);
 	
+	/**
+	 * called every tick when the activate button is down
+	 */
+	public abstract void onActivateTick(World world);
+	
 	public abstract String getName();
 	
 	public abstract long getUseTime();
