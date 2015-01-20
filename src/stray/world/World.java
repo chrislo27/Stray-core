@@ -433,7 +433,10 @@ public class World implements TileBasedMap {
 
 		if (getPlayer() != null) {
 			if (getVoidDistance() > (getPlayer().x + getPlayer().sizex)) {
-				getPlayer().damage(9001);
+				getPlayer().heal(-(1f / (Main.TICKS * 2f)));
+			}
+			if(augmentActivate){
+				Augments.getAugment(currentAugment).onActivateTick(this);
 			}
 		}
 	}
