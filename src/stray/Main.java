@@ -839,6 +839,8 @@ public class Main extends Game implements Consumer {
 	}
 	
 	public int getAugmentsUnlocked(){
+		if(Settings.debug) return Augments.getList().size;
+		
 		return Math.min(Augments.getList().size, progress.getInteger("augmentsunlocked", 0));
 	}
 
