@@ -17,6 +17,9 @@ public class Particle implements Poolable {
 	public float lifetime = -1;
 	float prelife = 0;
 	boolean destroyOnBlock = false;
+	
+	boolean clockwise = true;
+	float rotspeed = 0;
 
 	float tintr = 1;
 	float tintg = 1;
@@ -81,6 +84,12 @@ public class Particle implements Poolable {
 		destroyOnBlock = b;
 		return this;
 	}
+	
+	public Particle setRotation(float seconds, boolean clockwise){
+		rotspeed = seconds;
+		this.clockwise = clockwise;
+		return this;
+	}
 
 	@Override
 	public void reset() {
@@ -92,6 +101,8 @@ public class Particle implements Poolable {
 		prelife = 0;
 		texture = "poof";
 		destroyOnBlock = false;
+		clockwise = true;
+		rotspeed = 0;
 		setTint(Color.WHITE);
 	}
 
@@ -111,11 +122,17 @@ public class Particle implements Poolable {
 					Texture t = main.manager.get(texture.substring(5), Texture.class);
 					main.batch.setColor(tintr, tintg, tintb,
 							(lifetime <= 0.1f ? (Math.min(lifetime * 10f, tinta)) : tinta));
-					main.batch.draw(
-							t,
-							x * World.tilesizex - (t.getWidth() / 2) - world.camera.camerax,
+					if(rotspeed > 0){
+						Utils.drawRotated(main.batch, t, x * World.tilesizex - (t.getWidth() / 2) - world.camera.camerax,
 							Main.convertY(y * World.tilesizey + (t.getHeight() / 2)
-									- world.camera.cameray));
+									- world.camera.cameray), t.getWidth(), t.getHeight(), MathHelper.getNumberFromTime(rotspeed), clockwise);
+					}else{
+						main.batch.draw(
+								t,
+								x * World.tilesizex - (t.getWidth() / 2) - world.camera.camerax,
+								Main.convertY(y * World.tilesizey + (t.getHeight() / 2)
+										- world.camera.cameray));
+					}
 					main.batch.setColor(Color.WHITE);
 				} else {
 					Texture t = main.manager.get(AssetMap.get(texture), Texture.class);
@@ -126,6 +143,17 @@ public class Particle implements Poolable {
 							x * World.tilesizex - (t.getWidth() / 2) - world.camera.camerax,
 							Main.convertY(y * World.tilesizey + (t.getHeight() / 2)
 									- world.camera.cameray));
+					if(rotspeed > 0){
+						Utils.drawRotated(main.batch, t, x * World.tilesizex - (t.getWidth() / 2) - world.camera.camerax,
+								Main.convertY(y * World.tilesizey + (t.getHeight() / 2)
+										- world.camera.cameray), t.getWidth(), t.getHeight(), MathHelper.getNumberFromTime(rotspeed), clockwise);
+					}else{
+						main.batch.draw(
+								t,
+								x * World.tilesizex - (t.getWidth() / 2) - world.camera.camerax,
+								Main.convertY(y * World.tilesizey + (t.getHeight() / 2)
+										- world.camera.cameray));
+					}
 					main.batch.setColor(Color.WHITE);
 				}
 			}
