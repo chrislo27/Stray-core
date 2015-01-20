@@ -125,7 +125,7 @@ public class Particle implements Poolable {
 					if(rotspeed > 0){
 						Utils.drawRotated(main.batch, t, x * World.tilesizex - (t.getWidth() / 2) - world.camera.camerax,
 							Main.convertY(y * World.tilesizey + (t.getHeight() / 2)
-									- world.camera.cameray), t.getWidth(), t.getHeight(), MathHelper.getNumberFromTime(rotspeed), clockwise);
+									- world.camera.cameray), t.getWidth(), t.getHeight(), MathHelper.getNumberFromTime(rotspeed) * 360, clockwise);
 					}else{
 						main.batch.draw(
 								t,
@@ -146,7 +146,7 @@ public class Particle implements Poolable {
 					if(rotspeed > 0){
 						Utils.drawRotated(main.batch, t, x * World.tilesizex - (t.getWidth() / 2) - world.camera.camerax,
 								Main.convertY(y * World.tilesizey + (t.getHeight() / 2)
-										- world.camera.cameray), t.getWidth(), t.getHeight(), MathHelper.getNumberFromTime(rotspeed), clockwise);
+										- world.camera.cameray), t.getWidth(), t.getHeight(), MathHelper.getNumberFromTime(rotspeed) * 360, clockwise);
 					}else{
 						main.batch.draw(
 								t,
