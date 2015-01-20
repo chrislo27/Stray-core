@@ -38,11 +38,21 @@ public class Augments {
 		@Override
 		public void onActivateEnd(World world) {
 		}
+
+		@Override
+		public long getUseTime() {
+			return 0;
+		}
+
+		@Override
+		public boolean canUse(World world) {
+			return false;
+		}
 		
 	};
 	
 	private void loadResources() {
-		
+		list.add(new FLUDDAugment());
 	}
 	
 	public static Array<Augment> getList(){

@@ -26,6 +26,10 @@ public abstract class Augment {
 	
 	public abstract String getName();
 	
+	public abstract long getUseTime();
+	
+	public abstract boolean canUse(World world);
+	
 	public Color getColor(){
 		return reused.set(1, 1, 1, 1);
 	}

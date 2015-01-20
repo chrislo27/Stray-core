@@ -98,6 +98,7 @@ public class World implements TileBasedMap {
 
 	public int currentAugment = 0;
 	private boolean augmentActivate = false;
+	long lastAugmentUse = System.currentTimeMillis();
 
 	public World(Main main) {
 		this(main, 32, 24, Main.getRandomInst().nextLong());
@@ -202,10 +203,7 @@ public class World implements TileBasedMap {
 			}
 
 			if (main.getAugmentsUnlocked() > 0) {
-				if (Gdx.input.isKeyJustPressed(Keys.E)) {
-					Augments.getAugment(currentAugment).onActivateStart(this);
-					augmentActivate = true;
-				} else if (Gdx.input.isKeyJustPressed(Keys.Q)) {
+				if (Gdx.input.isKeyJustPressed(Keys.Q)) {
 					if (main.getAugmentsUnlocked() > 1) {
 						if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)
 								|| Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
@@ -218,12 +216,22 @@ public class World implements TileBasedMap {
 						renderer.lastAugmentSwitch = System.currentTimeMillis();
 					}
 				}
-				if (Gdx.input.isKeyPressed(Keys.E)) {
-					Augments.getAugment(currentAugment).onActivate(this);
+
+				if (Gdx.input.isKeyJustPressed(Keys.E)
+						&& (Augments.getAugment(currentAugment).canUse(this))) {
+					Augments.getAugment(currentAugment).onActivateStart(this);
 					augmentActivate = true;
+					lastAugmentUse = System.currentTimeMillis();
 				}
 
-				if (!Gdx.input.isKeyPressed(Keys.E) && augmentActivate) {
+				if (Gdx.input.isKeyPressed(Keys.E)
+						&& (System.currentTimeMillis() - lastAugmentUse <= Augments.getAugment(
+								currentAugment).getUseTime())) {
+					Augments.getAugment(currentAugment).onActivate(this);
+					augmentActivate = true;
+				} else if ((!Gdx.input.isKeyPressed(Keys.E) && augmentActivate)
+						|| (System.currentTimeMillis() - lastAugmentUse > Augments.getAugment(
+								currentAugment).getUseTime() && Gdx.input.isKeyPressed(Keys.E) && augmentActivate)) {
 					augmentActivate = false;
 					Augments.getAugment(currentAugment).onActivateEnd(this);
 				}
