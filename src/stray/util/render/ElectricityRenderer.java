@@ -97,8 +97,8 @@ public class ElectricityRenderer {
 		} else {
 			float mid_x = (x2 + x1) * 0.5f;
 			float mid_y = (y2 + y1) * 0.5f;
-			mid_x += (Main.getRandomInst().nextDouble() - 0.5f) * displace;
-			mid_y += (Main.getRandomInst().nextDouble() - 0.5f) * displace;
+			mid_x += (Main.getRandom().nextDouble() - 0.5f) * displace;
+			mid_y += (Main.getRandom().nextDouble() - 0.5f) * displace;
 			drawSingleP2PLightning(batch, x1, y1, mid_x, mid_y, displace * 0.5f, detail, thickness);
 			drawSingleP2PLightning(batch, x2, y2, mid_x, mid_y, displace * 0.5f, detail, thickness);
 		}

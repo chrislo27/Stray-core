@@ -444,8 +444,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 
 	public Color getColor() {
 		if (tint == null) {
-			tint = new Color(Main.getRandomInst().nextFloat(), Main.getRandomInst().nextFloat(),
-					Main.getRandomInst().nextFloat(), 1);
+			tint = new Color(Main.getRandom().nextFloat(), Main.getRandom().nextFloat(),
+					Main.getRandom().nextFloat(), 1);
 		}
 		return tint;
 	}

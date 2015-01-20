@@ -98,8 +98,8 @@ public abstract class EntityLiving extends Entity {
 				.setLifetime(0.4f)
 				.setTexture("particlecircle")
 				.setTint(
-						Main.getRainbow(Main.getRandomInst().nextFloat()
-								* (Main.getRandomInst().nextInt() / Main.random(2, Short.MAX_VALUE)), 1))
+						Main.getRainbow(Main.getRandom().nextFloat()
+								* (Main.getRandom().nextInt() / Main.random(2, Short.MAX_VALUE)), 1))
 				.setAlpha(1 / 3f);
 	}
 

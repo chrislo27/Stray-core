@@ -31,7 +31,7 @@ public class SpaceBackground {
 		return instance;
 	}
 
-	private int magicnumber = Main.getRandomInst().nextInt();
+	private int magicnumber = Main.getRandom().nextInt();
 	private float camerax = 0;
 	private double timewatched = 0d;
 	private float krakenx = Gdx.graphics.getWidth();
@@ -45,7 +45,7 @@ public class SpaceBackground {
 		while (asteroids.size < maxAsteroids) {
 			VisualAsteroid ast = new VisualAsteroid();
 			moveAsteroidToEdge(ast);
-			ast.x = World.tilesizex + (Gdx.graphics.getWidth() * Main.getRandomInst().nextFloat());
+			ast.x = World.tilesizex + (Gdx.graphics.getWidth() * Main.getRandom().nextFloat());
 			asteroids.add(ast);
 		}
 	}
@@ -155,9 +155,9 @@ public class SpaceBackground {
 
 	private void moveAsteroidToEdge(VisualAsteroid ast) {
 		ast.y = (Gdx.graphics.getHeight() - (ast.size * (32 / 4)))
-				* Main.getRandomInst().nextFloat();
+				* Main.getRandom().nextFloat();
 		ast.x = Gdx.graphics.getWidth() + World.tilesizex
-				+ (Main.getRandomInst().nextFloat() * (World.tilesizex * 2));
+				+ (Main.getRandom().nextFloat() * (World.tilesizex * 2));
 		ast.prepare();
 	}
 
@@ -182,8 +182,8 @@ class VisualAsteroid {
 	}
 
 	public void prepare() {
-		size = 0.75f + Main.getRandomInst().nextFloat();
-		speed = 0.75f + Main.getRandomInst().nextFloat();
+		size = 0.75f + Main.getRandom().nextFloat();
+		speed = 0.75f + Main.getRandom().nextFloat();
 		colour = false;
 		if ((Main.random(1, Math.round(SpaceBackground.maxAsteroids * 32)) == 1)
 				&& !SpaceBackground.instance().containsSpecial()) {

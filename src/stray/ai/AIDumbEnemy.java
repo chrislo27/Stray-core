@@ -12,7 +12,7 @@ public class AIDumbEnemy extends BaseAI {
 	/**
 	 * false = left
 	 */
-	boolean direction = Main.getRandomInst().nextBoolean();
+	boolean direction = Main.getRandom().nextBoolean();
 
 	@Override
 	public void tickUpdate() {

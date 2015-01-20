@@ -443,7 +443,7 @@ public class Main extends Game implements Consumer {
 
 	private static Random random = new Random();
 
-	public static Random getRandomInst() {
+	public static Random getRandom() {
 		return random;
 	}
 

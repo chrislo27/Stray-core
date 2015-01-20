@@ -101,7 +101,7 @@ public class World implements TileBasedMap {
 	long lastAugmentUse = System.currentTimeMillis();
 
 	public World(Main main) {
-		this(main, 32, 24, Main.getRandomInst().nextLong());
+		this(main, 32, 24, Main.getRandom().nextLong());
 	}
 
 	public World(Main main, int x, int y, long seed) {

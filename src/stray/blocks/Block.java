@@ -28,7 +28,7 @@ public class Block {
 		this.path = path;
 	}
 
-	public static final int globalMagicNumber = Main.getRandomInst().nextInt();
+	public static final int globalMagicNumber = Main.getRandom().nextInt();
 
 	protected boolean connectedTextures = false;
 	protected boolean variants = false;
