@@ -35,8 +35,8 @@ public class FLUDDAugment extends Augment {
 		}
 		
 		if(player.health < player.maxhealth){
-			// 50% regen boost
-			player.health += (Gdx.graphics.getRawDeltaTime() / (EntityPlayer.SECONDS_TO_REGEN / 2f));
+			// 25% regen boost
+			player.health += (Gdx.graphics.getRawDeltaTime() / (EntityPlayer.SECONDS_TO_REGEN * 0.25f));
 			player.health = MathUtils.clamp(player.health, 0f, player.maxhealth);
 		}
 	}
