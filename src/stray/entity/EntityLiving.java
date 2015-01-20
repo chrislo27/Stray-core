@@ -116,8 +116,7 @@ public abstract class EntityLiving extends Entity {
 	 * @return false if cancelled
 	 */
 	public boolean damage(float dmg) {
-		if (dmg <= 0) return false;
-		if (health <= 0) return false;
+		if (dmg <= 0 || health <= 0) return false;
 		if (dmg > 0 && invincibility > 0) return false;
 		health = MathUtils.clamp(health - dmg, 0f, maxhealth);
 		if(dmg > 0) invincibility = Math.round(invulnTime * Main.TICKS);
@@ -129,7 +128,8 @@ public abstract class EntityLiving extends Entity {
 	 * @param amt
 	 */
 	public void heal(float amt){
-		health = MathUtils.clamp(health + amt, 0, maxhealth);
+		health = MathUtils.clamp(health + amt, 0f, maxhealth);
+		if(health <= 0f) damage(1); // this is so the damage override methods get triggered
 	}
 
 	@Override
