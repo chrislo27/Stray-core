@@ -238,7 +238,7 @@ public class WorldRenderer {
 			if(i == 3) batch.setColor(1, 0, 0, 1);
 			Utils.drawRotated(batch, main.textures.get("gear"), 135 + (i * 32) - (i * 3),
 					5 + (i % 2 != 0 ? 7 : 0), 32, 32,
-					MathHelper.getNumberFromTime(((Gdx.input.isKeyPressed(Keys.E)) ? 0.75f : 5f)) * 360, i % 2 == 0);
+					MathHelper.getNumberFromTime(((world.augmentActivate) ? 0.75f : 5f)) * 360, i % 2 == 0);
 		}
 		batch.setColor(1, 1, 1, 1);
 		
