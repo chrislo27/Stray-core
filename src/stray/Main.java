@@ -276,7 +276,7 @@ public class Main extends Game implements Consumer {
 	@Override
 	public void dispose() {
 		Settings.getPreferences().putBoolean("showFPS", Settings.showFPS).flush();
-		
+
 		batch.dispose();
 		manager.dispose();
 		font.dispose();
@@ -319,6 +319,303 @@ public class Main extends Game implements Consumer {
 		BACKSTORY.dispose();
 		SETTINGS.dispose();
 
+	}
+
+	private void preRender() {
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClearDepthf(1f);
+		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
+
+		camera.update();
+		gears.update(1);
+		if (Gdx.input.isKeyJustPressed(Keys.F12)) {
+			Settings.debug = !Settings.debug;
+		}
+		if (Settings.debug) { // console things -> alt + key
+			if (((Gdx.input.isKeyPressed(Keys.ALT_LEFT) || Gdx.input.isKeyPressed(Keys.ALT_RIGHT)))) {
+				if (Gdx.input.isKeyJustPressed(Keys.C)) {
+					if (consolewindow.isVisible()) {
+						consolewindow.setVisible(false);
+					} else {
+						consolewindow.setVisible(true);
+						conscrollPane.getVerticalScrollBar().setValue(
+								conscrollPane.getVerticalScrollBar().getMaximum());
+					}
+				} else if (Gdx.input.isKeyJustPressed(Keys.Q)) {
+					throw new GameException(
+							"This is a forced crash caused by pressing ALT+Q while in debug mode.");
+				} else if (Gdx.input.isKeyJustPressed(Keys.L)) {
+					LEVELEDITOR.resetWorld();
+					setScreen(LEVELEDITOR);
+				} else if (Gdx.input.isKeyJustPressed(Keys.A)) {
+					toShow.add(new Appearance(Achievements.instance().achievements.get(Achievements
+							.instance().achievementId.get("test"))));
+				} else if (Gdx.input.isKeyJustPressed(Keys.G)) {
+					gears.reset();
+				}
+
+			}
+		}
+	}
+
+	@Override
+	public void render() {
+		deltaUntilTick += Gdx.graphics.getRawDeltaTime();
+
+		try {
+			while (deltaUntilTick >= (1.0f / TICKS)) {
+				if (getScreen() != null) ((Updateable) getScreen()).tickUpdate();
+				tickUpdate();
+				deltaUntilTick -= (1.0f / TICKS);
+			}
+
+			if (getScreen() != null) {
+				((Updateable) getScreen()).renderUpdate();
+			}
+			preRender();
+			super.render();
+			postRender();
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			Gdx.files.local("crash/").file().mkdir();
+			String date = new SimpleDateFormat("yyyy-MM-dd hh-mm-ss").format(new Date());
+			date.trim();
+			FileHandle handle = Gdx.files.local("crash/crash-log_" + date + ".txt");
+			handle.writeString(output.toString(), false);
+
+			consoletext.setText(output.toString());
+			resetSystemOut();
+			System.out.println("\n\nThe game crashed. There is an error log at " + handle.path()
+					+ " ; please send it to the game developer!\n");
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+
+			Gdx.app.exit();
+			System.exit(1);
+		}
+
+	}
+
+	private void postRender() {
+		batch.begin();
+
+		font.setColor(Color.WHITE);
+
+		if (Settings.showFPS || Settings.debug) {
+			font.draw(batch, "FPS: "
+					+ (Gdx.graphics.getFramesPerSecond() <= (MAX_FPS / 4f) ? "[RED]"
+							: (Gdx.graphics.getFramesPerSecond() <= (MAX_FPS / 2f) ? "[YELLOW]"
+									: "")) + Gdx.graphics.getFramesPerSecond() + "[]", 5,
+					Gdx.graphics.getHeight() - 5);
+		}
+		if (Settings.debug) {
+			font.setMarkupEnabled(false);
+			font.draw(
+					batch,
+					"(avg of " + lastFPS.length + " sec: " + String.format("%.1f", getAvgFPS())
+							+ ") " + Arrays.toString(lastFPS),
+					5 + font.getSpaceWidth()
+							+ (font.getBounds("FPS: " + Gdx.graphics.getFramesPerSecond()).width),
+					Gdx.graphics.getHeight() - 5);
+			font.setMarkupEnabled(true);
+		}
+
+		renderAchievements();
+
+		if (currentConvo != null) {
+			batch.setColor(0, 0, 0, 0.5f);
+			fillRect(0, 0, Gdx.graphics.getWidth(), 128);
+			batch.setColor(Color.LIGHT_GRAY);
+			int width = 3;
+			fillRect(0, 0, width, 128);
+			fillRect(0, 126, Gdx.graphics.getWidth(), width);
+			fillRect(0, 0, Gdx.graphics.getWidth(), width);
+			fillRect(Gdx.graphics.getWidth() - width, 0, width, 128);
+
+			font.setColor(Color.WHITE);
+			if (currentConvo.getCurrent().speaker != null) font.draw(batch,
+					Translator.getMsg("conv.name." + currentConvo.getCurrent().speaker) + ": ", 10,
+					120);
+			font.drawWrapped(batch, Translator.getMsg(currentConvo.getCurrent().text), 10, 100,
+					Gdx.graphics.getWidth() - 20);
+			drawInverse(Translator.getMsg("conversation.next"), Gdx.graphics.getWidth() - 8, 20);
+			batch.setColor(Color.WHITE);
+		}
+
+		if (this.getScreen() != null) {
+			if (Settings.debug) ((Updateable) this.getScreen()).renderDebug(this.renderDebug());
+		}
+		batch.end();
+
+		fpstimer += Gdx.graphics.getDeltaTime();
+		if (fpstimer >= 1) {
+			fpstimer--;
+			int[] temp = lastFPS.clone();
+			for (int i = 1; i < lastFPS.length; i++) {
+				lastFPS[i] = temp[i - 1];
+			}
+			lastFPS[0] = Gdx.graphics.getFramesPerSecond();
+		}
+	}
+
+	public void tickUpdate() {
+		if (!(toShow.size == 0)) {
+			if (toShow.first().time == Appearance.startingTime) {
+				manager.get(AssetMap.get("questcomplete"), Sound.class).play(0.5f);
+			}
+			if (toShow.first().time > 0) {
+				toShow.first().time--;
+			} else if (toShow.first().time <= 0 && toShow.first().y <= 0) {
+				toShow.removeIndex(0);
+			}
+		}
+	}
+
+	private void loadAssets() {
+		AssetMap.instance(); // load asset map namer thing
+		Achievements.instance();
+		Translator.instance();
+		Conversations.instance();
+		addColors();
+
+		// missing
+		manager.load(AssetMap.add("blockmissingtexture", "images/blocks/missing/missing.png"),
+				Texture.class);
+		manager.load(AssetMap.add("missingtexture", "images/missing.png"), Texture.class);
+
+		// blocks
+		Blocks.instance().addBlockTextures(this);
+
+		// ui
+		manager.load(AssetMap.add("spacekraken", "images/ui/misc.png"), Texture.class);
+		manager.load(AssetMap.add("guilanguage", "images/ui/button/language.png"), Texture.class);
+		manager.load(AssetMap.add("guisettings", "images/ui/button/settings.png"), Texture.class);
+		manager.load(AssetMap.add("guibg", "images/ui/button/bg.png"), Texture.class);
+		manager.load(AssetMap.add("guislider", "images/ui/button/slider.png"), Texture.class);
+		manager.load(AssetMap.add("guisliderarrow", "images/ui/button/sliderarrow.png"),
+				Texture.class);
+		manager.load(AssetMap.add("guiexit", "images/ui/button/exit.png"), Texture.class);
+		manager.load(AssetMap.add("guiback", "images/ui/button/backbutton.png"), Texture.class);
+		manager.load(AssetMap.add("guibgfalse", "images/ui/button/bgfalse.png"), Texture.class);
+		manager.load(AssetMap.add("guibgtrue", "images/ui/button/bgtrue.png"), Texture.class);
+		manager.load(AssetMap.add("detectionarrow", "images/ui/detection.png"), Texture.class);
+
+		// particle
+		manager.load(AssetMap.add("money", "images/particle/money.png"), Texture.class);
+		manager.load(AssetMap.add("checkpoint", "images/particle/checkpoint.png"), Texture.class);
+		manager.load(AssetMap.add("poof", "images/particle/poof.png"), Texture.class);
+		manager.load(AssetMap.add("sparkle", "images/particle/sparkle.png"), Texture.class);
+		manager.load(AssetMap.add("arrowup", "images/particle/arrow/up.png"), Texture.class);
+		manager.load(AssetMap.add("arrowdown", "images/particle/arrow/down.png"), Texture.class);
+		manager.load(AssetMap.add("arrowleft", "images/particle/arrow/left.png"), Texture.class);
+		manager.load(AssetMap.add("arrowright", "images/particle/arrow/right.png"), Texture.class);
+		manager.load(AssetMap.add("arrowcentre", "images/particle/arrow/centre.png"), Texture.class);
+		manager.load(AssetMap.add("lasercube", "images/particle/lasercube.png"), Texture.class);
+		manager.load(AssetMap.add("particlepower", "images/particle/power.png"), Texture.class);
+		manager.load(AssetMap.add("magnetglow", "images/particle/magnetglow.png"), Texture.class);
+		manager.load(AssetMap.add("airwhoosh", "images/particle/airwhoosh.png"), Texture.class);
+		manager.load(AssetMap.add("particlecircle", "images/particle/circle.png"), Texture.class);
+
+		// cutscene
+		manager.load("images/cutscene/stunning.png", Texture.class);
+		manager.load("images/cutscene/stunning2.png", Texture.class);
+		manager.load("images/cutscene/controls0.png", Texture.class);
+		manager.load("images/cutscene/controls1.png", Texture.class);
+		manager.load("images/cutscene/controls2.png", Texture.class);
+		manager.load("images/cutscene/rep.png", Texture.class);
+
+		// effects
+		manager.load(AssetMap.add("effecticonblindness", "images/ui/effect/icon/blindness.png"),
+				Texture.class);
+		manager.load(AssetMap.add("effectoverlayblindness", "images/ui/effect/blindness.png"),
+				Texture.class);
+
+		// entities
+		manager.load(AssetMap.add("player", "images/entity/player/player.png"), Texture.class);
+		manager.load(AssetMap.add("smallasteroid", "images/entity/smallasteroid.png"),
+				Texture.class);
+		manager.load(AssetMap.add("entityzaborinox", "images/entity/zaborinox.png"), Texture.class);
+
+		// misc
+		manager.load(AssetMap.add("vignette", "images/ui/vignette.png"), Texture.class);
+		manager.load(AssetMap.add("entityshield", "images/entity/shield.png"), Texture.class);
+		manager.load(AssetMap.add("levelselectbg", "images/levelselectbg.png"), Texture.class);
+		manager.load(AssetMap.add("levelselectdot", "images/levelselectdot.png"), Texture.class);
+		manager.load(AssetMap.add("levelselected", "images/levelselected.png"), Texture.class);
+		manager.load(AssetMap.add("glintsquare", "images/item/glintsquare.png"), Texture.class);
+		manager.load(AssetMap.add("voidend", "images/voidend.png"), Texture.class);
+
+		// level backgrounds
+		manager.load(AssetMap.add("levelbgcity", "images/levelbg/city.png"), Texture.class);
+		manager.load(AssetMap.add("levelbgcircuit", "images/levelbg/circuit.png"), Texture.class);
+
+		// colour
+		manager.load(AssetMap.add("colourblue", "images/colour/blue.png"), Texture.class);
+		manager.load(AssetMap.add("colourred", "images/colour/red.png"), Texture.class);
+		manager.load(AssetMap.add("colourorange", "images/colour/orange.png"), Texture.class);
+		manager.load(AssetMap.add("colourgreen", "images/colour/green.png"), Texture.class);
+		manager.load(AssetMap.add("colourpurple", "images/colour/purple.png"), Texture.class);
+		manager.load(AssetMap.add("colouryellow", "images/colour/yellow.png"), Texture.class);
+		manager.load(AssetMap.add("colourmetal", "images/colour/metal_back.jpg"), Texture.class);
+		manager.load(AssetMap.add("colourpointer1", "images/colour/pointer1.png"), Texture.class);
+		manager.load(AssetMap.add("colourpointer2", "images/colour/pointer2.png"), Texture.class);
+		manager.load(AssetMap.add("colournuclear", "images/colour/radioactiveFull.png"),
+				Texture.class);
+
+		// sfx
+		manager.load(AssetMap.add("questcomplete", "sounds/questcomplete.ogg"), Sound.class);
+		manager.load(AssetMap.add("switchsfx", "sounds/switch.ogg"), Sound.class);
+		manager.load(AssetMap.add("voidambient", "sounds/ambient/void.ogg"), Sound.class);
+
+		// voice (assetmap -> "voice-<voice in convs>")
+
+		// music
+
+		// colour
+		manager.load(AssetMap.add("colour200pts", "sounds/colour/200pts.ogg"), Sound.class);
+		manager.load(AssetMap.add("colourswap", "sounds/colour/apocalypseSwap.ogg"), Sound.class);
+		manager.load(AssetMap.add("colourcoverup", "sounds/colour/coverUpAndLand.ogg"), Sound.class);
+		manager.load(AssetMap.add("colourincorrect", "sounds/colour/incorrect.ogg"), Sound.class);
+	}
+
+	private void loadUnmanagedAssets() {
+		// misc
+
+		// unmanaged textures
+		textures.put("gear", new Texture("images/gear.png"));
+		gears = new Gears(this);
+
+		// animations
+		animations.put("shine", new SynchedAnimation(0.1f, 20, "images/item/shine/shine", ".png",
+				false));
+		animations.put("portal", new SynchedAnimation(0.05f, 32, "images/blocks/portal/portal",
+				".png", true).setRegionTile(32, 32));
+
+		// load animations
+		Iterator it = animations.entrySet().iterator();
+		while (it.hasNext()) {
+			((SynchedAnimation) ((Entry) it.next()).getValue()).load();
+		}
+
+	}
+
+	private void addColors() {
+		Colors.put("VOID_PURPLE", new Color(123f / 255f, 0, 1, 1));
+
+		// text related
+		Colors.put("POI", new Color(37 / 255f, 217 / 255f, 217 / 255f, 1));
+		Colors.put("DANGER", new Color(1, 0, 0, 1));
+		Colors.put("MAINOBJ", new Color(1, 217 / 255f, 0, 1));
+	}
+
+	public Texture getCurrentShine() {
+		return animations.get("shine").getCurrentFrame().getTexture();
 	}
 
 	/**
@@ -577,62 +874,6 @@ public class Main extends Game implements Consumer {
 		font.setScale(1);
 	}
 
-	@Override
-	public void render() {
-		deltaUntilTick += Gdx.graphics.getRawDeltaTime();
-
-		try {
-			while (deltaUntilTick >= (1.0f / TICKS)) {
-				if (getScreen() != null) ((Updateable) getScreen()).tickUpdate();
-				tickUpdate();
-				deltaUntilTick -= (1.0f / TICKS);
-			}
-
-			if (getScreen() != null) {
-				((Updateable) getScreen()).renderUpdate();
-			}
-			preRender();
-			super.render();
-			postRender();
-		} catch (Exception e) {
-			e.printStackTrace();
-
-			Gdx.files.local("crash/").file().mkdir();
-			String date = new SimpleDateFormat("yyyy-MM-dd hh-mm-ss").format(new Date());
-			date.trim();
-			FileHandle handle = Gdx.files.local("crash/crash-log_" + date + ".txt");
-			handle.writeString(output.toString(), false);
-
-			consoletext.setText(output.toString());
-			resetSystemOut();
-			System.out.println("\n\nThe game crashed. There is an error log at " + handle.path()
-					+ " ; please send it to the game developer!\n");
-			try {
-				Thread.sleep(5);
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-
-			Gdx.app.exit();
-			System.exit(1);
-		}
-
-	}
-
-	public void tickUpdate() {
-		if (!(toShow.size == 0)) {
-			if (toShow.first().time == Appearance.startingTime) {
-				manager.get(AssetMap.get("questcomplete"), Sound.class).play(0.5f);
-			}
-			if (toShow.first().time > 0) {
-				toShow.first().time--;
-			} else if (toShow.first().time <= 0 && toShow.first().y <= 0) {
-				toShow.removeIndex(0);
-			}
-		}
-	}
-
 	public void renderAchievements() {
 		// achievement -- 0 is fully up, 64 is fully down
 
@@ -667,44 +908,6 @@ public class Main extends Game implements Consumer {
 		}
 	}
 
-	private void preRender() {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		Gdx.gl.glClearDepthf(1f);
-		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
-
-		camera.update();
-		gears.update(1);
-		if (Gdx.input.isKeyJustPressed(Keys.F12)) {
-			Settings.debug = !Settings.debug;
-		}
-		if (Settings.debug) { // console things -> alt + key
-			if (((Gdx.input.isKeyPressed(Keys.ALT_LEFT) || Gdx.input.isKeyPressed(Keys.ALT_RIGHT)))) {
-				if (Gdx.input.isKeyJustPressed(Keys.C)) {
-					if (consolewindow.isVisible()) {
-						consolewindow.setVisible(false);
-					} else {
-						consolewindow.setVisible(true);
-						conscrollPane.getVerticalScrollBar().setValue(
-								conscrollPane.getVerticalScrollBar().getMaximum());
-					}
-				} else if (Gdx.input.isKeyJustPressed(Keys.Q)) {
-					throw new GameException(
-							"This is a forced crash caused by pressing ALT+Q while in debug mode.");
-				} else if (Gdx.input.isKeyJustPressed(Keys.L)) {
-					LEVELEDITOR.resetWorld();
-					setScreen(LEVELEDITOR);
-				} else if (Gdx.input.isKeyJustPressed(Keys.A)) {
-					toShow.add(new Appearance(Achievements.instance().achievements.get(Achievements
-							.instance().achievementId.get("test"))));
-				} else if (Gdx.input.isKeyJustPressed(Keys.G)) {
-					gears.reset();
-				}
-
-			}
-		}
-	}
-
 	private int totalavgFPS = 0;
 	private float fpstimer = 0;
 
@@ -715,68 +918,6 @@ public class Main extends Game implements Consumer {
 		}
 
 		return ((totalavgFPS) / (lastFPS.length * 1f));
-	}
-
-	private void postRender() {
-		batch.begin();
-
-		font.setColor(Color.WHITE);
-
-		if (Settings.showFPS || Settings.debug) {
-			font.draw(batch, "FPS: "
-					+ (Gdx.graphics.getFramesPerSecond() <= (MAX_FPS / 4f) ? "[RED]"
-							: (Gdx.graphics.getFramesPerSecond() <= (MAX_FPS / 2f) ? "[YELLOW]"
-									: "")) + Gdx.graphics.getFramesPerSecond() + "[]", 5,
-					Gdx.graphics.getHeight() - 5);
-		}
-		if (Settings.debug) {
-			font.setMarkupEnabled(false);
-			font.draw(
-					batch,
-					"(avg of " + lastFPS.length + " sec: " + String.format("%.1f", getAvgFPS())
-							+ ") " + Arrays.toString(lastFPS),
-					5 + font.getSpaceWidth()
-							+ (font.getBounds("FPS: " + Gdx.graphics.getFramesPerSecond()).width),
-					Gdx.graphics.getHeight() - 5);
-			font.setMarkupEnabled(true);
-		}
-
-		renderAchievements();
-
-		if (currentConvo != null) {
-			batch.setColor(0, 0, 0, 0.5f);
-			fillRect(0, 0, Gdx.graphics.getWidth(), 128);
-			batch.setColor(Color.LIGHT_GRAY);
-			int width = 3;
-			fillRect(0, 0, width, 128);
-			fillRect(0, 126, Gdx.graphics.getWidth(), width);
-			fillRect(0, 0, Gdx.graphics.getWidth(), width);
-			fillRect(Gdx.graphics.getWidth() - width, 0, width, 128);
-
-			font.setColor(Color.WHITE);
-			if (currentConvo.getCurrent().speaker != null) font.draw(batch,
-					Translator.getMsg("conv.name." + currentConvo.getCurrent().speaker) + ": ", 10,
-					120);
-			font.drawWrapped(batch, Translator.getMsg(currentConvo.getCurrent().text), 10, 100,
-					Gdx.graphics.getWidth() - 20);
-			drawInverse(Translator.getMsg("conversation.next"), Gdx.graphics.getWidth() - 8, 20);
-			batch.setColor(Color.WHITE);
-		}
-
-		if (this.getScreen() != null) {
-			if (Settings.debug) ((Updateable) this.getScreen()).renderDebug(this.renderDebug());
-		}
-		batch.end();
-
-		fpstimer += Gdx.graphics.getDeltaTime();
-		if (fpstimer >= 1) {
-			fpstimer--;
-			int[] temp = lastFPS.clone();
-			for (int i = 1; i < lastFPS.length; i++) {
-				lastFPS[i] = temp[i - 1];
-			}
-			lastFPS[0] = Gdx.graphics.getFramesPerSecond();
-		}
 	}
 
 	public int getMostMemory = MemoryUtils.getUsedMemory();
@@ -816,10 +957,10 @@ public class Main extends Game implements Consumer {
 	public int getDifficulty() {
 		return progress.getInteger("difficulty", Difficulty.NORMAL_ID);
 	}
-	
-	public int getAugmentsUnlocked(){
-		if(Settings.debug) return Augments.getList().size;
-		
+
+	public int getAugmentsUnlocked() {
+		if (Settings.debug) return Augments.getList().size;
+
 		return Math.min(Augments.getList().size, progress.getInteger("augmentsunlocked", 0));
 	}
 
@@ -837,147 +978,6 @@ public class Main extends Game implements Consumer {
 
 	public void setClearColor(int r, int g, int b) {
 		Gdx.gl20.glClearColor(r / 255f, g / 255f, b / 255f, 1f);
-	}
-
-	private void loadAssets() {
-		AssetMap.instance(); // load asset map namer thing
-		Achievements.instance();
-		Translator.instance();
-		Conversations.instance();
-		addColors();
-
-		// missing
-		manager.load(AssetMap.add("blockmissingtexture", "images/blocks/missing/missing.png"),
-				Texture.class);
-		manager.load(AssetMap.add("missingtexture", "images/missing.png"), Texture.class);
-
-		// blocks
-		Blocks.instance().addBlockTextures(this);
-
-		// ui
-		manager.load(AssetMap.add("spacekraken", "images/ui/misc.png"), Texture.class);
-		manager.load(AssetMap.add("guilanguage", "images/ui/button/language.png"), Texture.class);
-		manager.load(AssetMap.add("guisettings", "images/ui/button/settings.png"), Texture.class);
-		manager.load(AssetMap.add("guibg", "images/ui/button/bg.png"), Texture.class);
-		manager.load(AssetMap.add("guislider", "images/ui/button/slider.png"), Texture.class);
-		manager.load(AssetMap.add("guisliderarrow", "images/ui/button/sliderarrow.png"),
-				Texture.class);
-		manager.load(AssetMap.add("guiexit", "images/ui/button/exit.png"), Texture.class);
-		manager.load(AssetMap.add("guiback", "images/ui/button/backbutton.png"), Texture.class);
-		manager.load(AssetMap.add("guibgfalse", "images/ui/button/bgfalse.png"), Texture.class);
-		manager.load(AssetMap.add("guibgtrue", "images/ui/button/bgtrue.png"), Texture.class);
-		manager.load(AssetMap.add("detectionarrow", "images/ui/detection.png"), Texture.class);
-
-		// particle
-		manager.load(AssetMap.add("money", "images/particle/money.png"), Texture.class);
-		manager.load(AssetMap.add("checkpoint", "images/particle/checkpoint.png"), Texture.class);
-		manager.load(AssetMap.add("poof", "images/particle/poof.png"), Texture.class);
-		manager.load(AssetMap.add("sparkle", "images/particle/sparkle.png"), Texture.class);
-		manager.load(AssetMap.add("arrowup", "images/particle/arrow/up.png"), Texture.class);
-		manager.load(AssetMap.add("arrowdown", "images/particle/arrow/down.png"), Texture.class);
-		manager.load(AssetMap.add("arrowleft", "images/particle/arrow/left.png"), Texture.class);
-		manager.load(AssetMap.add("arrowright", "images/particle/arrow/right.png"), Texture.class);
-		manager.load(AssetMap.add("arrowcentre", "images/particle/arrow/centre.png"), Texture.class);
-		manager.load(AssetMap.add("lasercube", "images/particle/lasercube.png"), Texture.class);
-		manager.load(AssetMap.add("particlepower", "images/particle/power.png"), Texture.class);
-		manager.load(AssetMap.add("magnetglow", "images/particle/magnetglow.png"), Texture.class);
-		manager.load(AssetMap.add("airwhoosh", "images/particle/airwhoosh.png"), Texture.class);
-		manager.load(AssetMap.add("particlecircle", "images/particle/circle.png"), Texture.class);
-
-		// cutscene
-		manager.load("images/cutscene/stunning.png", Texture.class);
-		manager.load("images/cutscene/stunning2.png", Texture.class);
-		manager.load("images/cutscene/controls0.png", Texture.class);
-		manager.load("images/cutscene/controls1.png", Texture.class);
-		manager.load("images/cutscene/controls2.png", Texture.class);
-		manager.load("images/cutscene/rep.png", Texture.class);
-
-		// effects
-		manager.load(AssetMap.add("effecticonblindness", "images/ui/effect/icon/blindness.png"),
-				Texture.class);
-		manager.load(AssetMap.add("effectoverlayblindness", "images/ui/effect/blindness.png"),
-				Texture.class);
-
-		// entities
-		manager.load(AssetMap.add("player", "images/entity/player/player.png"), Texture.class);
-		manager.load(AssetMap.add("smallasteroid", "images/entity/smallasteroid.png"),
-				Texture.class);
-		manager.load(AssetMap.add("entityzaborinox", "images/entity/zaborinox.png"), Texture.class);
-
-		// misc
-		manager.load(AssetMap.add("vignette", "images/ui/vignette.png"), Texture.class);
-		manager.load(AssetMap.add("entityshield", "images/entity/shield.png"), Texture.class);
-		manager.load(AssetMap.add("levelselectbg", "images/levelselectbg.png"), Texture.class);
-		manager.load(AssetMap.add("levelselectdot", "images/levelselectdot.png"), Texture.class);
-		manager.load(AssetMap.add("levelselected", "images/levelselected.png"), Texture.class);
-		manager.load(AssetMap.add("glintsquare", "images/item/glintsquare.png"), Texture.class);
-		manager.load(AssetMap.add("voidend", "images/voidend.png"), Texture.class);
-
-		// level backgrounds
-		manager.load(AssetMap.add("levelbgcity", "images/levelbg/city.png"), Texture.class);
-		manager.load(AssetMap.add("levelbgcircuit", "images/levelbg/circuit.png"), Texture.class);
-
-		// colour
-		manager.load(AssetMap.add("colourblue", "images/colour/blue.png"), Texture.class);
-		manager.load(AssetMap.add("colourred", "images/colour/red.png"), Texture.class);
-		manager.load(AssetMap.add("colourorange", "images/colour/orange.png"), Texture.class);
-		manager.load(AssetMap.add("colourgreen", "images/colour/green.png"), Texture.class);
-		manager.load(AssetMap.add("colourpurple", "images/colour/purple.png"), Texture.class);
-		manager.load(AssetMap.add("colouryellow", "images/colour/yellow.png"), Texture.class);
-		manager.load(AssetMap.add("colourmetal", "images/colour/metal_back.jpg"), Texture.class);
-		manager.load(AssetMap.add("colourpointer1", "images/colour/pointer1.png"), Texture.class);
-		manager.load(AssetMap.add("colourpointer2", "images/colour/pointer2.png"), Texture.class);
-		manager.load(AssetMap.add("colournuclear", "images/colour/radioactiveFull.png"),
-				Texture.class);
-
-		// sfx
-		manager.load(AssetMap.add("questcomplete", "sounds/questcomplete.ogg"), Sound.class);
-		manager.load(AssetMap.add("switchsfx", "sounds/switch.ogg"), Sound.class);
-		manager.load(AssetMap.add("voidambient", "sounds/ambient/void.ogg"), Sound.class);
-
-		// voice (assetmap -> "voice-<voice in convs>")
-
-		// music
-
-		// colour
-		manager.load(AssetMap.add("colour200pts", "sounds/colour/200pts.ogg"), Sound.class);
-		manager.load(AssetMap.add("colourswap", "sounds/colour/apocalypseSwap.ogg"), Sound.class);
-		manager.load(AssetMap.add("colourcoverup", "sounds/colour/coverUpAndLand.ogg"), Sound.class);
-		manager.load(AssetMap.add("colourincorrect", "sounds/colour/incorrect.ogg"), Sound.class);
-	}
-
-	private void loadUnmanagedAssets() {
-		// misc
-
-		// unmanaged textures
-		textures.put("gear", new Texture("images/gear.png"));
-		gears = new Gears(this);
-
-		// animations
-		animations.put("shine", new SynchedAnimation(0.1f, 20, "images/item/shine/shine", ".png",
-				false));
-		animations.put("portal", new SynchedAnimation(0.05f, 32, "images/blocks/portal/portal",
-				".png", true).setRegionTile(32, 32));
-
-		// load animations
-		Iterator it = animations.entrySet().iterator();
-		while (it.hasNext()) {
-			((SynchedAnimation) ((Entry) it.next()).getValue()).load();
-		}
-
-	}
-
-	private void addColors() {
-		Colors.put("VOID_PURPLE", new Color(123f / 255f, 0, 1, 1));
-
-		// text related
-		Colors.put("POI", new Color(37 / 255f, 217 / 255f, 217 / 255f, 1));
-		Colors.put("DANGER", new Color(1, 0, 0, 1));
-		Colors.put("MAINOBJ", new Color(1, 217 / 255f, 0, 1));
-	}
-
-	public Texture getCurrentShine() {
-		return animations.get("shine").getCurrentFrame().getTexture();
 	}
 
 }
