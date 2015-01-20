@@ -244,27 +244,6 @@ public class Main extends Game implements Consumer {
 
 		achievements.load("achievement", getPref("achievements"));
 
-		Thread gcer = new Thread("Stray-the daemon garbage nomer from hell") {
-
-			public void run() {
-				final int gctiming = 60000;
-				while (true) {
-					try {
-						this.sleep(50);
-						if (showgc) showgc = false;
-						this.sleep(gctiming - 50);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					System.gc();
-					showgc = true;
-				}
-			}
-		};
-		gcer.setPriority(Thread.MIN_PRIORITY);
-		gcer.setDaemon(true);
-		gcer.start();
-
 		Thread versionchecker = new Thread("Stray-version checker") {
 
 			public void run() {
