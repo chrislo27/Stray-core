@@ -71,13 +71,13 @@ public class Particle implements Poolable {
 		tinta = a;
 		return this;
 	}
-	
-	public Particle setAlpha(float a){
+
+	public Particle setAlpha(float a) {
 		tinta = a;
 		return this;
 	}
-	
-	public Particle setDestroyOnBlock(boolean b){
+
+	public Particle setDestroyOnBlock(boolean b) {
 		destroyOnBlock = b;
 		return this;
 	}
@@ -107,7 +107,7 @@ public class Particle implements Poolable {
 							- world.camera.camerax,
 							Main.convertY(y * World.tilesizey - world.camera.cameray));
 					main.font.setColor(Color.WHITE);
-				} else if (texture.startsWith("real-")){
+				} else if (texture.startsWith("real-")) {
 					Texture t = main.manager.get(texture.substring(5), Texture.class);
 					main.batch.setColor(tintr, tintg, tintb,
 							(lifetime <= 0.1f ? (Math.min(lifetime * 10f, tinta)) : tinta));
@@ -117,7 +117,7 @@ public class Particle implements Poolable {
 							Main.convertY(y * World.tilesizey + (t.getHeight() / 2)
 									- world.camera.cameray));
 					main.batch.setColor(Color.WHITE);
-				}else{
+				} else {
 					Texture t = main.manager.get(AssetMap.get(texture), Texture.class);
 					main.batch.setColor(tintr, tintg, tintb,
 							(lifetime <= 0.1f ? (Math.min(lifetime * 10f, tinta)) : tinta));
@@ -137,9 +137,11 @@ public class Particle implements Poolable {
 		} else if (prelife <= 0) {
 			lifetime -= Gdx.graphics.getDeltaTime();
 		}
-		
-		if(destroyOnBlock){
-			if(MathHelper.intersects((int) x, (int) y, 1, 1, x, y, 8 * World.tilepartx, 8 * World.tileparty)){
+
+		if (destroyOnBlock) {
+			if (world.getBlock((int) x, (int) y).isSolid(world, (int) x, (int) y)) if (MathHelper
+					.intersects((int) x, (int) y, 1, 1, x, y, 8 * World.tilepartx,
+							8 * World.tileparty)) {
 				lifetime = -1;
 				prelife = -1;
 			}
