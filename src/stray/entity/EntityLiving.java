@@ -123,6 +123,14 @@ public abstract class EntityLiving extends Entity {
 		if(dmg > 0) invincibility = Math.round(invulnTime * Main.TICKS);
 		return true;
 	}
+	
+	/**
+	 * adds health to entity, use negative for damage without invuln
+	 * @param amt
+	 */
+	public void heal(float amt){
+		health = MathUtils.clamp(health + amt, 0, maxhealth);
+	}
 
 	@Override
 	public void renderUpdate() {
