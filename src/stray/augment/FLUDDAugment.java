@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 
 public class FLUDDAugment extends Augment {
 
-	public static final float PARTICLE_SPEED = 32f;
+	public static final float PARTICLE_SPEED = 16f;
 
 	private long lastUse = System.currentTimeMillis();
 
@@ -22,30 +22,32 @@ public class FLUDDAugment extends Augment {
 	@Override
 	public void onActivate(World world) {
 		world.getPlayer().anchored = true;
+		EntityPlayer player = world.getPlayer();
+
+		for (int i = 0; i < 4; i++) {
+			createParticle(world, player.x + (player.sizex / 4f), player.y + (player.sizey / 10f)
+					+ (i * 8));
+
+			createParticle(world, player.x + ((player.sizex / 4f) * 3), player.y
+					+ (player.sizey / 10f) + (i * 8));
+		}
 	}
 
 	private void createParticle(World world, float x, float y) {
 		world.particles.add(ParticlePool.obtain().setPosition(x, y).setVelocity(0, PARTICLE_SPEED)
 				.setTint(getColor()).setTexture("magnetglow").setLifetime(15)
-				.setDestroyOnBlock(true).setRotation(0.5f, Main.getRandom().nextBoolean()).setAlpha(0.5f));
+				.setDestroyOnBlock(true).setRotation(0.5f, Main.getRandom().nextBoolean())
+				.setAlpha(1f));
 	}
 
 	@Override
 	public void onActivateEnd(World world) {
 		world.getPlayer().anchored = false;
 	}
-	
-	@Override
-	public void onActivateTick(World world){
-		EntityPlayer player = world.getPlayer();
-		
-		for (int i = 0; i < 3; i++) {
-			createParticle(world, player.x + (player.sizex / 4f), player.y + (player.sizey / 10f)
-					+ (i * World.tileparty * 3));
 
-			createParticle(world, player.x + ((player.sizex / 4f) * 3), player.y
-					+ (player.sizey / 10f) + (i * World.tileparty * 3));
-		}
+	@Override
+	public void onActivateTick(World world) {
+
 	}
 
 	@Override
