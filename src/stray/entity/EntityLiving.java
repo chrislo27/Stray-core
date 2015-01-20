@@ -129,7 +129,11 @@ public abstract class EntityLiving extends Entity {
 	 */
 	public void heal(float amt){
 		health = MathUtils.clamp(health + amt, 0f, maxhealth);
-		if(health <= 0f) damage(1); // this is so the damage override methods get triggered
+		if(health <= 0f){
+			 // this is so the damage override methods get triggered
+			health = Math.min(0.0001f, maxhealth);
+			damage(1);
+		}
 	}
 
 	@Override
