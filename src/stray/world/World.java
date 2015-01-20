@@ -438,7 +438,7 @@ public class World implements TileBasedMap {
 		camera.update();
 
 		if (getPlayer() != null) {
-			if (getVoidDistance() > (getPlayer().x + getPlayer().sizex)) {
+			if (getVoidDistance() > (getPlayer().x)) {
 				getPlayer().heal(-(1f / (Main.TICKS * 2f)));
 			}
 			if (augmentActivate) {
