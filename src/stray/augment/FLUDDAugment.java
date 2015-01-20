@@ -5,7 +5,9 @@ import stray.entity.EntityPlayer;
 import stray.util.ParticlePool;
 import stray.world.World;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 
 public class FLUDDAugment extends Augment {
 
@@ -30,6 +32,12 @@ public class FLUDDAugment extends Augment {
 
 			createParticle(world, player.x + ((player.sizex / 4f) * 3), player.y
 					+ (player.sizey / 10f) + (i * 8));
+		}
+		
+		if(player.health < player.maxhealth){
+			// 50% regen boost
+			player.health += (Gdx.graphics.getRawDeltaTime() / (EntityPlayer.SECONDS_TO_REGEN / 2f));
+			player.health = MathUtils.clamp(player.health, 0f, player.maxhealth);
 		}
 	}
 
