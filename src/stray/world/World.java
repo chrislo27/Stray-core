@@ -287,7 +287,7 @@ public class World implements TileBasedMap {
 		if (p.health <= 0) return;
 
 		camera.centerX(((p.x + (p.sizex / 2f)) * tilesizex + cameramovex));
-		if (p.getBlockCollidingDown() != null) camera
+		if (p.getBlockCollidingDown() != null || !isPlayerVisible()) camera
 				.centerY(((p.y + (p.sizey / 2f)) * tilesizey + cameramovey) - (tilesizey * 3));
 		for (int x = (int) (p.x - ((Gdx.graphics.getWidth() / 2) / tilesizex)); x < (int) (p.x + ((Gdx.graphics
 				.getWidth() / 2) / tilesizex)); x++) {
@@ -303,6 +303,12 @@ public class World implements TileBasedMap {
 		}
 		camera.clamp();
 		main.camera.update();
+	}
+
+	private boolean isPlayerVisible() {
+		return (((getPlayer().y + getPlayer().sizey) * World.tilesizey) <= camera.cameray
+				+ Settings.DEFAULT_HEIGHT)
+				&& ((getPlayer().y * World.tilesizey) >= camera.cameray);
 	}
 
 	public void renderOnly() {
@@ -435,7 +441,7 @@ public class World implements TileBasedMap {
 			if (getVoidDistance() > (getPlayer().x + getPlayer().sizex)) {
 				getPlayer().heal(-(1f / (Main.TICKS * 2f)));
 			}
-			if(augmentActivate){
+			if (augmentActivate) {
 				Augments.getAugment(currentAugment).onActivateTick(this);
 			}
 		}
