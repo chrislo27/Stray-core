@@ -439,7 +439,7 @@ public class World implements TileBasedMap {
 
 		if (getPlayer() != null) {
 			if (getVoidDistance() > (getPlayer().x)) {
-				getPlayer().heal(-(1f / (Main.TICKS * 2f)));
+				getPlayer().heal(-((1f / (Main.TICKS * 2f)) * Math.max(getVoidDistance() - getPlayer().x, 1f)) );
 			}
 			if (augmentActivate) {
 				Augments.getAugment(currentAugment).onActivateTick(this);
