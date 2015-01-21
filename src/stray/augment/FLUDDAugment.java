@@ -14,16 +14,19 @@ public class FLUDDAugment extends Augment {
 	public static final float PARTICLE_SPEED = 16f;
 
 	private long lastUse = System.currentTimeMillis();
+	
+	private float lastGravCoeff = 1f;
 
 	@Override
 	public void onActivateStart(World world) {
 		lastUse = System.currentTimeMillis();
 		world.getPlayer().veloy = 0;
+		lastGravCoeff = world.getPlayer().gravityCoefficient;
+		world.getPlayer().gravityCoefficient = World.tileparty;
 	}
 
 	@Override
 	public void onActivate(World world) {
-		world.getPlayer().anchored = true;
 		EntityPlayer player = world.getPlayer();
 
 		for (int i = 0; i < 4; i++) {
@@ -50,7 +53,7 @@ public class FLUDDAugment extends Augment {
 
 	@Override
 	public void onActivateEnd(World world) {
-		world.getPlayer().anchored = false;
+		world.getPlayer().gravityCoefficient = lastGravCoeff;
 	}
 
 	@Override

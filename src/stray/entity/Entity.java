@@ -39,10 +39,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 	 * no drag applied
 	 */
 	public boolean nodrag = false;
-	/**
-	 * no gravity applied
-	 */
-	public boolean anchored = false;
+	
+	public float gravityCoefficient = 1;
 
 	public float velox = 0; // speed blocks/sec
 	public float veloy = 0; // speed blocks/sec
@@ -120,11 +118,10 @@ public abstract class Entity implements EntityMover, Sizeable {
 				if (velox > 0) velox = 0;
 			}
 		}
-		if (!anchored) {
 			if (getBlockCollidingDown() == null) {
-				veloy += world.gravity / Main.TICKS;
+				veloy += (world.gravity / Main.TICKS) * gravityCoefficient;
 			}
-		}
+		
 
 		if (veloy != 0) {
 			int velo = (int) (veloy / Main.TICKS * World.tilesizey);
