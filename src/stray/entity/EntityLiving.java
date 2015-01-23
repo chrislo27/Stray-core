@@ -26,7 +26,7 @@ public abstract class EntityLiving extends Entity {
 	public float maxhealth = 1;
 	public int invincibility = 0;
 	public final float invulnTime = 1.5f;
-	
+
 	public int stunTime = 0;
 
 	public EntityLiving(World world, float x, float y) {
@@ -39,14 +39,40 @@ public abstract class EntityLiving extends Entity {
 	}
 
 	public abstract BaseAI getNewAI();
-	
+
 	@Override
-	public void render(float delta){
+	public void render(float delta) {
 		super.render(delta);
-		
-		if(stunTime > 0){
+
+		if (stunTime > 0) {
 			Texture star = world.main.manager.get(AssetMap.get("particlestar"), Texture.class);
-			world.batch.draw(star, (MathHelper.clampHalf(1.5f) - 0.25f) * star.getWidth() * 1.5f, y - (star.getHeight() / 2) + (MathHelper.clampHalf(2) - 0.25f));
+			if(MathHelper.getNumberFromTime(1.5f) >= 0.5f){
+				world.batch.draw(
+						star,
+						(x * World.tilesizex) - world.camera.camerax + ((sizex / 4f) * World.tilesizex)
+								- ((MathHelper.clampHalf(1.5f) - 0.25f) * star.getWidth() * 3f),
+						Main.convertY((y * World.tilesizey) - world.camera.cameray)
+								- ((star.getHeight() / 2) * (MathHelper.clampHalf(1) - 0.25f)));
+				world.batch.draw(
+						star,
+						(x * World.tilesizex) - world.camera.camerax + ((sizex / 4f) * World.tilesizex)
+								+ ((MathHelper.clampHalf(1.5f) - 0.25f) * star.getWidth() * 3f),
+						Main.convertY((y * World.tilesizey) - world.camera.cameray)
+								+ ((star.getHeight() / 2) * (MathHelper.clampHalf(1) - 0.25f)));
+			}else{
+				world.batch.draw(
+						star,
+						(x * World.tilesizex) - world.camera.camerax + ((sizex / 4f) * World.tilesizex)
+								+ ((MathHelper.clampHalf(1.5f) - 0.25f) * star.getWidth() * 3f),
+						Main.convertY((y * World.tilesizey) - world.camera.cameray)
+								+ ((star.getHeight() / 2) * (MathHelper.clampHalf(1) - 0.25f)));
+				world.batch.draw(
+						star,
+						(x * World.tilesizex) - world.camera.camerax + ((sizex / 4f) * World.tilesizex)
+								- ((MathHelper.clampHalf(1.5f) - 0.25f) * star.getWidth() * 3f),
+						Main.convertY((y * World.tilesizey) - world.camera.cameray)
+								- ((star.getHeight() / 2) * (MathHelper.clampHalf(1) - 0.25f)));
+			}
 		}
 	}
 
@@ -119,11 +145,11 @@ public abstract class EntityLiving extends Entity {
 
 	@Override
 	public void tickUpdate() {
-		if(stunTime > 0){
+		if (stunTime > 0) {
 			stunTime--;
 			return;
 		}
-		
+
 		super.tickUpdate();
 		if (ai != null) ai.tickUpdate();
 		if (invincibility > 0) invincibility--;
@@ -138,18 +164,19 @@ public abstract class EntityLiving extends Entity {
 		if (dmg <= 0 || health <= 0) return false;
 		if (dmg > 0 && invincibility > 0) return false;
 		health = MathUtils.clamp(health - dmg, 0f, maxhealth);
-		if(dmg > 0) invincibility = Math.round(invulnTime * Main.TICKS);
+		if (dmg > 0) invincibility = Math.round(invulnTime * Main.TICKS);
 		return true;
 	}
-	
+
 	/**
 	 * adds health to entity, use negative for damage without invuln
+	 * 
 	 * @param amt
 	 */
-	public void heal(float amt){
+	public void heal(float amt) {
 		health = MathUtils.clamp(health + amt, 0f, maxhealth);
-		if(health <= 0f){
-			 // this is so the damage override methods get triggered
+		if (health <= 0f) {
+			// this is so the damage override methods get triggered
 			health = Math.min(0.0001f, maxhealth);
 			damage(1);
 		}
@@ -168,8 +195,8 @@ public abstract class EntityLiving extends Entity {
 			veloy = -jump;
 		}
 	}
-	
-	public void stun(float seconds){
+
+	public void stun(float seconds) {
 		stunTime = Math.max(Math.round(seconds * Main.TICKS), 0);
 	}
 
@@ -195,7 +222,7 @@ public abstract class EntityLiving extends Entity {
 		super.moveRight();
 		facing = Direction.RIGHT;
 	}
-	
+
 	@Override
 	public void moveUp() {
 		super.moveUp();
