@@ -46,29 +46,34 @@ public abstract class EntityLiving extends Entity {
 
 		if (stunTime > 0) {
 			Texture star = world.main.manager.get(AssetMap.get("particlestar"), Texture.class);
-			if(MathHelper.getNumberFromTime(1.5f) >= 0.5f){
+			
+			if (MathHelper.getNumberFromTime(1.5f) >= 0.5f) {
 				world.batch.draw(
 						star,
-						(x * World.tilesizex) - world.camera.camerax + ((sizex / 4f) * World.tilesizex)
+						(x * World.tilesizex) - world.camera.camerax
+								+ ((sizex / 4f) * World.tilesizex)
 								- ((MathHelper.clampHalf(1.5f) - 0.25f) * star.getWidth() * 3f),
 						Main.convertY((y * World.tilesizey) - world.camera.cameray)
 								- ((star.getHeight() / 2) * (MathHelper.clampHalf(1) - 0.25f)));
 				world.batch.draw(
 						star,
-						(x * World.tilesizex) - world.camera.camerax + ((sizex / 4f) * World.tilesizex)
+						(x * World.tilesizex) - world.camera.camerax
+								+ ((sizex / 4f) * World.tilesizex)
 								+ ((MathHelper.clampHalf(1.5f) - 0.25f) * star.getWidth() * 3f),
 						Main.convertY((y * World.tilesizey) - world.camera.cameray)
 								+ ((star.getHeight() / 2) * (MathHelper.clampHalf(1) - 0.25f)));
-			}else{
+			} else {
 				world.batch.draw(
 						star,
-						(x * World.tilesizex) - world.camera.camerax + ((sizex / 4f) * World.tilesizex)
+						(x * World.tilesizex) - world.camera.camerax
+								+ ((sizex / 4f) * World.tilesizex)
 								+ ((MathHelper.clampHalf(1.5f) - 0.25f) * star.getWidth() * 3f),
 						Main.convertY((y * World.tilesizey) - world.camera.cameray)
 								+ ((star.getHeight() / 2) * (MathHelper.clampHalf(1) - 0.25f)));
 				world.batch.draw(
 						star,
-						(x * World.tilesizex) - world.camera.camerax + ((sizex / 4f) * World.tilesizex)
+						(x * World.tilesizex) - world.camera.camerax
+								+ ((sizex / 4f) * World.tilesizex)
 								- ((MathHelper.clampHalf(1.5f) - 0.25f) * star.getWidth() * 3f),
 						Main.convertY((y * World.tilesizey) - world.camera.cameray)
 								- ((star.getHeight() / 2) * (MathHelper.clampHalf(1) - 0.25f)));
