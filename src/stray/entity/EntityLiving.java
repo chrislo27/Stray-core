@@ -42,8 +42,6 @@ public abstract class EntityLiving extends Entity {
 
 	@Override
 	public void render(float delta) {
-		super.render(delta);
-
 		if (stunTime > 0) {
 			Texture star = world.main.manager.get(AssetMap.get("particlestar"), Texture.class);
 			
@@ -53,31 +51,35 @@ public abstract class EntityLiving extends Entity {
 						(x * World.tilesizex) - world.camera.camerax
 								+ ((sizex / 4f) * World.tilesizex)
 								- ((MathHelper.clampHalf(1.5f) - 0.25f) * star.getWidth() * 3f),
-						Main.convertY((y * World.tilesizey) - world.camera.cameray)
-								- ((star.getHeight() / 2) * (MathHelper.clampHalf(1) - 0.25f)));
+						Main.convertY((y * World.tilesizey) - world.camera.cameray + (star.getHeight() / 4f))
+								- ((star.getHeight() / 3f) * (MathHelper.clampHalf(1) - 0.25f) * 2));
+				super.render(delta);
 				world.batch.draw(
 						star,
 						(x * World.tilesizex) - world.camera.camerax
 								+ ((sizex / 4f) * World.tilesizex)
 								+ ((MathHelper.clampHalf(1.5f) - 0.25f) * star.getWidth() * 3f),
-						Main.convertY((y * World.tilesizey) - world.camera.cameray)
-								+ ((star.getHeight() / 2) * (MathHelper.clampHalf(1) - 0.25f)));
+						Main.convertY((y * World.tilesizey) - world.camera.cameray + (star.getHeight() / 4f))
+								+ ((star.getHeight() / 3f) * (MathHelper.clampHalf(1) - 0.25f) * 2));
 			} else {
 				world.batch.draw(
 						star,
 						(x * World.tilesizex) - world.camera.camerax
 								+ ((sizex / 4f) * World.tilesizex)
 								+ ((MathHelper.clampHalf(1.5f) - 0.25f) * star.getWidth() * 3f),
-						Main.convertY((y * World.tilesizey) - world.camera.cameray)
-								+ ((star.getHeight() / 2) * (MathHelper.clampHalf(1) - 0.25f)));
+						Main.convertY((y * World.tilesizey) - world.camera.cameray + (star.getHeight() / 4f))
+								+ ((star.getHeight() / 3f) * (MathHelper.clampHalf(1) - 0.25f) * 2));
+				super.render(delta);
 				world.batch.draw(
 						star,
 						(x * World.tilesizex) - world.camera.camerax
 								+ ((sizex / 4f) * World.tilesizex)
 								- ((MathHelper.clampHalf(1.5f) - 0.25f) * star.getWidth() * 3f),
-						Main.convertY((y * World.tilesizey) - world.camera.cameray)
-								- ((star.getHeight() / 2) * (MathHelper.clampHalf(1) - 0.25f)));
+						Main.convertY((y * World.tilesizey) - world.camera.cameray + (star.getHeight() / 4f))
+								- ((star.getHeight() / 3f) * (MathHelper.clampHalf(1) - 0.25f) * 2));
 			}
+		}else{
+			super.render(delta);
 		}
 	}
 
