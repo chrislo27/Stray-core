@@ -2,7 +2,9 @@ package stray.entity;
 
 import stray.Main;
 import stray.ai.BaseAI;
+import stray.util.AssetMap;
 import stray.util.Direction;
+import stray.util.MathHelper;
 import stray.util.Particle;
 import stray.util.ParticlePool;
 import stray.world.World;
@@ -24,6 +26,8 @@ public abstract class EntityLiving extends Entity {
 	public float maxhealth = 1;
 	public int invincibility = 0;
 	public final float invulnTime = 1.5f;
+	
+	public int stunTime = 0;
 
 	public EntityLiving(World world, float x, float y) {
 		super(world, x, y);
@@ -35,6 +39,16 @@ public abstract class EntityLiving extends Entity {
 	}
 
 	public abstract BaseAI getNewAI();
+	
+	@Override
+	public void render(float delta){
+		super.render(delta);
+		
+		if(stunTime > 0){
+			Texture star = world.main.manager.get(AssetMap.get("particlestar"), Texture.class);
+			world.batch.draw(star, (MathHelper.clampHalf(1.5f) - 0.25f) * star.getWidth() * 1.5f, y - (star.getHeight() / 2) + (MathHelper.clampHalf(2) - 0.25f));
+		}
+	}
 
 	/**
 	 * also handles invuln flashing
@@ -105,6 +119,11 @@ public abstract class EntityLiving extends Entity {
 
 	@Override
 	public void tickUpdate() {
+		if(stunTime > 0){
+			stunTime--;
+			return;
+		}
+		
 		super.tickUpdate();
 		if (ai != null) ai.tickUpdate();
 		if (invincibility > 0) invincibility--;
@@ -148,6 +167,10 @@ public abstract class EntityLiving extends Entity {
 		if (getBlockCollidingUp() == null && getBlockCollidingDown() != null) {
 			veloy = -jump;
 		}
+	}
+	
+	public void stun(float seconds){
+		stunTime = Math.max(Math.round(seconds * Main.TICKS), 0);
 	}
 
 	@Override
