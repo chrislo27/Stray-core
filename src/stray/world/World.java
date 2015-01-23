@@ -182,7 +182,7 @@ public class World implements TileBasedMap {
 	public void inputUpdate() {
 		if (main.getConv() != null) return;
 		if (getPlayer() == null) return;
-		if (getPlayer().health > 0) {
+		if (getPlayer().health > 0 && getPlayer().stunTime <= 0) {
 
 			if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 				getPlayer().jump();
@@ -257,7 +257,7 @@ public class World implements TileBasedMap {
 				if (Gdx.input.isKeyJustPressed(Keys.T)) {
 					getPlayer().damage(0.999f);
 				}else if (Gdx.input.isKeyJustPressed(Keys.Y)) {
-					getPlayer().stun(3);;
+					getPlayer().stun(3);
 				}
 			}
 		}
