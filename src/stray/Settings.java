@@ -10,8 +10,6 @@ public class Settings {
 	
 	public static final int DEFAULT_WIDTH = 1280;
 	public static final int DEFAULT_HEIGHT = 720;
-	public static final int SMALLER_WIDTH = 864;
-	public static final int SMALLER_HEIGHT = 648;
 	
 	public static boolean showFPS = true;
 	public static boolean debug = false;
@@ -37,12 +35,6 @@ public class Settings {
 	
 	public static Preferences getPreferences(){
 		return instance().pref;
-	}
-	
-	// SETTINGS METHODS TO END OF FILE
-	
-	public static boolean isSmallResolution(){
-		return instance().pref.getBoolean("resolutionsmall", false);
 	}
 	
 	public static float getMusicVolume(){

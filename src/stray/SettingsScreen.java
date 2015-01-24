@@ -29,18 +29,6 @@ public class SettingsScreen extends Updateable {
 			}
 		});
 		container.elements.add(new LanguageButton(5, 5));
-		container.elements.add(new BooleanButton((Gdx.graphics.getWidth() / 2) - 100, Gdx.graphics
-				.getHeight() - 144, 200, 32, "menu.settings.resolution") {
-
-			@Override
-			public boolean onLeftClick() {
-				super.onLeftClick();
-				Settings.getPreferences()
-						.putBoolean("resolutionsmall", !Settings.isSmallResolution()).flush();
-				showRestartMsg = true;
-				return true;
-			}
-		}.setState(Settings.isSmallResolution()));
 		container.elements.add(music.setSlider(Settings.getMusicVolume()));
 		container.elements.add(sound.setSlider(Settings.getSoundVolume()));
 		container.elements.add(new BooleanButton((Gdx.graphics.getWidth() / 2) - 80, Gdx.graphics
