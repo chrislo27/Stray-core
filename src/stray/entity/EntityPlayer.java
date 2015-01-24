@@ -3,6 +3,7 @@ package stray.entity;
 import stray.Main;
 import stray.ai.BaseAI;
 import stray.augment.Augments;
+import stray.entity.types.Stunnable;
 import stray.entity.types.Weighted;
 import stray.util.AssetMap;
 import stray.util.Difficulty;
@@ -12,11 +13,10 @@ import stray.util.Utils;
 import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 
-public class EntityPlayer extends EntityLiving implements Weighted {
+public class EntityPlayer extends EntityLiving implements Weighted, Stunnable {
 
 	public EntityPlayer(World world, float x, float y) {
 		super(world, x, y);

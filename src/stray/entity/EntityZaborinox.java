@@ -3,6 +3,7 @@ package stray.entity;
 import stray.ai.AIDumbEnemy;
 import stray.ai.BaseAI;
 import stray.entity.types.Enemy;
+import stray.entity.types.Stunnable;
 import stray.entity.types.Weighted;
 import stray.util.AssetMap;
 import stray.world.World;
@@ -14,7 +15,7 @@ import com.badlogic.gdx.graphics.Texture;
  * 
  *
  */
-public class EntityZaborinox extends EntityLiving implements Enemy, Weighted {
+public class EntityZaborinox extends EntityLiving implements Enemy, Weighted, Stunnable {
 
 	public EntityZaborinox(World world, float x, float y) {
 		super(world, x, y);
