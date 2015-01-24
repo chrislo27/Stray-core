@@ -257,7 +257,7 @@ public class World implements TileBasedMap {
 				if (Gdx.input.isKeyJustPressed(Keys.T)) {
 					getPlayer().damage(0.999f);
 				}else if (Gdx.input.isKeyJustPressed(Keys.Y)) {
-					getPlayer().stun(3);
+					getPlayer().stun(5);
 				}
 			}
 		}
