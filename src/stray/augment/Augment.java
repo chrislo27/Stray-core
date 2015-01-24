@@ -1,5 +1,6 @@
 package stray.augment;
 
+import stray.Main;
 import stray.world.World;
 
 import com.badlogic.gdx.graphics.Color;
@@ -37,5 +38,9 @@ public abstract class Augment {
 	
 	public Color getColor(){
 		return reused.set(1, 1, 1, 1);
+	}
+	
+	public void renderUi(Main main){
+		
 	}
 }

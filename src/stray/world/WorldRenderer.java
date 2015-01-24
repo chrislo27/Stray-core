@@ -268,6 +268,8 @@ public class WorldRenderer {
 			String text = Translator.getMsg("ui.currentaugment") + Translator.getMsg(Augments.getAugment(world.currentAugment).getName());
 			main.drawTextBg(text, Gdx.graphics.getWidth() / 2 - (main.font.getBounds(text).width / 2), 50);
 		}
+		
+		Augments.getAugment(world.currentAugment).renderUi(main);
 	}
 
 	public void renderDebug(int starting) {
