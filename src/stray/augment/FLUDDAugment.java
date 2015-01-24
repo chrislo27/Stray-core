@@ -1,7 +1,7 @@
 package stray.augment;
 
-import stray.Main;
 import stray.entity.EntityPlayer;
+import stray.util.MathHelper;
 import stray.util.ParticlePool;
 import stray.world.World;
 
@@ -11,10 +11,10 @@ import com.badlogic.gdx.math.MathUtils;
 
 public class FLUDDAugment extends Augment {
 
-	public static final float PARTICLE_SPEED = 16f;
+	public static final float PARTICLE_SPEED = 8f;
 
 	private long lastUse = System.currentTimeMillis();
-	
+
 	private float lastGravCoeff = 1f;
 
 	@Override
@@ -29,26 +29,24 @@ public class FLUDDAugment extends Augment {
 	public void onActivate(World world) {
 		EntityPlayer player = world.getPlayer();
 
-		for (int i = 0; i < 4; i++) {
-			createParticle(world, player.x + (player.sizex / 4f), player.y + (player.sizey / 10f)
-					+ (i * 8));
-
+		for (int i = 0; i < 1; i++) {
+			createParticle(world, player.x + (player.sizex / 4f), player.y + (player.sizey - 0.2f)
+					+ (i * 8), "magnetglow");
 			createParticle(world, player.x + ((player.sizex / 4f) * 3), player.y
-					+ (player.sizey / 10f) + (i * 8));
+					+ (player.sizey - 0.2f) + (i * 8), "magnetglow");
 		}
-		
-		if(player.health < player.maxhealth){
+
+		if (player.health < player.maxhealth) {
 			// 25% regen boost
 			player.health += (Gdx.graphics.getRawDeltaTime() / 32f);
 			player.health = MathUtils.clamp(player.health, 0f, player.maxhealth);
 		}
 	}
 
-	private void createParticle(World world, float x, float y) {
+	private void createParticle(World world, float x, float y, String type) {
 		world.particles.add(ParticlePool.obtain().setPosition(x, y).setVelocity(0, PARTICLE_SPEED)
-				.setTint(getColor()).setTexture("magnetglow").setLifetime(15)
-				.setDestroyOnBlock(true).setRotation(0.5f, Main.getRandom().nextBoolean())
-				.setAlpha(1f));
+				.setTint(getColor()).setTexture(type).setLifetime(15).setDestroyOnBlock(true)
+				.setAlpha(MathHelper.clampHalf(1 / 3f) + 0.25f));
 	}
 
 	@Override
