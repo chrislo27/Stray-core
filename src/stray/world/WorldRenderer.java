@@ -179,8 +179,19 @@ public class WorldRenderer {
 		batch.flush();
 	}
 
+	private float originalhealth = -1;
+	private float timeUntilOrig = 0;
+	
 	public void renderHealth() {
 		if (world.getPlayer() == null) return;
+		if(originalhealth <= -1) originalhealth = world.getPlayer().health;
+		if(timeUntilOrig > 0){
+			timeUntilOrig -= Gdx.graphics.getDeltaTime();
+		}
+		if(timeUntilOrig <= 0){
+			timeUntilOrig = 0;
+			originalhealth = MathUtils.clamp(originalhealth + ((world.getPlayer().health - originalhealth) * Gdx.graphics.getDeltaTime() * 4f), 0f, world.getPlayer().maxhealth);
+		}
 
 		batch.setColor(0, 0, 0, 0.3f);
 		main.fillRect(0, 0, 128, 50);
@@ -194,13 +205,21 @@ public class WorldRenderer {
 		main.font.setColor(1, 1, 1, 1);
 		main.font.setScale(1);
 
+		// the background of the bar
 		batch.setColor(1 * (1 - (world.getPlayer().health / world.getPlayer().maxhealth)), 0,
 				1 * (world.getPlayer().health / world.getPlayer().maxhealth), 0.25f);
 		main.fillRect(8 + baroffset, 8, 112 - baroffset, 12);
-
-		batch.setColor(batch.getColor().r, batch.getColor().g, batch.getColor().b, 1);
+		
+		// actual health
+		batch.setColor(batch.getColor().r, batch.getColor().g, batch.getColor().b, 0.25f);
 		main.fillRect(8 + baroffset, 8,
 				(112 - baroffset) * (1 - (world.getPlayer().health / world.getPlayer().maxhealth)),
+				12);
+
+		// opaque health
+		batch.setColor(batch.getColor().r, batch.getColor().g, batch.getColor().b, 1);
+		main.fillRect(8 + baroffset, 8,
+				(112 - baroffset) * (1 - (originalhealth / world.getPlayer().maxhealth)),
 				12);
 
 		batch.setColor(1, 1, 1, 1);
@@ -220,6 +239,8 @@ public class WorldRenderer {
 	}
 
 	public void onDamagePlayer(float original) {
+		originalhealth = original;
+		timeUntilOrig = 0.75f;
 		world.vignettecolour.set(1, 0, 0, 1f);
 	}
 
