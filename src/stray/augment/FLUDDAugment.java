@@ -33,7 +33,7 @@ public class FLUDDAugment extends Augment {
 	public void onActivate(World world) {
 		EntityPlayer player = world.getPlayer();
 		
-		if(player.gravityCoefficient <= World.tileparty) return;
+		if(player.gravityCoefficient > 0) return;
 		
 		for (int i = 0; i < 1; i++) {
 			createParticle(world, player.x + (player.sizex / 4f), player.y + (player.sizey - 0.2f)
