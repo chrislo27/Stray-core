@@ -52,6 +52,11 @@ public class Augments {
 		@Override
 		public void onActivateTick(World world) {
 		}
+
+		@Override
+		public boolean isInUse(World world) {
+			return false;
+		}
 		
 	};
 	

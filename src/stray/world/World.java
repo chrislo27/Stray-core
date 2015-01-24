@@ -230,9 +230,9 @@ public class World implements TileBasedMap {
 					Augments.getAugment(currentAugment).onActivate(this);
 					augmentActivate = true;
 				} else if ((!Gdx.input.isKeyPressed(Keys.E) && augmentActivate)
-						|| (System.currentTimeMillis() - lastAugmentUse > Augments.getAugment(
-								currentAugment).getUseTime()
-								&& Gdx.input.isKeyPressed(Keys.E) && augmentActivate)) {
+						|| ((System.currentTimeMillis() - lastAugmentUse > Augments.getAugment(
+								currentAugment).getUseTime() || !Augments.getAugment(currentAugment).isInUse(this))
+								&& (Gdx.input.isKeyPressed(Keys.E) && augmentActivate))) {
 					augmentActivate = false;
 					Augments.getAugment(currentAugment).onActivateEnd(this);
 				}

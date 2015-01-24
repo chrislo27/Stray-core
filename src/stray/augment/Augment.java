@@ -36,6 +36,8 @@ public abstract class Augment {
 	
 	public abstract boolean canUse(World world);
 	
+	public abstract boolean isInUse(World world);
+	
 	public Color getColor(){
 		return reused.set(1, 1, 1, 1);
 	}

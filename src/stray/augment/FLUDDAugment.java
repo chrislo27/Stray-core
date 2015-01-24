@@ -94,4 +94,9 @@ public class FLUDDAugment extends Augment {
 		return (world.getPlayer().getBlockCollidingDown() == null) && (touchedDown);
 	}
 
+	@Override
+	public boolean isInUse(World world) {
+		return world.getPlayer().gravityCoefficient <= 0;
+	}
+
 }
