@@ -40,7 +40,7 @@ public abstract class Augment {
 		return reused.set(1, 1, 1, 1);
 	}
 	
-	public void renderUi(Main main){
+	public void renderUi(Main main, World world){
 		
 	}
 }

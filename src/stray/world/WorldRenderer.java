@@ -269,7 +269,7 @@ public class WorldRenderer {
 			main.drawTextBg(text, Gdx.graphics.getWidth() / 2 - (main.font.getBounds(text).width / 2), 50);
 		}
 		
-		Augments.getAugment(world.currentAugment).renderUi(main);
+		Augments.getAugment(world.currentAugment).renderUi(main, world);
 	}
 
 	public void renderDebug(int starting) {

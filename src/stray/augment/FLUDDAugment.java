@@ -1,5 +1,6 @@
 package stray.augment;
 
+import stray.Main;
 import stray.entity.EntityPlayer;
 import stray.util.MathHelper;
 import stray.util.ParticlePool;
@@ -16,13 +17,16 @@ public class FLUDDAugment extends Augment {
 	private long lastUse = System.currentTimeMillis();
 
 	private float lastGravCoeff = 1f;
+	
+	private boolean touchedDown = false;
 
 	@Override
 	public void onActivateStart(World world) {
 		lastUse = System.currentTimeMillis();
 		world.getPlayer().veloy = 0;
 		lastGravCoeff = world.getPlayer().gravityCoefficient;
-		world.getPlayer().gravityCoefficient = World.tileparty;
+		world.getPlayer().gravityCoefficient = 0;
+		touchedDown = false;
 	}
 
 	@Override
@@ -58,6 +62,13 @@ public class FLUDDAugment extends Augment {
 	public void onActivateTick(World world) {
 
 	}
+	
+	@Override
+	public void renderUi(Main main, World world){
+		if(touchedDown == false){
+			if(world.getPlayer().getBlockCollidingDown() != null) touchedDown = true;
+		}
+	}
 
 	@Override
 	public String getName() {
@@ -76,7 +87,7 @@ public class FLUDDAugment extends Augment {
 
 	@Override
 	public boolean canUse(World world) {
-		return world.getPlayer().getBlockCollidingDown() == null;
+		return (world.getPlayer().getBlockCollidingDown() == null) && (touchedDown);
 	}
 
 }
