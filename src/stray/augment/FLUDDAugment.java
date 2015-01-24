@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.MathUtils;
 
 public class FLUDDAugment extends Augment {
 
-	public static final float PARTICLE_SPEED = 8f;
+	public static final float PARTICLE_SPEED = 10f;
 
 	private long lastUse = System.currentTimeMillis();
 
@@ -32,7 +32,9 @@ public class FLUDDAugment extends Augment {
 	@Override
 	public void onActivate(World world) {
 		EntityPlayer player = world.getPlayer();
-
+		
+		if(player.gravityCoefficient <= World.tileparty) return;
+		
 		for (int i = 0; i < 1; i++) {
 			createParticle(world, player.x + (player.sizex / 4f), player.y + (player.sizey - 0.2f)
 					+ (i * 8), "magnetglow");
@@ -41,7 +43,6 @@ public class FLUDDAugment extends Augment {
 		}
 
 		if (player.health < player.maxhealth) {
-			// 25% regen boost
 			player.health += (Gdx.graphics.getRawDeltaTime() / 32f);
 			player.health = MathUtils.clamp(player.health, 0f, player.maxhealth);
 		}
@@ -56,6 +57,9 @@ public class FLUDDAugment extends Augment {
 	@Override
 	public void onActivateEnd(World world) {
 		world.getPlayer().gravityCoefficient = lastGravCoeff;
+		if(touchedDown == false){
+			if(world.getPlayer().getBlockCollidingDown() != null) touchedDown = true;
+		}
 	}
 
 	@Override
