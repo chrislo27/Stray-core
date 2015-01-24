@@ -66,8 +66,8 @@ public class Block {
 	public void dispose() {
 
 	}
-	
-	public int getTickRate(){
+
+	public int getTickRate() {
 		return 1;
 	}
 
@@ -398,12 +398,15 @@ public class Block {
 	}
 
 	public static boolean playSound(int x, int y, float camx, float camy, Sound sound, float vol,
+			float pitch, boolean mustbevisible) {
+		if (!Block.isBlockVisible(camx, camy, x, y) && mustbevisible) return false;
+		sound.play(vol * Settings.getSoundVolume(), pitch, Utils.getSoundPan(x, camx));
+		return true;
+	}
+
+	public static boolean playSound(int x, int y, float camx, float camy, Sound sound, float vol,
 			float pitch) {
-		if (Block.isBlockVisible(camx, camy, x, y)) {
-			sound.play(vol * Settings.getSoundVolume(), pitch, Utils.getSoundPan(x, camx));
-			return true;
-		}
-		return false;
+		return playSound(x, y, camx, camy, sound, vol, pitch, true);
 	}
 
 }
