@@ -7,8 +7,10 @@ import stray.util.Direction;
 import stray.util.MathHelper;
 import stray.util.Particle;
 import stray.util.ParticlePool;
+import stray.util.Utils;
 import stray.world.World;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 
@@ -45,6 +47,10 @@ public abstract class EntityLiving extends Entity {
 		if (stunTime > 0) {
 			Texture star = world.main.manager.get(AssetMap.get("particlestar"), Texture.class);
 			
+			world.batch.setColor(1, 1, 1, MathHelper.clampHalf(1.5f) + 0.25f);
+			Utils.drawRotated(world.batch, world.main.manager.get(AssetMap.get("stunhalo"), Texture.class), (x * World.tilesizex) - world.camera.camerax + ((sizex * World.tilesizex) / 2) - star.getWidth(),
+				Main.convertY((y * World.tilesizey) - world.camera.cameray) - 10, 64, 24, ((MathHelper.clampHalf(1.5f) - 0.25f) * 30), true);
+			world.batch.setColor(1, 1, 1, 1);
 			if (MathHelper.getNumberFromTime(1.5f) >= 0.5f) {
 				world.batch.draw(
 						star,
@@ -52,7 +58,7 @@ public abstract class EntityLiving extends Entity {
 								+ ((sizex / 4f) * World.tilesizex)
 								- ((MathHelper.clampHalf(1.5f) - 0.25f) * star.getWidth() * 3f),
 						Main.convertY((y * World.tilesizey) - world.camera.cameray + (star.getHeight() / 4f))
-								- ((star.getHeight() / 3f) * (MathHelper.clampHalf(1) - 0.25f) * 2));
+								- ((star.getHeight() / 3f) * (MathHelper.clampHalf(3) - 0.25f) * 2));
 				super.render(delta);
 				world.batch.draw(
 						star,
@@ -60,7 +66,7 @@ public abstract class EntityLiving extends Entity {
 								+ ((sizex / 4f) * World.tilesizex)
 								+ ((MathHelper.clampHalf(1.5f) - 0.25f) * star.getWidth() * 3f),
 						Main.convertY((y * World.tilesizey) - world.camera.cameray + (star.getHeight() / 4f))
-								+ ((star.getHeight() / 3f) * (MathHelper.clampHalf(1) - 0.25f) * 2));
+								+ ((star.getHeight() / 3f) * (MathHelper.clampHalf(3) - 0.25f) * 2));
 			} else {
 				world.batch.draw(
 						star,
