@@ -54,15 +54,15 @@ public class BlockTimer extends Block {
 				if (!world.global.getValue(colour).equals("")) {
 					world.global.setValue(colour, "");
 					Block.playSound(x, y, world.camera.camerax, world.camera.cameray,
-							world.main.manager.get(AssetMap.get("switchsfx"), Sound.class), 1, 0.6f);
+							world.main.manager.get(AssetMap.get("switchsfx"), Sound.class), 1, 0.6f, false);
 				}
 			} else {
 				if (i % ((int) Main.TICKS) == 0) {
 					Block.playSound(x, y, world.camera.camerax, world.camera.cameray,
-							world.main.manager.get(AssetMap.get("switchsfx"), Sound.class), 1, 0.8f);
+							world.main.manager.get(AssetMap.get("switchsfx"), Sound.class), 1, 0.8f, false);
 				} else if ((i + ((int) Main.TICKS) / 3f) % ((int) Main.TICKS) == 0) {
 					Block.playSound(x, y, world.camera.camerax, world.camera.cameray,
-							world.main.manager.get(AssetMap.get("switchsfx"), Sound.class), 1, 1f);
+							world.main.manager.get(AssetMap.get("switchsfx"), Sound.class), 1, 1f, false);
 				}
 
 				if (!world.global.getValue(colour).equals("on")) {
