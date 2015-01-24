@@ -65,6 +65,8 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
  * 
@@ -74,6 +76,7 @@ import com.badlogic.gdx.utils.Array;
 public class Main extends Game implements Consumer {
 
 	public OrthographicCamera camera;
+	Viewport viewport;
 
 	public SpriteBatch batch;
 	public SpriteBatch maskRenderer;
@@ -174,6 +177,7 @@ public class Main extends Game implements Consumer {
 		ShaderProgram.pedantic = false;
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		viewport = new StretchViewport(Settings.DEFAULT_WIDTH, Settings.DEFAULT_HEIGHT, camera);
 		batch = new SpriteBatch();
 		batch.enableBlending();
 		maskRenderer = new SpriteBatch();
@@ -642,7 +646,7 @@ public class Main extends Game implements Consumer {
 
 	@Override
 	public void resize(int x, int y) {
-
+		viewport.update(x, y, false);
 	}
 
 	public void redirectSysOut() {
