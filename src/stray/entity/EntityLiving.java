@@ -2,6 +2,7 @@ package stray.entity;
 
 import stray.Main;
 import stray.ai.BaseAI;
+import stray.entity.types.Stunnable;
 import stray.util.AssetMap;
 import stray.util.Direction;
 import stray.util.MathHelper;
@@ -10,7 +11,6 @@ import stray.util.ParticlePool;
 import stray.util.Utils;
 import stray.world.World;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 
@@ -236,6 +236,7 @@ public abstract class EntityLiving extends Entity {
 	}
 
 	public void stun(float seconds) {
+		if(!(this instanceof Stunnable)) return;
 		stunTime = Math.max(Math.round(seconds * Main.TICKS), 0);
 	}
 
