@@ -1,5 +1,6 @@
 package stray.util.render;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
 public class Shaders {
@@ -164,131 +165,7 @@ public class Shaders {
 			"	gl_FragColor = vColor * vec4(sum.rgb, 1.0);\n" + 
 			"}";
 
-	public static final String VERTWARP = "uniform float screen;\r\n" + "\r\n" + "void main()\r\n"
-			+ "{\r\n" + "   gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;\r\n"
-			+ "   gl_TexCoord[0] = vec4(gl_Position.x * 1.77, gl_Position.y, 1.0, 1.0);\r\n" + "}";
-
-	public static final String FRAGWARP = "vec3 mod289(vec3 x) {\r\n"
-			+ "  return x - floor(x * (1.0 / 289.0)) * 289.0;\r\n"
-			+ "}\r\n"
-			+ "\r\n"
-			+ "vec4 mod289(vec4 x) {\r\n"
-			+ "  return x - floor(x * (1.0 / 289.0)) * 289.0;\r\n"
-			+ "}\r\n"
-			+ "\r\n"
-			+ "vec4 permute(vec4 x) {\r\n"
-			+ "     return mod289(((x*34.0)+1.0)*x);\r\n"
-			+ "}\r\n"
-			+ "\r\n"
-			+ "vec4 taylorInvSqrt(vec4 r)\r\n"
-			+ "{\r\n"
-			+ "  return 1.79284291400159 - 0.85373472095314 * r;\r\n"
-			+ "}\r\n"
-			+ "\r\n"
-			+ "float snoise(vec3 v)\r\n"
-			+ "  { \r\n"
-			+ "  const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;\r\n"
-			+ "  const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);\r\n"
-			+ "\r\n"
-			+ "// First corner\r\n"
-			+ "  vec3 i  = floor(v + dot(v, C.yyy) );\r\n"
-			+ "  vec3 x0 =   v - i + dot(i, C.xxx) ;\r\n"
-			+ "\r\n"
-			+ "// Other corners\r\n"
-			+ "  vec3 g = step(x0.yzx, x0.xyz);\r\n"
-			+ "  vec3 l = 1.0 - g;\r\n"
-			+ "  vec3 i1 = min( g.xyz, l.zxy );\r\n"
-			+ "  vec3 i2 = max( g.xyz, l.zxy );\r\n"
-			+ "\r\n"
-			+ "  //   x0 = x0 - 0.0 + 0.0 * C.xxx;\r\n"
-			+ "  //   x1 = x0 - i1  + 1.0 * C.xxx;\r\n"
-			+ "  //   x2 = x0 - i2  + 2.0 * C.xxx;\r\n"
-			+ "  //   x3 = x0 - 1.0 + 3.0 * C.xxx;\r\n"
-			+ "  vec3 x1 = x0 - i1 + C.xxx;\r\n"
-			+ "  vec3 x2 = x0 - i2 + C.yyy; // 2.0*C.x = 1/3 = C.y\r\n"
-			+ "  vec3 x3 = x0 - D.yyy;      // -1.0+3.0*C.x = -0.5 = -D.y\r\n"
-			+ "\r\n"
-			+ "// Permutations\r\n"
-			+ "  i = mod289(i); \r\n"
-			+ "  vec4 p = permute( permute( permute( \r\n"
-			+ "             i.z + vec4(0.0, i1.z, i2.z, 1.0 ))\r\n"
-			+ "           + i.y + vec4(0.0, i1.y, i2.y, 1.0 )) \r\n"
-			+ "           + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));\r\n"
-			+ "\r\n"
-			+ "// Gradients: 7x7 points over a square, mapped onto an octahedron.\r\n"
-			+ "// The ring size 17*17 = 289 is close to a multiple of 49 (49*6 = 294)\r\n"
-			+ "  float n_ = 0.142857142857; // 1.0/7.0\r\n"
-			+ "  vec3  ns = n_ * D.wyz - D.xzx;\r\n"
-			+ "\r\n"
-			+ "  vec4 j = p - 49.0 * floor(p * ns.z * ns.z);  //  mod(p,7*7)\r\n"
-			+ "\r\n"
-			+ "  vec4 x_ = floor(j * ns.z);\r\n"
-			+ "  vec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)\r\n"
-			+ "\r\n"
-			+ "  vec4 x = x_ *ns.x + ns.yyyy;\r\n"
-			+ "  vec4 y = y_ *ns.x + ns.yyyy;\r\n"
-			+ "  vec4 h = 1.0 - abs(x) - abs(y);\r\n"
-			+ "\r\n"
-			+ "  vec4 b0 = vec4( x.xy, y.xy );\r\n"
-			+ "  vec4 b1 = vec4( x.zw, y.zw );\r\n"
-			+ "\r\n"
-			+ "  //vec4 s0 = vec4(lessThan(b0,0.0))*2.0 - 1.0;\r\n"
-			+ "  //vec4 s1 = vec4(lessThan(b1,0.0))*2.0 - 1.0;\r\n"
-			+ "  vec4 s0 = floor(b0)*2.0 + 1.0;\r\n"
-			+ "  vec4 s1 = floor(b1)*2.0 + 1.0;\r\n"
-			+ "  vec4 sh = -step(h, vec4(0.0));\r\n"
-			+ "\r\n"
-			+ "  vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;\r\n"
-			+ "  vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;\r\n"
-			+ "\r\n"
-			+ "  vec3 p0 = vec3(a0.xy,h.x);\r\n"
-			+ "  vec3 p1 = vec3(a0.zw,h.y);\r\n"
-			+ "  vec3 p2 = vec3(a1.xy,h.z);\r\n"
-			+ "  vec3 p3 = vec3(a1.zw,h.w);\r\n"
-			+ "\r\n"
-			+ "//Normalise gradients\r\n"
-			+ "  vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));\r\n"
-			+ "  p0 *= norm.x;\r\n"
-			+ "  p1 *= norm.y;\r\n"
-			+ "  p2 *= norm.z;\r\n"
-			+ "  p3 *= norm.w;\r\n"
-			+ "\r\n"
-			+ "// Mix final noise value\r\n"
-			+ "  vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);\r\n"
-			+ "  m = m * m;\r\n"
-			+ "  return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), \r\n"
-			+ "                                dot(p2,x2), dot(p3,x3) ) );\r\n"
-			+ "  }\r\n"
-			+ "\r\n"
-			+ "///////////////////////////////////////\r\n"
-			+ "//\r\n"
-			+ "//         End Simplex Noise\r\n"
-			+ "//\r\n"
-			+ "///////////////////////////////////////\r\n"
-			+ "\r\n"
-			+ "uniform float time;\r\n"
-			+ "uniform vec2 offset;\r\n"
-			+ "\r\n"
-			+ "float fbm(vec2 pos)\r\n"
-			+ "{\r\n"
-			+ "	float t = time / 20.0;\r\n"
-			+ "	float base = 0.75;\r\n"
-			+ "	float n = 0.0;// * snoise(vec3(base * pos.x, base * pos.y, t));\r\n"
-			+ "	n += 0.5 * (snoise(vec3(2.0 * base * pos.x, 2.0 * base * pos.y, 1.4*t)));\r\n"
-			+ "	n += 0.25 * (snoise(vec3(4.0 * base * pos.x, 4.0 * base * pos.y, 2.4*t)));\r\n"
-			+ "    n += 0.125 * (snoise(vec3(8.0 * base * pos.x, 8.0 * base * pos.y, 3.4*t)));\r\n"
-			+ "    n += 0.0625 * (snoise(vec3(16.0 * base * pos.x, 16.0 * base * pos.y, 4.4*t)));\r\n"
-			+ "	n += 0.03125 * (snoise(vec3(32.0 * base * pos.x, 32.0 * base * pos.y, 5.4*t)));\r\n"
-			+ "	n = (n + 1.0) / 2.0;\r\n" + "	return n * 0.7;\r\n" + "}\r\n" + "\r\n"
-			+ "void main()\r\n" + "{\r\n" + "	vec2 p = gl_TexCoord[0].xy + offset;\r\n"
-			+ "	vec2 q = vec2(fbm(p), fbm(p));\r\n" + "	float n = fbm(p + 4.0*q);\r\n" + "	\r\n"
-			+ "	vec4 color1 = vec4(1.0, 0.65, 0.0, 1.0);\r\n"
-			+ "	vec4 color2 = vec4(1.0, 0.0, 0.0, 1.0);\r\n" + "	\r\n"
-			+ "	vec4 pcolor = color1*4.0;\r\n"
-			+ "	vec4 qcolor = mix(color2, pcolor, q.x*q.y*4.0); \r\n" + "	\r\n"
-			+ "	vec4 color = qcolor * n;\r\n"
-			+ "	gl_FragColor = vec4(color.r, color.g, color.b, 1.0);\r\n" + "}";
-
+	
 	public static final String VERTINVERT = "attribute vec4 "+ShaderProgram.POSITION_ATTRIBUTE+";\n" +
 			"attribute vec4 "+ShaderProgram.COLOR_ATTRIBUTE+";\n" +
 			"attribute vec2 "+ShaderProgram.TEXCOORD_ATTRIBUTE+"0;\n" +
@@ -320,6 +197,9 @@ public class Shaders {
 			"	gl_FragColor = texColor * vColor;\n" + 
 			"}";
 	
-	public static final String VERTWARP2 = VERTINVERT;
-	public static final String FRAGWARP2 = FRAGINVERT;
+	public static final String VERTWARP = Gdx.files.internal("shaders/warp.vert").readString();
+	
+	public static final String FRAGWARP = Gdx.files.internal("shaders/warp.frag").readString();
+
+	
 }

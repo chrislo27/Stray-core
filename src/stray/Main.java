@@ -132,7 +132,6 @@ public class Main extends Game implements Consumer {
 	public ShaderProgram blurshader;
 	public ShaderProgram defaultShader;
 	public ShaderProgram invertshader;
-	public ShaderProgram warpshader2;
 
 	public HashMap<String, SynchedAnimation> animations = new HashMap<String, SynchedAnimation>();
 	public HashMap<String, Texture> textures = new HashMap<String, Texture>();
@@ -227,10 +226,7 @@ public class Main extends Game implements Consumer {
 		greyshader = new ShaderProgram(Shaders.VERTGREY, Shaders.FRAGGREY);
 
 		warpshader = new ShaderProgram(Shaders.VERTWARP, Shaders.FRAGWARP);
-		warpshader.begin();
-		warpshader.setUniformf("screen", 1.77f);
-		warpshader.setUniformf("offset", 55f, 55f);
-		warpshader.end();
+		batch.setShader(warpshader);
 
 		blurshader = new ShaderProgram(Shaders.VERTBLUR, Shaders.FRAGBLUR);
 		blurshader.begin();
@@ -240,8 +236,6 @@ public class Main extends Game implements Consumer {
 		blurshader.end();
 		
 		invertshader = new ShaderProgram(Shaders.VERTINVERT, Shaders.FRAGINVERT);
-		
-		warpshader2 = new ShaderProgram(Shaders.VERTWARP2, Shaders.FRAGWARP2);
 
 		loadUnmanagedAssets();
 		loadAssets();
@@ -300,7 +294,6 @@ public class Main extends Game implements Consumer {
 		blurshader.dispose();
 		blueprintrenderer.dispose();
 		invertshader.dispose();
-		warpshader2.dispose();
 		shapes.dispose();
 
 		buffer.dispose();
@@ -332,7 +325,9 @@ public class Main extends Game implements Consumer {
 		SETTINGS.dispose();
 
 	}
-
+	
+	private float warptime = 0f;
+	
 	private void preRender() {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -369,6 +364,8 @@ public class Main extends Game implements Consumer {
 
 			}
 		}
+		
+		
 	}
 
 	@Override
@@ -474,6 +471,11 @@ public class Main extends Game implements Consumer {
 			}
 			lastFPS[0] = Gdx.graphics.getFramesPerSecond();
 		}
+		
+		warptime += Gdx.graphics.getDeltaTime();
+		warpshader.begin();
+		warpshader.setUniformf(warpshader.getUniformLocation("time"), warptime);
+		warpshader.end();
 	}
 
 	public void tickUpdate() {
