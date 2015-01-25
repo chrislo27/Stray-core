@@ -289,38 +289,37 @@ public class Shaders {
 			+ "	vec4 color = qcolor * n;\r\n"
 			+ "	gl_FragColor = vec4(color.r, color.g, color.b, 1.0);\r\n" + "}";
 
-	public static final String VERTINVERT = "//combined projection and view matrix\r\n" + 
-			"uniform mat4 u_projView;\r\n" + 
-			"\r\n" + 
-			"//\"in\" attributes from our SpriteBatch\r\n" + 
-			"attribute vec2 Position;\r\n" + 
-			"attribute vec2 TexCoord;\r\n" + 
-			"attribute vec4 Color;\r\n" + 
-			"\r\n" + 
-			"//\"out\" varyings to our fragment shader\r\n" + 
-			"varying vec4 vColor;\r\n" + 
-			"varying vec2 vTexCoord;\r\n" + 
-			"\r\n" + 
-			"void main() {\r\n" + 
-			"    vColor = Color;\r\n" + 
-			"    vTexCoord = TexCoord;\r\n" + 
-			"    gl_Position = u_projView * vec4(Position, 0.0, 1.0);\r\n" + 
+	public static final String VERTINVERT = "attribute vec4 "+ShaderProgram.POSITION_ATTRIBUTE+";\n" +
+			"attribute vec4 "+ShaderProgram.COLOR_ATTRIBUTE+";\n" +
+			"attribute vec2 "+ShaderProgram.TEXCOORD_ATTRIBUTE+"0;\n" +
+			
+			"uniform mat4 u_projTrans;\n" + 
+			" \n" + 
+			"varying vec4 vColor;\n" +
+			"varying vec2 vTexCoord;\n" +
+			
+			"void main() {\n" +  
+			"	vColor = "+ShaderProgram.COLOR_ATTRIBUTE+";\n" +
+			"	vTexCoord = "+ShaderProgram.TEXCOORD_ATTRIBUTE+"0;\n" +
+			"	gl_Position =  u_projTrans * " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" +
 			"}";
-	public static final String FRAGINVERT = "//SpriteBatch will use texture unit 0\r\n" + 
-			"uniform sampler2D u_texture;\r\n" + 
-			"\r\n" + 
-			"//\"in\" varyings from our vertex shader\r\n" + 
-			"varying vec4 vColor;\r\n" + 
-			"varying vec2 vTexCoord;\r\n" + 
-			"\r\n" + 
-			"void main() {\r\n" + 
-			"	//sample the texture\r\n" + 
-			"	vec4 texColor = texture2D(u_texture, vTexCoord);\r\n" + 
-			"	\r\n" + 
-			"	//invert the red, green and blue channels\r\n" + 
-			"	texColor.rgb = 1.0 - texColor.rgb;\r\n" + 
-			"	\r\n" + 
-			"	//final color\r\n" + 
-			"	gl_FragColor = texColor * vColor;\r\n" + 
+	public static final String FRAGINVERT = "#ifdef GL_ES\n" //
+			+ "#define LOWP lowp\n" //
+			+ "precision mediump float;\n" //
+			+ "#else\n" //
+			+ "#define LOWP \n" //
+			+ "#endif\n" + //
+			"varying LOWP vec4 vColor;\n" +
+			"varying vec2 vTexCoord;\n" + 
+			"uniform sampler2D u_texture;\n" +			
+			"void main() {\n" +  
+			"	vec4 texColor = texture2D(u_texture, vTexCoord);\n" + 
+			"	\n" + 
+			"	texColor.rgb = 1.0 - texColor.rgb;\n" + 
+			"	\n" + 
+			"	gl_FragColor = texColor * vColor;\n" + 
 			"}";
+	
+	public static final String VERTWARP2 = VERTINVERT;
+	public static final String FRAGWARP2 = FRAGINVERT;
 }

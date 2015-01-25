@@ -132,6 +132,7 @@ public class Main extends Game implements Consumer {
 	public ShaderProgram blurshader;
 	public ShaderProgram defaultShader;
 	public ShaderProgram invertshader;
+	public ShaderProgram warpshader2;
 
 	public HashMap<String, SynchedAnimation> animations = new HashMap<String, SynchedAnimation>();
 	public HashMap<String, Texture> textures = new HashMap<String, Texture>();
@@ -239,6 +240,9 @@ public class Main extends Game implements Consumer {
 		blurshader.end();
 		
 		invertshader = new ShaderProgram(Shaders.VERTINVERT, Shaders.FRAGINVERT);
+		
+		warpshader2 = new ShaderProgram(Shaders.VERTWARP2, Shaders.FRAGWARP2);
+		batch.setShader(warpshader2);
 
 		loadUnmanagedAssets();
 		loadAssets();
@@ -297,6 +301,7 @@ public class Main extends Game implements Consumer {
 		blurshader.dispose();
 		blueprintrenderer.dispose();
 		invertshader.dispose();
+		warpshader2.dispose();
 		shapes.dispose();
 
 		buffer.dispose();
