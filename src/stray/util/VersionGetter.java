@@ -44,10 +44,13 @@ public class VersionGetter {
 					.debug("JSON obtained from host: " + file.toString());
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
+			Main.latestVersionNumber = -1;
 		} catch (IOException e) {
 			e.printStackTrace();
+			Main.latestVersionNumber = -1;
 		} catch (NullPointerException e) {
 			Main.logger.error("Failed to parse/get latest version info", e);
+			Main.latestVersionNumber = -1;
 		}
 	}
 }
