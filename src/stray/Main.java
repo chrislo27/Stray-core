@@ -98,7 +98,7 @@ public class Main extends Game implements Consumer {
 
 	Matrix4 normalProjection;
 
-	public static final String version = "v1.3.3-alpha";
+	public static final String version = "v0.4.0-alpha";
 	public static final int currentVersionNumber = 2;
 	public static String latestVersion = "";
 	public static int latestVersionNumber = 0;
