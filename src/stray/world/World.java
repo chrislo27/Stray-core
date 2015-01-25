@@ -91,7 +91,7 @@ public class World implements TileBasedMap {
 
 	public String levelfile = null;
 
-	public float checkpointx, checkpointy;
+	public float checkpointx, checkpointy, checkpointvoid;
 
 	private float voidTimer = 0;
 	private static final float VOID_LENGTH = 6f;
@@ -385,13 +385,13 @@ public class World implements TileBasedMap {
 	}
 
 	public void setCheckpoint() {
-		checkpointx = getPlayer().x;
-		checkpointy = getPlayer().y;
+		setCheckpoint(getPlayer().x, getPlayer().y);
 	}
 
 	public void setCheckpoint(float x, float y) {
 		checkpointx = x;
 		checkpointy = y;
+		checkpointvoid = getVoidDistance();
 	}
 
 	public void attemptCheckpoint() {
@@ -423,7 +423,7 @@ public class World implements TileBasedMap {
 				getPlayer().y = checkpointy;
 				getPlayer().health = getPlayer().maxhealth;
 				getPlayer().invincibility = 1;
-				voidMsTime = System.currentTimeMillis();
+				voidMsTime = getVoidMSFromDistance(checkpointvoid);
 			}
 		}
 
@@ -459,6 +459,11 @@ public class World implements TileBasedMap {
 		return MathUtils.clamp(
 				((((System.currentTimeMillis() - voidMsTime) / 1000f) / voidTime) * sizex), -1,
 				sizex);
+	}
+	
+	public long getVoidMSFromDistance(float distance){
+		if(voidTime <= 0) return System.currentTimeMillis();
+		return (System.currentTimeMillis() - Math.round((voidTime * 1000d) * (distance / sizex))); //return starting ms
 	}
 
 	public void executeBlockUpdates() {
