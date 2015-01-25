@@ -103,6 +103,24 @@ public class WorldRenderer {
 				((world.getVoidDistance() * World.tilesizex) - world.camera.camerax), 0,
 				main.manager.get(AssetMap.get("voidend"), Texture.class).getWidth(),
 				Gdx.graphics.getHeight());
+		
+
+		int ylevel = Main.random(-World.tilesizex, Gdx.graphics.getHeight() + World.tilesizey);
+
+		if (Main.random(1, 3) < 3) world.particles.add(ParticlePool
+				.obtain()
+				.setTexture("magnetglow")
+				.setTint(batch.getColor())
+				.setLifetime(1.25f)
+				.setVelocity(
+						-2,
+						((ylevel > Gdx.graphics.getHeight() / 2f) ? MathUtils.clamp(
+								-(((ylevel - (Gdx.graphics.getHeight() / 2f)) / (Gdx.graphics
+										.getHeight() / 2f)) * 4), -4f, 4f) : MathUtils.clamp(
+								4 - ((ylevel / (Gdx.graphics.getHeight() / 2f)) * 4), -4f, 4f)))
+				.setPosition((((world.getVoidDistance())) + 2 + Main.random(0.5f, 1.5f)),
+						(world.camera.cameray + ylevel) / World.tilesizey));
+		
 		batch.setColor(1, 1, 1, 1);
 		if (Main.random(1, 6) == 1) {
 			float location = Main.random(1, Gdx.graphics.getHeight());
@@ -115,22 +133,6 @@ public class WorldRenderer {
 					location + Main.random(-16, 16), 24, 1.5f, 3, 3, Colors.get("VOID_PURPLE")
 							.toFloatBits());
 		}
-
-		int ylevel = Main.random(-World.tilesizex, Gdx.graphics.getHeight() + World.tilesizey);
-
-		if (Main.random(1, 3) < 3) world.particles.add(ParticlePool
-				.obtain()
-				.setTexture("magnetglow")
-				.setTint(0, 0, 0, 1)
-				.setLifetime(1.25f)
-				.setVelocity(
-						-2,
-						((ylevel > Gdx.graphics.getHeight() / 2f) ? MathUtils.clamp(
-								-(((ylevel - (Gdx.graphics.getHeight() / 2f)) / (Gdx.graphics
-										.getHeight() / 2f)) * 4), -4f, 4f) : MathUtils.clamp(
-								4 - ((ylevel / (Gdx.graphics.getHeight() / 2f)) * 4), -4f, 4f)))
-				.setPosition((((world.getVoidDistance())) + 2 + Main.random(0.5f, 1.5f)),
-						(world.camera.cameray + ylevel) / World.tilesizey));
 	}
 
 	public void renderEntities() {
