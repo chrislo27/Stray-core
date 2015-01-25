@@ -3,8 +3,9 @@ package stray;
 import stray.conversation.Conversations;
 import stray.transition.FadeIn;
 import stray.transition.FadeOut;
-import stray.ui.Button;
+import stray.transition.GearTransition;
 import stray.ui.BackButton;
+import stray.ui.Button;
 import stray.ui.SettingsButton;
 
 import com.badlogic.gdx.Gdx;
@@ -24,7 +25,7 @@ public strictfp class MainMenuScreen extends Updateable {
 				Main.CUTSCENE.prepare(Conversations.instance().convs.get("dev"), new FadeIn(),
 						new FadeOut(), Main.NEWGAME);
 				main.transition(new FadeIn(Color.BLACK, 0.5f), null, Main.CUTSCENE);
-
+				
 				Runtime.getRuntime().gc();
 				return true;
 			}
