@@ -80,7 +80,7 @@ public class LevelSelectScreen extends Updateable {
 			if (Levels.instance().levels.get(i) != null) {
 				main.font.setScale(1.5f);
 				main.drawCentered(
-						Translator.getMsg("level.name." + Levels.instance().levels.get(i).name),
+						Levels.getLevelName(i, Levels.LEVELS_PER_CHAPTER),
 						(Gdx.graphics.getWidth() / 2) + ((i - offset) * DISTANCE),
 						Gdx.graphics.getHeight() / 2 + 64);
 				if (getCurrent() == i) {

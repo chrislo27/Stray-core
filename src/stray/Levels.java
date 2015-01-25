@@ -3,6 +3,9 @@ package stray;
 import java.util.HashMap;
 
 public class Levels {
+	
+	public static final int LEVELS_PER_CHAPTER = 8;
+	
 	private static Levels instance;
 
 	private Levels() {
@@ -36,5 +39,9 @@ public class Levels {
 		levels.put(num, l);
 		reverse.put(l, num);
 		num++;
+	}
+	
+	public static String getLevelName(int level, int groupnum){
+		return ((level / groupnum) + 1) + "-" + ((level % groupnum) + 1);
 	}
 }
