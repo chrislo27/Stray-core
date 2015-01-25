@@ -50,5 +50,37 @@ public abstract class Updateable implements Screen {
 		return 0;
 	}
 	
+	public void debug(String message) {
+		Main.logger.debug(message);
+	}
+	
+	public void debug(String message, Exception exception) {
+		Main.logger.debug(message, exception);
+	}
+
+	public void info(String message) {
+		Main.logger.info(message);
+	}
+	
+	public void info(String message, Exception exception) {
+		Main.logger.info(message, exception);
+	}
+
+	public void error(String message) {
+		Main.logger.error(message);
+	}
+
+	public void error(String message, Throwable exception) {
+		Main.logger.error(message, exception);
+	}
+	
+	public void warn(String message) {
+		Main.logger.warn(message);
+	}
+
+	public void warn(String message, Throwable exception) {
+		Main.logger.warn(message, exception);
+	}
+	
 
 }
