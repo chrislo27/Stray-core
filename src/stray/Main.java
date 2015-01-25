@@ -242,7 +242,6 @@ public class Main extends Game implements Consumer {
 		invertshader = new ShaderProgram(Shaders.VERTINVERT, Shaders.FRAGINVERT);
 		
 		warpshader2 = new ShaderProgram(Shaders.VERTWARP2, Shaders.FRAGWARP2);
-		batch.setShader(warpshader2);
 
 		loadUnmanagedAssets();
 		loadAssets();
