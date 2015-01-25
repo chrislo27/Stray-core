@@ -98,7 +98,7 @@ public class Main extends Game implements Consumer {
 
 	Matrix4 normalProjection;
 
-	public static final String version = "v1.3.2-alpha";
+	public static final String version = "v1.3.3-alpha";
 	public static final int currentVersionNumber = 2;
 	public static String latestVersion = "";
 	public static int latestVersionNumber = 0;
@@ -226,7 +226,6 @@ public class Main extends Game implements Consumer {
 		greyshader = new ShaderProgram(Shaders.VERTGREY, Shaders.FRAGGREY);
 
 		warpshader = new ShaderProgram(Shaders.VERTWARP, Shaders.FRAGWARP);
-		batch.setShader(warpshader);
 
 		blurshader = new ShaderProgram(Shaders.VERTBLUR, Shaders.FRAGBLUR);
 		blurshader.begin();
