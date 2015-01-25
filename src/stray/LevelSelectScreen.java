@@ -103,7 +103,7 @@ public class LevelSelectScreen extends Updateable {
 		}
 		main.font.setScale(1);
 		main.batch.setColor(getCurrent() == -1 ? Color.GRAY : (getCurrent() % 2 == 0 ? Main
-				.getRainbow() : Main.getInverseRainbow()));
+				.getRainbow(1) : Main.getRainbow(-1)));
 		main.batch.draw(main.manager.get(AssetMap.get("levelselected"), Texture.class),
 				(Gdx.graphics.getWidth() / 2 - 32), Gdx.graphics.getHeight() / 2 - 96, 64, 128);
 		main.batch.setColor(Color.WHITE);

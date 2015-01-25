@@ -108,7 +108,7 @@ public class Utils {
 
 	public static void drawTexWithShiny(Main main, Texture texture, float x, float y, float width,
 			float height) {
-		Color c = Main.getInverseRainbow();
+		Color c = Main.getRainbow(-1);
 		// draw original
 		main.batch.draw(texture, x, y, width, height);
 
@@ -129,7 +129,7 @@ public class Utils {
 
 	public static void drawTexMask(Main main, Texture texture, Texture mask, float x, float y,
 			float width, float height) {
-		Color c = Main.getInverseRainbow();
+		Color c = Main.getRainbow(-1);
 		// draw original
 		main.batch.draw(texture, x, y, width, height);
 

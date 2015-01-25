@@ -708,21 +708,14 @@ public class Main extends Game implements Consumer {
 	public static Color getRainbow() {
 		return getRainbow(1, 1);
 	}
-
-	public static Color getInverseRainbow() {
-		return getRainbow(1, 1);
+	
+	public static Color getRainbow(float s){
+		return getRainbow(s, 1);
 	}
 
 	public static Color getRainbow(float s, float saturation) {
 		return rainbow.set(
-				Utils.HSBtoRGBA8888(MathHelper.getNumberFromTime(System.currentTimeMillis(), s),
-						saturation, 0.75f)).clamp();
-	}
-
-	public static Color getInverseRainbow(float s, float saturation) {
-		return inverseRainbow.set(
-				Utils.HSBtoRGBA8888(
-						1.0f - MathHelper.getNumberFromTime(System.currentTimeMillis(), s),
+				Utils.HSBtoRGBA8888((s < 0 ? 1.0f : 0) - MathHelper.getNumberFromTime(System.currentTimeMillis(), Math.abs(s)),
 						saturation, 0.75f)).clamp();
 	}
 
@@ -906,7 +899,7 @@ public class Main extends Game implements Consumer {
 				}
 			}
 			if (ap.a.special) {
-				batch.setColor(Main.getInverseRainbow());
+				batch.setColor(Main.getRainbow(-1));
 			}
 			batch.draw(manager.get(AssetMap.get("achievementui"), Texture.class),
 					Gdx.graphics.getWidth() - 256, Main.convertY(ap.y));
