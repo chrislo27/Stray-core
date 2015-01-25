@@ -289,4 +289,38 @@ public class Shaders {
 			+ "	vec4 color = qcolor * n;\r\n"
 			+ "	gl_FragColor = vec4(color.r, color.g, color.b, 1.0);\r\n" + "}";
 
+	public static final String VERTINVERT = "//combined projection and view matrix\r\n" + 
+			"uniform mat4 u_projView;\r\n" + 
+			"\r\n" + 
+			"//\"in\" attributes from our SpriteBatch\r\n" + 
+			"attribute vec2 Position;\r\n" + 
+			"attribute vec2 TexCoord;\r\n" + 
+			"attribute vec4 Color;\r\n" + 
+			"\r\n" + 
+			"//\"out\" varyings to our fragment shader\r\n" + 
+			"varying vec4 vColor;\r\n" + 
+			"varying vec2 vTexCoord;\r\n" + 
+			"\r\n" + 
+			"void main() {\r\n" + 
+			"    vColor = Color;\r\n" + 
+			"    vTexCoord = TexCoord;\r\n" + 
+			"    gl_Position = u_projView * vec4(Position, 0.0, 1.0);\r\n" + 
+			"}";
+	public static final String FRAGINVERT = "//SpriteBatch will use texture unit 0\r\n" + 
+			"uniform sampler2D u_texture;\r\n" + 
+			"\r\n" + 
+			"//\"in\" varyings from our vertex shader\r\n" + 
+			"varying vec4 vColor;\r\n" + 
+			"varying vec2 vTexCoord;\r\n" + 
+			"\r\n" + 
+			"void main() {\r\n" + 
+			"	//sample the texture\r\n" + 
+			"	vec4 texColor = texture2D(u_texture, vTexCoord);\r\n" + 
+			"	\r\n" + 
+			"	//invert the red, green and blue channels\r\n" + 
+			"	texColor.rgb = 1.0 - texColor.rgb;\r\n" + 
+			"	\r\n" + 
+			"	//final color\r\n" + 
+			"	gl_FragColor = texColor * vColor;\r\n" + 
+			"}";
 }

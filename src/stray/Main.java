@@ -131,6 +131,7 @@ public class Main extends Game implements Consumer {
 	public ShaderProgram warpshader;
 	public ShaderProgram blurshader;
 	public ShaderProgram defaultShader;
+	public ShaderProgram invertshader;
 
 	public HashMap<String, SynchedAnimation> animations = new HashMap<String, SynchedAnimation>();
 	public HashMap<String, Texture> textures = new HashMap<String, Texture>();
@@ -236,6 +237,8 @@ public class Main extends Game implements Consumer {
 		blurshader.setUniformf("resolution", Gdx.graphics.getWidth());
 		blurshader.setUniformf("radius", 2f);
 		blurshader.end();
+		
+		invertshader = new ShaderProgram(Shaders.VERTINVERT, Shaders.FRAGINVERT);
 
 		loadUnmanagedAssets();
 		loadAssets();
@@ -293,6 +296,7 @@ public class Main extends Game implements Consumer {
 		maskRenderer.dispose();
 		blurshader.dispose();
 		blueprintrenderer.dispose();
+		invertshader.dispose();
 		shapes.dispose();
 
 		buffer.dispose();
@@ -640,7 +644,6 @@ public class Main extends Game implements Consumer {
 			toShow.add(new Appearance(a));
 			achievements.complete(a);
 			achievements.save("achievement", getPref("achievements"));
-
 		}
 	}
 
