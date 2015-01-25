@@ -35,6 +35,8 @@ public strictfp class MainMenuScreen extends Updateable {
 			@Override
 			public boolean onLeftClick() {
 				if (hasSave) {
+					while (Main.LEVELSELECT.moveNext())
+						;
 					main.transition(new FadeIn(Color.BLACK, 0.5f), new FadeOut(Color.BLACK, 0.5f),
 							Main.LEVELSELECT);
 
