@@ -1,8 +1,11 @@
 package stray;
 
+import java.awt.AWTException;
+import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -143,7 +146,7 @@ public class Main extends Game implements Consumer {
 	private JFrame consolewindow;
 	private JTextArea consoletext;
 	private JScrollPane conscrollPane;
-	private TrayIcon trayicon;
+	protected TrayIcon trayicon;
 
 	/**
 	 * used for storing progress, level data etc
@@ -256,7 +259,14 @@ public class Main extends Game implements Consumer {
 			}
 		});
 
-		trayicon = new TrayIcon(new javax.swing.ImageIcon(getClass().getResource("assets/images/icon/icon32.png")).getImage(), getTitle());
+		try {
+			trayicon = new TrayIcon(ImageIO.read(getClass().getResource("/images/icon/icon16.png")), getTitle());
+			SystemTray.getSystemTray().add(trayicon);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void prepareStates() {
@@ -323,6 +333,7 @@ public class Main extends Game implements Consumer {
 		BACKSTORY.dispose();
 		SETTINGS.dispose();
 
+		SystemTray.getSystemTray().remove(trayicon);
 	}
 	
 	private float warptime = 0f;
