@@ -56,11 +56,12 @@ public class GearTransition implements Transition {
 		StencilMaskUtil.prepareMask();
 
 		main.shapes.begin(ShapeType.Filled);
+		float radius = (((GEAR_MIDDLE_DIAMETER / gear.getWidth()) * gearscale) * (Gdx.graphics.getWidth() / GEAR_MIDDLE_DIAMETER) * Gdx.graphics
+				.getWidth()) / 2 / 2;
 		main.shapes
 				.circle(Gdx.graphics.getWidth() / 2,
 						Gdx.graphics.getHeight() / 2,
-						(((GEAR_MIDDLE_DIAMETER / gear.getWidth()) * gearscale) * (Gdx.graphics.getWidth() / GEAR_MIDDLE_DIAMETER) * Gdx.graphics
-								.getWidth()) / 2 / 2);
+						radius, Math.round((float) (6 * Math.cbrt(radius))));
 		main.shapes.end();
 		
 		main.batch.begin();
