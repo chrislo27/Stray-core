@@ -25,12 +25,14 @@ public class Levels {
 	private void loadResources() {
 		levels.clear();
 		
-		add(new LevelData("level1").setCutscene("controls"));
-		add(new LevelData("level2"));
-		add(new LevelData("level3"));
-		add(new LevelData("level4"));
-		add(new LevelData("level5"));
-		add(new LevelData("level6"));
+		add(new LevelData("level1-1").setCutscene("controls"));
+		add(new LevelData("level1-2"));
+		add(new LevelData("level1-3"));
+		add(new LevelData("level1-4"));
+		add(new LevelData("level1-5"));
+		add(new LevelData("level1-6"));
+		add(new LevelData("level1-7"));
+		add(new LevelData("level1-8"));
 	}
 	
 	private int num = 0;
