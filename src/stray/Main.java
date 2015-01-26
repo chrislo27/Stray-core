@@ -250,17 +250,13 @@ public class Main extends Game implements Consumer {
 
 		achievements.load("achievement", getPref("achievements"));
 
-		Thread versionchecker = new Thread("Stray-version checker") {
-
+		Gdx.app.postRunnable(new Thread("Stray-version checker") {
 			public void run() {
 				VersionGetter.getVersionFromServer();
 			}
-		};
-		versionchecker.setPriority(Thread.MIN_PRIORITY);
-		versionchecker.setDaemon(true);
-		versionchecker.start();
+		});
 
-		trayicon = new TrayIcon(new javax.swing.ImageIcon(getClass().getResource("myimage.jpeg")).getImage(), getTitle());
+		trayicon = new TrayIcon(new javax.swing.ImageIcon(getClass().getResource("assets/images/icon/icon32.png")).getImage(), getTitle());
 	}
 
 	public void prepareStates() {
