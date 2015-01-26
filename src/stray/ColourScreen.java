@@ -205,7 +205,7 @@ public class ColourScreen extends Updateable {
 
 	@Override
 	public void hide() {
-		Main.resetTitle();
+		Main.getTitle();
 	}
 
 	@Override

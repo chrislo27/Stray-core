@@ -1,5 +1,6 @@
 package stray;
 
+import java.awt.TrayIcon;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -12,6 +13,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -141,6 +143,7 @@ public class Main extends Game implements Consumer {
 	private JFrame consolewindow;
 	private JTextArea consoletext;
 	private JScrollPane conscrollPane;
+	private TrayIcon trayicon;
 
 	/**
 	 * used for storing progress, level data etc
@@ -168,7 +171,7 @@ public class Main extends Game implements Consumer {
 	public void create() {
 		defaultShader = SpriteBatch.createDefaultShader();
 		progress = getPref("progress");
-		resetTitle();
+		Gdx.graphics.setTitle(getTitle() + " - " + Splashes.getRandomSplash());
 		redirectSysOut();
 
 		for (int i = 0; i < lastFPS.length; i++) {
@@ -257,6 +260,7 @@ public class Main extends Game implements Consumer {
 		versionchecker.setDaemon(true);
 		versionchecker.start();
 
+		trayicon = new TrayIcon(new javax.swing.ImageIcon(getClass().getResource("myimage.jpeg")).getImage(), getTitle());
 	}
 
 	public void prepareStates() {
@@ -634,12 +638,8 @@ public class Main extends Game implements Consumer {
 		return animations.get("shine").getCurrentFrame().getTexture();
 	}
 
-	/**
-	 * sets title of window to "GAMENAME VERSION - RANDOM_SPLASH"
-	 */
-	public static void resetTitle() {
-		Gdx.graphics.setTitle(Translator.getMsg("gamename") + " " + Main.version + " - "
-				+ Splashes.getRandomSplash());
+	public static String getTitle() {
+		return (Translator.getMsg("gamename") + " " + Main.version);
 	}
 
 	public void awardAchievement(String id) {
