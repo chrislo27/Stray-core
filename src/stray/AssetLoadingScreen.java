@@ -6,12 +6,8 @@ import java.util.Map;
 import stray.blocks.Block;
 import stray.blocks.Blocks;
 import stray.util.AssetLogger;
-import stray.util.render.Gears;
 import stray.world.World;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.Logger;
 
 public class AssetLoadingScreen extends MiscLoadingScreen {
