@@ -13,6 +13,7 @@ public class Settings {
 	
 	public static boolean showFPS = true;
 	public static boolean debug = false;
+	public static boolean showVignette = true;
 
 	private Settings() {
 	}

@@ -53,6 +53,16 @@ public class SettingsScreen extends Updateable {
 				return true;
 			}
 		}.setState(Settings.debug));
+		container.elements.add(new BooleanButton((Gdx.graphics.getWidth() / 2) - 80, Gdx.graphics
+				.getHeight() - 378, 160, 32, "menu.settings.vignette") {
+
+			@Override
+			public boolean onLeftClick() {
+				super.onLeftClick();
+				Settings.showVignette = !Settings.showVignette;
+				return true;
+			}
+		}.setState(Settings.showVignette));
 
 	}
 

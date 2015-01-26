@@ -31,7 +31,7 @@ public class WorldRenderer {
 	private Sprite detection;
 
 	public boolean showGrid = false;
-	
+
 	protected long lastAugmentSwitch = 0;
 
 	public WorldRenderer(World world) {
@@ -103,7 +103,6 @@ public class WorldRenderer {
 				((world.getVoidDistance() * World.tilesizex) - world.camera.camerax), 0,
 				main.manager.get(AssetMap.get("voidend"), Texture.class).getWidth(),
 				Gdx.graphics.getHeight());
-		
 
 		int ylevel = Main.random(-World.tilesizex, Gdx.graphics.getHeight() + World.tilesizey);
 
@@ -120,7 +119,7 @@ public class WorldRenderer {
 								4 - ((ylevel / (Gdx.graphics.getHeight() / 2f)) * 4), -4f, 4f)))
 				.setPosition((((world.getVoidDistance())) + 2 + Main.random(0.5f, 1.5f)),
 						(world.camera.cameray + ylevel) / World.tilesizey));
-		
+
 		batch.setColor(1, 1, 1, 1);
 		if (Main.random(1, 6) == 1) {
 			float location = Main.random(1, Gdx.graphics.getHeight());
@@ -158,12 +157,19 @@ public class WorldRenderer {
 
 	public void renderUi() {
 		if (world.getPlayer() == null) return;
-		
+
 		main.font.setColor(Color.WHITE);
-		batch.setColor(Color.WHITE);
+
+		if (Settings.showVignette) {
+			batch.setColor(0, 0, 0, 0.5f);
+			batch.draw(main.manager.get(AssetMap.get("vignette"), Texture.class), 0, 0,
+					Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+			batch.setColor(Color.WHITE);
+		}
 
 		if (world.vignettecolour.a > 0f) {
-			batch.setColor(world.vignettecolour);
+			batch.setColor(world.vignettecolour.r, world.vignettecolour.g, world.vignettecolour.b,
+					world.vignettecolour.a);
 			batch.draw(main.manager.get(AssetMap.get("vignette"), Texture.class), 0, 0,
 					Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			batch.setColor(Color.WHITE);
@@ -183,16 +189,20 @@ public class WorldRenderer {
 
 	private float originalhealth = -1;
 	private float timeUntilOrig = 0;
-	
+
 	public void renderHealth() {
 		if (world.getPlayer() == null) return;
-		if(originalhealth <= -1) originalhealth = world.getPlayer().health;
-		if(timeUntilOrig > 0){
+		if (originalhealth <= -1) originalhealth = world.getPlayer().health;
+		if (timeUntilOrig > 0) {
 			timeUntilOrig -= Gdx.graphics.getDeltaTime();
 		}
-		if(timeUntilOrig <= 0){
+		if (timeUntilOrig <= 0) {
 			timeUntilOrig = 0;
-			originalhealth = MathUtils.clamp(originalhealth + ((world.getPlayer().health - originalhealth) * Gdx.graphics.getDeltaTime() * 4f), 0f, world.getPlayer().maxhealth);
+			originalhealth = MathUtils.clamp(
+					originalhealth
+							+ ((world.getPlayer().health - originalhealth)
+									* Gdx.graphics.getDeltaTime() * 4f), 0f,
+					world.getPlayer().maxhealth);
 		}
 
 		batch.setColor(0, 0, 0, 0.3f);
@@ -211,7 +221,7 @@ public class WorldRenderer {
 		batch.setColor(1 * (1 - (world.getPlayer().health / world.getPlayer().maxhealth)), 0,
 				1 * (world.getPlayer().health / world.getPlayer().maxhealth), 0.25f);
 		main.fillRect(8 + baroffset, 8, 112 - baroffset, 12);
-		
+
 		// actual health
 		batch.setColor(batch.getColor().r, batch.getColor().g, batch.getColor().b, 0.25f);
 		main.fillRect(8 + baroffset, 8,
@@ -221,8 +231,7 @@ public class WorldRenderer {
 		// opaque health
 		batch.setColor(batch.getColor().r, batch.getColor().g, batch.getColor().b, 1);
 		main.fillRect(8 + baroffset, 8,
-				(112 - baroffset) * (1 - (originalhealth / world.getPlayer().maxhealth)),
-				12);
+				(112 - baroffset) * (1 - (originalhealth / world.getPlayer().maxhealth)), 12);
 
 		batch.setColor(1, 1, 1, 1);
 
@@ -248,29 +257,33 @@ public class WorldRenderer {
 
 	public void renderAugments() {
 		int augments = main.getAugmentsUnlocked();
-		
-		if(augments <= 0) return;
-		
+
+		if (augments <= 0) return;
+
 		batch.setColor(0, 0, 0, 0.3f);
 		main.fillRect(128, 0, 16 + (augments * 29), 50);
 		batch.setColor(1, 1, 1, 1);
-		
+
 		for (int i = 0; i < augments; i++) {
 			batch.setColor(0, 0, 0, 0.5f);
-			if(i == world.currentAugment) batch.setColor(Augments.getAugment(world.currentAugment).getColor());
-			if(i == 3) batch.setColor(1, 0, 0, 1);
+			if (i == world.currentAugment) batch.setColor(Augments.getAugment(world.currentAugment)
+					.getColor());
+			if (i == 3) batch.setColor(1, 0, 0, 1);
 			Utils.drawRotated(batch, main.textures.get("gear"), 135 + (i * 32) - (i * 3),
 					5 + (i % 2 != 0 ? 7 : 0), 32, 32,
-					MathHelper.getNumberFromTime(((world.augmentActivate) ? 0.75f : 5f)) * 360, i % 2 == 0);
+					MathHelper.getNumberFromTime(((world.augmentActivate) ? 0.75f : 5f)) * 360,
+					i % 2 == 0);
 		}
 		batch.setColor(1, 1, 1, 1);
-		
-		if(System.currentTimeMillis() - lastAugmentSwitch <= 2500){
+
+		if (System.currentTimeMillis() - lastAugmentSwitch <= 2500) {
 			main.font.setColor(1, 1, 1, 1);
-			String text = Translator.getMsg("ui.currentaugment") + Translator.getMsg(Augments.getAugment(world.currentAugment).getName());
-			main.drawTextBg(text, Gdx.graphics.getWidth() / 2 - (main.font.getBounds(text).width / 2), 50);
+			String text = Translator.getMsg("ui.currentaugment")
+					+ Translator.getMsg(Augments.getAugment(world.currentAugment).getName());
+			main.drawTextBg(text, Gdx.graphics.getWidth() / 2
+					- (main.font.getBounds(text).width / 2), 50);
 		}
-		
+
 		Augments.getAugment(world.currentAugment).renderUi(main, world);
 	}
 
