@@ -24,9 +24,11 @@ public class AssetLoadingScreen extends MiscLoadingScreen {
 
 	private AssetLogger output = new AssetLogger("assetoutput", Logger.DEBUG);
 
+	private long startms = 0;
+	
 	@Override
 	public void render(float delta) {
-		main.manager.update((int) (Main.MAX_FPS / 2f));
+		main.manager.update(Math.round(1000f / Main.MAX_FPS));
 		if (main.manager.getProgress() >= 1f) {
 			// finished
 			for (String s : main.manager.getAssetNames()) {
@@ -40,7 +42,8 @@ public class AssetLoadingScreen extends MiscLoadingScreen {
 			}
 
 			Main.GAME.world = new World(main);
-
+			Main.logger.info("Finished loading all managed assets, took " + (System.currentTimeMillis() - startms) + " ms");
+			
 			main.setScreen(Main.MAINMENU);
 		}
 		super.render(delta);
@@ -60,7 +63,7 @@ public class AssetLoadingScreen extends MiscLoadingScreen {
 
 	@Override
 	public void show() {
-
+		startms = System.currentTimeMillis();
 	}
 
 	@Override
