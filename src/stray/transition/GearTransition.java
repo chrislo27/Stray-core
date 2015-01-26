@@ -6,6 +6,7 @@ import stray.util.render.StencilMaskUtil;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.MathUtils;
 
 public class GearTransition implements Transition {
 
@@ -29,7 +30,6 @@ public class GearTransition implements Transition {
 
 	@Override
 	public void render(Main main) {
-		if (nextScreen == null) {
 			if (Main.TRANSITION.nextScreen == null) {
 				forcefinish = true;
 				return;
@@ -40,7 +40,7 @@ public class GearTransition implements Transition {
 			main.buffer2.end();
 			nextScreen = main.buffer2.getColorBufferTexture();
 			main.batch.begin();
-		}
+		
 
 		if (nextScreen == null) return;
 
@@ -61,7 +61,7 @@ public class GearTransition implements Transition {
 		main.shapes
 				.circle(Gdx.graphics.getWidth() / 2,
 						Gdx.graphics.getHeight() / 2,
-						radius, Math.round((float) (6 * Math.cbrt(radius))));
+						radius, (int) MathUtils.clamp((6 * Math.cbrt(radius)), 1, Integer.MAX_VALUE));
 		main.shapes.end();
 		
 		main.batch.begin();

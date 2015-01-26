@@ -38,9 +38,9 @@ public strictfp class MainMenuScreen extends Updateable {
 				if (hasSave) {
 					while (Main.LEVELSELECT.moveNext())
 						;
-					main.transition(new FadeIn(Color.BLACK, 0.5f), new FadeOut(Color.BLACK, 0.5f),
-							Main.LEVELSELECT);
-
+					main.transition(new FadeIn(Color.BLACK, 0.5f), new FadeOut(Color.BLACK, 0.5f), Main.LEVELSELECT);
+					//main.transition(new GearTransition(5), null, Main.LEVELSELECT);
+					
 					Runtime.getRuntime().gc();
 				}
 				return true;
