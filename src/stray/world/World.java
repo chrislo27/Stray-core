@@ -355,7 +355,7 @@ public class World implements TileBasedMap {
 			if ((camera.camerax / World.tilesizex) - getVoidDistance() < 4) {
 				if ((voidTimer += Gdx.graphics.getRawDeltaTime()) >= VOID_LENGTH) {
 					main.manager.get(AssetMap.get("voidambient"), Sound.class).play(
-							Settings.getSoundVolume(), 1f, getPan(getVoidDistance()));
+							Settings.soundVolume, 1f, getPan(getVoidDistance()));
 					voidTimer -= VOID_LENGTH;
 				}
 			} else {

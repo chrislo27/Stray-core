@@ -400,7 +400,7 @@ public class Block {
 	public static boolean playSound(int x, int y, float camx, float camy, Sound sound, float vol,
 			float pitch, boolean mustbevisible) {
 		if (!Block.isBlockVisible(camx, camy, x, y) && mustbevisible) return false;
-		sound.play(vol * Settings.getSoundVolume(), pitch, Utils.getSoundPan(x, camx));
+		sound.play(vol * Settings.soundVolume, pitch, Utils.getSoundPan(x, camx));
 		return true;
 	}
 

@@ -29,8 +29,8 @@ public class SettingsScreen extends Updateable {
 			}
 		});
 		container.elements.add(new LanguageButton(5, 5));
-		container.elements.add(music.setSlider(Settings.getMusicVolume()));
-		container.elements.add(sound.setSlider(Settings.getSoundVolume()));
+		container.elements.add(music.setSlider(Settings.musicVolume));
+		container.elements.add(sound.setSlider(Settings.soundVolume));
 		container.elements.add(new BooleanButton((Gdx.graphics.getWidth() / 2) - 80, Gdx.graphics
 				.getHeight() - 286, 160, 32, "menu.settings.showfps") {
 
@@ -116,8 +116,7 @@ public class SettingsScreen extends Updateable {
 
 	private void exitScreen() {
 		main.setScreen(Main.MAINMENU);
-		Settings.getPreferences().putFloat("sound", sound.slider).putFloat("music", music.slider)
-				.flush();
+		Settings.instance().save();
 	}
 
 	@Override

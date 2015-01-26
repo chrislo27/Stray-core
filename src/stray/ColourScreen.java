@@ -104,7 +104,7 @@ public class ColourScreen extends Updateable {
 			if (tiles[selx][sely].equals(choose)) {
 				amount--;
 				score += 5;
-				main.manager.get(AssetMap.get("colour200pts"), Sound.class).play(0.1f * Settings.getSoundVolume());
+				main.manager.get(AssetMap.get("colour200pts"), Sound.class).play(0.1f * Settings.soundVolume);
 				if (amount <= 0) {
 					msg = "You got them all!";
 					String last = choose;
@@ -137,12 +137,12 @@ public class ColourScreen extends Updateable {
 				if (Main.random(1, 2) == 1) {
 					msg = "This " + tiles[selx][sely] + " tile isn't " + choose + "!";
 				}
-				main.manager.get(AssetMap.get("colourincorrect"), Sound.class).play(0.5f * Settings.getSoundVolume());
+				main.manager.get(AssetMap.get("colourincorrect"), Sound.class).play(0.5f * Settings.soundVolume);
 			}
 		} else if (Gdx.input.isKeyJustPressed(Keys.R)) {
 			if (nuclearness == 0) {
 				nuclearness = 52;
-				main.manager.get(AssetMap.get("colourswap"), Sound.class).play(0.333f * Settings.getSoundVolume());
+				main.manager.get(AssetMap.get("colourswap"), Sound.class).play(0.333f * Settings.soundVolume);
 			}
 		}
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
