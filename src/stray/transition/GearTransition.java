@@ -61,7 +61,7 @@ public class GearTransition implements Transition {
 		main.shapes
 				.circle(Gdx.graphics.getWidth() / 2,
 						Gdx.graphics.getHeight() / 2,
-						radius, (int) MathUtils.clamp((6 * Math.cbrt(radius)), 1, Integer.MAX_VALUE));
+						radius, 100);
 		main.shapes.end();
 		
 		main.batch.begin();
