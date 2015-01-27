@@ -8,6 +8,8 @@ import stray.blocks.Blocks;
 import stray.util.AssetLogger;
 import stray.world.World;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Logger;
 
 public class AssetLoadingScreen extends MiscLoadingScreen {
@@ -21,10 +23,10 @@ public class AssetLoadingScreen extends MiscLoadingScreen {
 	private AssetLogger output = new AssetLogger("assetoutput", Logger.DEBUG);
 
 	private long startms = 0;
-	
+
 	@Override
 	public void render(float delta) {
-		main.manager.update(Math.round(1000f / Main.MAX_FPS));
+		main.manager.update((int) (1000f / Main.MAX_FPS));
 		if (main.manager.getProgress() >= 1f) {
 			// finished
 			for (String s : main.manager.getAssetNames()) {
@@ -38,12 +40,30 @@ public class AssetLoadingScreen extends MiscLoadingScreen {
 			}
 
 			Main.GAME.world = new World(main);
-			Main.logger.info("Finished loading all managed assets, took " + (System.currentTimeMillis() - startms) + " ms");
-			
+			Main.logger.info("Finished loading all managed assets, took "
+					+ (System.currentTimeMillis() - startms) + " ms");
+
 			main.setScreen(Main.MAINMENU);
 		}
 		super.render(delta);
 
+		main.batch.begin();
+		main.batch.setColor(1, 1, 1, 1);
+		main.fillRect(Gdx.graphics.getWidth() / 2 - 128, Gdx.graphics.getHeight() / 2 - 10,
+				256 * main.manager.getProgress(), 20);
+
+		main.fillRect(Gdx.graphics.getWidth() / 2 - 130, Gdx.graphics.getHeight() / 2 - 12, 260, 1);
+		main.fillRect(Gdx.graphics.getWidth() / 2 - 130, Gdx.graphics.getHeight() / 2 + 11, 260, 1);
+
+		main.fillRect(Gdx.graphics.getWidth() / 2 - 130, Gdx.graphics.getHeight() / 2 - 12, 1, 24);
+		main.fillRect(Gdx.graphics.getWidth() / 2 + 132, Gdx.graphics.getHeight() / 2 - 12, 1, 24);
+
+		if(main.manager.getAssetNames().size > 0)
+		main.drawTextBg(output.getLastMsg(), Gdx.graphics.getWidth() / 2
+				- (main.font.getBounds(output.getLastMsg()).width / 2),
+				Gdx.graphics.getHeight() / 2 - 35);
+
+		main.batch.end();
 	}
 
 	@Override
