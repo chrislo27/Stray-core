@@ -35,6 +35,7 @@ import stray.util.GameException;
 import stray.util.Logger;
 import stray.util.MathHelper;
 import stray.util.MemoryUtils;
+import stray.util.ScreenshotFactory;
 import stray.util.Splashes;
 import stray.util.Utils;
 import stray.util.VersionGetter;
@@ -320,8 +321,6 @@ public class Main extends Game implements Consumer {
 
 	}
 	
-	private float warptime = 0f;
-	
 	private void preRender() {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -330,36 +329,6 @@ public class Main extends Game implements Consumer {
 
 		camera.update();
 		gears.update(1);
-		if (Gdx.input.isKeyJustPressed(Keys.F12)) {
-			Settings.debug = !Settings.debug;
-		}
-		if (Settings.debug) { // console things -> alt + key
-			if (((Gdx.input.isKeyPressed(Keys.ALT_LEFT) || Gdx.input.isKeyPressed(Keys.ALT_RIGHT)))) {
-				if (Gdx.input.isKeyJustPressed(Keys.C)) {
-					if (consolewindow.isVisible()) {
-						consolewindow.setVisible(false);
-					} else {
-						consolewindow.setVisible(true);
-						conscrollPane.getVerticalScrollBar().setValue(
-								conscrollPane.getVerticalScrollBar().getMaximum());
-					}
-				} else if (Gdx.input.isKeyJustPressed(Keys.Q)) {
-					throw new GameException(
-							"This is a forced crash caused by pressing ALT+Q while in debug mode.");
-				} else if (Gdx.input.isKeyJustPressed(Keys.L)) {
-					LEVELEDITOR.resetWorld();
-					setScreen(LEVELEDITOR);
-				} else if (Gdx.input.isKeyJustPressed(Keys.A)) {
-					toShow.add(new Appearance(Achievements.instance().achievements.get(Achievements
-							.instance().achievementId.get("test"))));
-				} else if (Gdx.input.isKeyJustPressed(Keys.G)) {
-					gears.reset();
-				}
-
-			}
-		}
-		
-		
 	}
 
 	@Override
@@ -466,10 +435,40 @@ public class Main extends Game implements Consumer {
 			lastFPS[0] = Gdx.graphics.getFramesPerSecond();
 		}
 		
-		warptime += Gdx.graphics.getDeltaTime();
-		warpshader.begin();
-		warpshader.setUniformf(warpshader.getUniformLocation("time"), warptime);
-		warpshader.end();
+		inputUpdate();
+	}
+	
+	public void inputUpdate(){
+		if (Gdx.input.isKeyJustPressed(Keys.F12)) {
+			Settings.debug = !Settings.debug;
+		} else if (Gdx.input.isKeyJustPressed(Keys.F5)) {
+			ScreenshotFactory.saveScreenshot();
+		}
+		if (Settings.debug) { // console things -> alt + key
+			if (((Gdx.input.isKeyPressed(Keys.ALT_LEFT) || Gdx.input.isKeyPressed(Keys.ALT_RIGHT)))) {
+				if (Gdx.input.isKeyJustPressed(Keys.C)) {
+					if (consolewindow.isVisible()) {
+						consolewindow.setVisible(false);
+					} else {
+						consolewindow.setVisible(true);
+						conscrollPane.getVerticalScrollBar().setValue(
+								conscrollPane.getVerticalScrollBar().getMaximum());
+					}
+				} else if (Gdx.input.isKeyJustPressed(Keys.Q)) {
+					throw new GameException(
+							"This is a forced crash caused by pressing ALT+Q while in debug mode.");
+				} else if (Gdx.input.isKeyJustPressed(Keys.L)) {
+					LEVELEDITOR.resetWorld();
+					setScreen(LEVELEDITOR);
+				} else if (Gdx.input.isKeyJustPressed(Keys.A)) {
+					toShow.add(new Appearance(Achievements.instance().achievements.get(Achievements
+							.instance().achievementId.get("test"))));
+				} else if (Gdx.input.isKeyJustPressed(Keys.G)) {
+					gears.reset();
+				}
+
+			}
+		}
 	}
 
 	public void tickUpdate() {
