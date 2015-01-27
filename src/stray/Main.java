@@ -537,6 +537,7 @@ public class Main extends Game implements Consumer {
 		manager.load("images/cutscene/controls1.png", Texture.class);
 		manager.load("images/cutscene/controls2.png", Texture.class);
 		manager.load("images/cutscene/rep.png", Texture.class);
+		manager.load("images/cutscene/scientistface.png", Texture.class);
 
 		// effects
 		manager.load(AssetMap.add("effecticonblindness", "images/ui/effect/icon/blindness.png"),

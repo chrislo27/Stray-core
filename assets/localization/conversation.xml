@@ -29,6 +29,17 @@
 		<speech speaker="" text="conv.controls1" cutscene="controls1" />
 		<speech speaker="" text="conv.controls2" cutscene="controls2" />
 	</conversation>
+	
+	<conversation id="beginning">
+        <speech speaker="" text="conv.beginning0" cutscene="" />
+        <speech speaker="" text="conv.beginning1" cutscene="" />
+        <speech speaker="" text="conv.beginning2" cutscene="" />
+        <speech speaker="" text="conv.empty" cutscene="scientistface" />
+        <speech speaker="" text="conv.beginning4" cutscene="scientistface" />
+        <speech speaker="" text="conv.beginning5" cutscene="scientistface" />
+        <speech speaker="" text="conv.beginning6" cutscene="scientistface" />
+        <speech speaker="" text="conv.beginning7" cutscene="scientistface" />
+    </conversation>
 
 
 </conversations>
