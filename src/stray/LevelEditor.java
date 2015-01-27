@@ -188,6 +188,9 @@ public class LevelEditor extends Updateable {
 	public void show() {
 		if (world == null) {
 			world = new World(main);
+			if(world.getPlayer() != null){
+				world.setBlock(Blocks.instance().getBlock("spawnerplayer"), (int) world.getPlayer().x, (int) world.getPlayer().y);
+			}
 			world.entities.clear();
 		}
 	}
