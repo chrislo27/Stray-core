@@ -114,6 +114,10 @@ public class LevelEditor extends Updateable {
 		}
 		world.renderer.showGrid = true;
 		world.prepare();
+		if(world.getPlayer() != null){
+			world.setBlock(Blocks.instance().getBlock("spawnerplayer"), (int) world.getPlayer().x, (int) world.getPlayer().y);
+		}
+		world.entities.clear();
 	}
 
 	@Override
@@ -178,6 +182,7 @@ public class LevelEditor extends Updateable {
 				Main.convertY(starting + 90));
 		main.font.draw(main.batch, "world sizex: " + world.sizex, 5, Main.convertY(starting + 120));
 		main.font.draw(main.batch, "world sizey: " + world.sizey, 5, Main.convertY(starting + 135));
+		main.font.draw(main.batch, "file location: " + (lastFile == null ? null : lastFile.getName()), 5, Main.convertY(starting + 165));
 	}
 
 	@Override
@@ -187,11 +192,7 @@ public class LevelEditor extends Updateable {
 	@Override
 	public void show() {
 		if (world == null) {
-			world = new World(main);
-			if(world.getPlayer() != null){
-				world.setBlock(Blocks.instance().getBlock("spawnerplayer"), (int) world.getPlayer().x, (int) world.getPlayer().y);
-			}
-			world.entities.clear();
+			resetWorld();
 		}
 	}
 
