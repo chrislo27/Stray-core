@@ -161,7 +161,7 @@ public class WorldRenderer {
 		main.font.setColor(Color.WHITE);
 
 		if (Settings.showVignette) {
-			batch.setColor(0, 0, 0, 0.5f);
+			batch.setColor(0, 0, 0, 0.25f);
 			batch.draw(main.manager.get(AssetMap.get("vignette"), Texture.class), 0, 0,
 					Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			batch.setColor(Color.WHITE);
