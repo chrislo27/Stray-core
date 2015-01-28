@@ -52,6 +52,7 @@ public class Conversations {
 				String text = spe.getAttribute("text", "");
 				
 				if(speaker != null) if(speaker.equals("")) speaker = null;
+				if(cutscenepic != null) if(cutscenepic.equals("")) cutscenepic = null;
 
 				Main.logger.info("Adding speech for " + e.getAttribute("id") + ": speaker: "
 						+ speaker + ", text: " + text + ", cutscene: " + cutscenepic + ", voice: "
