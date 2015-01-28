@@ -39,6 +39,8 @@
         <speech speaker="" text="conv.beginning5" cutscene="scientistface" />
         <speech speaker="" text="conv.beginning6" cutscene="scientistface" />
         <speech speaker="" text="conv.beginning7" cutscene="scientistface" />
+        <speech speaker="" text="conv.beginning8" cutscene="scientistface" />
+        <speech speaker="" text="conv.beginning9" cutscene="scientistface" />
     </conversation>
 
 
