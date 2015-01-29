@@ -152,6 +152,7 @@ public class Main extends Game implements Consumer {
 	public static final int MAX_FPS = 60;
 	private int[] lastFPS = new int[5];
 	private float deltaUntilTick = 0;
+	private float totalSeconds = 0f;
 
 	public static Gears gears;
 
@@ -227,6 +228,9 @@ public class Main extends Game implements Consumer {
 		greyshader = new ShaderProgram(Shaders.VERTGREY, Shaders.FRAGGREY);
 
 		warpshader = new ShaderProgram(Shaders.VERTWARP, Shaders.FRAGWARP);
+		warpshader.begin();
+		warpshader.setUniformf(warpshader.getUniformLocation("time"), totalSeconds);
+		warpshader.end();
 
 		blurshader = new ShaderProgram(Shaders.VERTBLUR, Shaders.FRAGBLUR);
 		blurshader.begin();
@@ -434,6 +438,11 @@ public class Main extends Game implements Consumer {
 			}
 			lastFPS[0] = Gdx.graphics.getFramesPerSecond();
 		}
+		
+		totalSeconds += Gdx.graphics.getDeltaTime();
+		warpshader.begin();
+		warpshader.setUniformf(warpshader.getUniformLocation("time"), totalSeconds);
+		warpshader.end();
 		
 		inputUpdate();
 	}

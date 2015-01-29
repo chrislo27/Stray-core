@@ -11,6 +11,7 @@ import stray.util.MathHelper;
 import stray.util.ParticlePool;
 import stray.util.Utils;
 import stray.util.render.ElectricityRenderer;
+import stray.util.render.PostProcessing;
 import stray.util.render.SpaceBackground;
 
 import com.badlogic.gdx.Gdx;

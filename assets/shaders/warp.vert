@@ -9,7 +9,7 @@ attribute vec4 Color;
 //"out" varyings to our fragment shader
 varying vec4 vColor;
 varying vec2 vTexCoord;
- 
+
 void main() {
     vColor = Color;
     vTexCoord = TexCoord;

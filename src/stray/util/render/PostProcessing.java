@@ -81,4 +81,13 @@ public class PostProcessing {
 	public static void euphoria(Batch batch, FrameBuffer buffer){
 		euphoria(batch, buffer, 0.4f, 6);
 	}
+	
+	public static void warp(Batch batch, FrameBuffer buffer, ShaderProgram warp){
+		batch.setShader(warp);
+		batch.draw(buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(),
+				Gdx.graphics.getWidth(), -Gdx.graphics.getHeight(), 0, 0, Gdx.graphics.getWidth(),
+				Gdx.graphics.getHeight(), false, false);
+		batch.flush();
+		batch.setShader(null);
+	}
 }
