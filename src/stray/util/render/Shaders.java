@@ -197,9 +197,13 @@ public class Shaders {
 			"	gl_FragColor = texColor * vColor;\n" + 
 			"}";
 	
-	public static final String VERTWARP = Gdx.files.internal("shaders/warp.vert").readString();
+	public static final String VERTWARP = VERTDEFAULT;
 	
 	public static final String FRAGWARP = Gdx.files.internal("shaders/warp.frag").readString();
+	
+	public static final String VERTSWIZZLE = VERTDEFAULT;
+	
+	public static final String FRAGSWIZZLE = Gdx.files.internal("shaders/swizzle.frag").readString();
 
 	
 }
