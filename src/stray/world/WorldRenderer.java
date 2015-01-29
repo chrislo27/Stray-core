@@ -94,7 +94,7 @@ public class WorldRenderer {
 
 		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(),
 				Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
-		PostProcessing.warp(batch, main.buffer, main.warpshader);
+		PostProcessing.heat(batch, main.buffer, main, 128, 128, 64, 64, 128, 128, 64, 64);
 	}
 
 	public void renderVoid() {
