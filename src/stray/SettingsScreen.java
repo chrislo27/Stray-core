@@ -43,16 +43,7 @@ public class SettingsScreen extends Updateable {
 				return true;
 			}
 		}.setState(Settings.showFPS));
-		container.elements.add(new BooleanButton((Gdx.graphics.getWidth() / 2) - 80, Gdx.graphics
-				.getHeight() - 332, 160, 32, "menu.settings.debugmode") {
-
-			@Override
-			public boolean onLeftClick() {
-				super.onLeftClick();
-				Settings.debug = !Settings.debug;
-				return true;
-			}
-		}.setState(Settings.debug));
+		container.elements.add(debug);
 		container.elements.add(new BooleanButton((Gdx.graphics.getWidth() / 2) - 80, Gdx.graphics
 				.getHeight() - 378, 160, 32, "menu.settings.vignette") {
 
@@ -70,6 +61,17 @@ public class SettingsScreen extends Updateable {
 			Gdx.graphics.getHeight() - 192, 160, 32);
 	private Slider sound = new Slider((Gdx.graphics.getWidth() / 2) - 80,
 			Gdx.graphics.getHeight() - 240, 160, 32);
+	
+	private BooleanButton debug = new BooleanButton((Gdx.graphics.getWidth() / 2) - 80, Gdx.graphics
+			.getHeight() - 332, 160, 32, "menu.settings.debugmode") {
+
+		@Override
+		public boolean onLeftClick() {
+			super.onLeftClick();
+			Settings.debug = !Settings.debug;
+			return true;
+		}
+	}.setState(Settings.debug);
 
 	private boolean showRestartMsg = false;
 
@@ -112,6 +114,8 @@ public class SettingsScreen extends Updateable {
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			exitScreen();
 		}
+		
+		debug.setState(Settings.debug);
 	}
 
 	private void exitScreen() {
