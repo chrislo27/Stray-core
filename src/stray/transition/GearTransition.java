@@ -1,6 +1,8 @@
 package stray.transition;
 
 import stray.Main;
+import stray.util.MathHelper;
+import stray.util.Utils;
 import stray.util.render.StencilMaskUtil;
 
 import com.badlogic.gdx.Gdx;
@@ -49,8 +51,8 @@ public class GearTransition implements Transition {
 				.getWidth() / 2);
 
 		main.batch.setColor(1, 1, 1, 1);
-		main.batch.draw(gear, (Gdx.graphics.getWidth() / 2) - (size / 2f),
-				(Gdx.graphics.getHeight() / 2) - (size / 2f), size, size);
+		Utils.drawRotated(main.batch, gear, (Gdx.graphics.getWidth() / 2) - (size / 2f),
+				(Gdx.graphics.getHeight() / 2) - (size / 2f), size, size, 360 * MathHelper.getNumberFromTime(2f), true);
 
 		main.batch.end();
 		StencilMaskUtil.prepareMask();
