@@ -446,9 +446,9 @@ public class Main extends Game implements Consumer {
 		
 		warpshader.begin();
 		warpshader.setUniformf(warpshader.getUniformLocation("time"), totalSeconds);
-		warpshader.setUniformf(warpshader.getUniformLocation("amplitude"), 0.75f, 1.5f);
-		warpshader.setUniformf(warpshader.getUniformLocation("frequency"), 0.75f, 1.5f);
-		warpshader.setUniformf(warpshader.getUniformLocation("speed"), 1f);
+		warpshader.setUniformf(warpshader.getUniformLocation("amplitude"), 0.25f, 0.1f);
+		warpshader.setUniformf(warpshader.getUniformLocation("frequency"), 10f, 5f);
+		warpshader.setUniformf(warpshader.getUniformLocation("speed"), 2.5f);
 		warpshader.end();
 		
 		inputUpdate();
