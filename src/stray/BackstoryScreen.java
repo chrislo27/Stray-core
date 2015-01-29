@@ -46,8 +46,8 @@ public class BackstoryScreen extends MiscLoadingScreen {
 		if (time > 0) {
 			time -= Gdx.graphics.getDeltaTime();
 			if (time < (TIMETAKEN / 2f) && !loaded) {
-				loaded = true;
 				Main.GAME.world.load(level);
+				loaded = true;
 			}
 			if (time < 0) time = 0;
 		}
