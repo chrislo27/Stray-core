@@ -26,24 +26,19 @@ public class PostProcessing {
 	 *            amount in pixels to blur
 	 */
 	public static void twoPassBlur(Batch batch, FrameBuffer buffer, ShaderProgram blurshader,
-			float radius) {
+			float radius, float x, float y, float drawWidth, float drawHeight, int u, int v, int width, int height) {
 		buffer.begin();
 		batch.setShader(blurshader);
 		blurshader.setUniformf("radius", (float) radius);
 		blurshader.setUniformf("dir", 1f, 0f);
-		batch.draw(buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(),
-				Gdx.graphics.getWidth(), -Gdx.graphics.getHeight(), 0, 0, Gdx.graphics.getWidth(),
-				Gdx.graphics.getHeight(), false, false);
+		batch.draw(buffer.getColorBufferTexture(), x, y, drawWidth, drawHeight, u, v, width, height, false, true);
 		batch.flush();
 		buffer.end();
 
 		buffer.begin();
 		blurshader.setUniformf("dir", 0f, 1f);
-		batch.draw(buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(),
-				Gdx.graphics.getWidth(), -Gdx.graphics.getHeight(), 0, 0, Gdx.graphics.getWidth(),
-				Gdx.graphics.getHeight(), false, false);
+		batch.draw(buffer.getColorBufferTexture(), x, y, drawWidth, drawHeight, u, v, width, height, false, true);
 		batch.setShader(null);
-		batch.flush();
 		buffer.end();
 
 		batch.draw(buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), buffer.getWidth(),
@@ -82,12 +77,14 @@ public class PostProcessing {
 		euphoria(batch, buffer, 0.4f, 6);
 	}
 	
-	public static void warp(Batch batch, FrameBuffer buffer, ShaderProgram warp){
-		batch.setShader(warp);
-		batch.draw(buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(),
-				Gdx.graphics.getWidth(), -Gdx.graphics.getHeight(), 0, 0, Gdx.graphics.getWidth(),
-				Gdx.graphics.getHeight(), false, false);
+	public static void heat(Batch batch, FrameBuffer buffer, Main main, float x, float y, float drawWidth, float drawHeight, int u, int v, int width, int height){
+		buffer.begin();
+		batch.setShader(main.warpshader);
+		batch.draw(buffer.getColorBufferTexture(), x, y,
+				drawWidth, drawHeight, u, v, width, (height), false, true);
 		batch.flush();
 		batch.setShader(null);
+		buffer.end();
+		twoPassBlur(batch, buffer, main.blurshader, 1f, x, y, drawWidth, drawHeight, u, v, width, height);
 	}
 }
