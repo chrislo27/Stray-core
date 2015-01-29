@@ -52,7 +52,7 @@ public class ElectricityRenderer {
 			int numberOfBolts, float floatbits) {
 		for (int i = 0; i < points.length - 1; i++) {
 			drawP2PLightning(batch, points[i].x, points[i].y, points[i + 1].x, points[i + 1].y,
-					Main.random(60f, 140f), Main.random(0.8f, 3.8f), thickness, numberOfBolts, floatbits);
+					MathUtils.random(60f, 140f), MathUtils.random(0.8f, 3.8f), thickness, numberOfBolts, floatbits);
 		}
 	}
 
@@ -81,8 +81,8 @@ public class ElectricityRenderer {
 	}
 	
 	public static float getDefaultColor(float alpha){
-		return Color.toFloatBits(Main.random(14f, 54f) / 255f, Main.random(100f, 210f) / 255f,
-				Main.random(200f, 239f) / 255f, alpha);
+		return Color.toFloatBits(MathUtils.random(14f, 54f) / 255f, MathUtils.random(100f, 210f) / 255f,
+				MathUtils.random(200f, 239f) / 255f, alpha);
 	}
 
 	/**

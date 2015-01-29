@@ -3,6 +3,7 @@ package stray.util.render;
 import stray.Main;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
 
 public class RandomText {
 
@@ -10,11 +11,11 @@ public class RandomText {
 		if (text != null) {
 			float height = main.font.getBounds(text).height;
 			for (int i = 0; i < maxrender; i++) {
-				if (Main.random(1, chance) != 1) continue;
+				if (MathUtils.random(1, chance) != 1) continue;
 				main.drawCentered(
 						text,
-						Main.random(1, Gdx.graphics.getWidth() - 1),
-						Main.random(Math.round(height),
+						MathUtils.random(1, Gdx.graphics.getWidth() - 1),
+						MathUtils.random(Math.round(height),
 								Math.round(Gdx.graphics.getHeight() - height)));
 			}
 		}

@@ -1,9 +1,9 @@
 package stray.util.render;
 
-import stray.Main;
 import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
 
 
 public class SmoothCamera {
@@ -75,13 +75,13 @@ public class SmoothCamera {
 	
 	public void centerX(float x){
 		wantedx = x - (Gdx.graphics.getWidth() / 2f);
-		if(shakeTime > 0) wantedx += Main.random(-Math.round((shakeIntensity * World.tilesizex) * 10), Math.round(shakeIntensity * World.tilesizey * 10)) / 10f;
+		if(shakeTime > 0) wantedx += MathUtils.random(-Math.round((shakeIntensity * World.tilesizex) * 10), Math.round(shakeIntensity * World.tilesizey * 10)) / 10f;
 		clamp();
 	}
 	
 	public void centerY(float y){
 		wantedy = y - (Gdx.graphics.getHeight() / 2f);
-		if(shakeTime > 0) wantedy += Main.random(-Math.round((shakeIntensity * World.tilesizex) * 10), Math.round(shakeIntensity * World.tilesizey * 10)) / 10f;
+		if(shakeTime > 0) wantedy += MathUtils.random(-Math.round((shakeIntensity * World.tilesizex) * 10), Math.round(shakeIntensity * World.tilesizey * 10)) / 10f;
 		clamp();
 	}
 	

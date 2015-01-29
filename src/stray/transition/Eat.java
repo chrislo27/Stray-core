@@ -4,6 +4,7 @@ import stray.Main;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 
 public class Eat implements Transition {
 
@@ -25,7 +26,7 @@ public class Eat implements Transition {
 		}
 
 		for (int i = 0; i < placements; i++) {
-			traversed[Main.random(1, sizex) - 1][Main.random(1, sizey) - 1] = true;
+			traversed[MathUtils.random(1, sizex) - 1][MathUtils.random(1, sizey) - 1] = true;
 		}
 
 	}
@@ -124,25 +125,25 @@ public class Eat implements Transition {
 				for (int y = 0; y < sizey; y++) {
 					if (!temp[x][y] && traversed[x][y]) {
 						temp[x][y] = true;
-						if (x > 0 && !(Main.random(1, 2) == 1)) {
+						if (x > 0 && !(MathUtils.random(1, 2) == 1)) {
 							if (!traversed[x - 1][y]) {
 								traversed[x - 1][y] = true;
 								temp[x - 1][y] = true;
 							}
 						}
-						if (x < sizex - 1 && !(Main.random(1, 2) == 1)) {
+						if (x < sizex - 1 && !(MathUtils.random(1, 2) == 1)) {
 							if (!traversed[x + 1][y]) {
 								traversed[x + 1][y] = true;
 								temp[x + 1][y] = true;
 							}
 						}
-						if (y > 0 && !(Main.random(1, 2) == 1)) {
+						if (y > 0 && !(MathUtils.random(1, 2) == 1)) {
 							if (!traversed[x][y - 1]) {
 								traversed[x][y - 1] = true;
 								temp[x][y - 1] = true;
 							}
 						}
-						if (y < sizey - 1 && !(Main.random(1, 2) == 1)) {
+						if (y < sizey - 1 && !(MathUtils.random(1, 2) == 1)) {
 							if (!traversed[x][y + 1]) {
 								traversed[x][y + 1] = true;
 								temp[x][y + 1] = true;

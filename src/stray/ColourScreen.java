@@ -2,7 +2,6 @@ package stray;
 
 import stray.util.AssetMap;
 import stray.util.MathHelper;
-import stray.util.Splashes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -10,6 +9,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 
 public class ColourScreen extends Updateable {
 
@@ -24,7 +24,7 @@ public class ColourScreen extends Updateable {
 	String[][] tiles = new String[10][7];
 	int score = 0;
 
-	int amount = Main.random(3, 7);
+	int amount = MathUtils.random(3, 7);
 	String choose = randomTile();
 
 	int selx = 0;
@@ -111,10 +111,10 @@ public class ColourScreen extends Updateable {
 					while (choose.equals(last)) {
 						choose = randomTile();
 					}
-					amount = Main.random(3, 7);
+					amount = MathUtils.random(3, 7);
 				} else {
 					msg = "Nice find!";
-					switch (Main.random(1, 3)) {
+					switch (MathUtils.random(1, 3)) {
 					case 1:
 						msg = "Excellent!";
 						break;
@@ -134,7 +134,7 @@ public class ColourScreen extends Updateable {
 				}
 			} else {
 				msg = "That's not " + choose + "!";
-				if (Main.random(1, 2) == 1) {
+				if (MathUtils.randomBoolean()) {
 					msg = "This " + tiles[selx][sely] + " tile isn't " + choose + "!";
 				}
 				main.manager.get(AssetMap.get("colourincorrect"), Sound.class).play(0.5f * Settings.soundVolume);
@@ -159,7 +159,7 @@ public class ColourScreen extends Updateable {
 	}
 
 	private String randomTile() {
-		switch (Main.random(1, 6)) {
+		switch (MathUtils.random(1, 6)) {
 		case 1:
 			return "orange";
 		case 2:

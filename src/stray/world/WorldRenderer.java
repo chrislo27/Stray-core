@@ -95,6 +95,7 @@ public class WorldRenderer {
 		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(),
 				Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
 		PostProcessing.heat(batch, main.buffer, main, 128, 128, 64, 64, 128, 128, 64, 64);
+		PostProcessing.heat(batch, main.buffer, main, 512, 128, 64, 64, 512, 128, 64, 64);
 	}
 
 	public void renderVoid() {
@@ -106,9 +107,9 @@ public class WorldRenderer {
 				main.manager.get(AssetMap.get("voidend"), Texture.class).getWidth(),
 				Gdx.graphics.getHeight());
 
-		int ylevel = Main.random(-World.tilesizex, Gdx.graphics.getHeight() + World.tilesizey);
+		int ylevel = MathUtils.random(-World.tilesizex, Gdx.graphics.getHeight() + World.tilesizey);
 
-		if (Main.random(1, 3) < 3) world.particles.add(ParticlePool
+		if (MathUtils.random(1, 3) < 3) world.particles.add(ParticlePool
 				.obtain()
 				.setTexture("magnetglow")
 				.setTint(batch.getColor())
@@ -119,19 +120,19 @@ public class WorldRenderer {
 								-(((ylevel - (Gdx.graphics.getHeight() / 2f)) / (Gdx.graphics
 										.getHeight() / 2f)) * 4), -4f, 4f) : MathUtils.clamp(
 								4 - ((ylevel / (Gdx.graphics.getHeight() / 2f)) * 4), -4f, 4f)))
-				.setPosition((((world.getVoidDistance())) + 2 + Main.random(0.5f, 1.5f)),
+				.setPosition((((world.getVoidDistance())) + 2 + MathUtils.random(0.5f, 1.5f)),
 						(world.camera.cameray + ylevel) / World.tilesizey));
 
 		batch.setColor(1, 1, 1, 1);
-		if (Main.random(1, 6) == 1) {
-			float location = Main.random(1, Gdx.graphics.getHeight());
+		if (MathUtils.random(1, 6) == 1) {
+			float location = MathUtils.random(1, Gdx.graphics.getHeight());
 			ElectricityRenderer.drawP2PLightning(
 					batch,
 					((world.getVoidDistance() * World.tilesizex) - world.camera.camerax),
 					location,
 					((world.getVoidDistance() * World.tilesizex) - world.camera.camerax)
-							+ Main.random(World.tilesizex * 1.75f, World.tilesizex * 2.75f),
-					location + Main.random(-16, 16), 24, 1.5f, 3, 3, Colors.get("VOID_PURPLE")
+							+ MathUtils.random(World.tilesizex * 1.75f, World.tilesizex * 2.75f),
+					location + MathUtils.random(-16, 16), 24, 1.5f, 3, 3, Colors.get("VOID_PURPLE")
 							.toFloatBits());
 		}
 	}

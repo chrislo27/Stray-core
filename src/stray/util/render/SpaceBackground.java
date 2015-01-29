@@ -14,6 +14,7 @@ import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 
 public class SpaceBackground {
@@ -185,7 +186,7 @@ class VisualAsteroid {
 		size = 0.75f + Main.getRandom().nextFloat();
 		speed = 0.75f + Main.getRandom().nextFloat();
 		colour = false;
-		if ((Main.random(1, Math.round(SpaceBackground.maxAsteroids * 32)) == 1)
+		if ((MathUtils.random(1, Math.round(SpaceBackground.maxAsteroids * 32)) == 1)
 				&& !SpaceBackground.instance().containsSpecial()) {
 			colour = true;
 		}

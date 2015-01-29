@@ -823,31 +823,6 @@ public class Main extends Game implements Consumer {
 		return ret;
 	}
 
-	public static int random(int x, int y) {
-		return random(x, y, random);
-	}
-
-	public static int random(int x, int y, Random rand) {
-		if (x == y) {
-			return x;
-		}
-		if (x < 0) {
-			return (random(1, (y * 2) + 1) - (y + 1));
-		}
-		return rand.nextInt((y - x) + 1) + x;
-	}
-
-	public static float random(float x, float y) {
-		return random(x, y, random);
-	}
-
-	public static float random(float x, float y, Random rand) {
-		if (x == y) {
-			return x;
-		}
-		return rand.nextFloat() * (x - y) + x;
-	}
-
 	public static boolean useDefaultHeight = false;
 
 	public static void setUseDefaultHeight(boolean b) {
