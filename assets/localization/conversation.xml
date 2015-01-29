@@ -35,12 +35,12 @@
         <speech speaker="" text="conv.beginning1" cutscene="" />
         <speech speaker="" text="conv.beginning2" cutscene="" />
         <speech speaker="" text="conv.empty" cutscene="scientistface" />
-        <speech speaker="" text="conv.beginning4" cutscene="scientistface" />
-        <speech speaker="" text="conv.beginning5" cutscene="scientistface" />
-        <speech speaker="" text="conv.beginning6" cutscene="scientistface" />
-        <speech speaker="" text="conv.beginning7" cutscene="scientistface" />
-        <speech speaker="" text="conv.beginning8" cutscene="scientistface" />
-        <speech speaker="" text="conv.beginning9" cutscene="scientistface" />
+        <speech speaker="scientist" text="conv.beginning4" cutscene="scientistface" />
+        <speech speaker="scientist" text="conv.beginning5" cutscene="scientistface" />
+        <speech speaker="scientist" text="conv.beginning6" cutscene="scientistface" />
+        <speech speaker="scientist" text="conv.beginning7" cutscene="scientistface" />
+        <speech speaker="scientist" text="conv.beginning8" cutscene="scientistface" />
+        <speech speaker="scientist" text="conv.beginning9" cutscene="scientistface" />
     </conversation>
 
 
