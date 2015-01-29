@@ -24,27 +24,36 @@ public class AssetLoadingScreen extends MiscLoadingScreen {
 
 	private long startms = 0;
 
+	private boolean waitedAFrame = false;
+
 	@Override
 	public void render(float delta) {
 		main.manager.update((int) (1000f / Main.MAX_FPS));
-		if (main.manager.getProgress() >= 1f) {
-			// finished
-			for (String s : main.manager.getAssetNames()) {
-				// System.out.println(s);
+		do {
+			if (main.manager.getProgress() >= 1f) {
+				if(!waitedAFrame){
+					waitedAFrame = true;
+					break;
+				}
+				// finished
+				for (String s : main.manager.getAssetNames()) {
+					// System.out.println(s);
+				}
+
+				Iterator it = Blocks.instance().getAllBlocks();
+				while (it.hasNext()) {
+					Block block = (Block) ((Map.Entry) it.next()).getValue();
+					block.postLoad(main);
+				}
+
+				Main.GAME.world = new World(main);
+				Main.logger.info("Finished loading all managed assets, took "
+						+ (System.currentTimeMillis() - startms) + " ms");
+
+				main.setScreen(Main.MAINMENU);
 			}
+		} while (false);
 
-			Iterator it = Blocks.instance().getAllBlocks();
-			while (it.hasNext()) {
-				Block block = (Block) ((Map.Entry) it.next()).getValue();
-				block.postLoad(main);
-			}
-
-			Main.GAME.world = new World(main);
-			Main.logger.info("Finished loading all managed assets, took "
-					+ (System.currentTimeMillis() - startms) + " ms");
-
-			main.setScreen(Main.MAINMENU);
-		}
 		super.render(delta);
 
 		main.batch.begin();
@@ -58,10 +67,15 @@ public class AssetLoadingScreen extends MiscLoadingScreen {
 		main.fillRect(Gdx.graphics.getWidth() / 2 - 130, Gdx.graphics.getHeight() / 2 - 12, 1, 24);
 		main.fillRect(Gdx.graphics.getWidth() / 2 + 132, Gdx.graphics.getHeight() / 2 - 12, 1, 24);
 
-		if(main.manager.getAssetNames().size > 0)
-		main.drawTextBg(output.getLastMsg(), Gdx.graphics.getWidth() / 2
-				- (main.font.getBounds(output.getLastMsg()).width / 2),
-				Gdx.graphics.getHeight() / 2 - 35);
+		if (main.manager.getAssetNames().size > 0) {
+			main.drawTextBg(output.getLastMsg(),
+					Gdx.graphics.getWidth() / 2
+							- (main.font.getBounds(output.getLastMsg()).width / 2),
+					Gdx.graphics.getHeight() / 2 - 35);
+		}
+		String percent = String.format("%.0f", (main.manager.getProgress() * 100f)) + "%";
+		main.drawTextBg(percent, Gdx.graphics.getWidth() / 2
+				- (main.font.getBounds(percent).width / 2), Gdx.graphics.getHeight() / 2 - 60);
 
 		main.batch.end();
 	}
