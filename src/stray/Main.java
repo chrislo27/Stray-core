@@ -211,7 +211,7 @@ public class Main extends Game implements Consumer {
 		buffer2 = new FrameBuffer(Format.RGBA8888, Settings.DEFAULT_WIDTH, Settings.DEFAULT_HEIGHT,
 				true);
 
-		maskshader = new ShaderProgram(Shaders.VERTBAKE, Shaders.FRAGBAKE);
+		maskshader = new ShaderProgram(Shaders.VERTDEFAULT, Shaders.FRAGBAKE);
 		maskshader.begin();
 		maskshader.setUniformi("u_texture1", 1);
 		maskshader.setUniformi("u_mask", 2);
@@ -227,9 +227,12 @@ public class Main extends Game implements Consumer {
 
 		greyshader = new ShaderProgram(Shaders.VERTGREY, Shaders.FRAGGREY);
 
-		warpshader = new ShaderProgram(Shaders.VERTWARP, Shaders.FRAGWARP);
+		warpshader = new ShaderProgram(Shaders.VERTDEFAULT, Shaders.FRAGWARP);
 		warpshader.begin();
 		warpshader.setUniformf(warpshader.getUniformLocation("time"), totalSeconds);
+		warpshader.setUniformf(warpshader.getUniformLocation("amplitude"), 1.0f, 1.0f);
+		warpshader.setUniformf(warpshader.getUniformLocation("frequency"), 1.0f, 1.0f);
+		warpshader.setUniformf(warpshader.getUniformLocation("speed"), 1f);
 		warpshader.end();
 
 		blurshader = new ShaderProgram(Shaders.VERTBLUR, Shaders.FRAGBLUR);
@@ -440,8 +443,12 @@ public class Main extends Game implements Consumer {
 		}
 		
 		totalSeconds += Gdx.graphics.getDeltaTime();
+		
 		warpshader.begin();
 		warpshader.setUniformf(warpshader.getUniformLocation("time"), totalSeconds);
+		warpshader.setUniformf(warpshader.getUniformLocation("amplitude"), 0.75f, 1.5f);
+		warpshader.setUniformf(warpshader.getUniformLocation("frequency"), 0.75f, 1.5f);
+		warpshader.setUniformf(warpshader.getUniformLocation("speed"), 1f);
 		warpshader.end();
 		
 		inputUpdate();

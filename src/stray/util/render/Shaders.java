@@ -8,7 +8,7 @@ public class Shaders {
 	private Shaders() {
 	}
 
-	public static final String VERTBAKE = "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE
+	public static final String VERTDEFAULT = "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE
 			+ ";\n" + "attribute vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" + "attribute vec2 "
 			+ ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" +
 
