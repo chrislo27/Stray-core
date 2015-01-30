@@ -454,6 +454,32 @@ public class Main extends Game implements Consumer {
 		inputUpdate();
 	}
 	
+	private int renderDebug() {
+		int offset = 0;
+		if (getScreen() != null) offset = ((Updateable) getScreen()).getDebugOffset();
+		if (MemoryUtils.getUsedMemory() > getMostMemory) getMostMemory = MemoryUtils
+				.getUsedMemory();
+		font.setColor(Color.WHITE);
+		font.draw(batch, "version: "
+				+ Main.version
+				+ (latestVersion.equals("") ? "" : "; server: " + Main.latestVersion), 5, Main.convertY(30 + offset));
+		font.draw(batch, "Memory: "
+				+ NumberFormat.getInstance().format(MemoryUtils.getUsedMemory()) + " KB / "
+				+ NumberFormat.getInstance().format(MemoryUtils.getMaxMemory()) + " KB (max "
+				+ NumberFormat.getInstance().format(getMostMemory) + " KB) ", 5, Main.convertY(45 + offset));
+		font.draw(batch, "Available cores: " + MemoryUtils.getCores(), 5,
+				Main.convertY(60 + offset));
+		font.draw(batch, "OS: " + System.getProperty("os.name"), 5, Main.convertY(75 + offset));
+		if (getScreen() != null) {
+			font.draw(batch, "state: " + getScreen().getClass().getSimpleName(), 5,
+					Main.convertY(90 + offset));
+		} else {
+			font.draw(batch, "state: null", 5, Main.convertY(90 + offset));
+		}
+
+		return 75 + 30 + offset;
+	}
+	
 	public void inputUpdate(){
 		if (Gdx.input.isKeyJustPressed(Keys.F12)) {
 			Settings.debug = !Settings.debug;
@@ -911,35 +937,6 @@ public class Main extends Game implements Consumer {
 	}
 
 	public int getMostMemory = MemoryUtils.getUsedMemory();
-
-	private boolean showgc = false;
-
-	private int renderDebug() {
-		int offset = 0;
-		if (getScreen() != null) offset = ((Updateable) getScreen()).getDebugOffset();
-		if (MemoryUtils.getUsedMemory() > getMostMemory) getMostMemory = MemoryUtils
-				.getUsedMemory();
-		font.setColor(Color.WHITE);
-		font.draw(batch, "version: "
-				+ Main.version
-				+ (latestVersion.equals("") ? "" : "; latest: " + Main.latestVersion), 5, Main.convertY(30 + offset));
-		font.draw(batch, "Memory: "
-				+ NumberFormat.getInstance().format(MemoryUtils.getUsedMemory()) + " KB / "
-				+ NumberFormat.getInstance().format(MemoryUtils.getMaxMemory()) + " KB (max "
-				+ NumberFormat.getInstance().format(getMostMemory) + " KB) "
-				+ (showgc ? "gc'd" : ""), 5, Main.convertY(45 + offset));
-		font.draw(batch, "Available cores: " + MemoryUtils.getCores(), 5,
-				Main.convertY(60 + offset));
-		font.draw(batch, "OS: " + System.getProperty("os.name"), 5, Main.convertY(75 + offset));
-		if (getScreen() != null) {
-			font.draw(batch, "state: " + getScreen().getClass().getSimpleName(), 5,
-					Main.convertY(90 + offset));
-		} else {
-			font.draw(batch, "state: null", 5, Main.convertY(90 + offset));
-		}
-
-		return 75 + 30 + offset;
-	}
 
 	public int getDifficulty() {
 		return progress.getInteger("difficulty", Difficulty.NORMAL_ID);
