@@ -24,6 +24,13 @@ public class CutsceneScreen extends Updateable {
 	private int wait = 5;
 	private boolean entered = false;
 
+	/**
+	 * 
+	 * @param con the conversation to show
+	 * @param from the transition to use to the next screen (may be null)
+	 * @param to the transition to use to the next screen (may be null)
+	 * @param next the next screen after this
+	 */
 	public void prepare(Conversation con, Transition from, Transition to, Updateable next) {
 		this.from = from;
 		this.to = to;
