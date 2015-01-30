@@ -7,6 +7,7 @@ import stray.transition.GearTransition;
 import stray.ui.BackButton;
 import stray.ui.Button;
 import stray.ui.SettingsButton;
+import stray.util.version.VersionGetter;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -81,30 +82,42 @@ public strictfp class MainMenuScreen extends Updateable {
 
 		main.drawInverse(Main.version, Gdx.graphics.getWidth() - 5, 20);
 		if (!Main.latestVersion.equals("")) {
-			if (Main.latestVersionNumber > Main.currentVersionNumber) {
-				main.font.setColor(1, 0, 0, 1);
-				main.drawInverse(Translator.getMsg("menu.newversion") + Main.latestVersion,
-						Gdx.graphics.getWidth() - 5, 35);
-				main.font.setColor(1, 1, 1, 1);
-			} else if (Main.latestVersionNumber == Main.currentVersionNumber) {
+			switch(VersionGetter.getDiff()){
+			case EQUAL:
 				main.font.setColor(0, 1, 0, 1);
 				main.drawInverse(Translator.getMsg("menu.uptodate"), Gdx.graphics.getWidth() - 5,
 						35);
 				main.font.setColor(1, 1, 1, 1);
-			} else if (Main.latestVersionNumber < Main.currentVersionNumber) {
+				break;
+			case NEWER:
 				main.font.setColor(Color.CYAN);
 				main.drawInverse(Translator.getMsg("menu.versionahead") + Main.latestVersion + ")",
 						Gdx.graphics.getWidth() - 5, 35);
 				main.font.setColor(1, 1, 1, 1);
+				break;
+			case OLDER:
+				main.font.setColor(1, 0, 0, 1);
+				main.drawInverse(Translator.getMsg("menu.newversion") + Main.latestVersion,
+						Gdx.graphics.getWidth() - 5, 35);
+				main.font.setColor(1, 1, 1, 1);
+				break;
+			default:
+				break;
 			}
 		} else {
-			if (Main.latestVersionNumber == -1) {
+			switch(VersionGetter.getDiff()){
+			case CHECKING:
+				main.drawInverse(Translator.getMsg("menu.checkingversion"),
+						Gdx.graphics.getWidth() - 5, 35);
+				break;
+			case INVALID:
 				main.font.setColor(1, 0, 0, 1);
 				main.drawInverse(Translator.getMsg("menu.versioncheckfail"),
 						Gdx.graphics.getWidth() - 5, 35);
-				main.font.setColor(1, 1, 1, 1);
-			} else main.drawInverse(Translator.getMsg("menu.checkingversion"),
-					Gdx.graphics.getWidth() - 5, 35);
+				break;
+			default:
+				break;
+			}
 		}
 		container.render(main);
 		main.font.setColor(Color.WHITE);

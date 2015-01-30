@@ -38,9 +38,9 @@ import stray.util.MemoryUtils;
 import stray.util.ScreenshotFactory;
 import stray.util.Splashes;
 import stray.util.Utils;
-import stray.util.VersionGetter;
 import stray.util.render.Gears;
 import stray.util.render.Shaders;
+import stray.util.version.VersionGetter;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -100,9 +100,7 @@ public class Main extends Game implements Consumer {
 	Matrix4 normalProjection;
 
 	public static final String version = "v0.4.1-alpha";
-	public static final int currentVersionNumber = 4;
 	public static String latestVersion = "";
-	public static int latestVersionNumber = 0;
 
 	public AssetManager manager;
 
@@ -258,7 +256,7 @@ public class Main extends Game implements Consumer {
 
 		Gdx.app.postRunnable(new Thread("Stray-version checker") {
 			public void run() {
-				VersionGetter.getVersionFromServer();
+				VersionGetter.instance().getVersionFromServer();
 			}
 		});
 	}
@@ -924,10 +922,7 @@ public class Main extends Game implements Consumer {
 		font.setColor(Color.WHITE);
 		font.draw(batch, "version: "
 				+ Main.version
-				+ ", release #"
-				+ Main.currentVersionNumber
-				+ (latestVersion.equals("") ? "" : "; latest: " + Main.latestVersion
-						+ ", release #" + Main.latestVersionNumber), 5, Main.convertY(30 + offset));
+				+ (latestVersion.equals("") ? "" : "; latest: " + Main.latestVersion), 5, Main.convertY(30 + offset));
 		font.draw(batch, "Memory: "
 				+ NumberFormat.getInstance().format(MemoryUtils.getUsedMemory()) + " KB / "
 				+ NumberFormat.getInstance().format(MemoryUtils.getMaxMemory()) + " KB (max "
