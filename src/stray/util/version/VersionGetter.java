@@ -31,7 +31,7 @@ public class VersionGetter {
 	private VersionDiff difference = VersionDiff.CHECKING;
 	
 	private void loadResources() {
-
+		
 	}
 	
 	public static VersionDiff getDiff(){
@@ -97,8 +97,23 @@ public class VersionGetter {
 	 * @return
 	 */
 	public static int compareVersionsInt(String current, String server){
-		String[] vals1 = current.split("\\.");
-		String[] vals2 = server.split("\\.");
+		String str1 = current;
+		String str2 = server;
+		
+		// bleh way of handling alpha and beta
+		if(str1.endsWith("-alpha")){
+			str1 = str1.replace("-alpha", ".1");
+		}else if(str1.endsWith("-beta")){
+			str1 = str1.replace("-beta", ".2");
+		}
+		if(str2.endsWith("-alpha")){
+			str2 = str2.replace("-alpha", ".1");
+		}else if(str2.endsWith("-beta")){
+			str2 = str2.replace("-beta", ".2");
+		}
+		
+		String[] vals1 = str1.split("\\.");
+		String[] vals2 = str2.split("\\.");
 		int i = 0;
 		// set index to first non-equal ordinal or length of shortest version
 		// string
