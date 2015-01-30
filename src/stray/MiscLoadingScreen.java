@@ -19,11 +19,6 @@ public class MiscLoadingScreen extends Updateable {
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		main.batch.begin();
-//		main.font.setColor(Color.GREEN);
-//		main.font.draw(main.batch, "LOADING"
-//				+ getLoadingDots()
-//				+ (percentLoaded > -1 ? " - "
-//						+ (String.format("%.1f", (percentLoaded * 100f)) + "%") : ""), 5, 20);
 		Main.gears.render(main, Gdx.graphics.getWidth() - (128 + 64), 0);
 		main.batch.end();
 	}
