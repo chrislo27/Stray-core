@@ -11,7 +11,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 
-public class BlockTimer extends Block {
+public class BlockTimer extends Block implements AffectsColour {
 
 	public BlockTimer(String path, String col) {
 		super(path);
@@ -51,7 +51,7 @@ public class BlockTimer extends Block {
 
 			if (i <= 0) {
 				world.setMeta(null, x, y);
-				if (!world.global.getValue(colour).equals("")) {
+				if (!world.global.getValue(colour).equals("") && !BlockSwitch.areOtherBlocksOn(world, x, y, colour)) {
 					world.global.setValue(colour, "");
 					Block.playSound(x, y, world.camera.camerax, world.camera.cameray,
 							world.main.manager.get(AssetMap.get("switchsfx"), Sound.class), 1, 0.6f, false);
@@ -73,5 +73,15 @@ public class BlockTimer extends Block {
 			i--;
 			if (world.getMeta(x, y) != null) world.setMeta(i + "", x, y);
 		}
+	}
+
+	@Override
+	public boolean colourOn(World world, int x, int y) {
+		return world.getMeta(x, y) != null;
+	}
+
+	@Override
+	public String getColour(World world, int x, int y) {
+		return colour;
 	}
 }
