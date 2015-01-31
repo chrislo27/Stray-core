@@ -185,6 +185,7 @@ public class World implements TileBasedMap {
 		if (getPlayer().health > 0 && getPlayer().stunTime <= 0) {
 
 			if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+				Main.logger.debug("jump");
 				getPlayer().jump();
 			} else if ((Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S))) {
 
@@ -422,7 +423,8 @@ public class World implements TileBasedMap {
 				getPlayer().x = checkpointx;
 				getPlayer().y = checkpointy;
 				getPlayer().health = getPlayer().maxhealth;
-				getPlayer().invincibility = 1;
+				getPlayer().invincibility = Main.TICKS;
+				getPlayer().gravityCoefficient = 1;
 				voidMsTime = getVoidMSFromDistance(checkpointvoid);
 			}
 		}

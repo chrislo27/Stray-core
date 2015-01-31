@@ -99,6 +99,7 @@ public class EntityPlayer extends EntityLiving implements Weighted, Stunnable {
 				if (health == 0) {
 					world.canRespawnIn = Main.TICKS * 2;
 					invincibility = world.canRespawnIn + 1;
+					gravityCoefficient = 0;
 					poof();
 				}
 			}
