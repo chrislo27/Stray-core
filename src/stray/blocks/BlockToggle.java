@@ -2,9 +2,9 @@ package stray.blocks;
 
 import stray.world.World;
 
-public class BlockStepButton extends BlockFadeable {
+public class BlockToggle extends BlockFadeable {
 
-	public BlockStepButton(String path, String switc) {
+	public BlockToggle(String path, String switc) {
 		super(path);
 		switchColour = switc;
 	}

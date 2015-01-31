@@ -53,11 +53,11 @@ public class Blocks {
 		put("switchpurple", new BlockSwitch("images/blocks/switch/purple", "purple").solidify());
 		put("switchorange", new BlockSwitch("images/blocks/switch/orange", "orange").solidify());
  		
-		put("togglered", new BlockStepButton("images/blocks/toggle/red", "red").solidify());
-		put("togglegreen", new BlockStepButton("images/blocks/toggle/green", "green").solidify());
-		put("toggleblue", new BlockStepButton("images/blocks/toggle/blue", "blue").solidify());
-		put("togglepurple", new BlockStepButton("images/blocks/toggle/purple", "purple").solidify());
-		put("toggleorange", new BlockStepButton("images/blocks/toggle/orange", "orange").solidify());
+		put("togglered", new BlockToggle("images/blocks/toggle/red", "red").solidify());
+		put("togglegreen", new BlockToggle("images/blocks/toggle/green", "green").solidify());
+		put("toggleblue", new BlockToggle("images/blocks/toggle/blue", "blue").solidify());
+		put("togglepurple", new BlockToggle("images/blocks/toggle/purple", "purple").solidify());
+		put("toggleorange", new BlockToggle("images/blocks/toggle/orange", "orange").solidify());
 		
 		put("timerred", new BlockTimer("images/blocks/timer/red", "red"));
 		put("timergreen", new BlockTimer("images/blocks/timer/green", "green"));
