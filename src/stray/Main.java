@@ -430,6 +430,12 @@ public class Main extends Game implements Consumer {
 		if (this.getScreen() != null) {
 			if (Settings.debug) ((Updateable) this.getScreen()).renderDebug(this.renderDebug());
 		}
+		
+		if(Settings.debug){
+			batch.draw(animations.get("fire").getCurrentFrame(), 64, 32, 64, 64);
+			batch.draw(animations.get("fire").getCurrentFrame(), 64 * 2, 32, 64, 64);
+			batch.draw(animations.get("fire").getCurrentFrame(), 64 * 3, 32, 64, 64);
+		}
 		batch.end();
 
 		fpstimer += Gdx.graphics.getDeltaTime();
@@ -655,6 +661,7 @@ public class Main extends Game implements Consumer {
 				false));
 		animations.put("portal", new SynchedAnimation(0.05f, 32, "images/blocks/portal/portal",
 				".png", true).setRegionTile(32, 32));
+		animations.put("fire", new SynchedAnimation(0.05f, 30, "images/blocks/fire/fire", ".png", true).setRegionTile(128, 128).setVertical(false));
 
 		// load animations
 		Iterator it = animations.entrySet().iterator();
@@ -668,9 +675,9 @@ public class Main extends Game implements Consumer {
 		Colors.put("VOID_PURPLE", new Color(123f / 255f, 0, 1, 1));
 
 		// text related
-		Colors.put("POI", new Color(37 / 255f, 217 / 255f, 217 / 255f, 1));
+		Colors.put("PERSON", new Color(37 / 255f, 217 / 255f, 217 / 255f, 1)); // light blue
 		Colors.put("DANGER", new Color(1, 0, 0, 1));
-		Colors.put("MAINOBJ", new Color(1, 217 / 255f, 0, 1));
+		Colors.put("OBJ", new Color(1, 217 / 255f, 0, 1)); // yellow, use for noun/loc
 	}
 
 	public Texture getCurrentShine() {
