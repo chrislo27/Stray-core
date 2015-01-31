@@ -677,7 +677,7 @@ public class Main extends Game implements Consumer {
 		// text related
 		Colors.put("PERSON", new Color(37 / 255f, 217 / 255f, 217 / 255f, 1)); // light blue
 		Colors.put("DANGER", new Color(1, 0, 0, 1));
-		Colors.put("OBJ", new Color(1, 217 / 255f, 0, 1)); // yellow, use for noun/loc
+		Colors.put("OBJECT", new Color(1, 217 / 255f, 0, 1)); // yellow, use for noun/loc
 		Colors.put("VERB", new Color(1, 75 / 255f, 3 / 255f, 1));
 	}
 
