@@ -169,8 +169,7 @@ public class WorldRenderer {
 		}
 
 		if (world.vignettecolour.a > 0f) {
-			batch.setColor(world.vignettecolour.r, world.vignettecolour.g, world.vignettecolour.b,
-					world.vignettecolour.a);
+			batch.setColor(world.vignettecolour);
 			batch.draw(main.manager.get(AssetMap.get("vignette"), Texture.class), 0, 0,
 					Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			batch.setColor(Color.WHITE);
