@@ -13,18 +13,32 @@ import com.badlogic.gdx.graphics.Color;
 
 public class BlockTimer extends Block implements AffectsColour {
 
-	public BlockTimer(String path, String col) {
-		super(path);
-		colour = col;
+	public BlockTimer(Color c, String col) {
+		super(null);
+		switchColour = col;
+		renderColour = c;
 	}
 
-	String colour = "";
+	String switchColour = "";
+	Color renderColour = Color.WHITE;
 
 	public static final float SECONDS = 5f;
 
 	@Override
 	public void render(World world, int x, int y) {
-		super.render(world, x, y);
+		world.batch.draw(
+				world.main.textures.get("timer"), x
+						* world.tilesizex - world.camera.camerax,
+				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey),
+				World.tilesizex, World.tilesizey);
+		world.batch.setColor(renderColour);
+		world.batch.draw(
+				world.main.textures.get("timer_colour"), x
+						* world.tilesizex - world.camera.camerax,
+				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey),
+				World.tilesizex, World.tilesizey);
+		world.batch.setColor(1, 1, 1, 1);
+		
 		world.main.font.setColor(Color.WHITE);
 		if (world.main.getScreen() == Main.LEVELEDITOR) return;
 		if (world.getMeta(x, y) != null) {
@@ -51,8 +65,8 @@ public class BlockTimer extends Block implements AffectsColour {
 
 			if (i <= 0) {
 				world.setMeta(null, x, y);
-				if (!world.global.getValue(colour).equals("") && !BlockSwitch.areOtherBlocksOn(world, x, y, colour)) {
-					world.global.setValue(colour, "");
+				if (!world.global.getValue(switchColour).equals("") && !BlockSwitch.areOtherBlocksOn(world, x, y, switchColour)) {
+					world.global.setValue(switchColour, "");
 					Block.playSound(x, y, world.camera.camerax, world.camera.cameray,
 							world.main.manager.get(AssetMap.get("switchsfx"), Sound.class), 1, 0.6f, false);
 				}
@@ -65,8 +79,8 @@ public class BlockTimer extends Block implements AffectsColour {
 							world.main.manager.get(AssetMap.get("switchsfx"), Sound.class), 1, 1f, false);
 				}
 
-				if (!world.global.getValue(colour).equals("on")) {
-					world.global.setValue(colour, "on");
+				if (!world.global.getValue(switchColour).equals("on")) {
+					world.global.setValue(switchColour, "on");
 				}
 			}
 
@@ -82,6 +96,6 @@ public class BlockTimer extends Block implements AffectsColour {
 
 	@Override
 	public String getColour(World world, int x, int y) {
-		return colour;
+		return switchColour;
 	}
 }

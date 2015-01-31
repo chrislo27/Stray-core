@@ -643,6 +643,12 @@ public class Main extends Game implements Consumer {
 		// unmanaged textures
 		textures.put("gear", new Texture("images/gear.png"));
 		gears = new Gears(this);
+		textures.put("switch", new Texture("images/blocks/switch/switch.png"));
+		textures.put("switch_bg", new Texture("images/blocks/switch/switch_bg.png"));
+		textures.put("timer", new Texture("images/blocks/timer/timer.png"));
+		textures.put("timer_colour", new Texture("images/blocks/timer/timer_colour.png"));
+		textures.put("toggle", new Texture("images/blocks/toggle/toggle.png"));
+		textures.put("toggle_warning", new Texture("images/blocks/toggle/toggle_warning.png"));
 
 		// animations
 		animations.put("shine", new SynchedAnimation(0.1f, 20, "images/item/shine/shine", ".png",

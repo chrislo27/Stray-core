@@ -7,10 +7,9 @@ import java.util.Map.Entry;
 import stray.Main;
 import stray.entity.Entity;
 import stray.entity.EntityZaborinox;
-import stray.util.AssetMap;
 import stray.world.World;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Color;
 
 public class Blocks {
 
@@ -29,6 +28,12 @@ public class Blocks {
 
 	private HashMap<String, Block> blocks;
 	private HashMap<Block, String> reverse;
+	
+	public static final Color RED = new Color(1, 0, 0, 1);
+	public static final Color GREEN = new Color(16 / 255f, 164 / 255f, 43 / 255f, 1);
+	public static final Color BLUE = new Color(0, 145 / 255f, 1, 1);
+	public static final Color PURPLE = new Color(178 / 255f, 0, 1, 1);
+	public static final Color ORANGE = new Color(1, 106 / 255f, 0, 1);
 
 	private void loadResources() {
 		blocks = new HashMap<String, Block>();
@@ -49,23 +54,23 @@ public class Blocks {
 			}
 		}.hasVariants(4));
 		
-		put("switchred", new BlockSwitch("images/blocks/switch/red", "red").solidify());
-		put("switchgreen", new BlockSwitch("images/blocks/switch/green", "green").solidify());
-		put("switchblue", new BlockSwitch("images/blocks/switch/blue", "blue").solidify());
-		put("switchpurple", new BlockSwitch("images/blocks/switch/purple", "purple").solidify());
-		put("switchorange", new BlockSwitch("images/blocks/switch/orange", "orange").solidify());
+		put("switchred", new BlockSwitch(RED, "red").solidify());
+		put("switchgreen", new BlockSwitch(GREEN, "green").solidify());
+		put("switchblue", new BlockSwitch(BLUE, "blue").solidify());
+		put("switchpurple", new BlockSwitch(PURPLE, "purple").solidify());
+		put("switchorange", new BlockSwitch(ORANGE, "orange").solidify());
  		
-		put("togglered", new BlockToggle("images/blocks/toggle/red", "red").solidify());
-		put("togglegreen", new BlockToggle("images/blocks/toggle/green", "green").solidify());
-		put("toggleblue", new BlockToggle("images/blocks/toggle/blue", "blue").solidify());
-		put("togglepurple", new BlockToggle("images/blocks/toggle/purple", "purple").solidify());
-		put("toggleorange", new BlockToggle("images/blocks/toggle/orange", "orange").solidify());
+		put("togglered", new BlockToggle(RED, "red").solidify());
+		put("togglegreen", new BlockToggle(GREEN, "green").solidify());
+		put("toggleblue", new BlockToggle(BLUE, "blue").solidify());
+		put("togglepurple", new BlockToggle(PURPLE, "purple").solidify());
+		put("toggleorange", new BlockToggle(ORANGE, "orange").solidify());
 		
-		put("timerred", new BlockTimer("images/blocks/timer/red", "red"));
-		put("timergreen", new BlockTimer("images/blocks/timer/green", "green"));
-		put("timerblue", new BlockTimer("images/blocks/timer/blue", "blue"));
-		put("timerpurple", new BlockTimer("images/blocks/timer/purple", "purple"));
-		put("timerorange", new BlockTimer("images/blocks/timer/orange", "orange"));
+		put("timerred", new BlockTimer(RED, "red"));
+		put("timergreen", new BlockTimer(GREEN, "green"));
+		put("timerblue", new BlockTimer(BLUE, "blue"));
+		put("timerpurple", new BlockTimer(PURPLE, "purple"));
+		put("timerorange", new BlockTimer(ORANGE, "orange"));
 		
 		put("exitportal", new BlockExitPortal(null).setAnimation("portal"));
 		put("platform", new BlockPlatform("images/blocks/platform/platform").useConTextures());

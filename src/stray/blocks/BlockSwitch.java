@@ -12,17 +12,19 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class BlockSwitch extends Block implements AffectsColour {
 
-	public BlockSwitch(String path, String colour) {
-		super(path);
-		this.colour = colour;
+	public BlockSwitch(Color c, String colour) {
+		super(null);
+		this.switchColour = colour;
+		renderColour = c;
 	}
 
-	String colour = "";
+	Color renderColour = Color.WHITE;
+	String switchColour = "";
 
 	public void tickUpdate(World world, int x, int y) {
 		if (isEntityOn(world, x, y)) {
-			if (!world.global.getValue(colour).equals("on")) {
-				world.global.setValue(colour, "on");
+			if (!world.global.getValue(switchColour).equals("on")) {
+				world.global.setValue(switchColour, "on");
 				Block.playSound(x, y, world.camera.camerax, world.camera.cameray,
 						world.main.manager.get(AssetMap.get("switchsfx"), Sound.class), 1, 1);
 			}
@@ -30,11 +32,11 @@ public class BlockSwitch extends Block implements AffectsColour {
 			return;
 		}
 
-		if (!world.global.getValue(colour).equals("") && world.getMeta(x, y) != null) {
+		if (!world.global.getValue(switchColour).equals("") && world.getMeta(x, y) != null) {
 			world.setMeta(null, x, y);
 			
-			if(!areOtherBlocksOn(world, x, y, colour)){
-				world.global.setValue(colour, "");
+			if(!areOtherBlocksOn(world, x, y, switchColour)){
+				world.global.setValue(switchColour, "");
 				if (Block.isBlockVisible(world.camera.camerax, world.camera.cameray, x, y)) {
 					Block.playSound(x, y, world.camera.camerax, world.camera.cameray,
 							world.main.manager.get(AssetMap.get("switchsfx"), Sound.class), 1, 0.8f);
@@ -55,7 +57,24 @@ public class BlockSwitch extends Block implements AffectsColour {
 	}
 
 	public void render(World world, int x, int y) {
-		super.render(world, x, y);
+		world.batch.draw(
+				world.main.textures.get("switch"), x
+						* world.tilesizex - world.camera.camerax,
+				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey),
+				World.tilesizex, World.tilesizey);
+		world.batch.setColor(renderColour);
+		world.batch.draw(
+				world.main.textures.get("switch_bg"), x
+						* world.tilesizex - world.camera.camerax,
+				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey),
+				World.tilesizex, World.tilesizey);
+		world.batch.setColor(1, 1, 1, 1);
+		world.batch.draw(
+				world.main.textures.get("toggle_warning"), x
+						* world.tilesizex - world.camera.camerax,
+				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey),
+				World.tilesizex, World.tilesizey);
+		
 		if (world.getMeta(x, y) != null) if (world.getMeta(x, y).equals("step")) {
 			world.batch.setColor(Color.YELLOW);
 			world.batch.draw(world.main.manager.get(AssetMap.get("entityshield"), Texture.class), x
@@ -73,7 +92,7 @@ public class BlockSwitch extends Block implements AffectsColour {
 
 	@Override
 	public String getColour(World world, int x, int y) {
-		return colour;
+		return switchColour;
 	}
 
 	public static boolean areOtherBlocksOn(World world, int x, int y, String yourcolour) {
