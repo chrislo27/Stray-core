@@ -76,6 +76,7 @@ public class Blocks {
 		put("platform", new BlockPlatform("images/blocks/platform/platform").useConTextures());
 		put("cameramagnet", new BlockCameraMagnet("images/blocks/magnet"));
 		put("electrode", new BlockElectrode("images/blocks/electrode/electrode"));
+		put("fire", new BlockFire(null).setAnimation("fire"));
 		
 		// spawners
 		put("spawnerplayer", new BlockPlayerSpawner("images/entity/player/player"));
