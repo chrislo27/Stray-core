@@ -5,10 +5,12 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import stray.Main;
-import stray.blocks.fluid.BlockFluid;
 import stray.entity.Entity;
 import stray.entity.EntityZaborinox;
+import stray.util.AssetMap;
 import stray.world.World;
+
+import com.badlogic.gdx.graphics.Texture;
 
 public class Blocks {
 
@@ -32,7 +34,7 @@ public class Blocks {
 		blocks = new HashMap<String, Block>();
 		reverse = new HashMap<Block, String>();
 
-		put("space", new Block("images/blocks/old/space/space").hasVariants(8));
+		put("space", new BlockSpace("images/blocks/old/space/space").hasVariants(8));
 		put("wall", new Block("images/blocks/old/dungeonwall/wall").useConTextures().solidify());
 		put("empty", new BlockEmpty());
 		put("spike", new BlockSpike("images/blocks/spike").solidify());
@@ -78,18 +80,7 @@ public class Blocks {
 			}
 		});
 		
-		// fluids
-		put("fluidtest", new BlockFluid("aodkawfoa/aowa"){
-			@Override
-			public int getGravityDirection(){
-				return 1;
-			}
-			
-			@Override
-			public int getTickRate(){
-				return 1;
-			}
-		});
+		
 
 	}
 

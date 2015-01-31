@@ -2,6 +2,7 @@ package stray.util.render;
 
 import stray.Main;
 import stray.Settings;
+import stray.blocks.BlockSpace;
 import stray.blocks.Blocks;
 import stray.transition.FadeOut;
 import stray.transition.Spiral;
@@ -61,7 +62,7 @@ public class SpaceBackground {
 		for (int x = Math.max(Math.round(camerax / World.tilesizex - 1), 0); x < (((Gdx.graphics
 				.getWidth() + camerax) / World.tilesizex) + 1); x++) {
 			for (int y = 0; y < ((Gdx.graphics.getHeight() / World.tilesizey) + 2); y++) {
-				Blocks.instance().getBlock("space")
+				((BlockSpace) Blocks.instance().getBlock("space"))
 						.renderPlain(main, camerax, 0, x, y, magicnumber);
 			}
 		}
