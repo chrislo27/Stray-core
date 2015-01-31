@@ -21,7 +21,7 @@ public class BlockFire extends Block{
 			if (e instanceof EntityLiving) {
 				if (MathHelper.intersects(x, y, 1, 1, e.x,
 						e.y, e.sizex, e.sizey)) {
-					((EntityLiving) e).heal(damagePerTick);
+					((EntityLiving) e).heal(-damagePerTick);
 				}
 			}
 		}
