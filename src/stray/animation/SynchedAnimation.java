@@ -13,6 +13,7 @@ public class SynchedAnimation implements Disposable {
 	String suffix;
 	private int tilewidth, tileheight;
 	public boolean usesRegion = false;
+	boolean vertical = true;
 
 	public SynchedAnimation(float delay, int count, String path, String suffix, boolean usesRegion) {
 		framedelay = delay;
@@ -28,12 +29,23 @@ public class SynchedAnimation implements Disposable {
 		tileheight = height;
 		return this;
 	}
+	
+	public SynchedAnimation setVertical(boolean v){
+		vertical = v;
+		return this;
+	}
 
 	public void load() {
 		if (usesRegion) {
 			Texture tex = new Texture(path + suffix);
-			for (int y = 0; y < (tex.getHeight() / tileheight); y++) {
-				frames[y] = new TextureRegion(tex, 0, y * (tileheight), tilewidth, tileheight);
+			if(vertical){
+				for (int y = 0; y < (tex.getHeight() / tileheight); y++) {
+					frames[y] = new TextureRegion(tex, 0, y * (tileheight), tilewidth, tileheight);
+				}
+			}else{
+				for (int x = 0; x < (tex.getWidth() / tilewidth); x++) {
+					frames[x] = new TextureRegion(tex, x * tilewidth, 0, tilewidth, tileheight);
+				}
 			}
 		} else for (int i = 0; i < frames.length; i++) {
 			Texture t = new Texture(path + i + suffix);
