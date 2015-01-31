@@ -180,40 +180,40 @@ public class Block {
 		return ((int) time / (10000 / varianttypes));
 	}
 
-	/**
-	 * topleft origin!
-	 * 
-	 * @param batch
-	 * @param x
-	 * @param y
-	 */
-	public void renderModel(World world, int x, int y) {
-		Batch batch = world.batch;
-		if (path == null) return;
-		if (usingMissingTex) {
-			batch.draw(world.main.manager.get(AssetMap.get("blockmissingtexture"), Texture.class),
-					x, Main.convertY(y + World.tilesizey), World.tilesizex, World.tilesizey);
-			return;
-		}
-
-		if (animationlink != null) {
-			batch.draw(world.main.animations.get(animationlink).getCurrentFrame(), x,
-					Main.convertY(y + World.tilesizey), World.tilesizex, World.tilesizey);
-			return;
-		}
-
-		if (!connectedTextures) {
-			if (!variants) {
-				drawAt(batch, world.main.manager.get(sprites.get("defaulttex"), Texture.class), x,
-						y);
-			} else {
-				drawAt(batch, world.main.manager.get(sprites.get("defaulttex" + getVarFromTime()),
-						Texture.class), x, y);
-			}
-		} else {
-			drawAt(batch, world.main.manager.get(sprites.get("full"), Texture.class), x, y);
-		}
-	}
+//	/**
+//	 * topleft origin!
+//	 * 
+//	 * @param batch
+//	 * @param x
+//	 * @param y
+//	 */
+//	public void renderModel(World world, int x, int y) {
+//		Batch batch = world.batch;
+//		if (path == null) return;
+//		if (usingMissingTex) {
+//			batch.draw(world.main.manager.get(AssetMap.get("blockmissingtexture"), Texture.class),
+//					x, Main.convertY(y + World.tilesizey), World.tilesizex, World.tilesizey);
+//			return;
+//		}
+//
+//		if (animationlink != null) {
+//			batch.draw(world.main.animations.get(animationlink).getCurrentFrame(), x,
+//					Main.convertY(y + World.tilesizey), World.tilesizex, World.tilesizey);
+//			return;
+//		}
+//
+//		if (!connectedTextures) {
+//			if (!variants) {
+//				drawAt(batch, world.main.manager.get(sprites.get("defaulttex"), Texture.class), x,
+//						y);
+//			} else {
+//				drawAt(batch, world.main.manager.get(sprites.get("defaulttex" + getVarFromTime()),
+//						Texture.class), x, y);
+//			}
+//		} else {
+//			drawAt(batch, world.main.manager.get(sprites.get("full"), Texture.class), x, y);
+//		}
+//	}
 
 	public static int variantNum(World world, int x, int y) {
 		return variantNum(world.magicnumber, x, y);
@@ -227,38 +227,38 @@ public class Block {
 		return variantNum(Block.globalMagicNumber, x, y);
 	}
 
-	public void renderPlain(Main main, float camerax, float cameray, int x, int y, int magic) {
-		if (animationlink != null) {
-			main.batch.draw(main.animations.get(animationlink).getCurrentFrame(), x
-					* World.tilesizex - camerax, y * World.tilesizey - cameray, World.tilesizex,
-					World.tilesizey);
-			return;
-		}
-
-		if (usingMissingTex) {
-			main.batch.draw(main.manager.get(AssetMap.get("blockmissingtexture"), Texture.class), x
-					* World.tilesizex - camerax, y * World.tilesizey - cameray, World.tilesizex,
-					World.tilesizey);
-			return;
-		}
-
-		if (path == null) return;
-
-		if (!connectedTextures) {
-			if (!variants) {
-				drawAt(main.batch, main.manager.get(sprites.get("defaulttex"), Texture.class), x
-						* World.tilesizex - camerax, y * World.tilesizey - cameray);
-			} else {
-				drawAt(main.batch, main.manager.get(sprites.get("defaulttex"
-						+ ((variantNum(magic, x, y)) & (varianttypes - 1))), Texture.class), x
-						* World.tilesizex - camerax, y * World.tilesizey - cameray);
-			}
-		} else {
-			drawAt(main.batch, main.manager.get(sprites.get("full"), Texture.class), x
-					* World.tilesizex - camerax, y * World.tilesizey - cameray);
-
-		}
-	}
+//	public void renderPlain(Main main, float camerax, float cameray, int x, int y, int magic) {
+//		if (animationlink != null) {
+//			main.batch.draw(main.animations.get(animationlink).getCurrentFrame(), x
+//					* World.tilesizex - camerax, y * World.tilesizey - cameray, World.tilesizex,
+//					World.tilesizey);
+//			return;
+//		}
+//
+//		if (usingMissingTex) {
+//			main.batch.draw(main.manager.get(AssetMap.get("blockmissingtexture"), Texture.class), x
+//					* World.tilesizex - camerax, y * World.tilesizey - cameray, World.tilesizex,
+//					World.tilesizey);
+//			return;
+//		}
+//
+//		if (path == null) return;
+//
+//		if (!connectedTextures) {
+//			if (!variants) {
+//				drawAt(main.batch, main.manager.get(sprites.get("defaulttex"), Texture.class), x
+//						* World.tilesizex - camerax, y * World.tilesizey - cameray);
+//			} else {
+//				drawAt(main.batch, main.manager.get(sprites.get("defaulttex"
+//						+ ((variantNum(magic, x, y)) & (varianttypes - 1))), Texture.class), x
+//						* World.tilesizex - camerax, y * World.tilesizey - cameray);
+//			}
+//		} else {
+//			drawAt(main.batch, main.manager.get(sprites.get("full"), Texture.class), x
+//					* World.tilesizex - camerax, y * World.tilesizey - cameray);
+//
+//		}
+//	}
 
 	public void render(World world, int x, int y) {
 
