@@ -431,11 +431,6 @@ public class Main extends Game implements Consumer {
 			if (Settings.debug) ((Updateable) this.getScreen()).renderDebug(this.renderDebug());
 		}
 		
-		if(Settings.debug){
-			batch.draw(animations.get("fire").getCurrentFrame(), 64, 32, 64, 64);
-			batch.draw(animations.get("fire").getCurrentFrame(), 64 * 2, 32, 64, 64);
-			batch.draw(animations.get("fire").getCurrentFrame(), 64 * 3, 32, 64, 64);
-		}
 		batch.end();
 
 		fpstimer += Gdx.graphics.getDeltaTime();
