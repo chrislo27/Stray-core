@@ -21,9 +21,6 @@ public class GameInputProcessor implements InputProcessor {
 		case (Keys.ESCAPE):
 			main.setConv(null);
 			return true;
-		case (Keys.SPACE):
-			world.getPlayer().jump();
-			return true;
 		}
 
 		return false;
