@@ -25,7 +25,7 @@ public class Levels {
 	private void loadResources() {
 		levels.clear();
 		
-		add(new LevelData("level1-1").setCutscene("beginning"));
+		add(new LevelData("level1-1").setCutscene("controls"));
 		add(new LevelData("level1-2"));
 		add(new LevelData("level1-3"));
 		add(new LevelData("level1-4"));
