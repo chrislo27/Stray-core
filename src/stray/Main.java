@@ -398,7 +398,7 @@ public class Main extends Game implements Consumer {
 			font.draw(
 					batch,
 					"(avg of " + lastFPS.length + " sec: " + String.format("%.1f", getAvgFPS())
-							+ ") " + Arrays.toString(lastFPS),
+							+ ") " + Arrays.toString(lastFPS) + ", delta " + Gdx.graphics.getDeltaTime(),
 					5 + font.getSpaceWidth()
 							+ (font.getBounds("FPS: " + Gdx.graphics.getFramesPerSecond()).width),
 					Gdx.graphics.getHeight() - 5);
