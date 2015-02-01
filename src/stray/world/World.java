@@ -185,7 +185,6 @@ public class World implements TileBasedMap {
 		if (getPlayer().health > 0 && getPlayer().stunTime <= 0) {
 
 			if (Gdx.input.isKeyPressed(Keys.SPACE)) {
-				Main.logger.debug("jump");
 				getPlayer().jump();
 			} else if ((Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S))) {
 
