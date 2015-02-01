@@ -46,44 +46,19 @@ public class EntityPlayer extends EntityLiving implements Weighted, Stunnable {
 
 	private void drawGears(float x, float y) {
 		world.batch.setColor(Augments.getAugment(world.currentAugment).getColor());
-		if (world.main.getAugmentsUnlocked() <= 0) world.batch
-				.setColor(1, 1, 1, 1);
+		if (world.main.getAugmentsUnlocked() <= 0) world.batch.setColor(1, 1, 1, 1);
 		if (facing == Direction.LEFT) {
-			Utils.drawRotated(
-					world.batch,
-					world.main.textures.get("gear"),
-					x + 5,
-					y - 29,
-					26,
-					26,
+			Utils.drawRotated(world.batch, world.main.textures.get("gear"), x + 5, y - 29, 26, 26,
 					MathHelper.getNumberFromTime(((world.augmentActivate) ? 0.75f : 5f)) * 360,
 					false);
-			Utils.drawRotated(
-					world.batch,
-					world.main.textures.get("gear"),
-					x + 32,
-					y - 25,
-					19,
-					19,
+			Utils.drawRotated(world.batch, world.main.textures.get("gear"), x + 32, y - 25, 19, 19,
 					MathHelper.getNumberFromTime(((world.augmentActivate) ? 0.75f : 5f)) * 360,
 					true);
 		} else if (facing == Direction.RIGHT) {
-			Utils.drawRotated(
-					world.batch,
-					world.main.textures.get("gear"),
-					x + 31,
-					y - 29,
-					26,
-					26,
+			Utils.drawRotated(world.batch, world.main.textures.get("gear"), x + 31, y - 29, 26, 26,
 					MathHelper.getNumberFromTime(((world.augmentActivate) ? 0.75f : 5f)) * 360,
 					true);
-			Utils.drawRotated(
-					world.batch,
-					world.main.textures.get("gear"),
-					x + 12,
-					y - 25,
-					19,
-					19,
+			Utils.drawRotated(world.batch, world.main.textures.get("gear"), x + 12, y - 25, 19, 19,
 					MathHelper.getNumberFromTime(((world.augmentActivate) ? 0.75f : 5f)) * 360,
 					false);
 		}
@@ -106,6 +81,19 @@ public class EntityPlayer extends EntityLiving implements Weighted, Stunnable {
 			return true;
 		}
 		return false;
+	}
+
+	private long lastBadHeal = System.currentTimeMillis();
+
+	@Override
+	public void heal(float amt) {
+		super.heal(amt);
+		if (amt < 0) {
+			if (System.currentTimeMillis() - lastBadHeal >= 500) {
+				lastBadHeal = System.currentTimeMillis();
+				world.vignettecolour.set(1, 0, 0, 0.25f);
+			}
+		}
 	}
 
 	@Override

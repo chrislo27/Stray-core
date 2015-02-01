@@ -2,6 +2,7 @@ package stray.entity;
 
 import stray.Main;
 import stray.ai.BaseAI;
+import stray.entity.types.Inflammable;
 import stray.entity.types.Stunnable;
 import stray.util.AssetMap;
 import stray.util.Direction;
@@ -21,6 +22,8 @@ import com.badlogic.gdx.math.MathUtils;
  */
 public abstract class EntityLiving extends Entity {
 
+	public static final float FIRE_DAMAGE = ((1f / 3f)) / (Main.TICKS * 1f);
+
 	protected BaseAI ai;
 	protected Direction facing = Direction.RIGHT;
 
@@ -30,6 +33,7 @@ public abstract class EntityLiving extends Entity {
 	public final float invulnTime = 1.5f;
 
 	public int stunTime = 0;
+	public int fireTime = 0;
 
 	public EntityLiving(World world, float x, float y) {
 		super(world, x, y);
@@ -113,6 +117,14 @@ public abstract class EntityLiving extends Entity {
 		} else {
 			super.render(delta);
 		}
+
+		if (fireTime > 0 && !(this instanceof Inflammable)) {
+			world.batch.setColor(1, 1, 1, 0.9f);
+			world.batch.draw(world.main.animations.get("fire").getCurrentFrame(), (x * World.tilesizex)
+					- world.camera.camerax, Main.convertY(y * World.tilesizey
+					- world.camera.cameray) - (sizey * World.tilesizey), sizex * World.tilesizex, sizey * World.tilesizey);
+			world.batch.setColor(1, 1, 1, 1);
+		}
 	}
 
 	/**
@@ -177,13 +189,24 @@ public abstract class EntityLiving extends Entity {
 				.setLifetime(0.4f)
 				.setTexture("particlecircle")
 				.setTint(
-						Main.getRainbow(Main.getRandom().nextFloat()
-								* (Main.getRandom().nextInt() / MathUtils.random(2, Short.MAX_VALUE)), 1))
-				.setAlpha(1 / 3f);
+						Main.getRainbow(
+								Main.getRandom().nextFloat()
+										* (Main.getRandom().nextInt() / MathUtils.random(2,
+												Short.MAX_VALUE)), 1)).setAlpha(1 / 3f);
 	}
 
 	@Override
 	public void tickUpdate() {
+		do {
+			if (fireTime > 0) {
+				if (this instanceof Inflammable) {
+					fireTime = 0;
+					break;
+				}
+				fireTime--;
+				heal(-FIRE_DAMAGE);
+			}
+		} while (false);
 		if (stunTime > 0) {
 			stunTime--;
 			return;
@@ -213,7 +236,7 @@ public abstract class EntityLiving extends Entity {
 	 * @param amt
 	 */
 	public void heal(float amt) {
-		if(health <= 0) return;
+		if (health <= 0) return;
 		health = MathUtils.clamp(health + amt, 0f, maxhealth);
 		if (health <= 0f) {
 			// this is so the damage override methods get triggered
@@ -237,8 +260,16 @@ public abstract class EntityLiving extends Entity {
 	}
 
 	public void stun(float seconds) {
-		if(!(this instanceof Stunnable)) return;
+		if (!(this instanceof Stunnable)) return;
 		stunTime = Math.max(Math.round(seconds * Main.TICKS), 0);
+	}
+
+	public void setFire(float seconds) {
+		if (this instanceof Inflammable) {
+			fireTime = 0;
+			return;
+		}
+		fireTime = Math.max(Math.round(seconds * Main.TICKS), 0);
 	}
 
 	@Override

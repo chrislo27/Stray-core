@@ -46,6 +46,7 @@ public class FLUDDAugment extends Augment {
 			player.health += (Gdx.graphics.getRawDeltaTime() / 32f);
 			player.health = MathUtils.clamp(player.health, 0f, player.maxhealth);
 		}
+		if(player.fireTime > 0) player.fireTime = 0;
 	}
 
 	private void createParticle(World world, float x, float y, String type) {
