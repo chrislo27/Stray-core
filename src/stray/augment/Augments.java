@@ -62,6 +62,7 @@ public class Augments {
 	
 	private void loadResources() {
 		list.add(new FLUDDAugment());
+		list.add(new FireAugment());
 	}
 	
 	public static Array<Augment> getList(){
