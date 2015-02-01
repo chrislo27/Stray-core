@@ -201,7 +201,7 @@ public class WorldRenderer {
 			originalhealth = MathUtils.clamp(
 					originalhealth
 							+ ((world.getPlayer().health - originalhealth)
-									* Gdx.graphics.getDeltaTime() * 4f), 0f,
+									* Gdx.graphics.getDeltaTime() * 8f), 0f,
 					world.getPlayer().maxhealth);
 		}
 
@@ -251,7 +251,7 @@ public class WorldRenderer {
 
 	public void onDamagePlayer(float original) {
 		originalhealth = original;
-		timeUntilOrig = 0.75f;
+		timeUntilOrig = 0.5f;
 		world.vignettecolour.set(1, 0, 0, 1f);
 	}
 
