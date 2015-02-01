@@ -342,7 +342,7 @@ public class World implements TileBasedMap {
 	public void render() {
 
 		if (vignettecolour.a > 0) {
-			vignettecolour.a -= Gdx.graphics.getRawDeltaTime();
+			vignettecolour.a -= Gdx.graphics.getDeltaTime();
 			if (vignettecolour.a < 0) vignettecolour.a = 0;
 		}
 
