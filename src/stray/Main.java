@@ -885,7 +885,7 @@ public class Main extends Game implements Consumer {
 	}
 
 	public void drawTextBg(String text, float x, float y) {
-		batch.setColor(0, 0, 0, 0.6f);
+		batch.setColor(0, 0, 0, batch.getColor().a * 0.6f);
 		fillRect(x, y, font.getBounds(text).width + 2, 17);
 		font.draw(batch, text, x + 1, y + 15);
 		batch.setColor(1, 1, 1, 1);
