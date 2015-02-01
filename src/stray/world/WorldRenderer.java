@@ -124,10 +124,8 @@ public class WorldRenderer {
 		batch.setColor(1, 1, 1, 1);
 		if (MathUtils.random(1, 6) == 1) {
 			float location = MathUtils.random(1, Gdx.graphics.getHeight());
-			ElectricityRenderer.drawP2PLightning(
-					batch,
-					((world.getVoidDistance() * World.tilesizex) - world.camera.camerax),
-					location,
+			ElectricityRenderer.drawP2PLightning(batch,
+					((world.getVoidDistance() * World.tilesizex) - world.camera.camerax), location,
 					((world.getVoidDistance() * World.tilesizex) - world.camera.camerax)
 							+ MathUtils.random(World.tilesizex * 1.75f, World.tilesizex * 2.75f),
 					location + MathUtils.random(-16, 16), 24, 1.5f, 3, 3, Colors.get("VOID_PURPLE")
@@ -277,12 +275,17 @@ public class WorldRenderer {
 		batch.setColor(1, 1, 1, 1);
 
 		if (System.currentTimeMillis() - lastAugmentSwitch <= 2500) {
-			main.font.setColor(1, 1, 1, 1);
+			long timeSinceSwitch = (System.currentTimeMillis() - lastAugmentSwitch);
+			float alpha = ((timeSinceSwitch > 2500 - 250) ? ((250 - (timeSinceSwitch - (2500 - 250))) / 250f) : 1);
+			main.font.setColor(1, 1, 1, alpha);
+			batch.setColor(1, 1, 1, alpha);
 			String text = Translator.getMsg("ui.currentaugment")
 					+ Translator.getMsg(Augments.getAugment(world.currentAugment).getName());
 			main.drawTextBg(text, Gdx.graphics.getWidth() / 2
 					- (main.font.getBounds(text).width / 2), 50);
 		}
+		batch.setColor(1, 1, 1, 1);
+		main.font.setColor(1, 1, 1, 1);
 
 		Augments.getAugment(world.currentAugment).renderUi(main, world);
 	}
