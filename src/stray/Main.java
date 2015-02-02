@@ -432,7 +432,6 @@ public class Main extends Game implements Consumer {
 		if (this.getScreen() != null) {
 			if (Settings.debug) ((Updateable) this.getScreen()).renderDebug(this.renderDebug());
 		}
-
 		batch.end();
 
 		fpstimer += Gdx.graphics.getDeltaTime();
@@ -656,12 +655,12 @@ public class Main extends Game implements Consumer {
 
 		// animations
 		animations.put("shine", new SynchedAnimation(0.1f, 20, "images/item/shine/shine.png", false));
-		animations.put("portal", new SynchedAnimation(0.05f, 32, "images/blocks/portal/portal.png",
+		animations.put("portal", new SynchedAnimation(0.05f, 32, "images/blocks/portal/old/portal.png",
 				true).setRegionTile(32, 32));
 		animations.put("fire", new SynchedAnimation(0.05f, 30, "images/blocks/fire/fire.png", true)
 				.setRegionTile(128, 128).setVertical(false));
-		animations.put("fire-hud", new SynchedAnimation(0.05f, 32, "images/ui/fire-hud.png", true)
-				.setRegionTile(256, 256).setVertical(false));
+		animations.put("fire-hud", new SynchedAnimation(0.05f, 8, "images/ui/fire-hudnomiddle.png", true)
+				.setRegionTile(864, 468).setVertical(false));
 
 		// load animations
 		Iterator it = animations.entrySet().iterator();
