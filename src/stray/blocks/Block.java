@@ -158,9 +158,9 @@ public class Block {
 		}
 	}
 
-	protected void drawAt(Batch batch, Texture sprite, float f, float g) {
-		batch.draw(sprite, f, Main.convertY(g + World.tilesizey), World.tilesizex, World.tilesizey);
-	}
+//	protected void drawAt(Batch batch, Texture sprite, float f, float g) {
+//		batch.draw(sprite, f, Main.convertY(g + World.tilesizey), World.tilesizex, World.tilesizey);
+//	}
 
 	/**
 	 * only used for connected textures connected: full, corner, edgehor,
@@ -281,15 +281,15 @@ public class Block {
 
 		if (!connectedTextures) {
 			if (!variants) {
-				drawAt(world.batch,
+				world.batch.draw(
 						world.main.manager.get(sprites.get("defaulttex"), Texture.class), x
-								* world.tilesizex - world.camera.camerax, y * world.tilesizey
-								- world.camera.cameray);
+								* world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
+								- world.camera.cameray) + World.tilesizey));
 			} else {
-				drawAt(world.batch, world.main.manager.get(sprites.get("defaulttex"
+				world.batch.draw(world.main.manager.get(sprites.get("defaulttex"
 						+ ((variantNum(world, x, y)) & (varianttypes - 1))), Texture.class), x
-						* world.tilesizex - world.camera.camerax, y * world.tilesizey
-						- world.camera.cameray);
+						* world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
+								- world.camera.cameray) + World.tilesizey));
 			}
 		} else {
 			drawConnectedTexture(world, x, y,
@@ -311,19 +311,19 @@ public class Block {
 		if (up && down && left && right) {
 			if (world.getBlock(x + 1, y + 1) != this || world.getBlock(x + 1, y - 1) != this
 					|| world.getBlock(x - 1, y + 1) != this || world.getBlock(x - 1, y - 1) != this) {
-				drawAt(world.batch, corner, x * world.tilesizex - world.camera.camerax, y
-						* world.tilesizey - world.camera.cameray);
-			} else drawAt(world.batch, full, x * world.tilesizex - world.camera.camerax, y
-					* world.tilesizey - world.camera.cameray);
+				world.batch.draw(corner, x * world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
+						- world.camera.cameray) + World.tilesizey));
+			} else world.batch.draw(full, x * world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
+					- world.camera.cameray) + World.tilesizey));
 		} else if (up && down && (left == false || right == false)) {
-			drawAt(world.batch, ver, x * world.tilesizex - world.camera.camerax, y
-					* world.tilesizey - world.camera.cameray);
+			world.batch.draw(ver, x * world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
+					- world.camera.cameray) + World.tilesizey));
 		} else if (left && right && (up == false || down == false)) {
-			drawAt(world.batch, hor, x * world.tilesizex - world.camera.camerax, y
-					* world.tilesizey - world.camera.cameray);
+			world.batch.draw(hor, x * world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
+					- world.camera.cameray) + World.tilesizey));
 		} else {
-			drawAt(world.batch, corner, x * world.tilesizex - world.camera.camerax, y
-					* world.tilesizey - world.camera.cameray);
+			world.batch.draw(corner, x * world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
+					- world.camera.cameray) + World.tilesizey));
 		}
 	}
 
@@ -338,25 +338,25 @@ public class Block {
 		if (up && down && left && right) {
 			if (world.getBlock(x + 1, y + 1) != this || world.getBlock(x + 1, y - 1) != this
 					|| world.getBlock(x - 1, y + 1) != this || world.getBlock(x - 1, y - 1) != this) {
-				drawAt(world.batch, corner, x * world.tilesizex - world.camera.camerax, y
-						* world.tilesizey - world.camera.cameray);
-			} else drawAt(world.batch, full, x * world.tilesizex - world.camera.camerax, y
-					* world.tilesizey - world.camera.cameray);
+				world.batch.draw(corner, x * world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
+						- world.camera.cameray) + World.tilesizey));
+			} else world.batch.draw(full, x * world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
+					- world.camera.cameray) + World.tilesizey));
 		} else if (up && down && (left == false || right == false)) {
-			drawAt(world.batch, ver, x * world.tilesizex - world.camera.camerax, y
-					* world.tilesizey - world.camera.cameray);
+			world.batch.draw(ver, x * world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
+					- world.camera.cameray) + World.tilesizey));
 		} else if (left && right && (up == false || down == false)) {
-			drawAt(world.batch, hor, x * world.tilesizex - world.camera.camerax, y
-					* world.tilesizey - world.camera.cameray);
+			world.batch.draw(hor, x * world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
+					- world.camera.cameray) + World.tilesizey));
 		} else {
-			drawAt(world.batch, corner, x * world.tilesizex - world.camera.camerax, y
-					* world.tilesizey - world.camera.cameray);
+			world.batch.draw(corner, x * world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
+					- world.camera.cameray) + World.tilesizey));
 		}
 	}
 
-	protected void drawAt(SpriteBatch batch, TextureRegion corner, float f, float g) {
-		batch.draw(corner, f, Main.convertY(g + World.tilesizey), World.tilesizex, World.tilesizey);
-	}
+//	protected void drawAt(SpriteBatch batch, TextureRegion corner, float f, float g) {
+//		batch.draw(corner, f, Main.convertY(g + World.tilesizey), World.tilesizex, World.tilesizey);
+//	}
 
 	public static boolean isEntityNear(World world, int x, int y, int rad, Class<?> cls) {
 		for (int i = 0; i < world.entities.size; i++) {
