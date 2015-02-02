@@ -1,13 +1,16 @@
 package stray.blocks;
 
-import stray.Levels;
 import stray.Main;
 import stray.transition.FadeIn;
 import stray.transition.FadeOut;
+import stray.util.MathHelper;
+import stray.util.Utils;
+import stray.util.render.StencilMaskUtil;
 import stray.world.World;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class BlockExitPortal extends Block {
 
@@ -17,14 +20,27 @@ public class BlockExitPortal extends Block {
 
 	@Override
 	public void render(World world, int x, int y) {
+		world.batch.end();
+		
+		StencilMaskUtil.prepareMask();
+		world.main.shapes.begin(ShapeType.Filled);
+		world.main.shapes.rect(x * world.tilesizex - world.camera.camerax,
+				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey), World.tilesizex, World.tilesizey);
+		world.main.shapes.end();
+		
+		world.batch.begin();
+		StencilMaskUtil.useMask();
 		float a = world.batch.getColor().a;
 		world.batch.setColor(Main.getRainbow(2.5f, 1));
 		world.batch.setColor(world.batch.getColor().r, world.batch.getColor().g,
 				world.batch.getColor().b, a);
-		world.batch.draw(world.main.manager.get(sprites.get("defaulttex"), Texture.class), x
-				* world.tilesizex - world.camera.camerax,
-				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey));
+		Texture tex = world.main.manager.get(sprites.get("defaulttex"), Texture.class);
+		Utils.drawRotated(world.batch, tex, x * (tex.getWidth() / 2) - world.camera.camerax,
+				Main.convertY((y * (tex.getHeight() / 2) - world.camera.cameray) + World.tilesizey),
+				tex.getWidth(), tex.getHeight(), World.tilesizex / 2f, World.tilesizey / 2f, 360 * MathHelper.getNumberFromTime(2.5f), true);
 		world.batch.setColor(Color.WHITE);
+		world.batch.flush();
+		StencilMaskUtil.resetMask();
 	}
 
 	@Override
