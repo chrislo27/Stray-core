@@ -120,7 +120,7 @@ public class EntityPlayer extends EntityLiving implements Weighted, Stunnable {
 		super.renderUpdate();
 		if (invincibility == 0) {
 			if (health < maxhealth) {
-				health += (Gdx.graphics.getRawDeltaTime() / SECONDS_TO_REGEN);
+				health += (Gdx.graphics.getDeltaTime() / SECONDS_TO_REGEN);
 				health = MathUtils.clamp(health, 0, maxhealth);
 			}
 		}
