@@ -31,16 +31,16 @@ public class BlockSpace extends Block {
 
 		if (!connectedTextures) {
 			if (!variants) {
-				drawAt(main.batch, main.manager.get(sprites.get("defaulttex"), Texture.class), x
-						* World.tilesizex - camerax, y * World.tilesizey - cameray);
+				main.batch.draw(main.manager.get(sprites.get("defaulttex"), Texture.class), x
+						* World.tilesizex - camerax, Main.convertY((y * World.tilesizey - cameray) + World.tilesizey));
 			} else {
-				drawAt(main.batch, main.manager.get(sprites.get("defaulttex"
+				main.batch.draw(main.manager.get(sprites.get("defaulttex"
 						+ ((variantNum(magic, x, y)) & (varianttypes - 1))), Texture.class), x
-						* World.tilesizex - camerax, y * World.tilesizey - cameray);
+						* World.tilesizex - camerax, Main.convertY((y * World.tilesizey - cameray) + World.tilesizey));
 			}
 		} else {
-			drawAt(main.batch, main.manager.get(sprites.get("full"), Texture.class), x
-					* World.tilesizex - camerax, y * World.tilesizey - cameray);
+			main.batch.draw(main.manager.get(sprites.get("full"), Texture.class), x
+					* World.tilesizex - camerax, Main.convertY((y * World.tilesizey - cameray) + World.tilesizey));
 
 		}
 	}
