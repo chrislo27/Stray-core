@@ -25,7 +25,7 @@ public abstract class EntityLiving extends Entity {
 	public static final float FIRE_DAMAGE = ((1f / 3f)) / (Main.TICKS * 1f);
 
 	protected BaseAI ai;
-	protected Direction facing = Direction.RIGHT;
+	public Direction facing = Direction.RIGHT;
 
 	public float health = 1;
 	public float maxhealth = 1;

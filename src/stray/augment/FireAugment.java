@@ -1,11 +1,13 @@
 package stray.augment;
 
-import stray.Main;
+import stray.entity.EntityFlame;
 import stray.entity.EntityPlayer;
+import stray.util.Direction;
 import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 
 public class FireAugment extends Augment {
 
@@ -18,9 +20,10 @@ public class FireAugment extends Augment {
 	@Override
 	public void onActivate(World world) {
 		EntityPlayer player = world.getPlayer();
-		
+
 		player.heal(-(DPS * Gdx.graphics.getDeltaTime())
 				+ -(Gdx.graphics.getDeltaTime() / EntityPlayer.SECONDS_TO_REGEN));
+
 	}
 
 	@Override
@@ -29,7 +32,19 @@ public class FireAugment extends Augment {
 
 	@Override
 	public void onActivateTick(World world) {
+		EntityPlayer player = world.getPlayer();
 
+		if (player.facing == Direction.LEFT) {
+			EntityFlame flame = new EntityFlame(world, player.x - 1, player.y - 0.1f - MathUtils.random(0.05f));
+			flame.velox = -15f;
+			
+			world.entities.add(flame);
+		} else if (player.facing == Direction.RIGHT) {
+			EntityFlame flame = new EntityFlame(world, player.x + 1, player.y - 0.1f - MathUtils.random(0.05f));
+			flame.velox = 15f;
+			
+			world.entities.add(flame);
+		}
 	}
 
 	@Override
