@@ -139,15 +139,15 @@ public class WorldRenderer {
 
 		for (Entity e : world.entities) {
 			e.render(Gdx.graphics.getDeltaTime());
-			if (Settings.debug) {
-				batch.setColor(Color.MAGENTA.r, Color.MAGENTA.g, Color.MAGENTA.b, 0.1f);
-				main.fillRect(
-						(e.x * World.tilesizex) - world.camera.camerax,
-						Main.convertY(((e.y * World.tilesizey) + (e.sizey * World.tilesizey))
-								- world.camera.cameray), e.sizex * World.tilesizex, e.sizey
-								* World.tilesizey);
-				batch.setColor(Color.WHITE);
-			}
+//			if (Settings.debug) {
+//				batch.setColor(Color.MAGENTA.r, Color.MAGENTA.g, Color.MAGENTA.b, 0.1f);
+//				main.fillRect(
+//						(e.x * World.tilesizex) - world.camera.camerax,
+//						Main.convertY(((e.y * World.tilesizey) + (e.sizey * World.tilesizey))
+//								- world.camera.cameray), e.sizex * World.tilesizex, e.sizey
+//								* World.tilesizey);
+//				batch.setColor(Color.WHITE);
+//			}
 		}
 		batch.flush();
 	}
