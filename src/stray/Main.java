@@ -655,8 +655,8 @@ public class Main extends Game implements Consumer {
 
 		// animations
 		animations.put("shine", new SynchedAnimation(0.1f, 20, "images/item/shine/shine.png", false));
-		animations.put("portal", new SynchedAnimation(0.05f, 32, "images/blocks/portal/old/portal.png",
-				true).setRegionTile(32, 32));
+		animations.put("portal", new SynchedAnimation(0.05f, 32, "images/blocks/portal/portal.png",
+				true).setRegionTile(64, 64));
 		animations.put("fire", new SynchedAnimation(0.05f, 30, "images/blocks/fire/fire.png", true)
 				.setRegionTile(128, 128).setVertical(false));
 		animations.put("fire-hud", new SynchedAnimation(0.05f, 8, "images/ui/fire-hudnomiddle.png", true)
