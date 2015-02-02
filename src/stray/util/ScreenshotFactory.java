@@ -30,7 +30,7 @@ public class ScreenshotFactory {
         }
     }
 
-    private static Pixmap getScreenshot(int x, int y, int w, int h, boolean yDown){
+    public static Pixmap getScreenshot(int x, int y, int w, int h, boolean yDown){
         final Pixmap pixmap = ScreenUtils.getFrameBufferPixmap(x, y, w, h);
 
         if (yDown) {
