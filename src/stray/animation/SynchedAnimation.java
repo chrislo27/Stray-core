@@ -46,7 +46,7 @@ public class SynchedAnimation implements Disposable {
 				}
 			}
 		} else {
-			String suffix = path.substring(path.lastIndexOf('.') + 1);
+			String suffix = path.substring(path.lastIndexOf('.'));
 			String withoutSuffix = path.substring(0, path.lastIndexOf('.'));
 			for (int i = 0; i < frames.length; i++) {
 				Texture t = new Texture(withoutSuffix + i + suffix);
