@@ -40,6 +40,12 @@ public class Utils {
 				* (clockwise ? -1f : 1f), 0, 0, tex.getWidth(), tex.getHeight(), false, false);
 	}
 
+	public static void drawRotated(Batch batch, Texture tex, float x, float y, float width,
+			float height, float rotation, boolean clockwise, int u, int v, int uwidth, int vheight) {
+		batch.draw(tex, x, y, 0, 0, width, height, 1, 1, rotation * (clockwise ? -1f : 1f), u, v,
+				uwidth, vheight, false, false);
+	}
+
 	public static int HSBtoRGBA8888(float hue, float saturation, float brightness) {
 		int r = 0, g = 0, b = 0;
 		if (saturation == 0) {
