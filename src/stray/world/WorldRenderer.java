@@ -13,6 +13,7 @@ import stray.util.Utils;
 import stray.util.render.ElectricityRenderer;
 import stray.util.render.PostProcessing;
 import stray.util.render.SpaceBackground;
+import stray.util.render.StencilMaskUtil;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -21,6 +22,7 @@ import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 
 public class WorldRenderer {
@@ -154,10 +156,13 @@ public class WorldRenderer {
 
 	}
 
+	private long fireStart = 0;
+	
 	public void renderUi() {
 		if (world.getPlayer() == null) return;
 
 		main.font.setColor(Color.WHITE);
+		batch.setColor(1, 1, 1, 1);
 
 		if (Settings.showVignette) {
 			batch.setColor(0, 0, 0, 0.25f);
@@ -172,7 +177,24 @@ public class WorldRenderer {
 					Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			batch.setColor(Color.WHITE);
 		}
-		batch.setColor(1, 1, 1, 1);
+		
+		if (world.getPlayer().fireTime > 0) {
+			if(fireStart <= 0){
+				fireStart = System.currentTimeMillis();
+			}
+			float alpha = 1;
+			if(System.currentTimeMillis() - fireStart < 500){
+				alpha = (System.currentTimeMillis() - fireStart) / 500f;
+			}
+			if(world.getPlayer().fireTime <= Main.TICKS / 5f){
+				alpha = world.getPlayer().fireTime / (Main.TICKS / 5f);
+			}
+			
+			batch.setColor(1, 1, 1, alpha * 0.333333333f);
+			batch.draw(main.animations.get("fire-hud").getCurrentFrame(), 0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
+		}else{
+			if(fireStart != 0) fireStart = 0;
+		}
 
 		if (detection == null) {
 			detection = new Sprite(main.manager.get(AssetMap.get("detectionarrow"), Texture.class));
@@ -276,7 +298,8 @@ public class WorldRenderer {
 
 		if (System.currentTimeMillis() - lastAugmentSwitch <= 2500) {
 			long timeSinceSwitch = (System.currentTimeMillis() - lastAugmentSwitch);
-			float alpha = ((timeSinceSwitch > 2500 - 250) ? ((250 - (timeSinceSwitch - (2500 - 250))) / 250f) : 1);
+			float alpha = ((timeSinceSwitch > 2500 - 250) ? ((250 - (timeSinceSwitch - (2500 - 250))) / 250f)
+					: 1);
 			main.font.setColor(1, 1, 1, alpha);
 			batch.setColor(1, 1, 1, alpha);
 			String text = Translator.getMsg("ui.currentaugment")
