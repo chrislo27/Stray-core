@@ -660,7 +660,7 @@ public class Main extends Game implements Consumer {
 				true).setRegionTile(32, 32));
 		animations.put("fire", new SynchedAnimation(0.05f, 30, "images/blocks/fire/fire.png", true)
 				.setRegionTile(128, 128).setVertical(false));
-		animations.put("fire-hud", new SynchedAnimation(0.05f, 30, "images/ui/fire-hud.png", true)
+		animations.put("fire-hud", new SynchedAnimation(0.05f, 32, "images/ui/fire-hud.png", true)
 				.setRegionTile(256, 256).setVertical(false));
 
 		// load animations
