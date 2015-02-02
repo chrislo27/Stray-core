@@ -239,7 +239,7 @@ public class Main extends Game implements Consumer {
 		blurshader.setUniformf("resolution", Gdx.graphics.getWidth());
 		blurshader.setUniformf("radius", 2f);
 		blurshader.end();
-		
+
 		invertshader = new ShaderProgram(Shaders.VERTINVERT, Shaders.FRAGINVERT);
 		swizzleshader = new ShaderProgram(Shaders.VERTSWIZZLE, Shaders.FRAGSWIZZLE);
 
@@ -255,6 +255,7 @@ public class Main extends Game implements Consumer {
 		achievements.load("achievement", getPref("achievements"));
 
 		Gdx.app.postRunnable(new Thread("Stray-version checker") {
+
 			public void run() {
 				VersionGetter.instance().getVersionFromServer();
 			}
@@ -327,7 +328,7 @@ public class Main extends Game implements Consumer {
 		SETTINGS.dispose();
 
 	}
-	
+
 	private void preRender() {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -398,7 +399,8 @@ public class Main extends Game implements Consumer {
 			font.draw(
 					batch,
 					"(avg of " + lastFPS.length + " sec: " + String.format("%.1f", getAvgFPS())
-							+ ") " + Arrays.toString(lastFPS) + ", delta " + Gdx.graphics.getDeltaTime(),
+							+ ") " + Arrays.toString(lastFPS) + ", delta "
+							+ Gdx.graphics.getDeltaTime(),
 					5 + font.getSpaceWidth()
 							+ (font.getBounds("FPS: " + Gdx.graphics.getFramesPerSecond()).width),
 					Gdx.graphics.getHeight() - 5);
@@ -430,7 +432,7 @@ public class Main extends Game implements Consumer {
 		if (this.getScreen() != null) {
 			if (Settings.debug) ((Updateable) this.getScreen()).renderDebug(this.renderDebug());
 		}
-		
+
 		batch.end();
 
 		fpstimer += Gdx.graphics.getDeltaTime();
@@ -442,32 +444,33 @@ public class Main extends Game implements Consumer {
 			}
 			lastFPS[0] = Gdx.graphics.getFramesPerSecond();
 		}
-		
+
 		totalSeconds += Gdx.graphics.getDeltaTime();
-		
+
 		warpshader.begin();
 		warpshader.setUniformf(warpshader.getUniformLocation("time"), totalSeconds);
 		warpshader.setUniformf(warpshader.getUniformLocation("amplitude"), 0.25f, 0.1f);
 		warpshader.setUniformf(warpshader.getUniformLocation("frequency"), 10f, 5f);
 		warpshader.setUniformf(warpshader.getUniformLocation("speed"), 2.5f);
 		warpshader.end();
-		
+
 		inputUpdate();
 	}
-	
+
 	private int renderDebug() {
 		int offset = 0;
 		if (getScreen() != null) offset = ((Updateable) getScreen()).getDebugOffset();
 		if (MemoryUtils.getUsedMemory() > getMostMemory) getMostMemory = MemoryUtils
 				.getUsedMemory();
 		font.setColor(Color.WHITE);
-		font.draw(batch, "version: "
-				+ Main.version
-				+ (latestVersion.equals("") ? "" : "; server: " + Main.latestVersion), 5, Main.convertY(30 + offset));
+		font.draw(batch, "version: " + Main.version
+				+ (latestVersion.equals("") ? "" : "; server: " + Main.latestVersion), 5,
+				Main.convertY(30 + offset));
 		font.draw(batch, "Memory: "
 				+ NumberFormat.getInstance().format(MemoryUtils.getUsedMemory()) + " KB / "
 				+ NumberFormat.getInstance().format(MemoryUtils.getMaxMemory()) + " KB (max "
-				+ NumberFormat.getInstance().format(getMostMemory) + " KB) ", 5, Main.convertY(45 + offset));
+				+ NumberFormat.getInstance().format(getMostMemory) + " KB) ", 5,
+				Main.convertY(45 + offset));
 		font.draw(batch, "Available cores: " + MemoryUtils.getCores(), 5,
 				Main.convertY(60 + offset));
 		font.draw(batch, "OS: " + System.getProperty("os.name"), 5, Main.convertY(75 + offset));
@@ -480,8 +483,8 @@ public class Main extends Game implements Consumer {
 
 		return 75 + 30 + offset;
 	}
-	
-	public void inputUpdate(){
+
+	public void inputUpdate() {
 		if (Gdx.input.isKeyJustPressed(Keys.F12)) {
 			Settings.debug = !Settings.debug;
 		} else if (Gdx.input.isKeyJustPressed(Keys.F5)) {
@@ -652,11 +655,13 @@ public class Main extends Game implements Consumer {
 		textures.put("toggle_warning", new Texture("images/blocks/toggle/toggle_warning.png"));
 
 		// animations
-		animations.put("shine", new SynchedAnimation(0.1f, 20, "images/item/shine/shine", ".png",
-				false));
-		animations.put("portal", new SynchedAnimation(0.05f, 32, "images/blocks/portal/portal",
-				".png", true).setRegionTile(32, 32));
-		animations.put("fire", new SynchedAnimation(0.05f, 30, "images/blocks/fire/fire", ".png", true).setRegionTile(128, 128).setVertical(false));
+		animations.put("shine", new SynchedAnimation(0.1f, 20, "images/item/shine/shine.png", false));
+		animations.put("portal", new SynchedAnimation(0.05f, 32, "images/blocks/portal/portal.png",
+				true).setRegionTile(32, 32));
+		animations.put("fire", new SynchedAnimation(0.05f, 30, "images/blocks/fire/fire.png", true)
+				.setRegionTile(128, 128).setVertical(false));
+		animations.put("fire-hud", new SynchedAnimation(0.05f, 30, "images/ui/fire-hud.png", true)
+				.setRegionTile(256, 256).setVertical(false));
 
 		// load animations
 		Iterator it = animations.entrySet().iterator();
@@ -670,9 +675,11 @@ public class Main extends Game implements Consumer {
 		Colors.put("VOID_PURPLE", new Color(123f / 255f, 0, 1, 1));
 
 		// text related
-		Colors.put("PERSON", new Color(37 / 255f, 217 / 255f, 217 / 255f, 1)); // light blue
+		Colors.put("PERSON", new Color(37 / 255f, 217 / 255f, 217 / 255f, 1)); // light
+																				// blue
 		Colors.put("DANGER", new Color(1, 0, 0, 1));
-		Colors.put("OBJECT", new Color(1, 217 / 255f, 0, 1)); // yellow, use for noun/loc
+		Colors.put("OBJECT", new Color(1, 217 / 255f, 0, 1)); // yellow, use for
+																// noun/loc
 		Colors.put("VERB", new Color(1, 75 / 255f, 3 / 255f, 1));
 	}
 
@@ -750,15 +757,17 @@ public class Main extends Game implements Consumer {
 	public static Color getRainbow() {
 		return getRainbow(1, 1);
 	}
-	
-	public static Color getRainbow(float s){
+
+	public static Color getRainbow(float s) {
 		return getRainbow(s, 1);
 	}
 
 	public static Color getRainbow(float s, float saturation) {
 		return rainbow.set(
-				Utils.HSBtoRGBA8888((s < 0 ? 1.0f : 0) - MathHelper.getNumberFromTime(System.currentTimeMillis(), Math.abs(s)),
-						saturation, 0.75f)).clamp();
+				Utils.HSBtoRGBA8888(
+						(s < 0 ? 1.0f : 0)
+								- MathHelper.getNumberFromTime(System.currentTimeMillis(),
+										Math.abs(s)), saturation, 0.75f)).clamp();
 	}
 
 	public InputMultiplexer getDefaultInput() {

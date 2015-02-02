@@ -10,16 +10,14 @@ public class SynchedAnimation implements Disposable {
 	public int framecount = 1;
 	protected TextureRegion[] frames;
 	String path;
-	String suffix;
 	private int tilewidth, tileheight;
 	public boolean usesRegion = false;
 	boolean vertical = true;
 
-	public SynchedAnimation(float delay, int count, String path, String suffix, boolean usesRegion) {
+	public SynchedAnimation(float delay, int count, String path, boolean usesRegion) {
 		framedelay = delay;
 		framecount = count;
 		this.path = path;
-		this.suffix = suffix;
 		this.usesRegion = usesRegion;
 		if (count > 0) frames = new TextureRegion[count];
 	}
@@ -29,34 +27,38 @@ public class SynchedAnimation implements Disposable {
 		tileheight = height;
 		return this;
 	}
-	
-	public SynchedAnimation setVertical(boolean v){
+
+	public SynchedAnimation setVertical(boolean v) {
 		vertical = v;
 		return this;
 	}
 
 	public void load() {
 		if (usesRegion) {
-			Texture tex = new Texture(path + suffix);
-			if(vertical){
+			Texture tex = new Texture(path);
+			if (vertical) {
 				for (int y = 0; y < (tex.getHeight() / tileheight); y++) {
 					frames[y] = new TextureRegion(tex, 0, y * (tileheight), tilewidth, tileheight);
 				}
-			}else{
+			} else {
 				for (int x = 0; x < (tex.getWidth() / tilewidth); x++) {
 					frames[x] = new TextureRegion(tex, x * tilewidth, 0, tilewidth, tileheight);
 				}
 			}
-		} else for (int i = 0; i < frames.length; i++) {
-			Texture t = new Texture(path + i + suffix);
-			frames[i] = new TextureRegion(t);
+		} else {
+			String suffix = path.substring(path.lastIndexOf('.') + 1);
+			String withoutSuffix = path.substring(0, path.lastIndexOf('.'));
+			for (int i = 0; i < frames.length; i++) {
+				Texture t = new Texture(withoutSuffix + i + suffix);
+				frames[i] = new TextureRegion(t);
+			}
 		}
 	}
 
 	public TextureRegion getCurrentFrame() {
 		return getCurrentFrame(framedelay);
 	}
-	
+
 	public TextureRegion getCurrentFrame(float delay) {
 		long i = (long) (System.currentTimeMillis() / (delay * 1000d));
 		return frames[(int) ((frames.length - 1) - (i % frames.length))];
