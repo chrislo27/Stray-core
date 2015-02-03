@@ -65,8 +65,8 @@ public class BlockTimer extends Block implements AffectsColour {
 
 			if (i <= 0) {
 				world.setMeta(null, x, y);
-				if (!world.global.getValue(switchColour).equals("") && !BlockSwitch.areOtherBlocksOn(world, x, y, switchColour)) {
-					world.global.setValue(switchColour, "");
+				if (!world.global.getString(switchColour).equals("") && !BlockSwitch.areOtherBlocksOn(world, x, y, switchColour)) {
+					world.global.setString(switchColour, "");
 					Block.playSound(x, y, world.camera.camerax, world.camera.cameray,
 							world.main.manager.get(AssetMap.get("switchsfx"), Sound.class), 1, 0.6f, false);
 				}
@@ -79,8 +79,8 @@ public class BlockTimer extends Block implements AffectsColour {
 							world.main.manager.get(AssetMap.get("switchsfx"), Sound.class), 1, 1f, false);
 				}
 
-				if (!world.global.getValue(switchColour).equals("on")) {
-					world.global.setValue(switchColour, "on");
+				if (!world.global.getString(switchColour).equals("on")) {
+					world.global.setString(switchColour, "on");
 				}
 			}
 

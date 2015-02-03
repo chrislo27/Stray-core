@@ -31,27 +31,34 @@ public class BlockExitPortal extends Block {
 	@Override
 	public void tickUpdate(World world, int x, int y) {
 		if (world.main.getScreen() != Main.GAME) return;
-		if (Block.entityIntersects(world, x, y, world.getPlayer())
-				&& !world.global.getValue("completedLevel").equals("done!")) {
-			world.global.setValue("completedLevel", "done!");
-			long lasttime = System.currentTimeMillis() - world.msTime;
-
-			if (lasttime < world.main.progress.getLong(world.levelfile + "-besttime",
-					Long.MAX_VALUE - 1)) {
-				world.main.progress.putLong(world.levelfile + "-besttime", lasttime).flush();
+		if (Block.entityIntersects(world, x, y, world.getPlayer())) {
+			if(!world.global.getString("completedLevel").equals("done!")){
+				world.global.setString("completedLevel", "done!");
+				
+				save(world);
+				Main.LEVELSELECT.moveNext();
 			}
-
-			world.main.progress.putLong(world.levelfile + "-latesttime", lasttime).flush();
-
-			if (world.main.progress.getInteger("rightmostlevel", 0) == Main.LEVELSELECT
-					.getCurrent()) {
-				world.main.progress.putInteger("rightmostlevel",
-						world.main.progress.getInteger("rightmostlevel", 0) + 1).flush();
-
-			}
-			Main.LEVELSELECT.moveNext();
+			
 
 			world.main.transition(new FadeIn(), new FadeOut(), Main.LEVELSELECT);
+		}
+	}
+	
+	private void save(World world){
+		long lasttime = System.currentTimeMillis() - world.msTime;
+
+		if (lasttime < world.main.progress.getLong(world.levelfile + "-besttime",
+				Long.MAX_VALUE - 1)) {
+			world.main.progress.putLong(world.levelfile + "-besttime", lasttime).flush();
+		}
+
+		world.main.progress.putLong(world.levelfile + "-latesttime", lasttime).flush();
+
+		if (world.main.progress.getInteger("rightmostlevel", 0) == Main.LEVELSELECT
+				.getCurrent()) {
+			world.main.progress.putInteger("rightmostlevel",
+					world.main.progress.getInteger("rightmostlevel", 0) + 1).flush();
+
 		}
 	}
 

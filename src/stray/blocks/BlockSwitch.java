@@ -23,8 +23,8 @@ public class BlockSwitch extends Block implements AffectsColour {
 
 	public void tickUpdate(World world, int x, int y) {
 		if (isEntityOn(world, x, y)) {
-			if (!world.global.getValue(switchColour).equals("on")) {
-				world.global.setValue(switchColour, "on");
+			if (!world.global.getString(switchColour).equals("on")) {
+				world.global.setString(switchColour, "on");
 				Block.playSound(x, y, world.camera.camerax, world.camera.cameray,
 						world.main.manager.get(AssetMap.get("switchsfx"), Sound.class), 1, 1);
 			}
@@ -32,11 +32,11 @@ public class BlockSwitch extends Block implements AffectsColour {
 			return;
 		}
 
-		if (!world.global.getValue(switchColour).equals("") && world.getMeta(x, y) != null) {
+		if (!world.global.getString(switchColour).equals("") && world.getMeta(x, y) != null) {
 			world.setMeta(null, x, y);
 			
 			if(!areOtherBlocksOn(world, x, y, switchColour)){
-				world.global.setValue(switchColour, "");
+				world.global.setString(switchColour, "");
 				if (Block.isBlockVisible(world.camera.camerax, world.camera.cameray, x, y)) {
 					Block.playSound(x, y, world.camera.camerax, world.camera.cameray,
 							world.main.manager.get(AssetMap.get("switchsfx"), Sound.class), 1, 0.8f);
