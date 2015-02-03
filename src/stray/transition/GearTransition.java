@@ -13,6 +13,8 @@ import com.badlogic.gdx.math.MathUtils;
 public class GearTransition implements Transition {
 
 	public static final float GEAR_MIDDLE_DIAMETER = 178f;
+	public static final float FULL_TO_MIDDLE_RATIO = 512f / 178f;
+	public static final float MIDDLE_TO_FULL_RATIO = 178f / 512f;
 
 	float gearscale = 0f;
 	float seconds = 1;
