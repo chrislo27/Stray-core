@@ -33,7 +33,11 @@ public class EntityFlame extends Entity {
 		for (Entity e : world.entities) {
 			if (e instanceof EntityLiving) {
 				if (!(e instanceof Inflammable)) {
-					if (intersectingOther(e)) ((EntityLiving) e).setFire(1.5f);
+					if (intersectingOther(e)){
+						((EntityLiving) e).setFire(1.5f);
+						lifetime /= 2;
+						break;
+					}
 				}
 			}
 		}
