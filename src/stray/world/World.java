@@ -8,6 +8,7 @@ import stray.Settings;
 import stray.augment.Augments;
 import stray.blocks.Block;
 import stray.blocks.BlockCameraMagnet;
+import stray.blocks.BlockExitPortal;
 import stray.blocks.BlockPlayerSpawner;
 import stray.blocks.Blocks;
 import stray.blocks.fluid.BlockFluid;
@@ -99,6 +100,8 @@ public class World implements TileBasedMap {
 	public int currentAugment = 0;
 	public boolean augmentActivate = false;
 	long lastAugmentUse = System.currentTimeMillis();
+	
+	public float exitRotation = 0;
 
 	public World(Main main) {
 		this(main, 32, 24, Main.getRandom().nextLong());
@@ -237,6 +240,16 @@ public class World implements TileBasedMap {
 					Augments.getAugment(currentAugment).onActivateEnd(this);
 				}
 			}
+		}else{
+			if(getPlayer().health <= 0){
+				if ((!Gdx.input.isKeyPressed(Keys.E) && augmentActivate)
+						|| ((System.currentTimeMillis() - lastAugmentUse > Augments.getAugment(
+								currentAugment).getUseTime() || !Augments.getAugment(currentAugment).isInUse(this))
+								&& (Gdx.input.isKeyPressed(Keys.E) && augmentActivate))) {
+					augmentActivate = false;
+					Augments.getAugment(currentAugment).onActivateEnd(this);
+				}
+			}
 		}
 
 		if (Gdx.input.isKeyPressed(Keys.I)) {
@@ -268,6 +281,21 @@ public class World implements TileBasedMap {
 		inputUpdate();
 		for (Entity e : entities) {
 			e.renderUpdate();
+		}
+		updateExitRotation();
+	}
+	
+	private void updateExitRotation(){
+		exitRotation += Gdx.graphics.getDeltaTime() * calcExitRotationSpeed();
+		
+		if(exitRotation > 360) exitRotation %= 360;
+	}
+	
+	public float calcExitRotationSpeed(){
+		if(!global.getString("completedLevel").equals("done!")){
+			return 10f;
+		}else{
+			return 400f - ((global.getInt("exitAnimation") / (1f * BlockExitPortal.ANIMATION_TIME)) * 400f);
 		}
 	}
 

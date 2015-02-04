@@ -34,20 +34,28 @@ public class Utils {
 						-1f, 1f);
 	}
 
-	public static void drawRotated(Batch batch, Texture tex, float x, float y, float width,
+	public static void drawRotatedCentered(Batch batch, Texture tex, float x, float y, float width,
 			float height, float rotation, boolean clockwise) {
-		drawRotated(batch, tex, x, y, width, height, width / 2f, height / 2f, rotation, clockwise, 0, 0, tex.getWidth(), tex.getHeight());
-	}
-	
-	public static void drawRotated(Batch batch, Texture tex, float x, float y, float width,
-			float height, float centerX, float centerY, float rotation, boolean clockwise) {
-		drawRotated(batch, tex, x, y, width, height, centerX, centerY, rotation, clockwise, 0, 0, tex.getWidth(), tex.getHeight());
+		drawRotated(batch, tex, x - width / 2f, y - width / 2f, width, height, rotation, clockwise);
 	}
 
 	public static void drawRotated(Batch batch, Texture tex, float x, float y, float width,
-			float height, float centerX, float centerY, float rotation, boolean clockwise, int u, int v, int uwidth, int vheight) {
-		batch.draw(tex, x, y, centerX, centerY, width, height, 1, 1, rotation * (clockwise ? -1f : 1f), u, v,
-				uwidth, vheight, false, false);
+			float height, float rotation, boolean clockwise) {
+		drawRotated(batch, tex, x, y, width, height, width / 2f, height / 2f, rotation, clockwise,
+				0, 0, tex.getWidth(), tex.getHeight());
+	}
+
+	public static void drawRotated(Batch batch, Texture tex, float x, float y, float width,
+			float height, float centerX, float centerY, float rotation, boolean clockwise) {
+		drawRotated(batch, tex, x, y, width, height, centerX, centerY, rotation, clockwise, 0, 0,
+				tex.getWidth(), tex.getHeight());
+	}
+
+	public static void drawRotated(Batch batch, Texture tex, float x, float y, float width,
+			float height, float centerX, float centerY, float rotation, boolean clockwise, int u,
+			int v, int uwidth, int vheight) {
+		batch.draw(tex, x, y, centerX, centerY, width, height, 1, 1, rotation
+				* (clockwise ? -1f : 1f), u, v, uwidth, vheight, false, false);
 	}
 
 	public static int HSBtoRGBA8888(float hue, float saturation, float brightness) {
