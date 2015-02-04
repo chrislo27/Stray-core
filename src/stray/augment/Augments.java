@@ -24,7 +24,7 @@ public class Augments {
 	private Augment def = new Augment(){
 		@Override
 		public String getName() {
-			return "augment.default.name";
+			return "augment.name.default";
 		}
 
 		@Override
