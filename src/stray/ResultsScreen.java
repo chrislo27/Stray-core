@@ -62,7 +62,7 @@ public class ResultsScreen extends Updateable {
 		this.deaths = deaths;
 		
 		int old = resultsPick;
-		while(resultsPick != old){
+		while(resultsPick == old){
 			resultsPick = MathUtils.random(0, 3);
 		}
 		
