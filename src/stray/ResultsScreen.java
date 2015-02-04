@@ -2,6 +2,8 @@ package stray;
 
 import stray.ui.LevelSelectButton;
 import stray.ui.NextLevelButton;
+import stray.ui.RetryLevelButton;
+import stray.util.Utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,29 +13,48 @@ public class ResultsScreen extends Updateable {
 	public ResultsScreen(Main m) {
 		super(m);
 		
-		container.elements.add(new LevelSelectButton(5, 5){
+		container.elements.add(new LevelSelectButton(Gdx.graphics.getWidth() / 2 - 24 - 8 - 48, Gdx.graphics.getHeight() / 4){
 
 			@Override
 			public boolean onLeftClick() {
+				main.setScreen(Main.LEVELSELECT);
+				
 				return true;
 			}
 			
 		});
 		
-		container.elements.add(new NextLevelButton(58, 5){
+		container.elements.add(new RetryLevelButton(Gdx.graphics.getWidth() / 2 - 24, Gdx.graphics.getHeight() / 4){
 
 			@Override
 			public boolean onLeftClick() {
-				return false;
+				Main.LEVELSELECT.goToLevel(levelname);
+				
+				return true;
 			}
 			
 		});
+		
+		container.elements.add(new NextLevelButton(Gdx.graphics.getWidth() / 2 - 24 + 8 + 48, Gdx.graphics.getHeight() / 4){
+
+			@Override
+			public boolean onLeftClick() {
+				Main.LEVELSELECT.goToLevel(Math.round(Main.LEVELSELECT.wanted));
+				
+				return true;
+			}
+			
+		});
+		
 	}
 
 	private String levelfile = null;
+	private int levelname = 0;
 
-	public ResultsScreen setData(String levelf) {
-
+	public ResultsScreen setData(String levelf, int levelid) {
+		levelfile = levelf;
+		levelname = levelid;
+		
 		return this;
 	}
 
@@ -42,17 +63,26 @@ public class ResultsScreen extends Updateable {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		main.batch.begin();
 		if (levelfile != null) {
 			main.font.setColor(1, 1, 1, 1);
+			main.font.setScale(2);
+			main.drawCentered(
+					Levels.getLevelName(levelname),
+					Gdx.graphics.getWidth() / 2, Main.convertY(225));
+			main.font.setScale(1);
 			main.drawCentered(
 					Translator.getMsg("menu.results.latesttime")
-							+ main.progress.getLong(levelfile + "-latesttime"),
-					Gdx.graphics.getWidth() / 2, Main.convertY(250));
+							+ Utils.formatMs(main.progress.getLong(levelfile + "-latesttime")),
+					Gdx.graphics.getWidth() / 2, Main.convertY(275));
 			main.drawCentered(
 					Translator.getMsg("menu.results.besttime")
-							+ main.progress.getLong(levelfile + "-latesttime"),
-					Gdx.graphics.getWidth() / 2, Main.convertY(275));
+							+ Utils.formatMs(main.progress.getLong(levelfile + "-latesttime")),
+					Gdx.graphics.getWidth() / 2, Main.convertY(300));
 		}
+		
+		container.render(main);
+		main.batch.end();
 	}
 
 	@Override

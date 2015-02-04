@@ -118,6 +118,7 @@ public class Main extends Game implements Consumer {
 	public static NewGameScreen NEWGAME = null;
 	public static BackstoryScreen BACKSTORY = null;
 	public static SettingsScreen SETTINGS = null;
+	public static ResultsScreen RESULTS = null;
 
 	public static Texture filltex;
 
@@ -277,6 +278,7 @@ public class Main extends Game implements Consumer {
 		NEWGAME = new NewGameScreen(this);
 		BACKSTORY = new BackstoryScreen(this);
 		SETTINGS = new SettingsScreen(this);
+		RESULTS = new ResultsScreen(this);
 	}
 
 	@Override
@@ -326,7 +328,7 @@ public class Main extends Game implements Consumer {
 		TESTLEVEL.dispose();
 		BACKSTORY.dispose();
 		SETTINGS.dispose();
-
+		RESULTS.dispose();
 	}
 
 	private void preRender() {
@@ -557,6 +559,9 @@ public class Main extends Game implements Consumer {
 		manager.load(AssetMap.add("guibgfalse", "images/ui/button/bgfalse.png"), Texture.class);
 		manager.load(AssetMap.add("guibgtrue", "images/ui/button/bgtrue.png"), Texture.class);
 		manager.load(AssetMap.add("detectionarrow", "images/ui/detection.png"), Texture.class);
+		manager.load(AssetMap.add("guilevelselect", "images/ui/button/levelselect.png"), Texture.class);
+		manager.load(AssetMap.add("guinextlevel", "images/ui/button/nextlevel.png"), Texture.class);
+		manager.load(AssetMap.add("guiretry", "images/ui/button/retry.png"), Texture.class);
 
 		// particle
 		manager.load(AssetMap.add("money", "images/particle/money.png"), Texture.class);
@@ -674,11 +679,9 @@ public class Main extends Game implements Consumer {
 		Colors.put("VOID_PURPLE", new Color(123f / 255f, 0, 1, 1));
 
 		// text related
-		Colors.put("PERSON", new Color(37 / 255f, 217 / 255f, 217 / 255f, 1)); // light
-																				// blue
+		Colors.put("PERSON", new Color(37 / 255f, 217 / 255f, 217 / 255f, 1));
 		Colors.put("DANGER", new Color(1, 0, 0, 1));
-		Colors.put("OBJECT", new Color(1, 217 / 255f, 0, 1)); // yellow, use for
-																// noun/loc
+		Colors.put("OBJECT", new Color(1, 217 / 255f, 0, 1));
 		Colors.put("VERB", new Color(1, 75 / 255f, 3 / 255f, 1));
 	}
 

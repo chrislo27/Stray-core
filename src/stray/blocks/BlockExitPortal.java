@@ -1,5 +1,6 @@
 package stray.blocks;
 
+import stray.Levels;
 import stray.Main;
 import stray.transition.FadeIn;
 import stray.transition.FadeOut;
@@ -21,15 +22,13 @@ public class BlockExitPortal extends Block {
 
 	@Override
 	public void render(World world, int x, int y) {
-		Utils.drawRotatedCentered(
-				world.batch,
-				world.main.textures.get("gear"),
-				x * world.tilesizex - world.camera.camerax + (World.tilesizey / 2f),
+		Utils.drawRotatedCentered(world.batch, world.main.textures.get("gear"), x * world.tilesizex
+				- world.camera.camerax + (World.tilesizey / 2f),
 				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey)
-						+ (World.tilesizey / 2f),
-				World.tilesizex * GearTransition.FULL_TO_MIDDLE_RATIO,
-				World.tilesizey * GearTransition.FULL_TO_MIDDLE_RATIO,
-				world.exitRotation, y % 2 == 0 && x % 2 == 0);
+						+ (World.tilesizey / 2f), World.tilesizex
+						* GearTransition.FULL_TO_MIDDLE_RATIO, World.tilesizey
+						* GearTransition.FULL_TO_MIDDLE_RATIO, world.exitRotation, y % 2 == 0
+						&& x % 2 == 0);
 	}
 
 	@Override
@@ -44,14 +43,23 @@ public class BlockExitPortal extends Block {
 				Main.LEVELSELECT.moveNext();
 			}
 		}
-		
+
 		if (world.global.getInt("exitAnimation") >= 0) world.global.setInt("exitAnimation",
 				world.global.getInt("exitAnimation") - 1);
 
-		if (world.global.getInt("exitAnimation") < 0) {
-			if (world.main.getScreen() != Main.GAME) return;
-			world.main.transition(new FadeIn(), new FadeOut(), Main.LEVELSELECT);
+		if(world.global.getString("completedLevel").equals("done!")){
+			if (world.global.getInt("exitAnimation") < 0) {
+				if (world.main.getScreen() != Main.GAME) return;
+				world.main.transition(
+						new FadeIn(),
+						null,
+						Main.RESULTS.setData(
+								world.levelfile,
+								Levels.instance().getNumFromLevelFile(
+										world.levelfile)));
+			}
 		}
+		
 	}
 
 	private void save(World world) {
@@ -59,16 +67,18 @@ public class BlockExitPortal extends Block {
 
 		if (lasttime < world.main.progress.getLong(world.levelfile + "-besttime",
 				Long.MAX_VALUE - 1)) {
-			world.main.progress.putLong(world.levelfile + "-besttime", lasttime).flush();
+			world.main.progress.putLong(world.levelfile + "-besttime", lasttime);
 		}
 
-		world.main.progress.putLong(world.levelfile + "-latesttime", lasttime).flush();
+		world.main.progress.putLong(world.levelfile + "-latesttime", lasttime);
 
 		if (world.main.progress.getInteger("rightmostlevel", 0) == Main.LEVELSELECT.getCurrent()) {
 			world.main.progress.putInteger("rightmostlevel",
-					world.main.progress.getInteger("rightmostlevel", 0) + 1).flush();
+					world.main.progress.getInteger("rightmostlevel", 0) + 1);
 
 		}
+
+		world.main.progress.flush();
 	}
 
 }

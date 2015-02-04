@@ -34,7 +34,7 @@ public class LevelSelectScreen extends Updateable {
 
 			@Override
 			public boolean onLeftClick() {
-				if(getCurrent() >= 0 && getCurrent() < Levels.instance().levels.size()) goToLevel(getCurrent());
+				if (getCurrent() >= 0 && getCurrent() < Levels.instance().levels.size()) goToLevel(getCurrent());
 				return true;
 			}
 
@@ -79,10 +79,8 @@ public class LevelSelectScreen extends Updateable {
 					Gdx.graphics.getHeight() / 2 - 24, 48, 48);
 			if (Levels.instance().levels.get(i) != null) {
 				main.font.setScale(1.5f);
-				main.drawCentered(
-						Levels.getLevelName(i),
-						(Gdx.graphics.getWidth() / 2) + ((i - offset) * DISTANCE),
-						Gdx.graphics.getHeight() / 2 + 64);
+				main.drawCentered(Levels.getLevelName(i), (Gdx.graphics.getWidth() / 2)
+						+ ((i - offset) * DISTANCE), Gdx.graphics.getHeight() / 2 + 64);
 				if (getCurrent() == i) {
 					long millis = main.progress.getLong(Levels.instance().levels.get(i).name
 							+ "-besttime", -1);
@@ -139,20 +137,16 @@ public class LevelSelectScreen extends Updateable {
 	}
 
 	public void goToLevel(int level) {
-			Main.BACKSTORY.prepare(
-					Levels.instance().levels.get(level).name,
-					Gdx.files.internal("levels/" + Levels.instance().levels.get(level).name
-							+ ".xml"));
-			if (Levels.instance().levels.get(level).cutscene != null) {
-				Main.CUTSCENE
-						.prepare(Conversations.instance().convs.get(Levels.instance().levels
-								.get(level).cutscene), new FadeIn(), new FadeOut(),
-								(Main.BACKSTORY));
-				main.transition(new FadeIn(), null, Main.CUTSCENE);
-			} else {
-				main.transition(new FadeIn(), new FadeOut(), Main.BACKSTORY);
-			}
-		
+		Main.BACKSTORY.prepare(Levels.instance().levels.get(level).name,
+				Gdx.files.internal("levels/" + Levels.instance().levels.get(level).name + ".xml"));
+		if (Levels.instance().levels.get(level).cutscene != null) {
+			Main.CUTSCENE.prepare(Conversations.instance().convs.get(Levels.instance().levels
+					.get(level).cutscene), new FadeIn(), new FadeOut(), (Main.BACKSTORY));
+			main.transition(new FadeIn(), null, Main.CUTSCENE);
+		} else {
+			main.transition(new FadeIn(), new FadeOut(), Main.BACKSTORY);
+		}
+
 	}
 
 	private void goToMenu() {
@@ -215,7 +209,7 @@ public class LevelSelectScreen extends Updateable {
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			goToMenu();
 		} else if (Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isKeyJustPressed(Keys.ENTER)) {
-			if(getCurrent() >= 0 && getCurrent() < Levels.instance().levels.size()){
+			if (getCurrent() >= 0 && getCurrent() < Levels.instance().levels.size()) {
 				goToLevel(getCurrent());
 			}
 		}

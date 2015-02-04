@@ -7,7 +7,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.MathUtils;
 
 public class BackstoryScreen extends MiscLoadingScreen {
 
@@ -42,6 +41,13 @@ public class BackstoryScreen extends MiscLoadingScreen {
 		if (!loaded) {
 			Main.GAME.world.load(level);
 			loaded = true;
+			if(story != null){
+				if(Translator.getMsg("backstory." + story).equals("")){
+					main.transition(null, new FadeOut(), next);
+				}
+			}else{
+				main.transition(null, new FadeOut(), next);
+			}
 		}
 	}
 
