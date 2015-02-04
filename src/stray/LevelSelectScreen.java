@@ -34,7 +34,7 @@ public class LevelSelectScreen extends Updateable {
 
 			@Override
 			public boolean onLeftClick() {
-				goToLevel();
+				if(getCurrent() >= 0 && getCurrent() < Levels.instance().levels.size()) goToLevel(getCurrent());
 				return true;
 			}
 
@@ -138,22 +138,21 @@ public class LevelSelectScreen extends Updateable {
 		return false;
 	}
 
-	private void goToLevel() {
-		if (getCurrent() >= 0 && getCurrent() < Levels.instance().levels.size()) {
+	public void goToLevel(int level) {
 			Main.BACKSTORY.prepare(
-					Levels.instance().levels.get(getCurrent()).name,
-					Gdx.files.internal("levels/" + Levels.instance().levels.get(getCurrent()).name
+					Levels.instance().levels.get(level).name,
+					Gdx.files.internal("levels/" + Levels.instance().levels.get(level).name
 							+ ".xml"));
-			if (Levels.instance().levels.get(getCurrent()).cutscene != null) {
+			if (Levels.instance().levels.get(level).cutscene != null) {
 				Main.CUTSCENE
 						.prepare(Conversations.instance().convs.get(Levels.instance().levels
-								.get(getCurrent()).cutscene), new FadeIn(), new FadeOut(),
+								.get(level).cutscene), new FadeIn(), new FadeOut(),
 								(Main.BACKSTORY));
 				main.transition(new FadeIn(), null, Main.CUTSCENE);
 			} else {
 				main.transition(new FadeIn(), new FadeOut(), Main.BACKSTORY);
 			}
-		}
+		
 	}
 
 	private void goToMenu() {
@@ -216,7 +215,9 @@ public class LevelSelectScreen extends Updateable {
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			goToMenu();
 		} else if (Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isKeyJustPressed(Keys.ENTER)) {
-			goToLevel();
+			if(getCurrent() >= 0 && getCurrent() < Levels.instance().levels.size()){
+				goToLevel(getCurrent());
+			}
 		}
 	}
 
