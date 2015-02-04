@@ -101,16 +101,16 @@ public class ResultsScreen extends Updateable {
 			if(voidPresent){
 				if(main.progress.getLong(levelfile + "-latesttime") <= Levels.instance().levels.get(levelname).bestTime){
 					main.drawCentered(
-							Translator.getMsg("menu.results.good" + resultsPick),
+							"\"" + Translator.getMsg("menu.results.good" + resultsPick) + "\"",
 							Gdx.graphics.getWidth() / 2, Main.convertY(400));
 				}else{
 					main.drawCentered(
-							Translator.getMsg("menu.results.bad" + resultsPick),
+							"\"" + Translator.getMsg("menu.results.bad" + resultsPick) + "\"",
 							Gdx.graphics.getWidth() / 2, Main.convertY(400));
 				}
 			}else{
 				main.drawCentered(
-						Translator.getMsg("menu.results.good" + resultsPick),
+						"\"" + Translator.getMsg("menu.results.good" + resultsPick) + "\"",
 						Gdx.graphics.getWidth() / 2, Main.convertY(400));
 			}
 		}
