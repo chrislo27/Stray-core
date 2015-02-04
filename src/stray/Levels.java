@@ -46,4 +46,16 @@ public class Levels {
 	public static String getLevelName(int level, int groupnum){
 		return ((level / groupnum) + 1) + "-" + ((level % groupnum) + 1);
 	}
+	
+	public static String getLevelName(int level){
+		return getLevelName(level, LEVELS_PER_CHAPTER);
+	}
+	
+	public int getNumFromLevelFile(String file){
+		for(int i = 0; i < levels.size(); i++){
+			if(levels.get(i).name.equals(file)) return i;
+		}
+		
+		return -1;
+	}
 }

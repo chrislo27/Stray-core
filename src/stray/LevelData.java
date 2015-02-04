@@ -4,6 +4,7 @@ public class LevelData {
 
 	public String name = "level.unknown";
 	public String cutscene = null;
+	public long bestTime = Long.MAX_VALUE;
 
 	public int difficulty = 0;
 
@@ -13,6 +14,11 @@ public class LevelData {
 
 	public LevelData setCutscene(String c) {
 		cutscene = c;
+		return this;
+	}
+	
+	public LevelData setTime(long t){
+		bestTime = t;
 		return this;
 	}
 
