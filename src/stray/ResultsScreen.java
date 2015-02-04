@@ -7,6 +7,7 @@ import stray.util.Utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.MathUtils;
 
 public class ResultsScreen extends Updateable {
 
@@ -50,10 +51,18 @@ public class ResultsScreen extends Updateable {
 
 	private String levelfile = null;
 	private int levelname = 0;
+	private boolean voidPresent = false;
+	private int resultsPick = MathUtils.random(0, 3);
 
-	public ResultsScreen setData(String levelf, int levelid) {
+	public ResultsScreen setData(String levelf, int levelid, boolean voidChasing) {
 		levelfile = levelf;
 		levelname = levelid;
+		voidPresent = voidChasing;
+		
+		int old = resultsPick;
+		while(resultsPick != old){
+			resultsPick = MathUtils.random(0, 3);
+		}
 		
 		return this;
 	}
@@ -79,6 +88,25 @@ public class ResultsScreen extends Updateable {
 					Translator.getMsg("menu.results.besttime")
 							+ Utils.formatMs(main.progress.getLong(levelfile + "-latesttime")),
 					Gdx.graphics.getWidth() / 2, Main.convertY(300));
+			
+			if(voidPresent){
+				if(main.progress.getLong(levelfile + "-latesttime") <= Levels.instance().levels.get(levelname).bestTime){
+					main.drawCentered(
+							Translator.getMsg("menu.results.good" + resultsPick)
+									+ Utils.formatMs(main.progress.getLong(levelfile + "-latesttime")),
+							Gdx.graphics.getWidth() / 2, Main.convertY(333));
+				}else{
+					main.drawCentered(
+							Translator.getMsg("menu.results.bad" + resultsPick)
+									+ Utils.formatMs(main.progress.getLong(levelfile + "-latesttime")),
+							Gdx.graphics.getWidth() / 2, Main.convertY(333));
+				}
+			}else{
+				main.drawCentered(
+						Translator.getMsg("menu.results.good" + resultsPick)
+								+ Utils.formatMs(main.progress.getLong(levelfile + "-latesttime")),
+						Gdx.graphics.getWidth() / 2, Main.convertY(333));
+			}
 		}
 		
 		container.render(main);
