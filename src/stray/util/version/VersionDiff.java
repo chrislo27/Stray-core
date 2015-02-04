@@ -3,6 +3,6 @@ package stray.util.version;
 
 public enum VersionDiff {
 	
-	EQUAL, NEWER, OLDER, INVALID, CHECKING;
+	EQUAL, FUTURE, OUTDATED, INVALID, CHECKING;
 	
 }

@@ -89,13 +89,13 @@ public strictfp class MainMenuScreen extends Updateable {
 						35);
 				main.font.setColor(1, 1, 1, 1);
 				break;
-			case NEWER:
+			case FUTURE:
 				main.font.setColor(Color.CYAN);
 				main.drawInverse(Translator.getMsg("menu.versionahead") + Main.latestVersion + ")",
 						Gdx.graphics.getWidth() - 5, 35);
 				main.font.setColor(1, 1, 1, 1);
 				break;
-			case OLDER:
+			case OUTDATED:
 				main.font.setColor(1, 0, 0, 1);
 				main.drawInverse(Translator.getMsg("menu.newversion") + Main.latestVersion,
 						Gdx.graphics.getWidth() - 5, 35);

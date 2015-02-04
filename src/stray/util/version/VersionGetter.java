@@ -11,6 +11,7 @@ import stray.Settings;
 
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import com.github.zafarkhaja.semver.Version;
 
 public class VersionGetter {
 
@@ -60,8 +61,19 @@ public class VersionGetter {
 			JsonValue value = new JsonReader().parse(file.toString());
 
 			Main.latestVersion = value.getString("version", "");
+			
+			Version current = Version.valueOf(Main.version);
+			Version server = Version.valueOf(Main.latestVersion);
 
-			difference = compareVersions(Main.version, Main.latestVersion);
+			int diff = current.compareTo(server);
+			
+			if(diff == 0){
+				difference = VersionDiff.EQUAL;
+			}else if(diff < 0){
+				difference = VersionDiff.OUTDATED;
+			}else if(diff > 0){
+				difference = VersionDiff.FUTURE;
+			}else difference = VersionDiff.INVALID;
 
 			if (Settings.debug) Main.logger.debug("JSON obtained from host: " + file.toString());
 		} catch (MalformedURLException e) {
@@ -73,69 +85,6 @@ public class VersionGetter {
 		} catch (NullPointerException e) {
 			Main.logger.error("Failed to parse/get latest version info", e);
 			difference = VersionDiff.INVALID;
-		}
-	}
-
-	public static VersionDiff compareVersions(String current, String server) {
-		int i = compareVersionsInt(current, server);
-		if (i == 0) {
-			return VersionDiff.EQUAL;
-		} else if (i == 1) {
-			return VersionDiff.NEWER;
-		} else if (i == -1) {
-			return VersionDiff.OLDER;
-		} else return VersionDiff.INVALID;
-	}
-
-	/**
-	 * uses integers to determine version differences 0 is same, positive is the
-	 * build version is newer than server, negative is the build version is
-	 * older than server
-	 * 
-	 * @param current
-	 * @param server
-	 * @return
-	 */
-	public static int compareVersionsInt(String current, String server) {
-		String str1 = current;
-		String str2 = server;
-
-		// bleh way of handling alpha and beta
-		if (str1.endsWith("-alpha")) {
-			str1 = str1.replace("-alpha", ".1");
-		} else if (str1.endsWith("-beta")) {
-			str1 = str1.replace("-beta", ".2");
-		}
-		if (str2.endsWith("-alpha")) {
-			str2 = str2.replace("-alpha", ".1");
-		} else if (str2.endsWith("-beta")) {
-			str2 = str2.replace("-beta", ".2");
-		}
-
-		String[] vals1 = str1.split("\\.");
-		String[] vals2 = str2.split("\\.");
-		int i = 0;
-		// set index to first non-equal ordinal or length of shortest version
-		// string
-		while (i < vals1.length && i < vals2.length && vals1[i].equals(vals2[i])) {
-			i++;
-		}
-
-		try {
-			// compare first non-equal ordinal number
-			if (i < vals1.length && i < vals2.length) {
-				int diff = Integer.valueOf(vals1[i]).compareTo(Integer.valueOf(vals2[i]));
-				return Integer.signum(diff);
-			}
-			// the strings are equal or one string is a substring of the other
-			// e.g. "1.2.3" = "1.2.3" or "1.2.3" < "1.2.3.4"
-			else {
-				return Integer.signum(vals1.length - vals2.length);
-			}
-		} catch (NumberFormatException e) {
-			Main.logger.error(
-					"Failed to parse versions \"" + current + "\" and \"" + server + "\"", e);
-			return 404;
 		}
 	}
 }
