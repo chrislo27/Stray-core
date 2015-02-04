@@ -102,6 +102,8 @@ public class World implements TileBasedMap {
 	long lastAugmentUse = System.currentTimeMillis();
 	
 	public float exitRotation = 0;
+	
+	public int deaths = 0;
 
 	public World(Main main) {
 		this(main, 32, 24, Main.getRandom().nextLong());
@@ -133,6 +135,7 @@ public class World implements TileBasedMap {
 		}
 
 		magicnumber = new Random().nextInt();
+		deaths = 0;
 
 		entities = new Array<Entity>(32);
 		particles = new Array<Particle>();
@@ -453,6 +456,7 @@ public class World implements TileBasedMap {
 				getPlayer().invincibility = Main.TICKS;
 				getPlayer().gravityCoefficient = 1;
 				voidMsTime = getVoidMSFromDistance(checkpointvoid);
+				deaths++;
 			}
 		}
 

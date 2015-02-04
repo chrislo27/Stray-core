@@ -56,7 +56,7 @@ public class BlockExitPortal extends Block {
 						Main.RESULTS.setData(
 								world.levelfile,
 								Levels.instance().getNumFromLevelFile(
-										world.levelfile), world.voidTime > 0));
+										world.levelfile), world.voidTime > 0, world.deaths));
 			}
 		}
 		

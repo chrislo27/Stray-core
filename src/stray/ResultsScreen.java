@@ -53,11 +53,13 @@ public class ResultsScreen extends Updateable {
 	private int levelname = 0;
 	private boolean voidPresent = false;
 	private int resultsPick = MathUtils.random(0, 3);
+	private int deaths = 0;
 
-	public ResultsScreen setData(String levelf, int levelid, boolean voidChasing) {
+	public ResultsScreen setData(String levelf, int levelid, boolean voidChasing, int deaths) {
 		levelfile = levelf;
 		levelname = levelid;
 		voidPresent = voidChasing;
+		this.deaths = deaths;
 		
 		int old = resultsPick;
 		while(resultsPick != old){
@@ -88,24 +90,28 @@ public class ResultsScreen extends Updateable {
 					Translator.getMsg("menu.results.besttime")
 							+ Utils.formatMs(main.progress.getLong(levelfile + "-latesttime")),
 					Gdx.graphics.getWidth() / 2, Main.convertY(300));
+			main.drawCentered(
+					Translator.getMsg("menu.results.deaths")
+							+ deaths,
+					Gdx.graphics.getWidth() / 2, Main.convertY(325));
 			
+			main.drawCentered(
+					Translator.getMsg("menu.results.verdict"),
+					Gdx.graphics.getWidth() / 2, Main.convertY(380));
 			if(voidPresent){
 				if(main.progress.getLong(levelfile + "-latesttime") <= Levels.instance().levels.get(levelname).bestTime){
 					main.drawCentered(
-							Translator.getMsg("menu.results.good" + resultsPick)
-									+ Utils.formatMs(main.progress.getLong(levelfile + "-latesttime")),
-							Gdx.graphics.getWidth() / 2, Main.convertY(333));
+							Translator.getMsg("menu.results.good" + resultsPick),
+							Gdx.graphics.getWidth() / 2, Main.convertY(400));
 				}else{
 					main.drawCentered(
-							Translator.getMsg("menu.results.bad" + resultsPick)
-									+ Utils.formatMs(main.progress.getLong(levelfile + "-latesttime")),
-							Gdx.graphics.getWidth() / 2, Main.convertY(333));
+							Translator.getMsg("menu.results.bad" + resultsPick),
+							Gdx.graphics.getWidth() / 2, Main.convertY(400));
 				}
 			}else{
 				main.drawCentered(
-						Translator.getMsg("menu.results.good" + resultsPick)
-								+ Utils.formatMs(main.progress.getLong(levelfile + "-latesttime")),
-						Gdx.graphics.getWidth() / 2, Main.convertY(333));
+						Translator.getMsg("menu.results.good" + resultsPick),
+						Gdx.graphics.getWidth() / 2, Main.convertY(400));
 			}
 		}
 		
