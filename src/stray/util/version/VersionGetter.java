@@ -62,8 +62,8 @@ public class VersionGetter {
 
 			Main.latestVersion = value.getString("version", "");
 			
-			Version current = Version.valueOf(Main.version);
-			Version server = Version.valueOf(Main.latestVersion);
+			Version current = Version.valueOf(Main.version.replace("v", ""));
+			Version server = Version.valueOf(Main.latestVersion.replace("v", ""));
 
 			int diff = current.compareTo(server);
 			
