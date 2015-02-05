@@ -5,6 +5,7 @@ import stray.ai.BaseAI;
 import stray.entity.types.Inflammable;
 import stray.entity.types.Stunnable;
 import stray.util.AssetMap;
+import stray.util.DamageSource;
 import stray.util.Direction;
 import stray.util.MathHelper;
 import stray.util.Particle;
@@ -204,7 +205,7 @@ public abstract class EntityLiving extends Entity {
 					break;
 				}
 				fireTime--;
-				heal(-FIRE_DAMAGE);
+				heal(-FIRE_DAMAGE, DamageSource.fire);
 			}
 		} while (false);
 		if (stunTime > 0) {
@@ -222,7 +223,7 @@ public abstract class EntityLiving extends Entity {
 	 * @param dmg
 	 * @return false if cancelled
 	 */
-	public boolean damage(float dmg) {
+	public boolean damage(float dmg, DamageSource source) {
 		if (dmg <= 0 || health <= 0) return false;
 		if (dmg > 0 && invincibility > 0) return false;
 		health = MathUtils.clamp(health - dmg, 0f, maxhealth);
@@ -235,13 +236,13 @@ public abstract class EntityLiving extends Entity {
 	 * 
 	 * @param amt
 	 */
-	public void heal(float amt) {
+	public void heal(float amt, DamageSource source) {
 		if (health <= 0) return;
 		health = MathUtils.clamp(health + amt, 0f, maxhealth);
 		if (health <= 0f) {
 			// this is so the damage override methods get triggered
 			health = Math.min(0.0001f, maxhealth);
-			damage(1);
+			damage(1, source);
 		}
 	}
 

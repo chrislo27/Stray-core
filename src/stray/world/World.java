@@ -17,6 +17,7 @@ import stray.entity.EntityPlayer;
 import stray.pathfinding.Mover;
 import stray.pathfinding.TileBasedMap;
 import stray.util.AssetMap;
+import stray.util.DamageSource;
 import stray.util.GlobalVariables;
 import stray.util.MathHelper;
 import stray.util.Particle;
@@ -271,7 +272,7 @@ public class World implements TileBasedMap {
 		if (Settings.debug) {
 			if (Gdx.input.isKeyPressed(Keys.ALT_LEFT) || Gdx.input.isKeyPressed(Keys.ALT_RIGHT)) {
 				if (Gdx.input.isKeyJustPressed(Keys.T)) {
-					getPlayer().damage(0.999f);
+					getPlayer().damage(0.999f, DamageSource.generic);
 				}else if (Gdx.input.isKeyJustPressed(Keys.Y)) {
 					getPlayer().stun(5);
 				}
@@ -474,7 +475,7 @@ public class World implements TileBasedMap {
 
 		if (getPlayer() != null) {
 			if (getVoidDistance() > (getPlayer().x)) {
-				getPlayer().heal(-((1f / (Main.TICKS * 2f)) * Math.max(getVoidDistance() - getPlayer().x, 1f)) );
+				getPlayer().heal(-((1f / (Main.TICKS * 2f)) * Math.max(getVoidDistance() - getPlayer().x, 1f)), DamageSource.theVoid);
 			}
 			if (augmentActivate) {
 				Augments.getAugment(currentAugment).onActivateTick(this);

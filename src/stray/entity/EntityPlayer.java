@@ -6,6 +6,7 @@ import stray.augment.Augments;
 import stray.entity.types.Stunnable;
 import stray.entity.types.Weighted;
 import stray.util.AssetMap;
+import stray.util.DamageSource;
 import stray.util.Difficulty;
 import stray.util.Direction;
 import stray.util.MathHelper;
@@ -66,9 +67,9 @@ public class EntityPlayer extends EntityLiving implements Weighted, Stunnable {
 	}
 
 	@Override
-	public boolean damage(float dmg) {
+	public boolean damage(float dmg, DamageSource source) {
 		float originalhealth = health;
-		if (super.damage(dmg * Difficulty.get().get(world.main.getDifficulty()).damageMultiplier)) {
+		if (super.damage(dmg * Difficulty.get().get(world.main.getDifficulty()).damageMultiplier, source)) {
 			if (dmg > 0 && invincibility == invulnTime * Main.TICKS) {
 				world.renderer.onDamagePlayer(originalhealth);
 				if (health == 0) {
@@ -86,8 +87,8 @@ public class EntityPlayer extends EntityLiving implements Weighted, Stunnable {
 	private long lastBadHeal = System.currentTimeMillis();
 
 	@Override
-	public void heal(float amt) {
-		super.heal(amt);
+	public void heal(float amt, DamageSource source) {
+		super.heal(amt, source);
 		if (amt < 0) {
 			if (System.currentTimeMillis() - lastBadHeal >= 500) {
 				lastBadHeal = System.currentTimeMillis();

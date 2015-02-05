@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import stray.Main;
 import stray.entity.Entity;
 import stray.entity.EntityLiving;
+import stray.util.DamageSource;
 import stray.util.MathHelper;
 import stray.util.render.ElectricityRenderer;
 import stray.world.World;
@@ -20,7 +21,7 @@ public class BlockElectrode extends Block {
 	public void tickUpdate(World world, int x, int y) {
 		for (Entity e : world.entities) {
 			if (e instanceof EntityLiving) {
-				if (Block.entityIntersects(world, x, y, e)) ((EntityLiving) e).damage(1);
+				if (Block.entityIntersects(world, x, y, e)) ((EntityLiving) e).damage(1, DamageSource.electric);
 			}
 		}
 	}

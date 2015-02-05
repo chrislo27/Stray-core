@@ -566,6 +566,8 @@ public class Main extends Game implements Consumer {
 		manager.load("images/ui/damage/spikes.png", Texture.class);
 		manager.load("images/ui/damage/generic.png", Texture.class);
 		manager.load("images/ui/damage/fire.png", Texture.class);
+		manager.load("images/ui/damage/electric.png", Texture.class);
+		manager.load("images/ui/damage/theVoid.png", Texture.class);
 
 		// particle
 		manager.load(AssetMap.add("money", "images/particle/money.png"), Texture.class);

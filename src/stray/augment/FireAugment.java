@@ -2,6 +2,7 @@ package stray.augment;
 
 import stray.entity.EntityFlame;
 import stray.entity.EntityPlayer;
+import stray.util.DamageSource;
 import stray.util.Direction;
 import stray.world.World;
 
@@ -22,7 +23,7 @@ public class FireAugment extends Augment {
 		EntityPlayer player = world.getPlayer();
 
 		player.heal(-(DPS * Gdx.graphics.getDeltaTime())
-				+ -(Gdx.graphics.getDeltaTime() / EntityPlayer.SECONDS_TO_REGEN));
+				+ -(Gdx.graphics.getDeltaTime() / EntityPlayer.SECONDS_TO_REGEN), DamageSource.fire);
 
 	}
 
