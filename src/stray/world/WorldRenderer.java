@@ -340,6 +340,8 @@ public class WorldRenderer {
 				5, Main.convertY(starting + 135));
 		main.font.draw(batch, "voidDistance: " + String.format("%.3f", world.getVoidDistance()), 5,
 				Main.convertY(starting + 150));
+		main.font.draw(batch, "deaths: " + world.deaths.size, 5,
+				Main.convertY(starting + 165));
 
 	}
 

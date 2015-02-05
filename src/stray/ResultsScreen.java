@@ -3,70 +3,109 @@ package stray;
 import stray.ui.LevelSelectButton;
 import stray.ui.NextLevelButton;
 import stray.ui.RetryLevelButton;
+import stray.util.AssetMap;
+import stray.util.DamageSource;
 import stray.util.Utils;
+import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
 
 public class ResultsScreen extends Updateable {
 
 	public ResultsScreen(Main m) {
 		super(m);
-		
-		container.elements.add(new LevelSelectButton(Gdx.graphics.getWidth() / 2 - 24 - 8 - 48, Gdx.graphics.getHeight() / 4){
+
+		container.elements.add(new LevelSelectButton(Gdx.graphics.getWidth() / 2 - 24 - 8 - 48,
+				Gdx.graphics.getHeight() / 4) {
 
 			@Override
 			public boolean onLeftClick() {
 				main.setScreen(Main.LEVELSELECT);
-				
+
 				return true;
 			}
-			
+
 		});
-		
-		container.elements.add(new RetryLevelButton(Gdx.graphics.getWidth() / 2 - 24, Gdx.graphics.getHeight() / 4){
+
+		container.elements.add(new RetryLevelButton(Gdx.graphics.getWidth() / 2 - 24, Gdx.graphics
+				.getHeight() / 4) {
 
 			@Override
 			public boolean onLeftClick() {
 				Main.LEVELSELECT.goToLevel(levelname);
-				
+
 				return true;
 			}
-			
+
 		});
-		
-		container.elements.add(new NextLevelButton(Gdx.graphics.getWidth() / 2 - 24 + 8 + 48, Gdx.graphics.getHeight() / 4){
+
+		container.elements.add(new NextLevelButton(Gdx.graphics.getWidth() / 2 - 24 + 8 + 48,
+				Gdx.graphics.getHeight() / 4) {
 
 			@Override
 			public boolean onLeftClick() {
 				Main.LEVELSELECT.goToLevel(Math.round(Main.LEVELSELECT.wanted));
-				
+
 				return true;
 			}
-			
+
 		});
-		
+
 	}
 
 	private String levelfile = null;
 	private int levelname = 0;
 	private boolean voidPresent = false;
 	private int resultsPick = MathUtils.random(0, 3);
-	private int deaths = 0;
+	private Array<DamageSource> deaths = new Array<DamageSource>(1);
+	private Array<DeathIcon> icons = new Array<DeathIcon>(64);
 
-	public ResultsScreen setData(String levelf, int levelid, boolean voidChasing, int deaths) {
+	public ResultsScreen setData(String levelf, int levelid, boolean voidChasing,
+			Array<DamageSource> deaths) {
 		levelfile = levelf;
 		levelname = levelid;
 		voidPresent = voidChasing;
 		this.deaths = deaths;
-		
+		groupDeaths();
+
 		int old = resultsPick;
-		while(resultsPick == old){
+		while (resultsPick == old) {
 			resultsPick = MathUtils.random(0, 3);
 		}
-		
+
 		return this;
+	}
+
+	private void groupDeaths() {
+		icons.clear();
+		for (int i = 0; i < deaths.size; i++) {
+			int following = 0;
+			boolean added = false;
+
+			if (i + 1 < deaths.size) {
+				int cur = i + 1;
+				while (cur < deaths.size) {
+					if (deaths.get(cur) == deaths.get(i)) {
+						following++;
+					} else {
+						icons.add(new DeathIcon(deaths.get(i), 1 + following));
+						i += following;
+						added = true;
+						break;
+					}
+					cur++;
+				}
+			}
+
+			if (!added) {
+				icons.add(new DeathIcon(deaths.get(i), 1 + following));
+				i += following;
+			}
+		}
 	}
 
 	@Override
@@ -78,9 +117,8 @@ public class ResultsScreen extends Updateable {
 		if (levelfile != null) {
 			main.font.setColor(1, 1, 1, 1);
 			main.font.setScale(2);
-			main.drawCentered(
-					Levels.getLevelName(levelname),
-					Gdx.graphics.getWidth() / 2, Main.convertY(225));
+			main.drawCentered(Levels.getLevelName(levelname), Gdx.graphics.getWidth() / 2,
+					Main.convertY(225));
 			main.font.setScale(1);
 			main.drawCentered(
 					Translator.getMsg("menu.results.latesttime")
@@ -90,33 +128,46 @@ public class ResultsScreen extends Updateable {
 					Translator.getMsg("menu.results.besttime")
 							+ Utils.formatMs(main.progress.getLong(levelfile + "-latesttime")),
 					Gdx.graphics.getWidth() / 2, Main.convertY(300));
-			main.drawCentered(
-					Translator.getMsg("menu.results.deaths")
-							+ deaths,
+
+			main.drawCentered(Translator.getMsg("menu.results.deaths") + deaths.size,
 					Gdx.graphics.getWidth() / 2, Main.convertY(325));
-			
-			main.drawCentered(
-					Translator.getMsg("menu.results.verdict"),
-					Gdx.graphics.getWidth() / 2, Main.convertY(380));
-			if(voidPresent){
-				if(main.progress.getLong(levelfile + "-latesttime") <= Levels.instance().levels.get(levelname).bestTime){
-					main.drawCentered(
-							"\"" + Translator.getMsg("menu.results.good" + resultsPick) + "\"",
-							Gdx.graphics.getWidth() / 2, Main.convertY(400));
-				}else{
-					main.drawCentered(
-							"\"" + Translator.getMsg("menu.results.bad" + resultsPick) + "\"",
-							Gdx.graphics.getWidth() / 2, Main.convertY(400));
+
+			if (deaths.size > 0) {
+				renderDeaths(Gdx.graphics.getWidth() / 2 - ((icons.size / 2f) * 35),
+						Main.convertY(375));
+			}
+
+			main.drawCentered(Translator.getMsg("menu.results.verdict"),
+					Gdx.graphics.getWidth() / 2, Main.convertY(400));
+			if (voidPresent) {
+				if (main.progress.getLong(levelfile + "-latesttime") <= Levels.instance().levels
+						.get(levelname).bestTime) {
+					main.drawCentered("\"" + Translator.getMsg("menu.results.good" + resultsPick)
+							+ "\"", Gdx.graphics.getWidth() / 2, Main.convertY(415));
+				} else {
+					main.drawCentered("\"" + Translator.getMsg("menu.results.bad" + resultsPick)
+							+ "\"", Gdx.graphics.getWidth() / 2, Main.convertY(415));
 				}
-			}else{
-				main.drawCentered(
-						"\"" + Translator.getMsg("menu.results.good" + resultsPick) + "\"",
-						Gdx.graphics.getWidth() / 2, Main.convertY(400));
+			} else {
+				main.drawCentered("\"" + Translator.getMsg("menu.results.good" + resultsPick)
+						+ "\"", Gdx.graphics.getWidth() / 2, Main.convertY(415));
 			}
 		}
-		
+
 		container.render(main);
 		main.batch.end();
+	}
+
+	private void renderDeaths(float x, float y) {
+
+		for (int i = 0; i < icons.size; i++) {
+			main.batch.draw(main.manager.get("images/ui/damage/" + icons.get(i).source.name
+					+ ".png", Texture.class), x + (i * 35), y);
+			if (icons.get(i).count > 1) {
+				main.drawCentered("x" + icons.get(i).count, x + (i * 35) + 16.5f, y);
+			}
+		}
+
 	}
 
 	@Override
@@ -153,6 +204,17 @@ public class ResultsScreen extends Updateable {
 
 	@Override
 	public void dispose() {
+	}
+
+	public static class DeathIcon {
+
+		DamageSource source = DamageSource.yourMother;
+		int count = 1;
+
+		public DeathIcon(DamageSource dmg, int group) {
+			source = dmg;
+			count = group;
+		}
 	}
 
 }
