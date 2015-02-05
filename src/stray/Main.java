@@ -562,6 +562,10 @@ public class Main extends Game implements Consumer {
 		manager.load(AssetMap.add("guilevelselect", "images/ui/button/levelselect.png"), Texture.class);
 		manager.load(AssetMap.add("guinextlevel", "images/ui/button/nextlevel.png"), Texture.class);
 		manager.load(AssetMap.add("guiretry", "images/ui/button/retry.png"), Texture.class);
+		manager.load("images/ui/damage/yourMother.png", Texture.class);
+		manager.load("images/ui/damage/spikes.png", Texture.class);
+		manager.load("images/ui/damage/generic.png", Texture.class);
+		manager.load("images/ui/damage/fire.png", Texture.class);
 
 		// particle
 		manager.load(AssetMap.add("money", "images/particle/money.png"), Texture.class);
