@@ -32,6 +32,7 @@ public abstract class EntityLiving extends Entity {
 	public float maxhealth = 1;
 	public int invincibility = 0;
 	public final float invulnTime = 1.5f;
+	protected DamageSource lastDmg = DamageSource.generic;
 
 	public int stunTime = 0;
 	public int fireTime = 0;
@@ -224,10 +225,14 @@ public abstract class EntityLiving extends Entity {
 	 * @return false if cancelled
 	 */
 	public boolean damage(float dmg, DamageSource source) {
-		if (dmg <= 0 || health <= 0) return false;
-		if (dmg > 0 && invincibility > 0) return false;
+		if (dmg <= 0 || health <= 0 || invincibility > 0){
+			return false;
+		}
 		health = MathUtils.clamp(health - dmg, 0f, maxhealth);
-		if (dmg > 0) invincibility = Math.round(invulnTime * Main.TICKS);
+		lastDmg = source;
+		if (dmg > 0){
+			invincibility = Math.round(invulnTime * Main.TICKS);
+		}
 		return true;
 	}
 
@@ -276,6 +281,10 @@ public abstract class EntityLiving extends Entity {
 	@Override
 	public boolean isDead() {
 		return health <= 0;
+	}
+	
+	public DamageSource getLastDamageSource(){
+		return lastDmg;
 	}
 
 	@Override
