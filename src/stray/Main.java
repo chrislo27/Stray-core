@@ -689,6 +689,7 @@ public class Main extends Game implements Consumer {
 		Colors.put("DANGER", new Color(1, 0, 0, 1));
 		Colors.put("OBJECT", new Color(1, 217 / 255f, 0, 1));
 		Colors.put("VERB", new Color(1, 75 / 255f, 3 / 255f, 1));
+		Colors.put("KEY", new Color(0, 204 / 255f, 0, 1));
 	}
 
 	public Texture getCurrentShine() {
