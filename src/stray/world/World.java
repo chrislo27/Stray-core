@@ -193,16 +193,16 @@ public class World implements TileBasedMap {
 
 			if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 				getPlayer().jump();
-			} else if ((Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S))) {
+			} else if (Gdx.input.isKeyPressed(Keys.DOWN)) {
 
-			} else if ((Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W))) {
+			} else if (Gdx.input.isKeyJustPressed(Keys.UP)) {
 
 			}
 
-			if ((Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A))) {
+			if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 				getPlayer().moveLeft();
 
-			} else if ((Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D))) {
+			} else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
 				getPlayer().moveRight();
 
 			} else {
