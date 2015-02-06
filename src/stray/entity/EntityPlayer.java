@@ -130,6 +130,8 @@ public class EntityPlayer extends EntityLiving implements Weighted, Stunnable {
 	@Override
 	public void tickUpdate() {
 		super.tickUpdate();
+		
+		if(fireTime > 2) fireTime = 2;
 	}
 
 	@Override
