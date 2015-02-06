@@ -179,18 +179,7 @@ public class WorldRenderer {
 		}
 		
 		if (world.getPlayer().fireTime > 0) {
-			if(fireStart <= 0){
-				fireStart = System.currentTimeMillis();
-			}
-			float alpha = 1;
-			if(System.currentTimeMillis() - fireStart < 500){
-				alpha = (System.currentTimeMillis() - fireStart) / 500f;
-			}
-			if(world.getPlayer().fireTime <= Main.TICKS / 5f){
-				alpha = world.getPlayer().fireTime / (Main.TICKS / 5f);
-			}
-			
-			batch.setColor(1, 1, 1, alpha * 0.333333333f);
+			batch.setColor(1, 1, 1, 0.333333333f);
 			batch.draw(main.animations.get("fire-hud").getCurrentFrame(), 0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
 		}else{
 			if(fireStart != 0) fireStart = 0;
