@@ -29,6 +29,8 @@ public class Blocks {
 	private HashMap<String, Block> blocks;
 	private HashMap<Block, String> reverse;
 	
+	private HashMap<String, String> oldLookup;
+	
 	public static final Color RED = new Color(1, 0, 0, 1);
 	public static final Color GREEN = new Color(16 / 255f, 164 / 255f, 43 / 255f, 1);
 	public static final Color BLUE = new Color(0, 145 / 255f, 1, 1);
@@ -38,6 +40,8 @@ public class Blocks {
 	private void loadResources() {
 		blocks = new HashMap<String, Block>();
 		reverse = new HashMap<Block, String>();
+		
+		oldLookup = new HashMap<String, String>();
 
 		put("space", new BlockOuterSpace("images/blocks/old/space/space").hasVariants(8));
 		put("wall", new Block("images/blocks/old/dungeonwall/wall").useConTextures().solidify());
@@ -98,6 +102,7 @@ public class Blocks {
 
 	public Block getBlock(String key) {
 		if (key == null) return defaultBlock();
+		if(oldLookup.get(key) != null) return blocks.get(oldLookup.get(key));
 		return blocks.get(key);
 	}
 
