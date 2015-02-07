@@ -449,18 +449,17 @@ public abstract class Entity implements EntityMover, Sizeable {
 
 	public void accelerate(float x, float y, boolean limitSpeed) {
 		if (x > 0) {
-			velox += (x - (world.drag / Gdx.graphics.getDeltaTime())) * Math.max(World.tilepartx, Math.abs(getLowestDrag()));
-			
+			velox += (x + (world.drag / Gdx.graphics.getDeltaTime())) * Math.max(World.tilepartx, Math.abs(getLowestDrag()));
 			if (limitSpeed) if (velox > maxspeed) velox = maxspeed;
 		} else if (x < 0) {
-			velox += (x + (world.drag / Gdx.graphics.getDeltaTime())) * Math.max(World.tilepartx, Math.abs(getLowestDrag()));
+			velox += (x - (world.drag / Gdx.graphics.getDeltaTime())) * Math.max(World.tilepartx, Math.abs(getLowestDrag()));
 			if (limitSpeed) if (velox < -maxspeed) velox = -maxspeed;
 		}
 		if (y > 0) {
-			veloy += y - (world.drag / Gdx.graphics.getDeltaTime());
+			veloy += y + (world.drag / Gdx.graphics.getDeltaTime());
 			//if (dragcalc) if (veloy > maxspeed) veloy = maxspeed;
 		} else if (y < 0) {
-			veloy += y + (world.drag / Gdx.graphics.getDeltaTime());
+			veloy += y - (world.drag / Gdx.graphics.getDeltaTime());
 			//if (dragcalc) if (veloy < -maxspeed) veloy = -maxspeed;
 		}
 
