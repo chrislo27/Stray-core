@@ -33,7 +33,7 @@ public class EntityPlayer extends EntityLiving implements Weighted, Stunnable {
 		sizey = 1f - (World.tileparty * 3);
 		jump = MathHelper.getJumpVelo(world.gravity, 2.5f);
 		this.maxspeed = 5f;
-		this.accspeed = this.maxspeed - 0.5f;
+		this.accspeed = maxspeed * 5f;
 		hasEntityCollision = true;
 		maxhealth = 1;
 		health = maxhealth;

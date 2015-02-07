@@ -449,17 +449,17 @@ public abstract class Entity implements EntityMover, Sizeable {
 
 	public void accelerate(float x, float y, boolean limitSpeed) {
 		if (x > 0) {
-			velox += (x + (world.drag / Gdx.graphics.getDeltaTime())) * Math.max(World.tilepartx, Math.abs(getLowestDrag()));
+			velox += (x + (world.drag * Gdx.graphics.getDeltaTime())) * Math.max(World.tilepartx, Math.abs(getLowestDrag()));
 			if (limitSpeed) if (velox > maxspeed) velox = maxspeed;
 		} else if (x < 0) {
-			velox += (x - (world.drag / Gdx.graphics.getDeltaTime())) * Math.max(World.tilepartx, Math.abs(getLowestDrag()));
+			velox += (x - (world.drag * Gdx.graphics.getDeltaTime())) * Math.max(World.tilepartx, Math.abs(getLowestDrag()));
 			if (limitSpeed) if (velox < -maxspeed) velox = -maxspeed;
 		}
 		if (y > 0) {
-			veloy += y + (world.drag / Gdx.graphics.getDeltaTime());
+			veloy += y + (world.drag * Gdx.graphics.getDeltaTime());
 			//if (dragcalc) if (veloy > maxspeed) veloy = maxspeed;
 		} else if (y < 0) {
-			veloy += y - (world.drag / Gdx.graphics.getDeltaTime());
+			veloy += y - (world.drag * Gdx.graphics.getDeltaTime());
 			//if (dragcalc) if (veloy < -maxspeed) veloy = -maxspeed;
 		}
 
@@ -471,25 +471,25 @@ public abstract class Entity implements EntityMover, Sizeable {
 
 	public void moveUp() {
 		if (getBlockCollidingUp() == null && veloy > -maxspeed) {
-			accelerate(0, -accspeed / Gdx.graphics.getDeltaTime(), true);
+			accelerate(0, -accspeed * Gdx.graphics.getDeltaTime(), true);
 		}
 	}
 
 	public void moveDown() {
 		if (getBlockCollidingDown() == null && veloy < maxspeed) {
-			accelerate(0, accspeed / Gdx.graphics.getDeltaTime(), true);
+			accelerate(0, accspeed * Gdx.graphics.getDeltaTime(), true);
 		}
 	}
 
 	public void moveLeft() {
 		if (getBlockCollidingLeft() == null && velox > -maxspeed) {
-			accelerate(-accspeed / Gdx.graphics.getDeltaTime(), 0, true);
+			accelerate(-accspeed * Gdx.graphics.getDeltaTime(), 0, true);
 		}
 	}
 
 	public void moveRight() {
 		if (getBlockCollidingRight() == null && velox < maxspeed) {
-			accelerate(accspeed / Gdx.graphics.getDeltaTime(), 0, true);
+			accelerate(accspeed * Gdx.graphics.getDeltaTime(), 0, true);
 		}
 	}
 
