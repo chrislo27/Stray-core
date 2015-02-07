@@ -17,7 +17,7 @@ public class Particle implements Poolable {
 	public float lifetime = -1;
 	float prelife = 0;
 	boolean destroyOnBlock = false;
-	
+
 	boolean clockwise = true;
 	float rotspeed = 0;
 
@@ -84,8 +84,8 @@ public class Particle implements Poolable {
 		destroyOnBlock = b;
 		return this;
 	}
-	
-	public Particle setRotation(float seconds, boolean clockwise){
+
+	public Particle setRotation(float seconds, boolean clockwise) {
 		rotspeed = seconds;
 		this.clockwise = clockwise;
 		return this;
@@ -118,36 +118,26 @@ public class Particle implements Poolable {
 							- world.camera.camerax,
 							Main.convertY(y * World.tilesizey - world.camera.cameray));
 					main.font.setColor(Color.WHITE);
-				} else if (texture.startsWith("real-")) {
-					Texture t = main.manager.get(texture.substring(5), Texture.class);
+				} else {
+					Texture t;
+					if (texture.startsWith("real-")) {
+						t = main.manager.get(texture.substring(5), Texture.class);
+					} else {
+						t = main.manager.get(AssetMap.get(texture), Texture.class);
+					}
+
 					main.batch.setColor(tintr, tintg, tintb,
 							(lifetime <= 0.1f ? (Math.min(lifetime * 10f, tinta)) : tinta));
-					if(rotspeed > 0){
-						Utils.drawRotated(main.batch, t, x * World.tilesizex - (t.getWidth() / 2) - world.camera.camerax,
-							Main.convertY(y * World.tilesizey + (t.getHeight() / 2)
-									- world.camera.cameray), t.getWidth(), t.getHeight(), t.getWidth() / 2f, t.getHeight() / 2f, MathHelper.getNumberFromTime(rotspeed) * 360, clockwise);
-					}else{
-						main.batch.draw(
+					if (rotspeed > 0) {
+						Utils.drawRotated(
+								main.batch,
 								t,
 								x * World.tilesizex - (t.getWidth() / 2) - world.camera.camerax,
 								Main.convertY(y * World.tilesizey + (t.getHeight() / 2)
-										- world.camera.cameray));
-					}
-					main.batch.setColor(Color.WHITE);
-				} else {
-					Texture t = main.manager.get(AssetMap.get(texture), Texture.class);
-					main.batch.setColor(tintr, tintg, tintb,
-							(lifetime <= 0.1f ? (Math.min(lifetime * 10f, tinta)) : tinta));
-					main.batch.draw(
-							t,
-							x * World.tilesizex - (t.getWidth() / 2) - world.camera.camerax,
-							Main.convertY(y * World.tilesizey + (t.getHeight() / 2)
-									- world.camera.cameray));
-					if(rotspeed > 0){
-						Utils.drawRotated(main.batch, t, x * World.tilesizex - (t.getWidth() / 2) - world.camera.camerax,
-								Main.convertY(y * World.tilesizey + (t.getHeight() / 2)
-										- world.camera.cameray), t.getWidth(), t.getWidth() / 2f, t.getHeight() / 2f, t.getHeight(), MathHelper.getNumberFromTime(rotspeed) * 360, clockwise);
-					}else{
+										- world.camera.cameray), t.getWidth() / 2f,
+								t.getHeight() / 2f, MathHelper.getNumberFromTime(rotspeed) * 360,
+								clockwise);
+					} else {
 						main.batch.draw(
 								t,
 								x * World.tilesizex - (t.getWidth() / 2) - world.camera.camerax,
@@ -168,8 +158,8 @@ public class Particle implements Poolable {
 
 		if (destroyOnBlock) {
 			if (world.getBlock((int) x, (int) y).isSolid(world, (int) x, (int) y)) if (MathHelper
-					.intersects((int) x, (int) y, 1, 1, x - (4 * World.tilepartx), y - (4 * World.tileparty), 8 * World.tilepartx,
-							8 * World.tileparty)) {
+					.intersects((int) x, (int) y, 1, 1, x - (4 * World.tilepartx), y
+							- (4 * World.tileparty), 8 * World.tilepartx, 8 * World.tileparty)) {
 				lifetime = -1;
 				prelife = -1;
 			}
