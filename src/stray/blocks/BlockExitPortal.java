@@ -61,6 +61,11 @@ public class BlockExitPortal extends Block {
 		}
 		
 	}
+	
+	@Override
+	public int getRenderLevel(World world, int x, int y){
+		return 1;
+	}
 
 	private void save(World world) {
 		long lasttime = System.currentTimeMillis() - world.msTime;
