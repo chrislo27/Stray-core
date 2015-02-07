@@ -31,7 +31,7 @@ public class BlockFluid extends Block {
 	}
 	
 	@Override
-	public int getRenderLevel(World world, int x, int y){
+	public int getRenderLevel(){
 		return 1;
 	}
 

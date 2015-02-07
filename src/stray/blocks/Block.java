@@ -49,7 +49,7 @@ public class Block {
 		return 1;
 	}
 	
-	public int getRenderLevel(World world, int x, int y){
+	public int getRenderLevel(){
 		return 0;
 	}
 

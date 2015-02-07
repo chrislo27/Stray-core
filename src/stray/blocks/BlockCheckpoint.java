@@ -11,6 +11,11 @@ public class BlockCheckpoint extends Block {
 	public BlockCheckpoint(String path) {
 		super(path);
 	}
+	
+	@Override
+	public int getRenderLevel(){
+		return 1;
+	}
 
 	@Override
 	public void tickUpdate(World world, int x, int y) {

@@ -59,7 +59,7 @@ public class WorldRenderer {
 		for (int level = Block.MIN_RENDER_LEVEL; level < Block.MAX_RENDER_LEVEL; level++) {
 			for (int x = prex; x < postx; x++) {
 				for (int y = prey; y < posty; y++) {
-					if (MathUtils.clamp(world.getBlock(x, y).getRenderLevel(world, x, y),
+					if (MathUtils.clamp(world.getBlock(x, y).getRenderLevel(),
 							Block.MIN_RENDER_LEVEL, Block.MAX_RENDER_LEVEL) != level) continue;
 					if (world.getBlock(x, y) != null) {
 						world.getBlock(x, y).render(world, x, y);

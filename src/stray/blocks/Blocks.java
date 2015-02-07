@@ -83,8 +83,13 @@ public class Blocks {
 		put("electrode", new BlockElectrode("images/blocks/electrode/electrode"));
 		put("fire", new BlockFire(null).setAnimation("fire"));
 		
-		put("checkpointclaimed", new Block("images/block/checkpoint/checkpointclaimed"));
-		put("checkpointunclaimed", new BlockCheckpoint("images/block/checkpoint/checkpointnew"));
+		put("checkpointclaimed", new Block("images/blocks/checkpoint/checkpointclaimed"){
+			@Override
+			public int getRenderLevel(){
+				return 1;
+			}
+		});
+		put("checkpointunclaimed", new BlockCheckpoint("images/blocks/checkpoint/checkpointnew"));
 		
 		// spawners
 		put("spawnerplayer", new BlockPlayerSpawner("images/entity/player/player"));
