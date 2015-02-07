@@ -19,6 +19,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Block {
 
+	public static final int MIN_RENDER_LEVEL = 0;
+	public static final int MAX_RENDER_LEVEL = 2;
+	
 	/**
 	 * 
 	 * @param path
@@ -43,6 +46,10 @@ public class Block {
 
 	public float getDragCoefficient(World world, int x, int y) {
 		return 1;
+	}
+	
+	public int getRenderLevel(World world, int x, int y){
+		return 0;
 	}
 
 	public Block solidify() {

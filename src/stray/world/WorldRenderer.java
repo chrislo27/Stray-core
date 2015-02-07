@@ -4,6 +4,7 @@ import stray.Main;
 import stray.Settings;
 import stray.Translator;
 import stray.augment.Augments;
+import stray.blocks.Block;
 import stray.blocks.Blocks;
 import stray.entity.Entity;
 import stray.util.AssetMap;
@@ -55,28 +56,32 @@ public class WorldRenderer {
 				+ (Settings.DEFAULT_HEIGHT / World.tilesizex), 0f, maxy);
 
 		main.font.setColor(Color.WHITE);
-		for (int x = prex; x < postx; x++) {
-			for (int y = prey; y < posty; y++) {
-				if (world.getBlock(x, y) != null) {
-					world.getBlock(x, y).render(world, x, y);
-				} else {
-					Blocks.defaultBlock().render(world, x, y);
-				}
-				if (showGrid) {
-					main.batch.setColor(1, 1, 1, 0.5f);
-					main.fillRect(
-							x * world.tilesizex - world.camera.camerax,
-							Main.convertY((y * world.tilesizey - world.camera.cameray)
-									+ World.tilesizey), 1, World.tilesizey);
-					main.fillRect(
-							x * world.tilesizex - world.camera.camerax,
-							Main.convertY((y * world.tilesizey - world.camera.cameray)
-									+ World.tilesizey), World.tilesizex, 1);
-					main.batch.setColor(1, 1, 1, 1);
+		for (int level = Block.MIN_RENDER_LEVEL; level < Block.MAX_RENDER_LEVEL; level++) {
+			for (int x = prex; x < postx; x++) {
+				for (int y = prey; y < posty; y++) {
+					if (MathUtils.clamp(world.getBlock(x, y).getRenderLevel(world, x, y),
+							Block.MIN_RENDER_LEVEL, Block.MAX_RENDER_LEVEL) != level) continue;
+					if (world.getBlock(x, y) != null) {
+						world.getBlock(x, y).render(world, x, y);
+					} else {
+						Blocks.defaultBlock().render(world, x, y);
+					}
+					if (showGrid) {
+						main.batch.setColor(1, 1, 1, 0.5f);
+						main.fillRect(
+								x * world.tilesizex - world.camera.camerax,
+								Main.convertY((y * world.tilesizey - world.camera.cameray)
+										+ World.tilesizey), 1, World.tilesizey);
+						main.fillRect(
+								x * world.tilesizex - world.camera.camerax,
+								Main.convertY((y * world.tilesizey - world.camera.cameray)
+										+ World.tilesizey), World.tilesizex, 1);
+						main.batch.setColor(1, 1, 1, 1);
+					}
 				}
 			}
+			batch.flush();
 		}
-		batch.flush();
 
 	}
 
@@ -139,15 +144,17 @@ public class WorldRenderer {
 
 		for (Entity e : world.entities) {
 			e.render(Gdx.graphics.getDeltaTime());
-//			if (Settings.debug) {
-//				batch.setColor(Color.MAGENTA.r, Color.MAGENTA.g, Color.MAGENTA.b, 0.1f);
-//				main.fillRect(
-//						(e.x * World.tilesizex) - world.camera.camerax,
-//						Main.convertY(((e.y * World.tilesizey) + (e.sizey * World.tilesizey))
-//								- world.camera.cameray), e.sizex * World.tilesizex, e.sizey
-//								* World.tilesizey);
-//				batch.setColor(Color.WHITE);
-//			}
+			// if (Settings.debug) {
+			// batch.setColor(Color.MAGENTA.r, Color.MAGENTA.g, Color.MAGENTA.b,
+			// 0.1f);
+			// main.fillRect(
+			// (e.x * World.tilesizex) - world.camera.camerax,
+			// Main.convertY(((e.y * World.tilesizey) + (e.sizey *
+			// World.tilesizey))
+			// - world.camera.cameray), e.sizex * World.tilesizex, e.sizey
+			// * World.tilesizey);
+			// batch.setColor(Color.WHITE);
+			// }
 		}
 		batch.flush();
 	}
@@ -157,7 +164,7 @@ public class WorldRenderer {
 	}
 
 	private long fireStart = 0;
-	
+
 	public void renderUi() {
 		if (world.getPlayer() == null) return;
 
@@ -177,12 +184,13 @@ public class WorldRenderer {
 					Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			batch.setColor(Color.WHITE);
 		}
-		
+
 		if (world.getPlayer().fireTime > 0) {
 			batch.setColor(1, 1, 1, 0.333333333f);
-			batch.draw(main.animations.get("fire-hud").getCurrentFrame(), 0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
-		}else{
-			if(fireStart != 0) fireStart = 0;
+			batch.draw(main.animations.get("fire-hud").getCurrentFrame(), 0,
+					Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
+		} else {
+			if (fireStart != 0) fireStart = 0;
 		}
 
 		if (detection == null) {
@@ -329,8 +337,7 @@ public class WorldRenderer {
 				5, Main.convertY(starting + 135));
 		main.font.draw(batch, "voidDistance: " + String.format("%.3f", world.getVoidDistance()), 5,
 				Main.convertY(starting + 150));
-		main.font.draw(batch, "deaths: " + world.deaths.size, 5,
-				Main.convertY(starting + 165));
+		main.font.draw(batch, "deaths: " + world.deaths.size, 5, Main.convertY(starting + 165));
 
 	}
 
