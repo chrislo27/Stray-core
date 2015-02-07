@@ -53,6 +53,7 @@ public class Blocks {
 				}
 			}
 		}.hasVariants(4));
+		put("ice", new BlockIce("images/blocks/ice/ice").solidify().useConTextures());
 		
 		put("switchred", new BlockSwitch(RED, "red").solidify());
 		put("switchgreen", new BlockSwitch(GREEN, "green").solidify());

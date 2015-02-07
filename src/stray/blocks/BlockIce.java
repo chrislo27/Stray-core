@@ -10,7 +10,7 @@ public class BlockIce extends Block{
 	}
 
 	public float getDragCoefficient(World world, int x, int y) {
-		return 0.5f;
+		return 0.175f;
 	}
 	
 }
