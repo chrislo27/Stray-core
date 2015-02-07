@@ -362,7 +362,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 		if ((posy + boundy) % World.tilesizey != 0) return 1;
 		if ((y + sizey) >= world.sizey) return 1;
 
-		float highest = 1;
+		float highest = Float.MIN_NORMAL;
 
 		for (int i = 0; i < boundx; i++) {
 			if (world.getBlock((posx + i) / World.tilesizex, ((posy + boundy) / World.tilesizey))
@@ -449,10 +449,10 @@ public abstract class Entity implements EntityMover, Sizeable {
 
 	public void accelerate(float x, float y, boolean limitSpeed) {
 		if (x > 0) {
-			velox += (x + (world.drag * Gdx.graphics.getDeltaTime())) * Math.max(World.tilepartx, Math.abs(getLowestDrag()));
+			velox += (x + (world.drag * Gdx.graphics.getDeltaTime())) * Math.max(World.tilepartx, Math.abs(getHighestDrag()));
 			if (limitSpeed) if (velox > maxspeed) velox = maxspeed;
 		} else if (x < 0) {
-			velox += (x - (world.drag * Gdx.graphics.getDeltaTime())) * Math.max(World.tilepartx, Math.abs(getLowestDrag()));
+			velox += (x - (world.drag * Gdx.graphics.getDeltaTime())) * Math.max(World.tilepartx, Math.abs(getHighestDrag()));
 			if (limitSpeed) if (velox < -maxspeed) velox = -maxspeed;
 		}
 		if (y > 0) {
