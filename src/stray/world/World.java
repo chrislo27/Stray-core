@@ -352,8 +352,6 @@ public class World implements TileBasedMap {
 		batch.flush();
 
 		renderer.renderBlocks();
-		// entities
-		renderer.renderEntities();
 
 		// particles
 		if (particles.size > 0) {

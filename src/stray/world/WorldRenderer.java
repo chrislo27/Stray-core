@@ -81,6 +81,9 @@ public class WorldRenderer {
 				}
 			}
 			batch.flush();
+			if(level == Block.ENTITY_RENDER_LEVEL){
+				renderEntities();
+			}
 		}
 
 	}
@@ -140,7 +143,7 @@ public class WorldRenderer {
 		}
 	}
 
-	public void renderEntities() {
+	private void renderEntities() {
 
 		for (Entity e : world.entities) {
 			e.render(Gdx.graphics.getDeltaTime());

@@ -21,6 +21,7 @@ public class Block {
 
 	public static final int MIN_RENDER_LEVEL = 0;
 	public static final int MAX_RENDER_LEVEL = 2;
+	public static final int ENTITY_RENDER_LEVEL = 0;
 	
 	/**
 	 * 
