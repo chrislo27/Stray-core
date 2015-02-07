@@ -39,7 +39,7 @@ public class Blocks {
 		blocks = new HashMap<String, Block>();
 		reverse = new HashMap<Block, String>();
 
-		put("space", new BlockSpace("images/blocks/old/space/space").hasVariants(8));
+		put("space", new BlockOuterSpace("images/blocks/old/space/space").hasVariants(8));
 		put("wall", new Block("images/blocks/old/dungeonwall/wall").useConTextures().solidify());
 		put("empty", new BlockEmpty());
 		put("spike", new BlockSpike("images/blocks/spike").solidify());

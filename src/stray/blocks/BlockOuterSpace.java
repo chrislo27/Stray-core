@@ -6,9 +6,9 @@ import stray.world.World;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public class BlockSpace extends Block {
+public class BlockOuterSpace extends Block {
 
-	public BlockSpace(String path) {
+	public BlockOuterSpace(String path) {
 		super(path);
 	}
 
