@@ -673,6 +673,7 @@ public class Main extends Game implements Consumer {
 				.setRegionTile(128, 128).setVertical(false));
 		animations.put("fire-hud", new SynchedAnimation(0.05f, 8, "images/ui/fire-hudnomiddle.png", true)
 				.setRegionTile(864, 468).setVertical(false));
+		animations.put("zacharie-spin", new SynchedAnimation(0.05f, 6, "images/zachariespinning.png", true).setRegionTile(500, 357).setVertical(false));
 
 		// load animations
 		Iterator it = animations.entrySet().iterator();
