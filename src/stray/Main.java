@@ -606,6 +606,7 @@ public class Main extends Game implements Consumer {
 		manager.load(AssetMap.add("smallasteroid", "images/entity/smallasteroid.png"),
 				Texture.class);
 		manager.load(AssetMap.add("entityzaborinox", "images/entity/zaborinox.png"), Texture.class);
+		manager.load(AssetMap.add("entitywhale", "images/entity/whale.png"), Texture.class);
 
 		// misc
 		manager.load(AssetMap.add("vignette", "images/ui/vignette.png"), Texture.class);
