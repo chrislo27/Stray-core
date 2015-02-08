@@ -106,6 +106,8 @@ public class World implements TileBasedMap {
 	public float exitRotation = 0;
 
 	public Array<DamageSource> deaths = new Array<DamageSource>(32);
+	
+	private EntityPlayer thePlayer = null;
 
 	public World(Main main) {
 		this(main, 32, 24, Main.getRandom().nextLong());
@@ -321,13 +323,15 @@ public class World implements TileBasedMap {
 	}
 
 	public EntityPlayer getPlayer() {
-		for (int i = 0; i < entities.size; i++) {
-			if (entities.get(i) instanceof EntityPlayer) {
-				return (EntityPlayer) entities.get(i);
+		if(thePlayer == null){
+			for (int i = 0; i < entities.size; i++) {
+				if (entities.get(i) instanceof EntityPlayer) {
+					thePlayer = (EntityPlayer) entities.get(i);
+				}
 			}
 		}
 
-		return null;
+		return thePlayer;
 	}
 
 	private void centerCamera() {
