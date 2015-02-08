@@ -356,10 +356,21 @@ public class World implements TileBasedMap {
 		main.camera.update();
 	}
 
-	private boolean isPlayerVisible() {
-		return (((getPlayer().y + getPlayer().sizey) * World.tilesizey) <= camera.cameray
+	protected boolean isPlayerVisible() {
+		EntityPlayer e = getPlayer();
+		return (((e.y + e.sizey) * World.tilesizey) <= camera.cameray
 				+ Settings.DEFAULT_HEIGHT)
-				&& ((getPlayer().y * World.tilesizey) >= camera.cameray);
+				&& ((e.y * World.tilesizey) >= camera.cameray);
+	}
+	
+	protected boolean isEntityOnScreen(Entity e){
+		if(e.x * World.tilesizex > camera.camerax + Settings.DEFAULT_WIDTH) return false;
+		if((e.x + e.sizex) * World.tilesizex < camera.camerax) return false;
+		if((((e.y) * World.tilesizey) > camera.cameray
+				+ Settings.DEFAULT_HEIGHT)) return false;
+		if((((e.y + e.sizey) * World.tilesizey) < camera.cameray)) return false;
+		
+		return true;
 	}
 
 	public void renderOnly() {
