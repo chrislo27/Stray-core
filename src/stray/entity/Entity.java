@@ -35,11 +35,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 	public boolean canCollideItself = true;
 	public Array<Class<? extends Entity>> ignoreCollision = new Array();
 
-	/**
-	 * no drag applied
-	 */
-	public boolean nodrag = false;
-	
+	public float dragCoefficient = 1;
 	public float gravityCoefficient = 1;
 
 	public float velox = 0; // speed blocks/sec
@@ -108,20 +104,18 @@ public abstract class Entity implements EntityMover, Sizeable {
 	 */
 	public void tickUpdate() {
 
-		if (!nodrag) {
-			float drag = world.drag * getLowestDrag();
-			if (velox > 0) {
-				velox -= drag / Main.TICKS;
-				if (velox < 0) velox = 0;
-			} else if (velox < 0) {
-				velox += drag / Main.TICKS;
-				if (velox > 0) velox = 0;
-			}
+		float drag = world.drag * getLowestDrag() * dragCoefficient;
+		if (velox > 0) {
+			velox -= drag / Main.TICKS;
+			if (velox < 0) velox = 0;
+		} else if (velox < 0) {
+			velox += drag / Main.TICKS;
+			if (velox > 0) velox = 0;
 		}
-			if (getBlockCollidingDown() == null) {
-				veloy += (world.gravity / Main.TICKS) * gravityCoefficient;
-			}
-		
+
+		if (getBlockCollidingDown() == null) {
+			veloy += (world.gravity / Main.TICKS) * gravityCoefficient;
+		}
 
 		if (veloy != 0) {
 			int velo = (int) (veloy / Main.TICKS * World.tilesizey);
@@ -324,8 +318,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 	}
 
 	public float getLowestDrag() {
-		if(getBlockCollidingDown() == null) return 1;
-		
+		if (getBlockCollidingDown() == null) return 1;
+
 		int posx = (int) (x * World.tilesizex);
 		int posy = (int) (y * World.tilesizey);
 		int boundx = (int) (sizex * World.tilesizex);
@@ -356,8 +350,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 	}
 
 	public float getHighestDrag() {
-		if(getBlockCollidingDown() == null) return 1;
-		
+		if (getBlockCollidingDown() == null) return 1;
+
 		int posx = (int) (x * World.tilesizex);
 		int posy = (int) (y * World.tilesizey);
 		int boundx = (int) (sizex * World.tilesizex);
@@ -445,26 +439,28 @@ public abstract class Entity implements EntityMover, Sizeable {
 
 	public Color getColor() {
 		if (tint == null) {
-			tint = new Color(Main.getRandom().nextFloat(), Main.getRandom().nextFloat(),
-					Main.getRandom().nextFloat(), 1);
+			tint = new Color(Main.getRandom().nextFloat(), Main.getRandom().nextFloat(), Main
+					.getRandom().nextFloat(), 1);
 		}
 		return tint;
 	}
 
 	public void accelerate(float x, float y, boolean limitSpeed) {
 		if (x > 0) {
-			velox += (x + (world.drag * Gdx.graphics.getDeltaTime())) * Math.max(World.tilepartx, Math.abs(getHighestDrag()));
+			velox += (x + (world.drag * Gdx.graphics.getDeltaTime()))
+					* Math.max(World.tilepartx, Math.abs(getHighestDrag()));
 			if (limitSpeed) if (velox > maxspeed) velox = maxspeed;
 		} else if (x < 0) {
-			velox += (x - (world.drag * Gdx.graphics.getDeltaTime())) * Math.max(World.tilepartx, Math.abs(getHighestDrag()));
+			velox += (x - (world.drag * Gdx.graphics.getDeltaTime()))
+					* Math.max(World.tilepartx, Math.abs(getHighestDrag()));
 			if (limitSpeed) if (velox < -maxspeed) velox = -maxspeed;
 		}
 		if (y > 0) {
 			veloy += y + (world.drag * Gdx.graphics.getDeltaTime());
-			//if (dragcalc) if (veloy > maxspeed) veloy = maxspeed;
+			// if (dragcalc) if (veloy > maxspeed) veloy = maxspeed;
 		} else if (y < 0) {
 			veloy += y - (world.drag * Gdx.graphics.getDeltaTime());
-			//if (dragcalc) if (veloy < -maxspeed) veloy = -maxspeed;
+			// if (dragcalc) if (veloy < -maxspeed) veloy = -maxspeed;
 		}
 
 	}

@@ -15,6 +15,7 @@ public class EntityFlame extends Entity {
 	@Override
 	public void prepare() {
 		gravityCoefficient = -0.1f;
+		dragCoefficient = 0.1f;
 	}
 
 	@Override
