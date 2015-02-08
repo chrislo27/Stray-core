@@ -27,7 +27,7 @@ public class EntityWhale extends EntityLiving implements Enemy{
 		sizey = 5f;
 		this.maxspeed = 2f;
 		this.accspeed = maxspeed * maxspeed;
-		this.hasEntityCollision = false;
+		this.hasEntityCollision = true;
 		gravityCoefficient = 0;
 	}
 
