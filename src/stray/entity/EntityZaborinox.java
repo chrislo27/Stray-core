@@ -27,7 +27,7 @@ public class EntityZaborinox extends EntityLiving implements Enemy, Weighted, St
 		sizex = 1f - (World.tilepartx * 3);
 		sizey = 1f - (World.tileparty * 3);
 		this.maxspeed = 5f;
-		this.accspeed = this.maxspeed - 0.1f;
+		this.accspeed = maxspeed * maxspeed;
 		this.hasEntityCollision = true;
 	}
 
