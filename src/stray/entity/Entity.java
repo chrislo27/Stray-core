@@ -76,7 +76,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 	 */
 	public abstract void renderSelf(float x, float y);
 
-	protected void renderTextureCentred(Texture tex, float width, float height) {
+	protected void renderTextureCentered(Texture tex, float width, float height) {
 		float rx = ((width + (sizex / 2f)) * World.tilesizex) - world.camera.camerax;
 		float ry = ((height + (sizey / 2f)) * World.tilesizey) - world.camera.cameray;
 		rx -= width / 2f;
@@ -84,8 +84,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 		world.batch.draw(tex, rx, Main.convertY(ry + (sizey * World.tilesizey)));
 	}
 
-	protected void renderTextureCentred(Texture tex) {
-		renderTextureCentred(tex, tex.getWidth(), tex.getHeight());
+	protected void renderTextureCentered(Texture tex) {
+		renderTextureCentered(tex, tex.getWidth(), tex.getHeight());
 	}
 
 	/**
