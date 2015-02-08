@@ -122,9 +122,8 @@ public abstract class EntityLiving extends Entity {
 
 		if (fireTime > 0 && !(this instanceof Inflammable)) {
 			world.batch.setColor(1, 1, 1, 0.9f);
-			world.batch.draw(world.main.animations.get("fire").getCurrentFrame(), (x * World.tilesizex)
-					- world.camera.camerax, Main.convertY(y * World.tilesizey
-					- world.camera.cameray) - (sizey * World.tilesizey), sizex * World.tilesizex, sizey * World.tilesizey);
+			world.batch.draw(world.main.animations.get("fire").getCurrentFrame(), (x * World.tilesizex) - world.camera.camerax,
+					Main.convertY((y * World.tilesizey) - world.camera.cameray) - (sizey * World.tilesizex), sizex * World.tilesizex, sizey * World.tilesizey);
 			world.batch.setColor(1, 1, 1, 1);
 		}
 	}
@@ -140,8 +139,11 @@ public abstract class EntityLiving extends Entity {
 		world.batch.setColor(1, 1, 1,
 				(invincibility > 0 ? (System.currentTimeMillis() / 100 % 2 == 0 ? 0.25f : 0.5f)
 						: world.batch.getColor().a));
-		world.batch.draw(sprite, x - (sprite.getWidth() - (sizex * World.tilesizex)) / 2, y
-				- World.tilesizey + (sprite.getHeight() - (sizey * World.tilesizey)) / 2,
+//		world.batch.draw(sprite, x - (sprite.getWidth() - (sizex * World.tilesizex)) / 2, y
+//				- World.tilesizey + (sprite.getHeight() - (sizey * World.tilesizey)) / 2,
+//				sprite.getWidth(), sprite.getHeight(), 0, 0, sprite.getWidth(), sprite.getHeight(),
+//				(facing != Direction.RIGHT), false);
+		world.batch.draw(sprite, x, y - sizey * World.tilesizey,
 				sprite.getWidth(), sprite.getHeight(), 0, 0, sprite.getWidth(), sprite.getHeight(),
 				(facing != Direction.RIGHT), false);
 		world.batch.setColor(1, 1, 1, 1);
