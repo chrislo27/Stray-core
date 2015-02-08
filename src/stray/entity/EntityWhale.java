@@ -17,7 +17,7 @@ public class EntityWhale extends EntityLiving implements Enemy{
 
 	@Override
 	public float getDamageDealt() {
-		return 0;
+		return 0.25f;
 	}
 
 	@Override
