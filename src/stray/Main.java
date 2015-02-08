@@ -20,8 +20,8 @@ import stray.achievements.Achievement;
 import stray.achievements.Achievements;
 import stray.achievements.Appearance;
 import stray.achievements.CompletedAchievements;
+import stray.animation.Animation;
 import stray.animation.LoopingAnimation;
-import stray.augment.Augments;
 import stray.blocks.Blocks;
 import stray.conversation.Conversation;
 import stray.conversation.Conversations;
@@ -134,7 +134,7 @@ public class Main extends Game implements Consumer {
 	public ShaderProgram invertshader;
 	public ShaderProgram swizzleshader;
 
-	public HashMap<String, LoopingAnimation> animations = new HashMap<String, LoopingAnimation>();
+	public HashMap<String, Animation> animations = new HashMap<String, Animation>();
 	public HashMap<String, Texture> textures = new HashMap<String, Texture>();
 
 	private CaptureStream output;
