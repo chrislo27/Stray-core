@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Disposable;
 
-public class SynchedAnimation implements Disposable {
+public class LoopingAnimation implements Disposable {
 
 	public float framedelay = 0.05f;
 	public int framecount = 1;
@@ -14,7 +14,7 @@ public class SynchedAnimation implements Disposable {
 	public boolean usesRegion = false;
 	boolean vertical = true;
 
-	public SynchedAnimation(float delay, int count, String path, boolean usesRegion) {
+	public LoopingAnimation(float delay, int count, String path, boolean usesRegion) {
 		framedelay = delay;
 		framecount = count;
 		this.path = path;
@@ -22,13 +22,13 @@ public class SynchedAnimation implements Disposable {
 		if (count > 0) frames = new TextureRegion[count];
 	}
 
-	public SynchedAnimation setRegionTile(int width, int height) {
+	public LoopingAnimation setRegionTile(int width, int height) {
 		tilewidth = width;
 		tileheight = height;
 		return this;
 	}
 
-	public SynchedAnimation setVertical(boolean v) {
+	public LoopingAnimation setVertical(boolean v) {
 		vertical = v;
 		return this;
 	}

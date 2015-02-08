@@ -20,7 +20,7 @@ import stray.achievements.Achievement;
 import stray.achievements.Achievements;
 import stray.achievements.Appearance;
 import stray.achievements.CompletedAchievements;
-import stray.animation.SynchedAnimation;
+import stray.animation.LoopingAnimation;
 import stray.augment.Augments;
 import stray.blocks.Blocks;
 import stray.conversation.Conversation;
@@ -134,7 +134,7 @@ public class Main extends Game implements Consumer {
 	public ShaderProgram invertshader;
 	public ShaderProgram swizzleshader;
 
-	public HashMap<String, SynchedAnimation> animations = new HashMap<String, SynchedAnimation>();
+	public HashMap<String, LoopingAnimation> animations = new HashMap<String, LoopingAnimation>();
 	public HashMap<String, Texture> textures = new HashMap<String, Texture>();
 
 	private CaptureStream output;
@@ -306,7 +306,7 @@ public class Main extends Game implements Consumer {
 
 		Iterator it = animations.entrySet().iterator();
 		while (it.hasNext()) {
-			((SynchedAnimation) ((Entry) it.next()).getValue()).dispose();
+			((LoopingAnimation) ((Entry) it.next()).getValue()).dispose();
 		}
 
 		it = textures.entrySet().iterator();
@@ -666,18 +666,18 @@ public class Main extends Game implements Consumer {
 		textures.put("toggle_warning", new Texture("images/blocks/toggle/toggle_warning.png"));
 
 		// animations
-		animations.put("shine", new SynchedAnimation(0.1f, 20, "images/item/shine/shine.png", false));
-		animations.put("portal", new SynchedAnimation(0.05f, 32, "images/blocks/portal/portal.png",
+		animations.put("shine", new LoopingAnimation(0.1f, 20, "images/item/shine/shine.png", false));
+		animations.put("portal", new LoopingAnimation(0.05f, 32, "images/blocks/portal/portal.png",
 				true).setRegionTile(64, 64));
-		animations.put("fire", new SynchedAnimation(0.05f, 30, "images/blocks/fire/fire.png", true)
+		animations.put("fire", new LoopingAnimation(0.05f, 30, "images/blocks/fire/fire.png", true)
 				.setRegionTile(128, 128).setVertical(false));
-		animations.put("fire-hud", new SynchedAnimation(0.05f, 8, "images/ui/fire-hudnomiddle.png", true)
+		animations.put("fire-hud", new LoopingAnimation(0.05f, 8, "images/ui/fire-hudnomiddle.png", true)
 				.setRegionTile(864, 468).setVertical(false));
 
 		// load animations
 		Iterator it = animations.entrySet().iterator();
 		while (it.hasNext()) {
-			((SynchedAnimation) ((Entry) it.next()).getValue()).load();
+			((LoopingAnimation) ((Entry) it.next()).getValue()).load();
 		}
 
 	}
