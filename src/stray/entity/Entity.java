@@ -324,6 +324,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 	}
 
 	public float getLowestDrag() {
+		if(getBlockCollidingDown() == null) return 1;
+		
 		int posx = (int) (x * World.tilesizex);
 		int posy = (int) (y * World.tilesizey);
 		int boundx = (int) (sizex * World.tilesizex);
@@ -354,6 +356,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 	}
 
 	public float getHighestDrag() {
+		if(getBlockCollidingDown() == null) return 1;
+		
 		int posx = (int) (x * World.tilesizex);
 		int posy = (int) (y * World.tilesizey);
 		int boundx = (int) (sizex * World.tilesizex);
