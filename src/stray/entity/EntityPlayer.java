@@ -47,7 +47,7 @@ public class EntityPlayer extends EntityLiving implements Weighted, Stunnable {
 
 	private void drawGears(float x, float y) {
 		world.batch.setColor(Augments.getAugment(world.currentAugment).getColor());
-		if (world.main.getAugmentsUnlocked() <= 0) world.batch.setColor(1, 1, 1, 1);
+		if (world.getAugmentsUnlocked() <= 0) world.batch.setColor(1, 1, 1, 1);
 		if (facing == Direction.LEFT) {
 			Utils.drawRotated(world.batch, world.main.textures.get("gear"), x + 5, y - 29, 26, 26,
 					MathHelper.getNumberFromTime(((world.augmentActivate) ? 0.75f : 5f)) * 360,
