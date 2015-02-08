@@ -8,6 +8,6 @@ package stray.entity.types;
  */
 public interface Enemy {
 
-	public abstract int getDamageDealt();
+	public abstract float getDamageDealt();
 	
 }

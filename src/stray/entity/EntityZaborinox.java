@@ -43,8 +43,8 @@ public class EntityZaborinox extends EntityLiving implements Enemy, Weighted, St
 	}
 
 	@Override
-	public int getDamageDealt() {
-		return 1;
+	public float getDamageDealt() {
+		return 0;
 	}
 
 }
