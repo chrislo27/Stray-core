@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Disposable;
 
-public class LoopingAnimation extends Animation implements Disposable {
+public class LoopingAnimation extends Animation{
 
 	public LoopingAnimation(float delay, int count, String path, boolean usesRegion) {
 		super(delay, count, path, usesRegion);
@@ -15,7 +15,6 @@ public class LoopingAnimation extends Animation implements Disposable {
 		return getCurrentFrame(framedelay);
 	}
 
-	@Override
 	public TextureRegion getCurrentFrame(float delay) {
 		long i = (long) (System.currentTimeMillis() / (delay * 1000d));
 		return frames[(int) ((frames.length - 1) - (i % frames.length))];

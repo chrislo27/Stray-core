@@ -57,8 +57,6 @@ public abstract class Animation implements Disposable {
 
 	public abstract TextureRegion getCurrentFrame();
 
-	public abstract TextureRegion getCurrentFrame(float delay);
-
 	@Override
 	public void dispose() {
 		if (usesRegion) {
