@@ -3,6 +3,7 @@ package stray.entity;
 import stray.Main;
 import stray.ai.BaseAI;
 import stray.augment.Augments;
+import stray.entity.types.Enemy;
 import stray.entity.types.Stunnable;
 import stray.entity.types.Weighted;
 import stray.util.AssetMap;
@@ -69,7 +70,8 @@ public class EntityPlayer extends EntityLiving implements Weighted, Stunnable {
 	@Override
 	public boolean damage(float dmg, DamageSource source) {
 		float originalhealth = health;
-		if (super.damage(dmg * Difficulty.get().get(world.main.getDifficulty()).damageMultiplier, source)) {
+		if (super.damage(dmg * Difficulty.get().get(world.main.getDifficulty()).damageMultiplier,
+				source)) {
 			if (dmg > 0 && invincibility == invulnTime * Main.TICKS) {
 				world.renderer.onDamagePlayer(originalhealth);
 				if (health == 0) {
@@ -130,8 +132,17 @@ public class EntityPlayer extends EntityLiving implements Weighted, Stunnable {
 	@Override
 	public void tickUpdate() {
 		super.tickUpdate();
-		
-		if(fireTime > 2) fireTime = 2;
+
+		if (fireTime > 2) fireTime = 2;
+
+		for (Entity e : world.entities) {
+			if (e instanceof Enemy) {
+				if (this.intersectingOther(e)) {
+					this.damage(((Enemy) e).getDamageDealt(), DamageSource.generic);
+					break;
+				}
+			}
+		}
 	}
 
 	@Override
