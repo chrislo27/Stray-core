@@ -21,17 +21,20 @@ public class AIDumbEnemy extends BaseAI {
 
 	@Override
 	public void renderUpdate() {
-		if (e.getBlockCollidingLeft() != null && e.getBlockCollidingRight() != null) return;
+		if (e.getBlockCollidingLeft() != null && e.getBlockCollidingRight() != null){
+			return;
+		}
 
 		if (direction) {
 			e.moveRight();
 		} else {
 			e.moveLeft();
 		}
-		if (e.getBlockCollidingLeft() != null && !direction) {
-			direction = true;
-		} else if (e.getBlockCollidingRight() != null && direction) {
-			direction = false;
+		
+		if(direction){
+			if(e.getBlockCollidingRight() != null) direction = false;
+		}else{
+			if(e.getBlockCollidingLeft() != null) direction = true;
 		}
 	}
 
