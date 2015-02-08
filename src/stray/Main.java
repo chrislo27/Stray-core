@@ -969,12 +969,6 @@ public class Main extends Game implements Consumer {
 		return progress.getInteger("difficulty", Difficulty.NORMAL_ID);
 	}
 
-	public int getAugmentsUnlocked() {
-		if (Settings.debug) return Augments.getList().size;
-
-		return Math.min(Augments.getList().size, progress.getInteger("augmentsunlocked", 0));
-	}
-
 	/**
 	 * basically appends "stray-" to the beginning of your preference
 	 * 

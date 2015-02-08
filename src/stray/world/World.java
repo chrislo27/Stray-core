@@ -3,6 +3,7 @@ package stray.world;
 import java.io.IOException;
 import java.util.Random;
 
+import stray.Levels;
 import stray.Main;
 import stray.Settings;
 import stray.augment.Augments;
@@ -101,9 +102,9 @@ public class World implements TileBasedMap {
 	public int currentAugment = 0;
 	public boolean augmentActivate = false;
 	long lastAugmentUse = System.currentTimeMillis();
-	
+
 	public float exitRotation = 0;
-	
+
 	public Array<DamageSource> deaths = new Array<DamageSource>(32);
 
 	public World(Main main) {
@@ -186,6 +187,20 @@ public class World implements TileBasedMap {
 		setVignette(alpha);
 	}
 
+	private int augmentsUnlocked = -1;
+	
+	public int getAugmentsUnlocked(){
+		if(Settings.debug) return Augments.getList().size;
+		if(augmentsUnlocked == -1){
+			if(Levels.instance().getNumFromLevelFile(
+					levelfile) != -1){
+				augmentsUnlocked = Math.min(0, Math.min(Augments.getList().size, Levels.instance().getLevelData(levelfile).augment));
+			}else augmentsUnlocked = 0;
+		}
+		
+		return augmentsUnlocked;
+	}
+
 	public void inputUpdate() {
 		if (main.getConv() != null) return;
 		if (getPlayer() == null) return;
@@ -209,13 +224,13 @@ public class World implements TileBasedMap {
 
 			}
 
-			if (main.getAugmentsUnlocked() > 0) {
+			if (getAugmentsUnlocked() > 0) {
 				if (Gdx.input.isKeyJustPressed(Keys.Q)) {
-					if (main.getAugmentsUnlocked() > 1) {
+					if (getAugmentsUnlocked() > 1) {
 						if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)
 								|| Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
 							currentAugment--;
-							if (currentAugment < 0) currentAugment = main.getAugmentsUnlocked() - 1;
+							if (currentAugment < 0) currentAugment = getAugmentsUnlocked() - 1;
 						} else {
 							currentAugment++;
 							if (currentAugment >= Augments.getList().size) currentAugment = 0;
@@ -238,18 +253,20 @@ public class World implements TileBasedMap {
 					augmentActivate = true;
 				} else if ((!Gdx.input.isKeyPressed(Keys.E) && augmentActivate)
 						|| ((System.currentTimeMillis() - lastAugmentUse > Augments.getAugment(
-								currentAugment).getUseTime() || !Augments.getAugment(currentAugment).isInUse(this))
-								&& (Gdx.input.isKeyPressed(Keys.E) && augmentActivate))) {
+								currentAugment).getUseTime() || !Augments
+								.getAugment(currentAugment).isInUse(this)) && (Gdx.input
+								.isKeyPressed(Keys.E) && augmentActivate))) {
 					augmentActivate = false;
 					Augments.getAugment(currentAugment).onActivateEnd(this);
 				}
 			}
-		}else{
-			if(getPlayer().health <= 0){
+		} else {
+			if (getPlayer().health <= 0) {
 				if ((!Gdx.input.isKeyPressed(Keys.E) && augmentActivate)
 						|| ((System.currentTimeMillis() - lastAugmentUse > Augments.getAugment(
-								currentAugment).getUseTime() || !Augments.getAugment(currentAugment).isInUse(this))
-								&& (Gdx.input.isKeyPressed(Keys.E) && augmentActivate))) {
+								currentAugment).getUseTime() || !Augments
+								.getAugment(currentAugment).isInUse(this)) && (Gdx.input
+								.isKeyPressed(Keys.E) && augmentActivate))) {
 					augmentActivate = false;
 					Augments.getAugment(currentAugment).onActivateEnd(this);
 				}
@@ -273,7 +290,7 @@ public class World implements TileBasedMap {
 			if (Gdx.input.isKeyPressed(Keys.ALT_LEFT) || Gdx.input.isKeyPressed(Keys.ALT_RIGHT)) {
 				if (Gdx.input.isKeyJustPressed(Keys.T)) {
 					getPlayer().damage(0.999f, DamageSource.generic);
-				}else if (Gdx.input.isKeyJustPressed(Keys.Y)) {
+				} else if (Gdx.input.isKeyJustPressed(Keys.Y)) {
 					getPlayer().stun(5);
 				}
 			}
@@ -288,17 +305,17 @@ public class World implements TileBasedMap {
 		}
 		updateExitRotation();
 	}
-	
-	private void updateExitRotation(){
+
+	private void updateExitRotation() {
 		exitRotation += Gdx.graphics.getDeltaTime() * calcExitRotationSpeed();
-		
-		if(exitRotation > 360) exitRotation %= 360;
+
+		if (exitRotation > 360) exitRotation %= 360;
 	}
-	
-	public float calcExitRotationSpeed(){
-		if(!global.getString("completedLevel").equals("done!")){
+
+	public float calcExitRotationSpeed() {
+		if (!global.getString("completedLevel").equals("done!")) {
 			return 10f;
-		}else{
+		} else {
 			return 400f - ((global.getInt("exitAnimation") / (1f * BlockExitPortal.ANIMATION_TIME)) * 400f);
 		}
 	}
@@ -473,7 +490,9 @@ public class World implements TileBasedMap {
 
 		if (getPlayer() != null) {
 			if (getVoidDistance() > (getPlayer().x)) {
-				getPlayer().heal(-((1f / (Main.TICKS * 2f)) * Math.max(getVoidDistance() - getPlayer().x, 1f)), DamageSource.theVoid);
+				getPlayer()
+						.heal(-((1f / (Main.TICKS * 2f)) * Math.max(getVoidDistance()
+								- getPlayer().x, 1f)), DamageSource.theVoid);
 			}
 			if (augmentActivate) {
 				Augments.getAugment(currentAugment).onActivateTick(this);
@@ -492,10 +511,12 @@ public class World implements TileBasedMap {
 				((((System.currentTimeMillis() - voidMsTime) / 1000f) / voidTime) * sizex), -1,
 				sizex);
 	}
-	
-	public long getVoidMSFromDistance(float distance){
-		if(voidTime <= 0) return System.currentTimeMillis();
-		return (System.currentTimeMillis() - Math.round((voidTime * 1000d) * (distance / sizex))); //return starting ms
+
+	public long getVoidMSFromDistance(float distance) {
+		if (voidTime <= 0) return System.currentTimeMillis();
+		return (System.currentTimeMillis() - Math.round((voidTime * 1000d) * (distance / sizex))); // return
+																									// starting
+																									// ms
 	}
 
 	public void executeBlockUpdates() {

@@ -276,7 +276,7 @@ public class WorldRenderer {
 	}
 
 	public void renderAugments() {
-		int augments = main.getAugmentsUnlocked();
+		int augments = world.getAugmentsUnlocked();
 
 		if (augments <= 0) return;
 

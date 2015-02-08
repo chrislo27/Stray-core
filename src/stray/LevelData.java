@@ -5,11 +5,13 @@ public class LevelData {
 	public String name = "level.unknown";
 	public String cutscene = null;
 	public long bestTime = Long.MAX_VALUE;
+	public int augment = 0;
 
 	public int difficulty = 0;
 
-	public LevelData(String name) {
+	public LevelData(String name, int augment) {
 		this.name = name;
+		this.augment = augment;
 	}
 
 	public LevelData setCutscene(String c) {
