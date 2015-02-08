@@ -12,17 +12,15 @@ public class MiscLoadingScreen extends Updateable {
 		super(m);
 	}
 
-
 	@Override
 	public void render(float delta) {
 		Gdx.gl20.glClearColor(0, 0, 0, 1);
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		main.batch.begin();
-		Main.gears.render(main, Gdx.graphics.getWidth() - (128 + 64), 0);
+		Main.gears.render(main, Gdx.graphics.getWidth() - (192), 0);
 		main.batch.end();
 	}
-
 
 	@Override
 	public void tickUpdate() {
@@ -38,12 +36,12 @@ public class MiscLoadingScreen extends Updateable {
 
 	@Override
 	public void show() {
-		
+
 	}
 
 	@Override
 	public void hide() {
-		
+
 	}
 
 	@Override
