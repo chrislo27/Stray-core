@@ -106,8 +106,6 @@ public class World implements TileBasedMap {
 	public float exitRotation = 0;
 
 	public Array<DamageSource> deaths = new Array<DamageSource>(32);
-	
-	private EntityPlayer thePlayer = null;
 
 	public World(Main main) {
 		this(main, 32, 24, Main.getRandom().nextLong());
@@ -190,16 +188,16 @@ public class World implements TileBasedMap {
 	}
 
 	private int augmentsUnlocked = -1;
-	
-	public int getAugmentsUnlocked(){
-		if(Settings.debug) return Augments.getList().size;
-		if(augmentsUnlocked == -1){
-			if(Levels.instance().getNumFromLevelFile(
-					levelfile) != -1){
-				augmentsUnlocked = Math.min(0, Math.min(Augments.getList().size, Levels.instance().getLevelData(levelfile).augment));
-			}else augmentsUnlocked = 0;
+
+	public int getAugmentsUnlocked() {
+		if (Settings.debug) return Augments.getList().size;
+		if (augmentsUnlocked == -1) {
+			if (Levels.instance().getNumFromLevelFile(levelfile) != -1) {
+				augmentsUnlocked = Math.min(0, Math.min(Augments.getList().size, Levels.instance()
+						.getLevelData(levelfile).augment));
+			} else augmentsUnlocked = 0;
 		}
-		
+
 		return augmentsUnlocked;
 	}
 
@@ -323,15 +321,13 @@ public class World implements TileBasedMap {
 	}
 
 	public EntityPlayer getPlayer() {
-		if(thePlayer == null){
-			for (int i = 0; i < entities.size; i++) {
-				if (entities.get(i) instanceof EntityPlayer) {
-					thePlayer = (EntityPlayer) entities.get(i);
-				}
+		for (int i = 0; i < entities.size; i++) {
+			if (entities.get(i) instanceof EntityPlayer) {
+				return (EntityPlayer) entities.get(i);
 			}
 		}
 
-		return thePlayer;
+		return null;
 	}
 
 	private void centerCamera() {
