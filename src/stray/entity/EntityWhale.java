@@ -1,15 +1,16 @@
 package stray.entity;
 
-import stray.ai.AIDumbEnemy;
+import stray.ai.AIWhale;
 import stray.ai.BaseAI;
 import stray.entity.types.Enemy;
+import stray.entity.types.Inflammable;
 import stray.util.AssetMap;
 import stray.world.World;
 
 import com.badlogic.gdx.graphics.Texture;
 
 
-public class EntityWhale extends EntityLiving implements Enemy{
+public class EntityWhale extends EntityLiving implements Enemy, Inflammable{
 
 	public EntityWhale(World w, float posx, float posy) {
 		super(w, posx, posy);
@@ -39,7 +40,7 @@ public class EntityWhale extends EntityLiving implements Enemy{
 
 	@Override
 	public BaseAI getNewAI() {
-		return new AIDumbEnemy(this);
+		return new AIWhale(this);
 	}
 
 }
