@@ -12,9 +12,11 @@ import stray.util.Difficulty;
 import stray.util.Direction;
 import stray.util.MathHelper;
 import stray.util.Utils;
+import stray.util.render.ElectricityRenderer;
 import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 
@@ -100,7 +102,20 @@ public class EntityPlayer extends EntityLiving implements Weighted, Stunnable {
 
 	@Override
 	public void renderSelf(float x, float y) {
-		if (health <= 0) return;
+		if (health <= 0) {
+			if (world.canRespawnIn > (Main.TICKS * 2f) - (Main.TICKS * 0.5f)) {
+				for (int i = 0; i < MathUtils.random(1, 3); i++) {
+					ElectricityRenderer.drawP2PLightning(world.batch, (x + (sizex / 2f)
+							* World.tilesizex), (y - (sizey / 2f) * World.tilesizey),
+							((x + (sizex / 2f) * World.tilesizex))
+									+ (World.tilesizex * sizex * MathUtils.random(-1f, 1f)),
+							((y - (sizey / 2f) * World.tilesizey))
+									+ (World.tilesizex * sizex * MathUtils.random(-1f, 1f)), 24,
+							1.5f, 2, 3, Color.CYAN.toFloatBits());
+				}
+			}
+			return;
+		}
 
 		drawSprite(x, y);
 
