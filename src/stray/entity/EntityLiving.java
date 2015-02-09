@@ -196,7 +196,7 @@ public abstract class EntityLiving extends Entity {
 						Main.getRainbow(
 								Main.getRandom().nextFloat()
 										* (Main.getRandom().nextInt() / MathUtils.random(2,
-												Short.MAX_VALUE)), 1)).setAlpha(1f);
+												Short.MAX_VALUE)), 1)).setAlpha(0.8f);
 	}
 
 	@Override
