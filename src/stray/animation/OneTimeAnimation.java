@@ -1,5 +1,7 @@
 package stray.animation;
 
+import stray.Main;
+
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
@@ -24,7 +26,7 @@ public class OneTimeAnimation extends Animation{
 		}
 		
 		long i = (long) ((System.currentTimeMillis() - startTime) / (framedelay * 1000d));
-		return frames[(int) ((frames.length - 1) - (i % frames.length))];
+		return frames[(frames.length - 1) - ((int) ((frames.length - 1) - (i % frames.length)))];
 	}
 	
 	public OneTimeAnimation start(){
