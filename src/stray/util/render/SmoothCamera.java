@@ -19,7 +19,7 @@ public class SmoothCamera {
 	
 	private transient World world;
 	
-	public float SPEED = 7.5f;
+	public float SPEED = 8f;
 	
 	private float shakeTime = 0;
 	private float shakeIntensity = 1f;
