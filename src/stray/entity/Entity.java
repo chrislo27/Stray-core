@@ -1,6 +1,7 @@
 package stray.entity;
 
 import stray.Main;
+import stray.blocks.BlockEmpty;
 import stray.blocks.BlockPlatform;
 import stray.util.Coordinate;
 import stray.util.EntityMover;
@@ -337,7 +338,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 	}
 
 	public float getLowestDrag() {
-		if (getBlockCollidingDown() == null) return 1;
+		if (getBlockCollidingDown() == null) return BlockEmpty.DRAG;
 
 		int posx = (int) (x * World.tilesizex);
 		int posy = (int) (y * World.tilesizey);
@@ -369,7 +370,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 	}
 
 	public float getHighestDrag() {
-		if (getBlockCollidingDown() == null) return 1;
+		if (getBlockCollidingDown() == null) return BlockEmpty.DRAG;
 
 		int posx = (int) (x * World.tilesizex);
 		int posy = (int) (y * World.tilesizey);
