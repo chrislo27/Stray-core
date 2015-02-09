@@ -25,7 +25,6 @@ public class EntityPlayer extends EntityLiving implements Weighted, Stunnable {
 
 	}
 
-	private float portalglow = 0;
 	public static final float SECONDS_TO_REGEN = 15;
 
 	@Override
@@ -104,17 +103,6 @@ public class EntityPlayer extends EntityLiving implements Weighted, Stunnable {
 		if (health <= 0) return;
 
 		drawSprite(x, y);
-
-		if (portalglow > 0) {
-			world.batch.setColor(Main.getRainbow(0.5f, 1));
-			world.batch.setColor(world.batch.getColor().r, world.batch.getColor().b,
-					world.batch.getColor().g, portalglow);
-			world.batch.draw(world.main.animations.get("portal").getCurrentFrame(), 0, 0,
-					Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-			world.batch.setColor(1, 1, 1, 1);
-			portalglow -= Gdx.graphics.getDeltaTime() * 0.75f;
-			if (portalglow < 0) portalglow = 0;
-		}
 
 	}
 
