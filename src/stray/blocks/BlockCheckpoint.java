@@ -22,7 +22,7 @@ public class BlockCheckpoint extends Block {
 
 	@Override
 	public void tickUpdate(World world, int x, int y) {
-		if (Block.entityIntersects(world, x, y, world.getPlayer())) {
+		if (Block.entityIntersects(world, x, y + 0.25f, world.getPlayer(), 1, 0.75f)) {
 			world.setBlock(Blocks.instance().getBlock("checkpointclaimed"), x, y);
 			world.setCheckpoint(x, y);
 			particles(world, x, y);
