@@ -504,7 +504,7 @@ public class Main extends Game implements Consumer {
 				} else if (Gdx.input.isKeyJustPressed(Keys.Q)) {
 					throw new GameException(
 							"This is a forced crash caused by pressing ALT+Q while in debug mode.");
-				} else if (Gdx.input.isKeyJustPressed(Keys.L)) {
+				} else if (Gdx.input.isKeyJustPressed(Keys.L) && getScreen() != Main.ASSETLOADING) {
 					LEVELEDITOR.resetWorld();
 					setScreen(LEVELEDITOR);
 				} else if (Gdx.input.isKeyJustPressed(Keys.A)) {
