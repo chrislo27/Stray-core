@@ -2,6 +2,7 @@ package stray.entity;
 
 import stray.Main;
 import stray.entity.types.Inflammable;
+import stray.util.DamageSource;
 import stray.world.World;
 
 public class EntityFlame extends Entity {
@@ -36,7 +37,8 @@ public class EntityFlame extends Entity {
 				if (!(e instanceof Inflammable)) {
 					if (intersectingOther(e)){
 						((EntityLiving) e).setFire(1.5f);
-						lifetime /= 1.5f;
+						((EntityLiving) e).heal(-EntityLiving.FIRE_DAMAGE, DamageSource.yourMother);
+						lifetime = 0;
 						break;
 					}
 				}
