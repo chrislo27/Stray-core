@@ -47,7 +47,7 @@ public class Blocks {
 		put("space", new BlockOuterSpace("images/blocks/old/space/space").hasVariants(8));
 		put("wall", new Block("images/blocks/old/dungeonwall/wall").useConTextures().solidify());
 		put("empty", new BlockEmpty());
-		put("spike", new BlockSpike("images/blocks/spike").solidify());
+		put("spike", new BlockSpike("images/blocks/spike"));
 		put("sign", new BlockReadable("images/blocks/sign/sign"){
 			@Override
 			public void onRead(World world, int x, int y){
