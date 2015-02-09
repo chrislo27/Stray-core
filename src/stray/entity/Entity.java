@@ -117,34 +117,45 @@ public abstract class Entity implements EntityMover, Sizeable {
 			veloy += (world.gravity / Main.TICKS) * gravityCoefficient;
 		}
 
+		
 		if (veloy != 0) {
 			int velo = (int) (veloy / Main.TICKS * World.tilesizey);
+			
 			if (velo > 0) {
-				if (getBlockCollidingDown() != null) {
+				Coordinate c = getBlockCollidingDown();
+				if (c != null) {
 					veloy = 0;
 					velo = 0;
 					onCollideDown();
+					
+					world.getBlock(c.getX(), c.getY()).onCollideUpFace(world, c.getX(), c.getY(), this);
 				}
 			} else if (velo < 0) {
-				if (getBlockCollidingUp() != null) {
+				Coordinate c = getBlockCollidingUp();
+				if (c != null) {
 					veloy = 0;
 					velo = 0;
 					onCollideUp();
+					world.getBlock(c.getX(), c.getY()).onCollideDownFace(world, c.getX(), c.getY(), this);
 				}
 			}
 			for (int i = 0; i < Math.abs(velo); i++) {
 				if (velo > 0) {
 					y += World.tileparty;
-					if (getBlockCollidingDown() != null) {
+					Coordinate c = getBlockCollidingDown();
+					if (c != null) {
 						veloy = 0;
 						onCollideDown();
+						world.getBlock(c.getX(), c.getY()).onCollideUpFace(world, c.getX(), c.getY(), this);
 						break;
 					}
 				} else if (velo < 0) {
 					y -= World.tileparty;
-					if (getBlockCollidingUp() != null) {
+					Coordinate c = getBlockCollidingUp();
+					if (c != null) {
 						veloy = 0;
 						onCollideUp();
+						world.getBlock(c.getX(), c.getY()).onCollideDownFace(world, c.getX(), c.getY(), this);
 						break;
 					}
 				}
@@ -156,31 +167,39 @@ public abstract class Entity implements EntityMover, Sizeable {
 			int velo = (int) (velox / Main.TICKS * World.tilesizex);
 
 			if (velo > 0) {
-				if (getBlockCollidingRight() != null) {
+				Coordinate c = getBlockCollidingRight();
+				if (c != null) {
 					velox = 0;
 					velo = 0;
 					onCollideRight();
+					world.getBlock(c.getX(), c.getY()).onCollideLeftFace(world, c.getX(), c.getY(), this);
 				}
 			} else if (velo < 0) {
-				if (getBlockCollidingLeft() != null) {
+				Coordinate c = getBlockCollidingLeft();
+				if (c != null) {
 					velox = 0;
 					velo = 0;
 					onCollideLeft();
+					world.getBlock(c.getX(), c.getY()).onCollideRightFace(world, c.getX(), c.getY(), this);
 				}
 			}
 			for (int i = 0; i < Math.abs(velo); i++) {
 				if (velo > 0) {
 					x += World.tilepartx;
-					if (getBlockCollidingRight() != null) {
+					Coordinate c = getBlockCollidingRight();
+					if (c != null) {
 						velox = 0;
 						onCollideRight();
+						world.getBlock(c.getX(), c.getY()).onCollideLeftFace(world, c.getX(), c.getY(), this);
 						break;
 					}
 				} else if (velo < 0) {
 					x -= World.tilepartx;
-					if (getBlockCollidingLeft() != null) {
+					Coordinate c = getBlockCollidingLeft();
+					if (c != null) {
 						velox = 0;
 						onCollideLeft();
+						world.getBlock(c.getX(), c.getY()).onCollideRightFace(world, c.getX(), c.getY(), this);
 						break;
 					}
 				}

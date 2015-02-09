@@ -57,6 +57,22 @@ public class Block {
 		solid = true;
 		return this;
 	}
+	
+	public void onCollideLeftFace(World world, int x, int y, Entity e) {
+
+	}
+	
+	public void onCollideRightFace(World world, int x, int y, Entity e) {
+
+	}
+	
+	public void onCollideUpFace(World world, int x, int y, Entity e) {
+
+	}
+	
+	public void onCollideDownFace(World world, int x, int y, Entity e) {
+
+	}
 
 	public boolean isSolid(World world, int x, int y) {
 		return solid;
