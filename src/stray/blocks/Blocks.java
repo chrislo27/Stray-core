@@ -92,6 +92,9 @@ public class Blocks {
 		});
 		put("checkpointunclaimed", new BlockCheckpoint("images/blocks/checkpoint/checkpointnew"));
 		
+		put("jumppad", new BlockJumpPad(null).setAnimation("jumppad").solidify());
+		put("accelerationpad", new BlockAccPad(null).setAnimation("accelerationpad").solidify());
+		
 		// spawners
 		put("spawnerplayer", new BlockPlayerSpawner("images/entity/player/player"));
 		put("spawnerzaborinox", new BlockSpawner("images/entity/zaborinox"){
