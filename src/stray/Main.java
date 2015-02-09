@@ -679,7 +679,7 @@ public class Main extends Game implements Consumer {
 				.put("jumppad", new LoopingAnimation(0.25f, 4, "images/blocks/jumppad/jumppad.png",
 						true).setRegionTile(64, 64));
 		animations.put("accelerationpad",
-				new LoopingAnimation(0.25f, 8, "images/blocks/accpad/accelerationpad.png", true)
+				new LoopingAnimation(0.5f, 2, "images/blocks/accpad/accelerationpad.png", true)
 						.setRegionTile(64, 64).setVertical(false));
 
 		// load animations
