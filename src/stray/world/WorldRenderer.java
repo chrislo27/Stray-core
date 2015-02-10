@@ -137,8 +137,8 @@ public class WorldRenderer {
 			ElectricityRenderer.drawP2PLightning(batch,
 					((world.getVoidDistance() * World.tilesizex) - world.camera.camerax), location,
 					((world.getVoidDistance() * World.tilesizex) - world.camera.camerax)
-							+ MathUtils.random(World.tilesizex * 1.75f, World.tilesizex * 2.75f),
-					location + MathUtils.random(-16, 16), 24, 1.5f, 3, 3, Colors.get("VOID_PURPLE")
+							+ MathUtils.random(World.tilesizex * 0.75f, World.tilesizex * 2.75f),
+					location + MathUtils.random(-64, 64), 24, 1.5f, 3, 3, Colors.get("VOID_PURPLE")
 							.toFloatBits());
 		}
 	}
