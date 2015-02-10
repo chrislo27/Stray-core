@@ -484,6 +484,10 @@ public class World implements TileBasedMap {
 				getPlayer().gravityCoefficient = 1;
 				voidMsTime = getVoidMSFromDistance(checkpointvoid);
 				deaths.add(getPlayer().getLastDamageSource());
+			}else{
+				getPlayer().gravityCoefficient = 0;
+				getPlayer().velox = 0;
+				getPlayer().veloy = 0;
 			}
 		}
 
