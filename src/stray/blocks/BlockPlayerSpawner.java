@@ -1,7 +1,6 @@
 package stray.blocks;
 
 import stray.entity.Entity;
-import stray.entity.EntityPlayer;
 import stray.world.World;
 
 
