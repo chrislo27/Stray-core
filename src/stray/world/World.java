@@ -499,8 +499,8 @@ public class World implements TileBasedMap {
 		centerCamera();
 		camera.update();
 
-		if (getPlayer() != null && voidTime > 0) {
-			if (getVoidDistance() > (getPlayer().x)) {
+		if (getPlayer() != null) {
+			if (getVoidDistance() > (getPlayer().x) && voidTime > 0) {
 				getPlayer()
 						.heal(-((1f / (Main.TICKS * 2f)) * Math.max(getVoidDistance()
 								- getPlayer().x, 1f)), DamageSource.theVoid);
