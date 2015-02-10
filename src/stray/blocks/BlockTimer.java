@@ -52,7 +52,7 @@ public class BlockTimer extends Block implements AffectsColour {
 					- world.camera.camerax + (World.tilesizex / 2),
 					Main.convertY((y * world.tilesizey - world.camera.cameray) - 15));
 
-			if (Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W)) {
+			if (Gdx.input.isKeyJustPressed(Keys.UP)) {
 				world.setMeta(Math.round(SECONDS * Main.TICKS) + "", x, y);
 			}
 		}

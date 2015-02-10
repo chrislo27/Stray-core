@@ -24,7 +24,7 @@ public class BlockReadable extends Block {
 			world.main.drawCentered(Translator.getMsg("block.readable"), x * world.tilesizex
 					- world.camera.camerax + (World.tilesizex / 2),
 					Main.convertY((y * world.tilesizey - world.camera.cameray) - 15));
-			if (Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W)) {
+			if (Gdx.input.isKeyJustPressed(Keys.UP)) {
 				if(world.main.getConv() == null){
 					if(world.getMeta(x, y) != null){
 						if(Conversations.instance().convs.containsKey(world.getMeta(x, y))){
