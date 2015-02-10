@@ -338,8 +338,10 @@ public class World implements TileBasedMap {
 		if (p.health <= 0) return;
 
 		camera.centerX(((p.x + (p.sizex / 2f)) * tilesizex + cameramovex));
-		if (p.getBlockCollidingDown() != null || !isPlayerVisible()) camera
-				.centerY(((p.y + (p.sizey / 2f)) * tilesizey + cameramovey) - (tilesizey * 3));
+		if (p.getBlockCollidingDown() != null || !isPlayerVisible()) {
+			camera.centerY(((p.y + (p.sizey / 2f)) * tilesizey + cameramovey) - (tilesizey * 1.5f));
+		}
+
 		for (int x = (int) (p.x - ((Gdx.graphics.getWidth() / 2) / tilesizex)); x < (int) (p.x + ((Gdx.graphics
 				.getWidth() / 2) / tilesizex)); x++) {
 			for (int y = (int) (p.y - ((Gdx.graphics.getHeight() / 2) / tilesizey)) - 3; y < (int) (p.y + ((Gdx.graphics
@@ -358,18 +360,16 @@ public class World implements TileBasedMap {
 
 	protected boolean isPlayerVisible() {
 		EntityPlayer e = getPlayer();
-		return (((e.y + e.sizey) * World.tilesizey) <= camera.cameray
-				+ Settings.DEFAULT_HEIGHT)
+		return (((e.y + e.sizey) * World.tilesizey) <= camera.cameray + Settings.DEFAULT_HEIGHT)
 				&& ((e.y * World.tilesizey) >= camera.cameray);
 	}
-	
-	protected boolean isEntityOnScreen(Entity e){
-		if(e.x * World.tilesizex > camera.camerax + Settings.DEFAULT_WIDTH) return false;
-		if((e.x + e.sizex) * World.tilesizex < camera.camerax) return false;
-		if((((e.y) * World.tilesizey) > camera.cameray
-				+ Settings.DEFAULT_HEIGHT)) return false;
-		if((((e.y + e.sizey) * World.tilesizey) < camera.cameray)) return false;
-		
+
+	protected boolean isEntityOnScreen(Entity e) {
+		if (e.x * World.tilesizex > camera.camerax + Settings.DEFAULT_WIDTH) return false;
+		if ((e.x + e.sizex) * World.tilesizex < camera.camerax) return false;
+		if ((((e.y) * World.tilesizey) > camera.cameray + Settings.DEFAULT_HEIGHT)) return false;
+		if ((((e.y + e.sizey) * World.tilesizey) < camera.cameray)) return false;
+
 		return true;
 	}
 
