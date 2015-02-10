@@ -66,6 +66,7 @@ public class World implements TileBasedMap {
 	public Array<BlockUpdate> scheduledUpdates = new Array<BlockUpdate>();
 
 	public Array<Entity> entities;
+	private EntityPlayer thePlayer = null;
 
 	public Array<Particle> particles;
 
@@ -147,7 +148,7 @@ public class World implements TileBasedMap {
 	}
 
 	public void addPlayer() {
-		if (getPlayer() == null) {
+		if (getPlayer() == null || thePlayer == null) {
 			EntityPlayer player = new EntityPlayer(this, 13, sizey - 9);
 			player.prepare();
 			entities.add(player);
@@ -321,13 +322,16 @@ public class World implements TileBasedMap {
 	}
 
 	public EntityPlayer getPlayer() {
-		for (int i = 0; i < entities.size; i++) {
-			if (entities.get(i) instanceof EntityPlayer) {
-				return (EntityPlayer) entities.get(i);
+		if(thePlayer == null){
+			for (int i = 0; i < entities.size; i++) {
+				if (entities.get(i) instanceof EntityPlayer) {
+					thePlayer = (EntityPlayer) entities.get(i);
+					return thePlayer;
+				}
 			}
 		}
 
-		return null;
+		return thePlayer;
 	}
 
 	private void centerCamera() {
