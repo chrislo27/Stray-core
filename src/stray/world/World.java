@@ -66,7 +66,7 @@ public class World implements TileBasedMap {
 	public Array<BlockUpdate> scheduledUpdates = new Array<BlockUpdate>();
 
 	public Array<Entity> entities;
-	private EntityPlayer thePlayer = null;
+	private int playerIndex = 0;
 
 	public Array<Particle> particles;
 
@@ -148,7 +148,7 @@ public class World implements TileBasedMap {
 	}
 
 	public void addPlayer() {
-		if (getPlayer() == null || thePlayer == null) {
+		if (getPlayer() == null) {
 			EntityPlayer player = new EntityPlayer(this, 13, sizey - 9);
 			player.prepare();
 			entities.add(player);
@@ -322,16 +322,20 @@ public class World implements TileBasedMap {
 	}
 
 	public EntityPlayer getPlayer() {
-		if(thePlayer == null){
-			for (int i = 0; i < entities.size; i++) {
-				if (entities.get(i) instanceof EntityPlayer) {
-					thePlayer = (EntityPlayer) entities.get(i);
-					return thePlayer;
-				}
+		if(entities.size < 1) return null;
+		
+		if(playerIndex < entities.size || entities.get(playerIndex) instanceof EntityPlayer){
+			return (EntityPlayer) entities.get(playerIndex);
+		}
+		
+		for (int i = 0; i < entities.size; i++) {
+			if (entities.get(i) instanceof EntityPlayer) {
+				playerIndex = i;
+				return (EntityPlayer) entities.get(i);
 			}
 		}
 
-		return thePlayer;
+		return null;
 	}
 
 	private void centerCamera() {
@@ -488,7 +492,7 @@ public class World implements TileBasedMap {
 				getPlayer().gravityCoefficient = 1;
 				voidMsTime = getVoidMSFromDistance(checkpointvoid);
 				deaths.add(getPlayer().getLastDamageSource());
-			}else{
+			} else {
 				getPlayer().gravityCoefficient = 0;
 				getPlayer().velox = 0;
 				getPlayer().veloy = 0;
