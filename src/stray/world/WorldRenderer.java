@@ -81,7 +81,7 @@ public class WorldRenderer {
 				}
 			}
 			batch.flush();
-			if(level == Block.ENTITY_RENDER_LEVEL){
+			if (level == Block.ENTITY_RENDER_LEVEL) {
 				renderEntities();
 			}
 		}
@@ -145,7 +145,7 @@ public class WorldRenderer {
 
 	private void renderEntities() {
 		for (Entity e : world.entities) {
-			if(!world.isEntityOnScreen(e)){
+			if (!world.isEntityOnScreen(e)) {
 				continue;
 			}
 			e.render(Gdx.graphics.getDeltaTime());
@@ -195,7 +195,35 @@ public class WorldRenderer {
 		renderHealth();
 
 		renderAugments();
-		batch.flush();
+
+		renderPlayerArrow();
+	}
+
+	public void renderPlayerArrow() {
+		if (!world.isEntityOnScreen(world.getPlayer())) {
+			float x = world.getPlayer().x;
+			float y = world.getPlayer().y;
+			float clampedX = MathUtils.clamp((x * World.tilesizex) - world.camera.camerax, 0,
+					Gdx.graphics.getWidth() - (world.getPlayer().sizex * World.tilesizex));
+			float clampedY = MathUtils.clamp(
+					Main.convertY((y * World.tilesizey) - world.camera.cameray), 0,
+					Gdx.graphics.getHeight() - (world.getPlayer().sizey * World.tilesizey));
+
+			batch.setColor(1, 1, 1, (MathHelper.clampNumberFromTime(0.75f)));
+
+			world.getPlayer().renderSelf(clampedX, clampedY);
+
+			Texture arrow = main.manager.get(AssetMap.get("playerdirectionarrow"), Texture.class);
+
+			batch.setColor(1, 1, 1, 1);
+			float degrees = MathHelper.calcRotationAngleInDegrees((x * World.tilesizex)
+					- world.camera.camerax + arrow.getWidth() / 2,
+					Main.convertY((y * World.tilesizey) - world.camera.cameray) + arrow.getHeight()
+							/ 2, clampedX + arrow.getWidth() / 2, clampedY - arrow.getHeight() / 2);
+
+			Utils.drawRotated(batch, arrow, clampedX, clampedY - arrow.getHeight(),
+					arrow.getWidth(), arrow.getHeight(), degrees, true);
+		}
 	}
 
 	private float originalhealth = -1;
