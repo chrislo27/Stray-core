@@ -16,6 +16,7 @@ import stray.util.render.ElectricityRenderer;
 import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
@@ -48,7 +49,10 @@ public class EntityPlayer extends EntityLiving implements Weighted, Stunnable {
 	}
 
 	private void drawGears(float x, float y) {
-		world.batch.setColor(Augments.getAugment(world.currentAugment).getColor());
+		world.batch.setColor(Augments.getAugment(world.currentAugment).getColor().r, Augments
+				.getAugment(world.currentAugment).getColor().g,
+				Augments.getAugment(world.currentAugment).getColor().b, world.batch.getColor().a);
+		
 		if (world.getAugmentsUnlocked() <= 0) world.batch.setColor(1, 1, 1, 1);
 		if (facing == Direction.LEFT) {
 			Utils.drawRotated(world.batch, world.main.textures.get("gear"), x + 5, y - 29, 26, 26,

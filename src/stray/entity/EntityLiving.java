@@ -146,7 +146,6 @@ public abstract class EntityLiving extends Entity {
 		world.batch.draw(sprite, x, y - sizey * World.tilesizey,
 				sprite.getWidth(), sprite.getHeight(), 0, 0, sprite.getWidth(), sprite.getHeight(),
 				(facing != Direction.RIGHT), false);
-		world.batch.setColor(1, 1, 1, 1);
 	}
 
 	public void poof() {
