@@ -54,7 +54,7 @@ public class FLUDDAugment extends Augment {
 	private void createParticle(World world, float x, float y, String type) {
 		world.particles.add(ParticlePool.obtain().setPosition(x, y).setVelocity(0, PARTICLE_SPEED)
 				.setTint(getColor()).setTexture(type).setLifetime(15).setDestroyOnBlock(true)
-				.setAlpha(MathHelper.clampHalf(1 / 3f) + 0.25f));
+				.setAlpha(MathHelper.clampNumberFromTime(1 / 3f) + 0.25f));
 	}
 
 	@Override

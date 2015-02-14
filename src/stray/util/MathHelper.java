@@ -70,7 +70,7 @@ public class MathHelper {
 		return ((time % Math.round((seconds * 1000))) / (seconds * 1000f));
 	}
 	
-	public static float clampHalf(float seconds){
+	public static float clampNumberFromTime(float seconds){
 		float f = getNumberFromTime(seconds);
 		if(f >= 0.5f){
 			return 1f - f;

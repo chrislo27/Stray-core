@@ -62,14 +62,14 @@ public class PostProcessing {
 	public static void euphoria(Batch batch, FrameBuffer buffer, float saturation, float displace) {
 		batch.setColor(Main.getRainbow(0.5f, saturation).r, Main.getRainbow(0.5f, saturation).g,
 				Main.getRainbow(0.5f, saturation).b, saturation);
-		batch.draw(buffer.getColorBufferTexture(), (displace * 2 * MathHelper.clampHalf(1f)),
+		batch.draw(buffer.getColorBufferTexture(), (displace * 2 * MathHelper.clampNumberFromTime(1f)),
 				Gdx.graphics.getHeight(), buffer.getWidth(), -buffer.getHeight());
 		batch.draw(buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight()
-				+ (displace * 2 * MathHelper.clampHalf(1f)), buffer.getWidth(), -buffer.getHeight());
-		batch.draw(buffer.getColorBufferTexture(), (-displace * 2 * MathHelper.clampHalf(1f)),
+				+ (displace * 2 * MathHelper.clampNumberFromTime(1f)), buffer.getWidth(), -buffer.getHeight());
+		batch.draw(buffer.getColorBufferTexture(), (-displace * 2 * MathHelper.clampNumberFromTime(1f)),
 				Gdx.graphics.getHeight(), buffer.getWidth(), -buffer.getHeight());
 		batch.draw(buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight()
-				- (displace * 2 * MathHelper.clampHalf(1f)), buffer.getWidth(), -buffer.getHeight());
+				- (displace * 2 * MathHelper.clampNumberFromTime(1f)), buffer.getWidth(), -buffer.getHeight());
 		batch.flush();
 		batch.setColor(1, 1, 1, 1);
 	}
