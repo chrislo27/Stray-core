@@ -396,7 +396,7 @@ public class Main extends Game implements Consumer {
 					+ (Gdx.graphics.getFramesPerSecond() <= (MAX_FPS / 4f) ? "[RED]"
 							: (Gdx.graphics.getFramesPerSecond() <= (MAX_FPS / 2f) ? "[YELLOW]"
 									: "")) + Gdx.graphics.getFramesPerSecond() + "[]", 5,
-					Gdx.graphics.getHeight() - 5);
+					Settings.DEFAULT_HEIGHT - 5);
 		}
 		if (Settings.debug) {
 			font.setMarkupEnabled(false);
@@ -407,7 +407,7 @@ public class Main extends Game implements Consumer {
 							+ Gdx.graphics.getDeltaTime(),
 					5 + font.getSpaceWidth()
 							+ (font.getBounds("FPS: " + Gdx.graphics.getFramesPerSecond()).width),
-					Gdx.graphics.getHeight() - 5);
+					Settings.DEFAULT_HEIGHT - 5);
 			font.setMarkupEnabled(true);
 		}
 
@@ -710,20 +710,22 @@ public class Main extends Game implements Consumer {
 
 	public static int getInputX() {
 		return (int) (Gdx.input.getX() * getScaleFactorX());
-//		return ((int) (viewport.unproject(unprojector.set(Gdx.input.getX(), Gdx.input.getY())).x));
+		// return ((int) (viewport.unproject(unprojector.set(Gdx.input.getX(),
+		// Gdx.input.getY())).x));
 	}
 
 	public static int getInputY() {
 		return (int) (Gdx.input.getY() * getScaleFactorY());
-//		return viewport.getScreenHeight()
-//				- ((int) (viewport.unproject(unprojector.set(Gdx.input.getX(), Gdx.input.getY())).y));
+		// return viewport.getScreenHeight()
+		// - ((int) (viewport.unproject(unprojector.set(Gdx.input.getX(),
+		// Gdx.input.getY())).y));
 	}
-	
-	public static float getScaleFactorX(){
+
+	public static float getScaleFactorX() {
 		return ((Gdx.graphics.getWidth() * 1f) / Settings.DEFAULT_WIDTH);
 	}
-	
-	public static float getScaleFactorY(){
+
+	public static float getScaleFactorY() {
 		return ((Gdx.graphics.getHeight() * 1f) / Settings.DEFAULT_HEIGHT);
 	}
 
