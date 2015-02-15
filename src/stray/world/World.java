@@ -208,66 +208,66 @@ public class World implements TileBasedMap {
 		if (getPlayer().health > 0 && getPlayer().stunTime <= 0) {
 
 			if (Gdx.input.isKeyPressed(Keys.SPACE)) {
-				getPlayer().jump();
-			} else if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+
+			}
+
+			if (Gdx.input.isKeyPressed(Keys.DOWN)) {
 
 			} else if (Gdx.input.isKeyJustPressed(Keys.UP)) {
-
+				getPlayer().jump();
 			}
 
 			if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 				getPlayer().moveLeft();
-
 			} else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
 				getPlayer().moveRight();
-
 			} else {
 
 			}
 
 			if (getAugmentsUnlocked() > 0) {
-				if (Gdx.input.isKeyJustPressed(Keys.Q)) {
-					if (getAugmentsUnlocked() > 1) {
-						if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)
-								|| Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
-							currentAugment--;
-							if (currentAugment < 0) currentAugment = getAugmentsUnlocked() - 1;
-						} else {
-							currentAugment++;
-							if (currentAugment >= Augments.getList().size) currentAugment = 0;
-						}
+				if (getAugmentsUnlocked() > 1) {
+					if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)
+							|| Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
+						currentAugment--;
+						if (currentAugment < 0) currentAugment = getAugmentsUnlocked() - 1;
+						renderer.lastAugmentSwitch = System.currentTimeMillis();
+					} else if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT)
+							|| Gdx.input.isKeyPressed(Keys.CONTROL_RIGHT)) {
+						currentAugment++;
+						if (currentAugment >= Augments.getList().size) currentAugment = 0;
 						renderer.lastAugmentSwitch = System.currentTimeMillis();
 					}
 				}
 
-				if (Gdx.input.isKeyJustPressed(Keys.E)
+				if (Gdx.input.isKeyJustPressed(Keys.SPACE)
 						&& (Augments.getAugment(currentAugment).canUse(this))) {
 					Augments.getAugment(currentAugment).onActivateStart(this);
 					augmentActivate = true;
 					lastAugmentUse = System.currentTimeMillis();
 				}
 
-				if (Gdx.input.isKeyPressed(Keys.E)
+				if (Gdx.input.isKeyPressed(Keys.SPACE)
 						&& (System.currentTimeMillis() - lastAugmentUse <= Augments.getAugment(
 								currentAugment).getUseTime())) {
 					Augments.getAugment(currentAugment).onActivate(this);
 					augmentActivate = true;
-				} else if ((!Gdx.input.isKeyPressed(Keys.E) && augmentActivate)
+				} else if ((!Gdx.input.isKeyPressed(Keys.SPACE) && augmentActivate)
 						|| ((System.currentTimeMillis() - lastAugmentUse > Augments.getAugment(
 								currentAugment).getUseTime() || !Augments
 								.getAugment(currentAugment).isInUse(this)) && (Gdx.input
-								.isKeyPressed(Keys.E) && augmentActivate))) {
+								.isKeyPressed(Keys.SPACE) && augmentActivate))) {
 					augmentActivate = false;
 					Augments.getAugment(currentAugment).onActivateEnd(this);
 				}
 			}
 		} else {
 			if (getPlayer().health <= 0) {
-				if ((!Gdx.input.isKeyPressed(Keys.E) && augmentActivate)
+				if ((!Gdx.input.isKeyPressed(Keys.SPACE) && augmentActivate)
 						|| ((System.currentTimeMillis() - lastAugmentUse > Augments.getAugment(
 								currentAugment).getUseTime() || !Augments
 								.getAugment(currentAugment).isInUse(this)) && (Gdx.input
-								.isKeyPressed(Keys.E) && augmentActivate))) {
+								.isKeyPressed(Keys.SPACE) && augmentActivate))) {
 					augmentActivate = false;
 					Augments.getAugment(currentAugment).onActivateEnd(this);
 				}
@@ -322,12 +322,12 @@ public class World implements TileBasedMap {
 	}
 
 	public EntityPlayer getPlayer() {
-		if(entities.size < 1) return null;
-		
-		if(playerIndex < entities.size || entities.get(playerIndex) instanceof EntityPlayer){
+		if (entities.size < 1) return null;
+
+		if (playerIndex < entities.size || entities.get(playerIndex) instanceof EntityPlayer) {
 			return (EntityPlayer) entities.get(playerIndex);
 		}
-		
+
 		for (int i = 0; i < entities.size; i++) {
 			if (entities.get(i) instanceof EntityPlayer) {
 				playerIndex = i;
