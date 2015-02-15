@@ -724,6 +724,7 @@ public class Main extends Game implements Consumer {
 	@Override
 	public void resize(int x, int y) {
 		viewport.update(x, y, false);
+		camera.setToOrtho(false, x, y);
 	}
 
 	public void redirectSysOut() {
