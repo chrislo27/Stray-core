@@ -39,9 +39,10 @@ public class Container {
 	protected static boolean mouseIn(GuiElement e) {
 		if (!e.visible()) return false;
 		if (Gdx.input.getX() >= e.getX() * Main.getScaleFactorX()
-				&& Gdx.input.getX() <= (e.getX() * Main.getScaleFactorX()) + (e.getWidth() * Main.getScaleFactorX())) {
-			if (Main.convertY(Gdx.input.getY()) >= e.getY() * Main.getScaleFactorY()
-					&& Main.convertY(Gdx.input.getY()) <= (e.getY() * Main.getScaleFactorY())
+				&& Gdx.input.getX() <= (e.getX() * Main.getScaleFactorX())
+						+ (e.getWidth() * Main.getScaleFactorX())) {
+			if (Gdx.graphics.getHeight() - Gdx.input.getY() >= e.getY() * Main.getScaleFactorY()
+					&& Gdx.graphics.getHeight() - Gdx.input.getY() <= (e.getY() * Main.getScaleFactorY())
 							+ (e.getHeight() * Main.getScaleFactorY())) {
 				return true;
 			}
