@@ -66,7 +66,6 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -79,7 +78,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class Main extends Game implements Consumer {
 
 	public OrthographicCamera camera;
-	private static Viewport viewport;
+	public static Viewport viewport;
 
 	public SpriteBatch batch;
 	public SpriteBatch maskRenderer;
@@ -709,7 +708,7 @@ public class Main extends Game implements Consumer {
 	private static Vector2 unprojector = new Vector2(0, 0);
 
 	public static int getInputX() {
-		return (int) (Gdx.input.getX() * getScaleFactorX());
+		return (int) ((Gdx.input.getX()) * getScaleFactorX());
 		// return ((int) (viewport.unproject(unprojector.set(Gdx.input.getX(),
 		// Gdx.input.getY())).x));
 	}
@@ -722,7 +721,7 @@ public class Main extends Game implements Consumer {
 	}
 
 	public static float getScaleFactorX() {
-		return ((Gdx.graphics.getWidth() * 1f) / Settings.DEFAULT_WIDTH);
+		return (((Gdx.graphics.getWidth() - viewport.getLeftGutterWidth() - viewport.getRightGutterWidth()) * 1f) / Settings.DEFAULT_WIDTH);
 	}
 
 	public static float getScaleFactorY() {
