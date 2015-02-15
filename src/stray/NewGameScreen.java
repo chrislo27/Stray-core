@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.GL20;
 
 public class NewGameScreen extends Updateable {
 
-	private ChoiceButton difficulty = new ChoiceButton((Gdx.graphics.getWidth() / 2) - 105, 64,
+	private ChoiceButton difficulty = new ChoiceButton((Settings.DEFAULT_WIDTH / 2) - 105, 64,
 			210, 32, "menu.difficultyselect", new String[] { "menu.difficulty.easy",
 					"menu.difficulty.normal", "menu.difficulty.hard" });
 
@@ -25,7 +25,7 @@ public class NewGameScreen extends Updateable {
 		difficulty.selection = Difficulty.NORMAL_ID;
 
 		container.elements.add(difficulty);
-		container.elements.add(new Button((Gdx.graphics.getWidth() / 2) - 80, 150, 160, 32,
+		container.elements.add(new Button((Settings.DEFAULT_WIDTH / 2) - 80, 150, 160, 32,
 				"menu.start") {
 
 			@Override
@@ -49,7 +49,7 @@ public class NewGameScreen extends Updateable {
 			}
 
 		});
-		container.elements.add(new BackButton(Gdx.graphics.getWidth() - 37, Gdx.graphics
+		container.elements.add(new BackButton(Settings.DEFAULT_WIDTH - 37, Gdx.graphics
 				.getHeight() - 37) {
 
 			@Override
@@ -73,7 +73,7 @@ public class NewGameScreen extends Updateable {
 		main.font.setColor(Color.WHITE);
 		Difficulty diff = Difficulty.get().get(difficulty.selection);
 		main.drawCentered(Translator.getMsg(difficulty.choices.get(difficulty.selection))
-				+ ": " + diff.damageMultiplier + "x " + Translator.getMsg("menu.difficultysummary"), Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2 - 7);
+				+ ": " + diff.damageMultiplier + "x " + Translator.getMsg("menu.difficultysummary"), Settings.DEFAULT_WIDTH / 2, Gdx.graphics.getHeight() / 2 - 7);
 
 		container.render(main);
 		main.font.setColor(Color.WHITE);

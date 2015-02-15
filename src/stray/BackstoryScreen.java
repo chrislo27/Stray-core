@@ -25,15 +25,15 @@ public class BackstoryScreen extends MiscLoadingScreen {
 		main.batch.begin();
 		main.font.setColor(1, 1, 1, 1);
 		if (story != null) main.font.drawWrapped(main.batch,
-				Translator.getMsg("backstory." + story), Gdx.graphics.getWidth() / 4f,
-				Main.convertY(Gdx.graphics.getHeight() * 0.4f), Gdx.graphics.getWidth() / 2f);
+				Translator.getMsg("backstory." + story), Settings.DEFAULT_WIDTH / 4f,
+				Main.convertY(Gdx.graphics.getHeight() * 0.4f), Settings.DEFAULT_WIDTH / 2f);
 
 		main.font.setColor(1, 1, 1, 1);
-		main.drawCentered(Translator.getMsg("conversation.next"), Gdx.graphics.getWidth() / 2,
+		main.drawCentered(Translator.getMsg("conversation.next"), Settings.DEFAULT_WIDTH / 2,
 				Main.convertY(Gdx.graphics.getHeight() * 0.8f));
 		main.font.setColor(1, 1, 1, 1);
 		main.batch.setColor(Color.BLACK);
-		main.fillRect(Gdx.graphics.getWidth() - 192, 0, 192, 128);
+		main.fillRect(Settings.DEFAULT_WIDTH - 192, 0, 192, 128);
 		main.batch.setColor(Color.WHITE);
 
 		main.batch.end();

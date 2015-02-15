@@ -3,9 +3,9 @@ package stray.util;
 import java.util.concurrent.TimeUnit;
 
 import stray.Main;
+import stray.Settings;
 import stray.world.World;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -29,8 +29,8 @@ public class Utils {
 
 	public static float getSoundPan(float xpos, float camerax) {
 		return MathUtils
-				.clamp(((xpos - (Math.round((camerax + (Gdx.graphics.getWidth() / 2))
-						/ World.tilesizex))) / (((Gdx.graphics.getWidth() / 2f) - World.tilesizex) / World.tilesizex)),
+				.clamp(((xpos - (Math.round((camerax + (Settings.DEFAULT_WIDTH / 2))
+						/ World.tilesizex))) / (((Settings.DEFAULT_WIDTH / 2f) - World.tilesizex) / World.tilesizex)),
 						-1f, 1f);
 	}
 

@@ -19,7 +19,7 @@ public class ResultsScreen extends Updateable {
 	public ResultsScreen(Main m) {
 		super(m);
 
-		container.elements.add(new LevelSelectButton(Gdx.graphics.getWidth() / 2 - 24 - 8 - 48,
+		container.elements.add(new LevelSelectButton(Settings.DEFAULT_WIDTH / 2 - 24 - 8 - 48,
 				Gdx.graphics.getHeight() / 4) {
 
 			@Override
@@ -31,7 +31,7 @@ public class ResultsScreen extends Updateable {
 
 		});
 
-		container.elements.add(new RetryLevelButton(Gdx.graphics.getWidth() / 2 - 24, Gdx.graphics
+		container.elements.add(new RetryLevelButton(Settings.DEFAULT_WIDTH / 2 - 24, Gdx.graphics
 				.getHeight() / 4) {
 
 			@Override
@@ -43,7 +43,7 @@ public class ResultsScreen extends Updateable {
 
 		});
 
-		container.elements.add(new NextLevelButton(Gdx.graphics.getWidth() / 2 - 24 + 8 + 48,
+		container.elements.add(new NextLevelButton(Settings.DEFAULT_WIDTH / 2 - 24 + 8 + 48,
 				Gdx.graphics.getHeight() / 4) {
 
 			@Override
@@ -117,40 +117,40 @@ public class ResultsScreen extends Updateable {
 		if (levelfile != null) {
 			main.font.setColor(1, 1, 1, 1);
 			main.font.setScale(2);
-			main.drawCentered(Levels.getLevelName(levelname), Gdx.graphics.getWidth() / 2,
+			main.drawCentered(Levels.getLevelName(levelname), Settings.DEFAULT_WIDTH / 2,
 					Main.convertY(225));
 			main.font.setScale(1);
 			main.drawCentered(
 					Translator.getMsg("menu.results.latesttime")
 							+ Utils.formatMs(main.progress.getLong(levelfile + "-latesttime")),
-					Gdx.graphics.getWidth() / 2, Main.convertY(275));
+					Settings.DEFAULT_WIDTH / 2, Main.convertY(275));
 			main.drawCentered(
 					Translator.getMsg("menu.results.besttime")
 							+ Utils.formatMs(main.progress.getLong(levelfile + "-latesttime")),
-					Gdx.graphics.getWidth() / 2, Main.convertY(300));
+					Settings.DEFAULT_WIDTH / 2, Main.convertY(300));
 
 			main.drawCentered(Translator.getMsg("menu.results.deaths") + deaths.size,
-					Gdx.graphics.getWidth() / 2, Main.convertY(325));
+					Settings.DEFAULT_WIDTH / 2, Main.convertY(325));
 
 			if (deaths.size > 0) {
-				renderDeaths(Gdx.graphics.getWidth() / 2 - ((icons.size / 2f) * 35),
+				renderDeaths(Settings.DEFAULT_WIDTH / 2 - ((icons.size / 2f) * 35),
 						Main.convertY(375));
 			}
 
 			main.drawCentered(Translator.getMsg("menu.results.verdict"),
-					Gdx.graphics.getWidth() / 2, Main.convertY(400));
+					Settings.DEFAULT_WIDTH / 2, Main.convertY(400));
 			if (voidPresent) {
 				if (main.progress.getLong(levelfile + "-latesttime") <= Levels.instance().levels
 						.get(levelname).bestTime) {
 					main.drawCentered("\"" + Translator.getMsg("menu.results.good" + resultsPick)
-							+ "\"", Gdx.graphics.getWidth() / 2, Main.convertY(415));
+							+ "\"", Settings.DEFAULT_WIDTH / 2, Main.convertY(415));
 				} else {
 					main.drawCentered("\"" + Translator.getMsg("menu.results.bad" + resultsPick)
-							+ "\"", Gdx.graphics.getWidth() / 2, Main.convertY(415));
+							+ "\"", Settings.DEFAULT_WIDTH / 2, Main.convertY(415));
 				}
 			} else {
 				main.drawCentered("\"" + Translator.getMsg("menu.results.good" + resultsPick)
-						+ "\"", Gdx.graphics.getWidth() / 2, Main.convertY(415));
+						+ "\"", Settings.DEFAULT_WIDTH / 2, Main.convertY(415));
 			}
 		}
 

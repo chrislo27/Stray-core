@@ -18,7 +18,7 @@ public class MiscLoadingScreen extends Updateable {
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		main.batch.begin();
-		Main.gears.render(main, Gdx.graphics.getWidth() - (192), 0);
+		Main.gears.render(main, Settings.DEFAULT_WIDTH - (192), 0);
 		main.batch.end();
 	}
 

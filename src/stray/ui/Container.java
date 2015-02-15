@@ -21,12 +21,7 @@ public class Container {
 	public boolean onLeftClick() {
 		for (GuiElement e : elements) {
 			if (!e.visible()) continue;
-			if (Gdx.input.getX() >= e.getX() && Gdx.input.getX() <= e.getX() + e.getWidth()) {
-				if (Main.convertY(Gdx.input.getY()) >= e.getY()
-						&& Main.convertY(Gdx.input.getY()) <= e.getY() + e.getHeight()) {
-					if (e.onLeftClick()) return true;
-				}
-			}
+			if (mouseIn(e)) if (e.onLeftClick()) return true;
 		}
 
 		return false;
@@ -35,11 +30,20 @@ public class Container {
 	public boolean onRightClick() {
 		for (GuiElement e : elements) {
 			if (!e.visible()) continue;
-			if (Gdx.input.getX() >= e.getX() && Gdx.input.getX() <= e.getX() + e.getWidth()) {
-				if (Main.convertY(Gdx.input.getY()) >= e.getY()
-						&& Main.convertY(Gdx.input.getY()) <= e.getY() + e.getHeight()) {
-					if (e.onRightClick()) return true;
-				}
+			if (mouseIn(e)) if (e.onRightClick()) return true;
+		}
+
+		return false;
+	}
+
+	protected static boolean mouseIn(GuiElement e) {
+		if (!e.visible()) return false;
+		if (Gdx.input.getX() >= e.getX() * Main.getScaleFactorX()
+				&& Gdx.input.getX() <= (e.getX() * Main.getScaleFactorX()) + (e.getWidth() * Main.getScaleFactorX())) {
+			if (Main.convertY(Gdx.input.getY()) >= e.getY() * Main.getScaleFactorY()
+					&& Main.convertY(Gdx.input.getY()) <= (e.getY() * Main.getScaleFactorY())
+							+ (e.getHeight() * Main.getScaleFactorY())) {
+				return true;
 			}
 		}
 

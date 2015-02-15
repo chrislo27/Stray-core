@@ -65,6 +65,8 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -77,7 +79,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class Main extends Game implements Consumer {
 
 	public OrthographicCamera camera;
-	Viewport viewport;
+	private static Viewport viewport;
 
 	public SpriteBatch batch;
 	public SpriteBatch maskRenderer;
@@ -569,7 +571,8 @@ public class Main extends Game implements Consumer {
 		manager.load("images/ui/damage/fire.png", Texture.class);
 		manager.load("images/ui/damage/electric.png", Texture.class);
 		manager.load("images/ui/damage/theVoid.png", Texture.class);
-		manager.load(AssetMap.add("playerdirectionarrow", "images/ui/player-arrow.png"), Texture.class);
+		manager.load(AssetMap.add("playerdirectionarrow", "images/ui/player-arrow.png"),
+				Texture.class);
 
 		// particle
 		manager.load(AssetMap.add("money", "images/particle/money.png"), Texture.class);
@@ -605,7 +608,8 @@ public class Main extends Game implements Consumer {
 
 		// entities
 		manager.load(AssetMap.add("player", "images/entity/player/player.png"), Texture.class);
-		manager.load(AssetMap.add("playerGears", "images/entity/player/Copy of player.png"), Texture.class);
+		manager.load(AssetMap.add("playerGears", "images/entity/player/Copy of player.png"),
+				Texture.class);
 		manager.load(AssetMap.add("smallasteroid", "images/entity/smallasteroid.png"),
 				Texture.class);
 		manager.load(AssetMap.add("entityzaborinox", "images/entity/zaborinox.png"), Texture.class);
@@ -677,12 +681,11 @@ public class Main extends Game implements Consumer {
 				.setRegionTile(128, 128).setVertical(false));
 		animations.put("fire-hud", new LoopingAnimation(0.05f, 8, "images/ui/fire-hudnomiddle.png",
 				true).setRegionTile(864, 468).setVertical(false));
-		animations
-				.put("jumppad", new LoopingAnimation(0.25f, 4, "images/blocks/jumppad/jumppad.png",
-						true).setRegionTile(64, 64));
-		animations.put("accelerationpad",
-				new LoopingAnimation(0.5f, 2, "images/blocks/accpad/accelerationpad.png", true)
-						.setRegionTile(64, 64).setVertical(false));
+		animations.put("jumppad", new LoopingAnimation(0.25f, 4,
+				"images/blocks/jumppad/jumppad.png", true).setRegionTile(64, 64));
+		animations.put("accelerationpad", new LoopingAnimation(0.5f, 2,
+				"images/blocks/accpad/accelerationpad.png", true).setRegionTile(64, 64)
+				.setVertical(false));
 
 		// load animations
 		Iterator it = animations.entrySet().iterator();
@@ -701,6 +704,27 @@ public class Main extends Game implements Consumer {
 		Colors.put("OBJECT", new Color(1, 217 / 255f, 0, 1));
 		Colors.put("VERB", new Color(1, 75 / 255f, 3 / 255f, 1));
 		Colors.put("KEY", new Color(0, 204 / 255f, 0, 1));
+	}
+
+	private static Vector2 unprojector = new Vector2(0, 0);
+
+	public static int getInputX() {
+		return (int) (Gdx.input.getX() * getScaleFactorX());
+//		return ((int) (viewport.unproject(unprojector.set(Gdx.input.getX(), Gdx.input.getY())).x));
+	}
+
+	public static int getInputY() {
+		return (int) (Gdx.input.getY() * getScaleFactorY());
+//		return viewport.getScreenHeight()
+//				- ((int) (viewport.unproject(unprojector.set(Gdx.input.getX(), Gdx.input.getY())).y));
+	}
+	
+	public static float getScaleFactorX(){
+		return ((Gdx.graphics.getWidth() * 1f) / Settings.DEFAULT_WIDTH);
+	}
+	
+	public static float getScaleFactorY(){
+		return ((Gdx.graphics.getHeight() * 1f) / Settings.DEFAULT_HEIGHT);
 	}
 
 	public Texture getCurrentShine() {
@@ -724,6 +748,7 @@ public class Main extends Game implements Consumer {
 	@Override
 	public void resize(int x, int y) {
 		viewport.update(x, y, false);
+		viewport.apply();
 		camera.setToOrtho(false, x, y);
 	}
 
@@ -888,12 +913,6 @@ public class Main extends Game implements Consumer {
 		return ret;
 	}
 
-	public static boolean useDefaultHeight = false;
-
-	public static void setUseDefaultHeight(boolean b) {
-		useDefaultHeight = b;
-	}
-
 	/**
 	 * converts y-down to y-up
 	 * 
@@ -902,8 +921,7 @@ public class Main extends Game implements Consumer {
 	 * @return the y-down conversion of input
 	 */
 	public static int convertY(float f) {
-		return Math.round((useDefaultHeight ? Settings.DEFAULT_HEIGHT : Gdx.graphics.getHeight())
-				- f);
+		return Math.round(Settings.DEFAULT_HEIGHT - f);
 	}
 
 	public void drawInverse(String s, float x, float y) {

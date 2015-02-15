@@ -124,27 +124,27 @@ public class LevelEditor extends Updateable {
 	public void render(float delta) {
 		world.renderOnly();
 
-		selx = world.getRoomX(Gdx.input.getX());
-		sely = world.getRoomY(Gdx.input.getY());
+		selx = world.getRoomX(Main.getInputX());
+		sely = world.getRoomY(Main.getInputY());
 
 		main.batch.begin();
 		main.batch.setColor(1, 1, 1, 0.5f);
 		Blocks.instance().getBlock(blocks.get(blocksel)).render(world, selx, sely);
 		main.batch.setColor(1, 1, 1, 1);
-		main.drawInverse("DEBUG MODE RECOMMENDED - F12", Gdx.graphics.getWidth() - 5,
+		main.drawInverse("DEBUG MODE RECOMMENDED - F12", Settings.DEFAULT_WIDTH - 5,
 				Gdx.graphics.getHeight() - 5);
-		main.drawInverse("ALT+S - SAVE", Gdx.graphics.getWidth() - 5, Gdx.graphics.getHeight() - 20);
-		main.drawInverse("ALT+O - OPEN", Gdx.graphics.getWidth() - 5, Gdx.graphics.getHeight() - 35);
+		main.drawInverse("ALT+S - SAVE", Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 20);
+		main.drawInverse("ALT+O - OPEN", Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 35);
 		main.drawInverse("NUMPAD 8462 - change level dimensions (will reset level!)",
-				Gdx.graphics.getWidth() - 5, Gdx.graphics.getHeight() - 50);
-		main.drawInverse("ALT+D - change metadata of selected", Gdx.graphics.getWidth() - 5,
+				Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 50);
+		main.drawInverse("ALT+D - change metadata of selected", Settings.DEFAULT_WIDTH - 5,
 				Gdx.graphics.getHeight() - 65);
-		main.drawInverse("ALT+SHFT+D - change DEFAULT metadata", Gdx.graphics.getWidth() - 5,
+		main.drawInverse("ALT+SHFT+D - change DEFAULT metadata", Settings.DEFAULT_WIDTH - 5,
 				Gdx.graphics.getHeight() - 80);
-		main.drawInverse("ALT+T - TEST LEVEL", Gdx.graphics.getWidth() - 5,
+		main.drawInverse("ALT+T - TEST LEVEL", Settings.DEFAULT_WIDTH - 5,
 				Gdx.graphics.getHeight() - 95);
 		main.drawInverse("- / + - ADJUST VOID TIME (" + world.voidTime + " s)",
-				Gdx.graphics.getWidth() - 5, Gdx.graphics.getHeight() - 110);
+				Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 110);
 		main.batch.end();
 
 		world.camera.clamp();

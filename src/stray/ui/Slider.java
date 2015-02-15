@@ -41,10 +41,10 @@ public class Slider implements GuiElement {
 				+ ((width - 32) * slider), y, 32, 32);
 
 		if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
-			if (Gdx.input.getX() >= x + ((width - 32) * slider)
-					&& Gdx.input.getX() <= x + ((width - 32) * slider) + 32) {
-				if (Main.convertY(Gdx.input.getY()) >= y
-						&& Main.convertY(Gdx.input.getY()) <= y + height) {
+			if (Main.getInputX() >= x + ((width - 32) * slider)
+					&& Main.getInputX() <= x + ((width - 32) * slider) + 32) {
+				if (Main.convertY(Main.getInputY()) >= y
+						&& Main.convertY(Main.getInputY()) <= y + height) {
 					grabbed = true;
 				}
 			}
@@ -52,7 +52,7 @@ public class Slider implements GuiElement {
 			grabbed = false;
 		}
 		if (grabbed) {
-			slider = MathUtils.clamp(((Gdx.input.getX() - x)) / (width - 32f), 0f, 1f);
+			slider = MathUtils.clamp(((Main.getInputX() - x)) / (width - 32f), 0f, 1f);
 
 		}
 	}

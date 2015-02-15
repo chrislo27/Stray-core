@@ -1,10 +1,10 @@
 package stray.transition;
 
+import stray.Main;
+import stray.Settings;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-
-import stray.Main;
-import stray.util.MathHelper;
 
 public class Spiral implements Transition {
 
@@ -14,7 +14,7 @@ public class Spiral implements Transition {
 
 	public Spiral(int time) {
 		tilespertick = time;
-		tilewidth = Gdx.graphics.getWidth() / 16;
+		tilewidth = Settings.DEFAULT_WIDTH / 16;
 		tileheight = Gdx.graphics.getHeight() / 9;
 
 		traversed = new boolean[tilewidth][tileheight];

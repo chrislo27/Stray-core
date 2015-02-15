@@ -4,6 +4,8 @@ import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import stray.Settings;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -23,7 +25,7 @@ public class ScreenshotFactory {
             do{
                 fh = new FileHandle("screenshots/screenshot_" + date + ".png");
             }while (fh.exists());
-            Pixmap pixmap = getScreenshot(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+            Pixmap pixmap = getScreenshot(0, 0, Settings.DEFAULT_WIDTH, Gdx.graphics.getHeight(), true);
             PixmapIO.writePNG(fh, pixmap);
             pixmap.dispose();
         }catch (Exception e){           

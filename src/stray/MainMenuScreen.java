@@ -18,7 +18,7 @@ public strictfp class MainMenuScreen extends Updateable {
 	public MainMenuScreen(Main m) {
 		super(m);
 
-		container.elements.add(new Button((Gdx.graphics.getWidth() / 2) - 80, 64, 160, 32,
+		container.elements.add(new Button((Settings.DEFAULT_WIDTH / 2) - 80, 64, 160, 32,
 				"menu.new") {
 
 			@Override
@@ -31,7 +31,7 @@ public strictfp class MainMenuScreen extends Updateable {
 				return true;
 			}
 		});
-		container.elements.add(new Button((Gdx.graphics.getWidth() / 2) - 80, 128, 160, 32,
+		container.elements.add(new Button((Settings.DEFAULT_WIDTH / 2) - 80, 128, 160, 32,
 				"menu.continue") {
 
 			@Override
@@ -53,7 +53,7 @@ public strictfp class MainMenuScreen extends Updateable {
 			}
 		});
 		container.elements.add(new SettingsButton(5, 5));
-		container.elements.add(new BackButton(Gdx.graphics.getWidth() - 37, Gdx.graphics
+		container.elements.add(new BackButton(Settings.DEFAULT_WIDTH - 37, Gdx.graphics
 				.getHeight() - 37) {
 
 			@Override
@@ -76,29 +76,29 @@ public strictfp class MainMenuScreen extends Updateable {
 
 		main.font.setColor(Color.WHITE);
 		main.font.setScale(2.5f);
-		main.drawCentered(Translator.getMsg("gamename").toUpperCase(), Gdx.graphics.getWidth() / 2,
+		main.drawCentered(Translator.getMsg("gamename").toUpperCase(), Settings.DEFAULT_WIDTH / 2,
 				Main.convertY(200));
 		main.font.setScale(1);
 
-		main.drawInverse(Main.version, Gdx.graphics.getWidth() - 5, 20);
+		main.drawInverse(Main.version, Settings.DEFAULT_WIDTH - 5, 20);
 		if (!Main.latestVersion.equals("")) {
 			switch(VersionGetter.getDiff()){
 			case EQUAL:
 				main.font.setColor(0, 1, 0, 1);
-				main.drawInverse(Translator.getMsg("menu.uptodate"), Gdx.graphics.getWidth() - 5,
+				main.drawInverse(Translator.getMsg("menu.uptodate"), Settings.DEFAULT_WIDTH - 5,
 						35);
 				main.font.setColor(1, 1, 1, 1);
 				break;
 			case FUTURE:
 				main.font.setColor(Color.CYAN);
 				main.drawInverse(Translator.getMsg("menu.versionahead") + Main.latestVersion + ")",
-						Gdx.graphics.getWidth() - 5, 35);
+						Settings.DEFAULT_WIDTH - 5, 35);
 				main.font.setColor(1, 1, 1, 1);
 				break;
 			case OUTDATED:
 				main.font.setColor(1, 0, 0, 1);
 				main.drawInverse(Translator.getMsg("menu.newversion") + Main.latestVersion,
-						Gdx.graphics.getWidth() - 5, 35);
+						Settings.DEFAULT_WIDTH - 5, 35);
 				main.font.setColor(1, 1, 1, 1);
 				break;
 			default:
@@ -108,12 +108,12 @@ public strictfp class MainMenuScreen extends Updateable {
 			switch(VersionGetter.getDiff()){
 			case CHECKING:
 				main.drawInverse(Translator.getMsg("menu.checkingversion"),
-						Gdx.graphics.getWidth() - 5, 35);
+						Settings.DEFAULT_WIDTH - 5, 35);
 				break;
 			case INVALID:
 				main.font.setColor(1, 0, 0, 1);
 				main.drawInverse(Translator.getMsg("menu.versioncheckfail"),
-						Gdx.graphics.getWidth() - 5, 35);
+						Settings.DEFAULT_WIDTH - 5, 35);
 				break;
 			default:
 				break;

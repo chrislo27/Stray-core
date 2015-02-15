@@ -36,7 +36,7 @@ public class SpaceBackground {
 	private int magicnumber = Main.getRandom().nextInt();
 	private float camerax = 0;
 	private double timewatched = 0d;
-	private float krakenx = Gdx.graphics.getWidth();
+	private float krakenx = Settings.DEFAULT_WIDTH;
 	private Array<VisualAsteroid> asteroids = new Array<VisualAsteroid>();
 
 	private int cooldown = 0;
@@ -47,7 +47,7 @@ public class SpaceBackground {
 		while (asteroids.size < maxAsteroids) {
 			VisualAsteroid ast = new VisualAsteroid();
 			moveAsteroidToEdge(ast);
-			ast.x = World.tilesizex + (Gdx.graphics.getWidth() * Main.getRandom().nextFloat());
+			ast.x = World.tilesizex + (Settings.DEFAULT_WIDTH * Main.getRandom().nextFloat());
 			asteroids.add(ast);
 		}
 	}
@@ -80,7 +80,7 @@ public class SpaceBackground {
 
 			if (asteroids.get(i).x < -(32 * asteroids.get(i).size)) {
 				if (asteroids.size > maxAsteroids
-						&& (getAsteroidsRight(Gdx.graphics.getWidth() / 2) > maxAsteroids)) {
+						&& (getAsteroidsRight(Settings.DEFAULT_WIDTH / 2) > maxAsteroids)) {
 					asteroids.removeIndex(i);
 				} else {
 					moveAsteroidToEdge(asteroids.get(i));
@@ -89,7 +89,7 @@ public class SpaceBackground {
 		}
 
 		main.batch.draw(main.manager.get(AssetMap.get("spacekraken"), Texture.class), krakenx, 0,
-				Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+				Settings.DEFAULT_WIDTH, Gdx.graphics.getHeight());
 		main.font.draw(main.batch, "Did you ever really remove me?", krakenx + 100, 225);
 
 		if (Settings.debug) {
@@ -115,13 +115,13 @@ public class SpaceBackground {
 		}
 
 		if (Gdx.input.isButtonPressed(Buttons.LEFT) && cooldown == 0) {
-			if (krakenx < Gdx.graphics.getWidth() && krakenx > -Gdx.graphics.getWidth()) {
+			if (krakenx < Settings.DEFAULT_WIDTH && krakenx > -Settings.DEFAULT_WIDTH) {
 				main.awardAchievement("kraken");
 			} else {
 				for (VisualAsteroid ast : asteroids) {
-					if (Gdx.input.getX() >= ast.x && Gdx.input.getX() <= (ast.x + (ast.size * 32))) {
-						if (Gdx.input.getY() <= ast.y
-								&& Gdx.input.getY() >= (ast.y - (ast.size * 32))) {
+					if (Main.getInputX() >= ast.x && Main.getInputX() <= (ast.x + (ast.size * 32))) {
+						if (Main.getInputY() <= ast.y
+								&& Main.getInputY() >= (ast.y - (ast.size * 32))) {
 							if (ast.colour) {
 								main.awardAchievement("secret");
 								ast.colour = false;
@@ -138,7 +138,7 @@ public class SpaceBackground {
 
 		if (cooldown > 0) cooldown--;
 		timewatched += Gdx.graphics.getRawDeltaTime();
-		if (timewatched >= (1800) && krakenx > -Gdx.graphics.getWidth()) {
+		if (timewatched >= (1800) && krakenx > -Settings.DEFAULT_WIDTH) {
 			krakenx -= Gdx.graphics.getDeltaTime() * 64;
 		}
 	}
@@ -158,7 +158,7 @@ public class SpaceBackground {
 	private void moveAsteroidToEdge(VisualAsteroid ast) {
 		ast.y = (Gdx.graphics.getHeight() - (ast.size * (32 / 4)))
 				* Main.getRandom().nextFloat();
-		ast.x = Gdx.graphics.getWidth() + World.tilesizex
+		ast.x = Settings.DEFAULT_WIDTH + World.tilesizex
 				+ (Main.getRandom().nextFloat() * (World.tilesizex * 2));
 		ast.prepare();
 	}

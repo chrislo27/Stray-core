@@ -19,7 +19,7 @@ public class LevelSelectScreen extends Updateable {
 
 	public LevelSelectScreen(Main m) {
 		super(m);
-		container.elements.add(new BackButton(Gdx.graphics.getWidth() - 37, Gdx.graphics
+		container.elements.add(new BackButton(Settings.DEFAULT_WIDTH - 37, Gdx.graphics
 				.getHeight() - 37) {
 
 			@Override
@@ -29,7 +29,7 @@ public class LevelSelectScreen extends Updateable {
 			}
 		});
 
-		container.elements.add(new Button(Gdx.graphics.getWidth() / 2 - 80, 64, -1, -1,
+		container.elements.add(new Button(Settings.DEFAULT_WIDTH / 2 - 80, 64, -1, -1,
 				"menu.levelselect.enter") {
 
 			@Override
@@ -64,10 +64,10 @@ public class LevelSelectScreen extends Updateable {
 	public void render(float delta) {
 		main.batch.begin();
 		main.batch.draw(main.manager.get(AssetMap.get("levelselectbg"), Texture.class), 0, 0,
-				Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+				Settings.DEFAULT_WIDTH, Gdx.graphics.getHeight());
 
 		main.batch.setColor(Color.CYAN);
-		main.fillRect(0, Gdx.graphics.getHeight() / 2 - 8, Gdx.graphics.getWidth(), 16);
+		main.fillRect(0, Gdx.graphics.getHeight() / 2 - 8, Settings.DEFAULT_WIDTH, 16);
 		main.batch.setColor(Color.WHITE);
 
 		main.font.setColor(Color.BLACK);
@@ -75,11 +75,11 @@ public class LevelSelectScreen extends Updateable {
 			if (i < wanted - 3 || i > wanted + 3) continue;
 
 			main.batch.draw(main.manager.get(AssetMap.get("levelselectdot"), Texture.class),
-					(Gdx.graphics.getWidth() / 2 - 24) + ((i - offset) * DISTANCE),
+					(Settings.DEFAULT_WIDTH / 2 - 24) + ((i - offset) * DISTANCE),
 					Gdx.graphics.getHeight() / 2 - 24, 48, 48);
 			if (Levels.instance().levels.get(i) != null) {
 				main.font.setScale(1.5f);
-				main.drawCentered(Levels.getLevelName(i), (Gdx.graphics.getWidth() / 2)
+				main.drawCentered(Levels.getLevelName(i), (Settings.DEFAULT_WIDTH / 2)
 						+ ((i - offset) * DISTANCE), Gdx.graphics.getHeight() / 2 + 64);
 				if (getCurrent() == i) {
 					long millis = main.progress.getLong(Levels.instance().levels.get(i).name
@@ -89,11 +89,11 @@ public class LevelSelectScreen extends Updateable {
 					main.font.setScale(1);
 					main.drawCentered(Translator.getMsg("menu.bestleveltime") + ": "
 							+ (millis == -1 ? "--:--:--.---" : Utils.formatMs(millis)),
-							Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2 - 115);
+							Settings.DEFAULT_WIDTH / 2, Gdx.graphics.getHeight() / 2 - 115);
 					main.drawCentered(Translator.getMsg("menu.latestleveltime") + ": "
 							+ (lastms == -1 ? "--:--:--.---" : Utils.formatMs(lastms)),
-							Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2 - 130);
-					main.drawCentered("more info here later", Gdx.graphics.getWidth() / 2,
+							Settings.DEFAULT_WIDTH / 2, Gdx.graphics.getHeight() / 2 - 130);
+					main.drawCentered("more info here later", Settings.DEFAULT_WIDTH / 2,
 							Gdx.graphics.getHeight() / 2 - 145);
 
 				}
@@ -103,7 +103,7 @@ public class LevelSelectScreen extends Updateable {
 		main.batch.setColor(getCurrent() == -1 ? Color.GRAY : (getCurrent() % 2 == 0 ? Main
 				.getRainbow(1) : Main.getRainbow(-1)));
 		main.batch.draw(main.manager.get(AssetMap.get("levelselected"), Texture.class),
-				(Gdx.graphics.getWidth() / 2 - 32), Gdx.graphics.getHeight() / 2 - 96, 64, 128);
+				(Settings.DEFAULT_WIDTH / 2 - 32), Gdx.graphics.getHeight() / 2 - 96, 64, 128);
 		main.batch.setColor(Color.WHITE);
 
 		container.render(main);

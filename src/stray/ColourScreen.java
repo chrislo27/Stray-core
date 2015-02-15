@@ -18,7 +18,7 @@ public class ColourScreen extends Updateable {
 		randomize();
 	}
 
-	public static final int offx = (Gdx.graphics.getWidth() / 2) - 300;
+	public static final int offx = (Settings.DEFAULT_WIDTH / 2) - 300;
 	public static final int offy = (Gdx.graphics.getHeight() / 2) - 300;
 
 	String[][] tiles = new String[10][7];
@@ -62,13 +62,13 @@ public class ColourScreen extends Updateable {
 		main.font.draw(main.batch, "Current colour: " + choose + " / " + amount + " remaining",
 				offx + 5, 120);
 		main.font.setColor(Color.WHITE);
-		main.drawCentered("Welcome to C.O.L.O.U.R.!", Gdx.graphics.getWidth() / 2, Main.convertY(5));
+		main.drawCentered("Welcome to C.O.L.O.U.R.!", Settings.DEFAULT_WIDTH / 2, Main.convertY(5));
 		main.drawCentered("This is a throwback to the first game ever made by chrislo27 in 2012.",
-				Gdx.graphics.getWidth() / 2, Main.convertY(20));
+				Settings.DEFAULT_WIDTH / 2, Main.convertY(20));
 		main.drawCentered("It is relatively pointless, but you found this easter egg nonetheless.",
-				Gdx.graphics.getWidth() / 2, Main.convertY(35));
+				Settings.DEFAULT_WIDTH / 2, Main.convertY(35));
 		main.drawCentered("WARNING: possible seizure warning with Apocalypse Swap",
-				Gdx.graphics.getWidth() / 2, Main.convertY(50));
+				Settings.DEFAULT_WIDTH / 2, Main.convertY(50));
 		main.font.setColor(Color.RED);
 		main.font.draw(main.batch, "Arrow Keys - move | Spacebar - select", offx + 5, 105);
 		main.font.draw(main.batch, "Escape - Main Menu | R - Apocalypse Swap", offx + 5, 90);

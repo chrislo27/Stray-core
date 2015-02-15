@@ -19,7 +19,7 @@ public class SettingsScreen extends Updateable {
 
 	private void addGuiElements() {
 		container.elements.clear();
-		container.elements.add(new BackButton(Gdx.graphics.getWidth() - 37, Gdx.graphics
+		container.elements.add(new BackButton(Settings.DEFAULT_WIDTH - 37, Gdx.graphics
 				.getHeight() - 37) {
 
 			@Override
@@ -31,7 +31,7 @@ public class SettingsScreen extends Updateable {
 		container.elements.add(new LanguageButton(5, 5));
 		container.elements.add(music.setSlider(Settings.musicVolume));
 		container.elements.add(sound.setSlider(Settings.soundVolume));
-		container.elements.add(new BooleanButton((Gdx.graphics.getWidth() / 2) - 80, Gdx.graphics
+		container.elements.add(new BooleanButton((Settings.DEFAULT_WIDTH / 2) - 80, Gdx.graphics
 				.getHeight() - 286, 160, 32, "menu.settings.showfps") {
 
 			@Override
@@ -44,7 +44,7 @@ public class SettingsScreen extends Updateable {
 			}
 		}.setState(Settings.showFPS));
 		container.elements.add(debug);
-		container.elements.add(new BooleanButton((Gdx.graphics.getWidth() / 2) - 80, Gdx.graphics
+		container.elements.add(new BooleanButton((Settings.DEFAULT_WIDTH / 2) - 80, Gdx.graphics
 				.getHeight() - 378, 160, 32, "menu.settings.vignette") {
 
 			@Override
@@ -57,12 +57,12 @@ public class SettingsScreen extends Updateable {
 
 	}
 
-	private Slider music = new Slider((Gdx.graphics.getWidth() / 2) - 80,
+	private Slider music = new Slider((Settings.DEFAULT_WIDTH / 2) - 80,
 			Gdx.graphics.getHeight() - 192, 160, 32);
-	private Slider sound = new Slider((Gdx.graphics.getWidth() / 2) - 80,
+	private Slider sound = new Slider((Settings.DEFAULT_WIDTH / 2) - 80,
 			Gdx.graphics.getHeight() - 240, 160, 32);
 	
-	private BooleanButton debug = new BooleanButton((Gdx.graphics.getWidth() / 2) - 80, Gdx.graphics
+	private BooleanButton debug = new BooleanButton((Settings.DEFAULT_WIDTH / 2) - 80, Gdx.graphics
 			.getHeight() - 332, 160, 32, "menu.settings.debugmode") {
 
 		@Override
@@ -86,21 +86,21 @@ public class SettingsScreen extends Updateable {
 		if (showRestartMsg) {
 			main.font.setColor(1, 0, 0, 1);
 			main.font.draw(main.batch, "[RED]*[]",
-					(Gdx.graphics.getWidth() / 2) - 100 - (main.font.getSpaceWidth() * 2),
+					(Settings.DEFAULT_WIDTH / 2) - 100 - (main.font.getSpaceWidth() * 2),
 					Gdx.graphics.getHeight() - 144 + 20);
 
 			main.font.setColor(1, 1, 1, 1);
 			main.drawScaled(Translator.getMsg("menu.settings.requiresrestart"),
-					(Gdx.graphics.getWidth() / 2), 100, 512, 0);
+					(Settings.DEFAULT_WIDTH / 2), 100, 512, 0);
 		}
 		main.font.setColor(1, 1, 1, 1);
 		main.font.draw(main.batch,
 				Translator.getMsg("menu.settings.musicvol", (int) (music.slider * 100)),
-				(Gdx.graphics.getWidth() / 2) + 80 + (main.font.getSpaceWidth()),
+				(Settings.DEFAULT_WIDTH / 2) + 80 + (main.font.getSpaceWidth()),
 				Gdx.graphics.getHeight() - 192 + 20);
 		main.font.draw(main.batch,
 				Translator.getMsg("menu.settings.soundvol", (int) (sound.slider * 100)),
-				(Gdx.graphics.getWidth() / 2) + 80 + (main.font.getSpaceWidth()),
+				(Settings.DEFAULT_WIDTH / 2) + 80 + (main.font.getSpaceWidth()),
 				Gdx.graphics.getHeight() - 240 + 20);
 
 		main.batch.end();

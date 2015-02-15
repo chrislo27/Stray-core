@@ -64,23 +64,23 @@ public class AssetLoadingScreen extends MiscLoadingScreen {
 
 		main.batch.begin();
 		main.batch.setColor(1, 1, 1, 1);
-		main.fillRect(Gdx.graphics.getWidth() / 2 - 128, Gdx.graphics.getHeight() / 2 - 10,
+		main.fillRect(Settings.DEFAULT_WIDTH / 2 - 128, Gdx.graphics.getHeight() / 2 - 10,
 				256 * main.manager.getProgress(), 20);
 
-		main.fillRect(Gdx.graphics.getWidth() / 2 - 130, Gdx.graphics.getHeight() / 2 - 12, 260, 1);
-		main.fillRect(Gdx.graphics.getWidth() / 2 - 130, Gdx.graphics.getHeight() / 2 + 11, 260, 1);
+		main.fillRect(Settings.DEFAULT_WIDTH / 2 - 130, Gdx.graphics.getHeight() / 2 - 12, 260, 1);
+		main.fillRect(Settings.DEFAULT_WIDTH / 2 - 130, Gdx.graphics.getHeight() / 2 + 11, 260, 1);
 
-		main.fillRect(Gdx.graphics.getWidth() / 2 - 130, Gdx.graphics.getHeight() / 2 - 12, 1, 24);
-		main.fillRect(Gdx.graphics.getWidth() / 2 + 132, Gdx.graphics.getHeight() / 2 - 12, 1, 24);
+		main.fillRect(Settings.DEFAULT_WIDTH / 2 - 130, Gdx.graphics.getHeight() / 2 - 12, 1, 24);
+		main.fillRect(Settings.DEFAULT_WIDTH / 2 + 132, Gdx.graphics.getHeight() / 2 - 12, 1, 24);
 
 		if (main.manager.getAssetNames().size > 0) {
 			main.drawTextBg(output.getLastMsg(),
-					Gdx.graphics.getWidth() / 2
+					Settings.DEFAULT_WIDTH / 2
 							- (main.font.getBounds(output.getLastMsg()).width / 2),
 					Gdx.graphics.getHeight() / 2 - 35);
 		}
 		String percent = String.format("%.0f", (main.manager.getProgress() * 100f)) + "%";
-		main.drawTextBg(percent, Gdx.graphics.getWidth() / 2
+		main.drawTextBg(percent, Settings.DEFAULT_WIDTH / 2
 				- (main.font.getBounds(percent).width / 2), Gdx.graphics.getHeight() / 2 - 60);
 
 //		if(Gdx.input.isKeyJustPressed(Keys.S)){

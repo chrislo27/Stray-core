@@ -1,5 +1,6 @@
 package stray.util.render;
 
+import stray.Settings;
 import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
@@ -74,7 +75,7 @@ public class SmoothCamera {
 	}
 	
 	public void centerX(float x){
-		wantedx = x - (Gdx.graphics.getWidth() / 2f);
+		wantedx = x - (Settings.DEFAULT_WIDTH / 2f);
 		if(shakeTime > 0) wantedx += MathUtils.random(-Math.round((shakeIntensity * World.tilesizex) * 10), Math.round(shakeIntensity * World.tilesizey * 10)) / 10f;
 		clamp();
 	}
@@ -86,7 +87,7 @@ public class SmoothCamera {
 	}
 	
 	public void forceCenterOn(float x, float y){
-		wantedx = x - (Gdx.graphics.getWidth() / 2f);
+		wantedx = x - (Settings.DEFAULT_WIDTH / 2f);
 		wantedy = y - (Gdx.graphics.getHeight() / 2f);
 		camerax = wantedx;
 		cameray = wantedy;
@@ -99,8 +100,8 @@ public class SmoothCamera {
 		if (camerax < 0) camerax = 0;
 		if (cameray < 0) cameray = 0;
 
-		if (camerax + (Gdx.graphics.getWidth()) > world.sizex * World.tilesizex) {
-			camerax = world.sizex * World.tilesizex - Gdx.graphics.getWidth();
+		if (camerax + (Settings.DEFAULT_WIDTH) > world.sizex * World.tilesizex) {
+			camerax = world.sizex * World.tilesizex - Settings.DEFAULT_WIDTH;
 		}
 		if (cameray + (Gdx.graphics.getHeight()) > world.sizey * World.tilesizey) {
 			cameray = world.sizey * World.tilesizey - Gdx.graphics.getHeight();

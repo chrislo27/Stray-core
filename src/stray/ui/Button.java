@@ -38,9 +38,7 @@ public class Button implements GuiElement {
 
 	public void imageRender(Main main, String img) {
 		main.batch.draw(main.manager.get(AssetMap.get(img), Texture.class), x, y, width, height);
-		if (Gdx.input.getX() >= x && Gdx.input.getX() <= x + width
-				&& Main.convertY(Gdx.input.getY()) >= y
-				&& Main.convertY(Gdx.input.getY()) <= y + height) {
+		if (Container.mouseIn(this)) {
 			main.batch.setColor(Color.CYAN.r, Color.CYAN.g, Color.CYAN.b, 0.42f);
 			main.batch
 					.draw(main.manager.get(AssetMap.get(img), Texture.class), x, y, width, height);

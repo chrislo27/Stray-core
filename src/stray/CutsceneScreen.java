@@ -51,13 +51,13 @@ public class CutsceneScreen extends Updateable {
 			if (main.getConv().getCurrent().imagepath != null) {
 				Texture t = main.manager.get("images/cutscene/"
 						+ main.getConv().getCurrent().imagepath + ".png"); // 480x320
-				main.batch.draw(t, (Gdx.graphics.getWidth() / 2) - (t.getWidth() / 2),
+				main.batch.draw(t, (Settings.DEFAULT_WIDTH / 2) - (t.getWidth() / 2),
 						((Gdx.graphics.getHeight() + 128) / 2) - (t.getHeight() / 2), 480, 320);
 				main.batch.setColor(Color.WHITE);
 			}
 
 			main.font.setColor(Color.WHITE);
-			main.drawInverse(Translator.getMsg("conversation.skip"), Gdx.graphics.getWidth() - 5,
+			main.drawInverse(Translator.getMsg("conversation.skip"), Settings.DEFAULT_WIDTH - 5,
 					Main.convertY(10));
 			main.batch.end();
 		}

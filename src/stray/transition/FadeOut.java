@@ -1,6 +1,7 @@
 package stray.transition;
 
 import stray.Main;
+import stray.Settings;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -27,7 +28,7 @@ public class FadeOut implements Transition {
 	@Override
 	public void render(Main main) {
 		main.batch.setColor(color.r, color.g, color.b, timeleft);
-		main.fillRect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		main.fillRect(0, 0, Settings.DEFAULT_WIDTH, Gdx.graphics.getHeight());
 		main.batch.setColor(Color.WHITE);
 		if (timeleft > 0){
 			timeleft -= Gdx.graphics.getRawDeltaTime();

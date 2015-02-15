@@ -418,7 +418,7 @@ public class Block {
 
 	public static boolean isBlockVisible(float camx, float camy, int x, int y) {
 		return MathHelper.intersects(x * World.tilesizex, y * World.tilesizey, World.tilesizex,
-				World.tilesizey, camx, camy, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+				World.tilesizey, camx, camy, Settings.DEFAULT_WIDTH, Gdx.graphics.getHeight());
 	}
 
 	public static boolean playSound(int x, int y, float camx, float camy, Sound sound, float vol,

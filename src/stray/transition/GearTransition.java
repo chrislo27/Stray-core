@@ -1,6 +1,7 @@
 package stray.transition;
 
 import stray.Main;
+import stray.Settings;
 import stray.util.MathHelper;
 import stray.util.Utils;
 import stray.util.render.StencilMaskUtil;
@@ -8,7 +9,6 @@ import stray.util.render.StencilMaskUtil;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.MathUtils;
 
 public class GearTransition implements Transition {
 
@@ -49,21 +49,21 @@ public class GearTransition implements Transition {
 		if (nextScreen == null) return;
 
 		Texture gear = main.textures.get("gear");
-		float size = (gearscale * (Gdx.graphics.getWidth() / GEAR_MIDDLE_DIAMETER) * Gdx.graphics
+		float size = (gearscale * (Settings.DEFAULT_WIDTH / GEAR_MIDDLE_DIAMETER) * Gdx.graphics
 				.getWidth() / 2);
 
 		main.batch.setColor(1, 1, 1, 1);
-		Utils.drawRotated(main.batch, gear, (Gdx.graphics.getWidth() / 2) - (size / 2f),
+		Utils.drawRotated(main.batch, gear, (Settings.DEFAULT_WIDTH / 2) - (size / 2f),
 				(Gdx.graphics.getHeight() / 2) - (size / 2f), size, size, 360 * MathHelper.getNumberFromTime(2f), true);
 
 		main.batch.end();
 		StencilMaskUtil.prepareMask();
 
 		main.shapes.begin(ShapeType.Filled);
-		float radius = (((GEAR_MIDDLE_DIAMETER / gear.getWidth()) * gearscale) * (Gdx.graphics.getWidth() / GEAR_MIDDLE_DIAMETER) * Gdx.graphics
+		float radius = (((GEAR_MIDDLE_DIAMETER / gear.getWidth()) * gearscale) * (Settings.DEFAULT_WIDTH / GEAR_MIDDLE_DIAMETER) * Gdx.graphics
 				.getWidth()) / 2 / 2;
 		main.shapes
-				.circle(Gdx.graphics.getWidth() / 2,
+				.circle(Settings.DEFAULT_WIDTH / 2,
 						Gdx.graphics.getHeight() / 2,
 						radius, 100);
 		main.shapes.end();

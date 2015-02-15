@@ -1,6 +1,7 @@
 package stray.util.render;
 
 import stray.Main;
+import stray.Settings;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
@@ -14,7 +15,7 @@ public class RandomText {
 				if (MathUtils.random(1, chance) != 1) continue;
 				main.drawCentered(
 						text,
-						MathUtils.random(1, Gdx.graphics.getWidth() - 1),
+						MathUtils.random(1, Settings.DEFAULT_WIDTH - 1),
 						MathUtils.random(Math.round(height),
 								Math.round(Gdx.graphics.getHeight() - height)));
 			}

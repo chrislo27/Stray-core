@@ -1,6 +1,7 @@
 package stray.transition;
 
 import stray.Main;
+import stray.Settings;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -12,7 +13,7 @@ public class Eat implements Transition {
 		if (speed <= 0) throw new IllegalArgumentException(
 				"Speed value must be greater than 0 : got " + speed);
 		this.speed = speed;
-		sizex = (int) (Gdx.graphics.getWidth() / tilewidthpx) + 2;
+		sizex = (int) (Settings.DEFAULT_WIDTH / tilewidthpx) + 2;
 		sizey = (int) (Gdx.graphics.getHeight() / tileheightpx) + 2;
 
 		traversed = new boolean[sizex][sizey];

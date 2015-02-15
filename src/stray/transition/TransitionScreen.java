@@ -5,8 +5,6 @@ import stray.Updateable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.ScreenUtils;
 
 public class TransitionScreen extends Updateable {
 

@@ -93,17 +93,17 @@ public class WorldRenderer {
 			SpaceBackground.instance().render(main);
 		} else {
 			main.batch.draw(main.manager.get(AssetMap.get(world.background), Texture.class), 0, 0,
-					Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+					Settings.DEFAULT_WIDTH, Gdx.graphics.getHeight());
 		}
 	}
 
 	public void renderBuffer() {
 		batch.setColor(0, 0, 0, 1);
-		main.fillRect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		main.fillRect(0, 0, Settings.DEFAULT_WIDTH, Gdx.graphics.getHeight());
 		batch.setColor(1, 1, 1, 1);
 
 		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(),
-				Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
+				Settings.DEFAULT_WIDTH, -Gdx.graphics.getHeight());
 	}
 
 	public void renderVoid() {
@@ -168,21 +168,21 @@ public class WorldRenderer {
 		if (Settings.showVignette) {
 			batch.setColor(0, 0, 0, 0.25f);
 			batch.draw(main.manager.get(AssetMap.get("vignette"), Texture.class), 0, 0,
-					Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+					Settings.DEFAULT_WIDTH, Gdx.graphics.getHeight());
 			batch.setColor(Color.WHITE);
 		}
 
 		if (world.vignettecolour.a > 0f) {
 			batch.setColor(world.vignettecolour);
 			batch.draw(main.manager.get(AssetMap.get("vignette"), Texture.class), 0, 0,
-					Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+					Settings.DEFAULT_WIDTH, Gdx.graphics.getHeight());
 			batch.setColor(Color.WHITE);
 		}
 
 		if (world.getPlayer().fireTime > 0) {
 			batch.setColor(1, 1, 1, 0.333333333f);
 			batch.draw(main.animations.get("fire-hud").getCurrentFrame(), 0,
-					Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
+					Gdx.graphics.getHeight(), Settings.DEFAULT_WIDTH, -Gdx.graphics.getHeight());
 		} else {
 			if (fireStart != 0) fireStart = 0;
 		}
@@ -204,7 +204,7 @@ public class WorldRenderer {
 			float x = world.getPlayer().x;
 			float y = world.getPlayer().y;
 			float clampedX = MathUtils.clamp((x * World.tilesizex) - world.camera.camerax, 0,
-					Gdx.graphics.getWidth() - (world.getPlayer().sizex * World.tilesizex));
+					Settings.DEFAULT_WIDTH - (world.getPlayer().sizex * World.tilesizex));
 			float clampedY = MathUtils.clamp(
 					Main.convertY((y * World.tilesizey) - world.camera.cameray), 0,
 					Gdx.graphics.getHeight() - (world.getPlayer().sizey * World.tilesizey));
@@ -323,7 +323,7 @@ public class WorldRenderer {
 			batch.setColor(1, 1, 1, alpha);
 			String text = Translator.getMsg("ui.currentaugment")
 					+ Translator.getMsg(Augments.getAugment(world.currentAugment).getName());
-			main.drawTextBg(text, Gdx.graphics.getWidth() / 2
+			main.drawTextBg(text, Settings.DEFAULT_WIDTH / 2
 					- (main.font.getBounds(text).width / 2), 50);
 		}
 		batch.setColor(1, 1, 1, 1);
