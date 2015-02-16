@@ -129,13 +129,10 @@ public class Particle implements Poolable {
 					main.batch.setColor(tintr, tintg, tintb,
 							(lifetime <= 0.1f ? (Math.min(lifetime * 10f, tinta)) : tinta));
 					if (rotspeed > 0) {
-						Utils.drawRotated(
-								main.batch,
-								t,
-								x * World.tilesizex - (t.getWidth() / 2) - world.camera.camerax,
-								Main.convertY(y * World.tilesizey + (t.getHeight() / 2)
-										- world.camera.cameray), t.getWidth() / 2f,
-								t.getHeight() / 2f, MathHelper.getNumberFromTime(rotspeed) * 360,
+						Utils.drawRotatedCentered(main.batch, t, x * World.tilesizex - world.camera.camerax,
+								Main.convertY(y * World.tilesizey
+										- world.camera.cameray), t.getWidth(),
+								t.getHeight(), MathHelper.getNumberFromTime(rotspeed) * 360,
 								clockwise);
 					} else {
 						main.batch.draw(
