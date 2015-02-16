@@ -32,6 +32,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
@@ -214,7 +215,7 @@ public class World implements TileBasedMap {
 			if (Gdx.input.isKeyPressed(Keys.DOWN)) {
 
 			} else if (Gdx.input.isKeyJustPressed(Keys.UP)) {
-				
+
 			}
 
 			if (Gdx.input.isKeyPressed(Keys.LEFT)) {
@@ -292,7 +293,7 @@ public class World implements TileBasedMap {
 				if (Gdx.input.isKeyJustPressed(Keys.T)) {
 					getPlayer().damage(0.999f, DamageSource.generic);
 				} else if (Gdx.input.isKeyJustPressed(Keys.Y)) {
-					getPlayer().stun(5);
+					explosion(getPlayer().x + 0.5f, getPlayer().y + 0.5f);
 				}
 			}
 		}
@@ -579,6 +580,40 @@ public class World implements TileBasedMap {
 		}
 
 		return false;
+	}
+
+	public void explosion(float x, float y) {
+		camera.shake(0.15f, 2.5f, false);
+		int smokeToSpawn = 30;
+		float smokeVelocity = 6f;
+		for (int i = 0; i < smokeToSpawn; i++) {
+			particles.add(ParticlePool
+					.obtain()
+					.setPosition(x, y)
+					.setLifetime(0.5f)
+					.setTexture("poof")
+					.setRotation(5f, MathUtils.randomBoolean())
+					.setVelocity(smokeVelocity * MathUtils.cosDeg((360f / smokeToSpawn) * i),
+							smokeVelocity * MathUtils.sinDeg((360f / smokeToSpawn) * i)));
+		}
+
+		for (int i = 0; i < MathUtils.random(45, 60); i++) {
+			particles.add(ParticlePool
+					.obtain()
+					.setPosition(x, y)
+					.setLifetime(0.5f)
+					.setTexture("poof")
+					.setRotation(5f, MathUtils.randomBoolean())
+					.setVelocity(
+							smokeVelocity * 3f * MathUtils.randomSign()
+									* MathUtils.random(0.25f, 1.25f),
+							smokeVelocity * 3f * MathUtils.randomSign()
+									* MathUtils.random(0.25f, 1.25f)));
+		}
+
+		particles.add(ParticlePool.obtain().setPosition(x, y).setLifetime(0.2f)
+				.setTexture("particleshockwave").setRotation(1f, MathUtils.randomBoolean())
+				.setStartScale(0.25f).setEndScale(1.5f));
 	}
 
 	public void show() {
