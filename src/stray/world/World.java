@@ -20,6 +20,7 @@ import stray.pathfinding.TileBasedMap;
 import stray.util.AssetMap;
 import stray.util.DamageSource;
 import stray.util.GlobalVariables;
+import stray.util.KeyBinds;
 import stray.util.MathHelper;
 import stray.util.Particle;
 import stray.util.ParticlePool;
@@ -206,69 +207,68 @@ public class World implements TileBasedMap {
 	public void inputUpdate() {
 		if (main.getConv() != null) return;
 		if (getPlayer() == null) return;
+		
 		if (getPlayer().health > 0 && getPlayer().stunTime <= 0) {
 
-			if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+			if (Gdx.input.isKeyPressed(KeyBinds.MOVEMENT_JUMP)) {
 				getPlayer().jump();
 			}
 
-			if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+			if (Gdx.input.isKeyPressed(KeyBinds.MOVEMENT_DOWN)) {
 
-			} else if (Gdx.input.isKeyJustPressed(Keys.UP)) {
+			} else if (Gdx.input.isKeyJustPressed(KeyBinds.MOVEMENT_UP)) {
 
 			}
 
-			if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+			if (Gdx.input.isKeyPressed(KeyBinds.MOVEMENT_LEFT)) {
 				getPlayer().moveLeft();
-			} else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+			} else if (Gdx.input.isKeyPressed(KeyBinds.MOVEMENT_RIGHT)) {
 				getPlayer().moveRight();
 			} else {
 
 			}
-
+			
 			if (getAugmentsUnlocked() > 0) {
 				if (getAugmentsUnlocked() > 1) {
-					if (Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT)
-							|| Gdx.input.isKeyJustPressed(Keys.SHIFT_RIGHT)) {
+					if (Gdx.input.isKeyJustPressed(KeyBinds.AUGMENT_NEXT)) {
 						currentAugment--;
 						if (currentAugment < 0) currentAugment = getAugmentsUnlocked() - 1;
 						renderer.lastAugmentSwitch = System.currentTimeMillis();
-					} else if (Gdx.input.isKeyJustPressed(Keys.CONTROL_LEFT)
-							|| Gdx.input.isKeyJustPressed(Keys.CONTROL_RIGHT)) {
+					} else if (Gdx.input.isKeyJustPressed(KeyBinds.AUGMENT_PREV)) {
 						currentAugment++;
 						if (currentAugment >= Augments.getList().size) currentAugment = 0;
 						renderer.lastAugmentSwitch = System.currentTimeMillis();
 					}
 				}
 
-				if (Gdx.input.isKeyJustPressed(Keys.SPACE)
+				if (Gdx.input.isKeyJustPressed(KeyBinds.AUGMENT_ACTIVATE)
 						&& (Augments.getAugment(currentAugment).canUse(this))) {
 					Augments.getAugment(currentAugment).onActivateStart(this);
 					augmentActivate = true;
 					lastAugmentUse = System.currentTimeMillis();
 				}
 
-				if (Gdx.input.isKeyPressed(Keys.SPACE)
+				if (Gdx.input.isKeyPressed(KeyBinds.AUGMENT_ACTIVATE)
 						&& (System.currentTimeMillis() - lastAugmentUse <= Augments.getAugment(
 								currentAugment).getUseTime())) {
 					Augments.getAugment(currentAugment).onActivate(this);
 					augmentActivate = true;
-				} else if ((!Gdx.input.isKeyPressed(Keys.SPACE) && augmentActivate)
+				} else if ((!Gdx.input.isKeyPressed(KeyBinds.AUGMENT_ACTIVATE) && augmentActivate)
 						|| ((System.currentTimeMillis() - lastAugmentUse > Augments.getAugment(
 								currentAugment).getUseTime() || !Augments
 								.getAugment(currentAugment).isInUse(this)) && (Gdx.input
-								.isKeyPressed(Keys.SPACE) && augmentActivate))) {
+								.isKeyPressed(KeyBinds.AUGMENT_ACTIVATE) && augmentActivate))) {
 					augmentActivate = false;
 					Augments.getAugment(currentAugment).onActivateEnd(this);
 				}
 			}
 		} else {
 			if (getPlayer().health <= 0) {
-				if ((!Gdx.input.isKeyPressed(Keys.SPACE) && augmentActivate)
+				if ((!Gdx.input.isKeyPressed(KeyBinds.AUGMENT_ACTIVATE) && augmentActivate)
 						|| ((System.currentTimeMillis() - lastAugmentUse > Augments.getAugment(
 								currentAugment).getUseTime() || !Augments
 								.getAugment(currentAugment).isInUse(this)) && (Gdx.input
-								.isKeyPressed(Keys.SPACE) && augmentActivate))) {
+								.isKeyPressed(KeyBinds.AUGMENT_ACTIVATE) && augmentActivate))) {
 					augmentActivate = false;
 					Augments.getAugment(currentAugment).onActivateEnd(this);
 				}
