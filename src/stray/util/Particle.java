@@ -15,6 +15,7 @@ public class Particle implements Poolable {
 	float velox = 0;
 	float veloy = 0;
 	public float lifetime = -1;
+	private float startTime = -1;
 	float prelife = 0;
 	boolean destroyOnBlock = false;
 
@@ -25,6 +26,9 @@ public class Particle implements Poolable {
 	float tintg = 1;
 	float tintb = 1;
 	float tinta = 1;
+	
+	float startScale = 1f;
+	float endScale = 1f;
 
 	String texture = "poof";
 
@@ -51,6 +55,7 @@ public class Particle implements Poolable {
 
 	public Particle setLifetime(float sec) {
 		lifetime = sec;
+		startTime = sec;
 		return this;
 	}
 
@@ -90,6 +95,16 @@ public class Particle implements Poolable {
 		this.clockwise = clockwise;
 		return this;
 	}
+	
+	public Particle setStartScale(float sc){
+		startScale = sc;
+		return this;
+	}
+	
+	public Particle setEndScale(float end){
+		endScale = end;
+		return this;
+	}
 
 	@Override
 	public void reset() {
@@ -98,12 +113,19 @@ public class Particle implements Poolable {
 		velox = 0;
 		veloy = 0;
 		lifetime = -1;
+		startTime = -1;
 		prelife = 0;
 		texture = "poof";
 		destroyOnBlock = false;
 		clockwise = true;
 		rotspeed = 0;
 		setTint(Color.WHITE);
+		startScale = 1f;
+		endScale = 1f;
+	}
+	
+	private float getModifiedScale(){
+		return (((startTime - lifetime) / startTime) * (endScale - startScale)) + startScale;
 	}
 
 	public void render(World world, Main main) {
@@ -131,15 +153,15 @@ public class Particle implements Poolable {
 					if (rotspeed > 0) {
 						Utils.drawRotatedCentered(main.batch, t, x * World.tilesizex - world.camera.camerax,
 								Main.convertY(y * World.tilesizey
-										- world.camera.cameray), t.getWidth(),
-								t.getHeight(), MathHelper.getNumberFromTime(rotspeed) * 360,
+										- world.camera.cameray), t.getWidth() * getModifiedScale(),
+								t.getHeight() * getModifiedScale(), MathHelper.getNumberFromTime(rotspeed) * 360,
 								clockwise);
 					} else {
 						main.batch.draw(
 								t,
-								x * World.tilesizex - (t.getWidth() / 2) - world.camera.camerax,
-								Main.convertY(y * World.tilesizey + (t.getHeight() / 2)
-										- world.camera.cameray));
+								x * World.tilesizex - (t.getWidth() * getModifiedScale() / 2) - world.camera.camerax,
+								Main.convertY(y * World.tilesizey + (t.getHeight() * getModifiedScale() / 2)
+										- world.camera.cameray), t.getWidth() * getModifiedScale(), t.getHeight() * getModifiedScale());
 					}
 					main.batch.setColor(Color.WHITE);
 				}
