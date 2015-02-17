@@ -19,8 +19,13 @@ public class LevelData {
 		return this;
 	}
 	
-	public LevelData setTime(long t){
+	public LevelData setBestTime(long t){
 		bestTime = t;
+		return this;
+	}
+	
+	public LevelData setType(LevelType t){
+		leveltype = t;
 		return this;
 	}
 
