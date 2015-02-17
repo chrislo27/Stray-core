@@ -109,6 +109,7 @@ public class LevelSelectScreen extends Updateable {
 		main.batch.setColor(Color.WHITE);
 
 		LevelType[] types = LevelType.values();
+		
 		for (int i = 0; i < types.length; i++) {
 			main.batch.setColor(0.5f, 0.5f, 0.5f, 0.25f);
 			main.font.setColor(0.5f, 0.5f, 0.5f, 0.25f);
