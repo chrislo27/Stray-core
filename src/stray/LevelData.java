@@ -36,12 +36,14 @@ public class LevelData {
 	public static final int INSANE = 3;
 	
 	public static enum LevelType{
-		NORMAL(""), VOID("void"), ;
+		NORMAL("", "normal"), VOID("void", "void"), ;
 		
 		public String image = "";
+		public String text = "";
 		
-		LevelType(String img){
+		LevelType(String img, String txt){
 			image = img;
+			text = txt;
 		}
 	}
 }

@@ -2,6 +2,7 @@ package stray;
 
 import java.util.concurrent.TimeUnit;
 
+import stray.LevelData.LevelType;
 import stray.conversation.Conversations;
 import stray.transition.FadeIn;
 import stray.transition.FadeOut;
@@ -94,8 +95,8 @@ public class LevelSelectScreen extends Updateable {
 					main.drawCentered(Translator.getMsg("menu.latestleveltime") + ": "
 							+ (lastms == -1 ? "--:--:--.---" : Utils.formatMs(lastms)),
 							Settings.DEFAULT_WIDTH / 2, Gdx.graphics.getHeight() / 2 - 130);
-					main.drawCentered("more info here later", Settings.DEFAULT_WIDTH / 2,
-							Gdx.graphics.getHeight() / 2 - 145);
+					// main.drawCentered("Level ", Settings.DEFAULT_WIDTH / 2,
+					// Gdx.graphics.getHeight() / 2 - 145);
 
 				}
 			}
@@ -106,6 +107,26 @@ public class LevelSelectScreen extends Updateable {
 		main.batch.draw(main.manager.get(AssetMap.get("levelselected"), Texture.class),
 				(Settings.DEFAULT_WIDTH / 2 - 32), Gdx.graphics.getHeight() / 2 - 96, 64, 128);
 		main.batch.setColor(Color.WHITE);
+
+		LevelType[] types = LevelType.values();
+		for (int i = 0; i < types.length; i++) {
+			main.batch.setColor(0.5f, 0.5f, 0.5f, 0.25f);
+			main.font.setColor(0.5f, 0.5f, 0.5f, 0.25f);
+			if(getCurrent() != -1){
+				if(Levels.instance().levels.get(getCurrent()) != null)
+				if(types[i] == Levels.instance().levels.get(getCurrent()).leveltype){
+					main.font.setColor(0, 0, 0, 1);
+					main.batch.setColor(1, 1, 1, 1);
+				}
+			}
+			main.batch.draw(main.manager.get(AssetMap.get("levelselectdot"
+					+ types[i].image), Texture.class),
+					8, 8 + (50 * i), 48, 48);
+			main.font.draw(main.batch, Translator.getMsg("menu.leveltype." + types[i].text), 60, 40 + (50 * i));
+			
+			main.font.setColor(0, 0, 0, 1);
+			main.batch.setColor(1, 1, 1, 1);
+		}
 
 		container.render(main);
 		main.batch.end();
