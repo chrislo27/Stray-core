@@ -19,8 +19,8 @@ public class LevelSelectScreen extends Updateable {
 
 	public LevelSelectScreen(Main m) {
 		super(m);
-		container.elements.add(new BackButton(Settings.DEFAULT_WIDTH - 37, Gdx.graphics
-				.getHeight() - 37) {
+		container.elements.add(new BackButton(Settings.DEFAULT_WIDTH - 37,
+				Gdx.graphics.getHeight() - 37) {
 
 			@Override
 			public boolean onLeftClick() {
@@ -74,9 +74,10 @@ public class LevelSelectScreen extends Updateable {
 		for (int i = 0; i < Levels.instance().levels.size(); i++) {
 			if (i < wanted - 3 || i > wanted + 3) continue;
 
-			main.batch.draw(main.manager.get(AssetMap.get("levelselectdot"), Texture.class),
-					(Settings.DEFAULT_WIDTH / 2 - 24) + ((i - offset) * DISTANCE),
-					Gdx.graphics.getHeight() / 2 - 24, 48, 48);
+			main.batch.draw(main.manager.get(AssetMap.get("levelselectdot"
+					+ Levels.instance().levels.get(i).leveltype.image), Texture.class),
+					(Settings.DEFAULT_WIDTH / 2 - 24) + ((i - offset) * DISTANCE), Gdx.graphics
+							.getHeight() / 2 - 24, 48, 48);
 			if (Levels.instance().levels.get(i) != null) {
 				main.font.setScale(1.5f);
 				main.drawCentered(Levels.getLevelName(i), (Settings.DEFAULT_WIDTH / 2)
