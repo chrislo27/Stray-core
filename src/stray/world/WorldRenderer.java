@@ -56,11 +56,10 @@ public class WorldRenderer {
 				+ (Settings.DEFAULT_HEIGHT / World.tilesizex), 0f, maxy);
 
 		main.font.setColor(Color.WHITE);
-		for (int level = Block.MIN_RENDER_LEVEL; level < Block.MAX_RENDER_LEVEL; level++) {
+		for (int level = 0; level < 2; level++) {
 			for (int x = prex; x < postx; x++) {
 				for (int y = prey; y < posty; y++) {
-					if (MathUtils.clamp(world.getBlock(x, y).getRenderLevel(),
-							Block.MIN_RENDER_LEVEL, Block.MAX_RENDER_LEVEL) != level) continue;
+					if (world.getBlock(x, y).isRenderedFront() != (level != 0)) continue;
 					if (world.getBlock(x, y) != null) {
 						world.getBlock(x, y).render(world, x, y);
 					} else {
@@ -81,7 +80,7 @@ public class WorldRenderer {
 				}
 			}
 			batch.flush();
-			if (level == Block.ENTITY_RENDER_LEVEL) {
+			if (level == 0) {
 				renderEntities();
 			}
 		}

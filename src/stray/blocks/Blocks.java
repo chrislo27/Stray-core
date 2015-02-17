@@ -86,8 +86,8 @@ public class Blocks {
 		
 		put("checkpointclaimed", new Block("images/blocks/checkpoint/checkpointclaimed"){
 			@Override
-			public int getRenderLevel(){
-				return 1;
+			public boolean isRenderedFront(){
+				return true;
 			}
 		});
 		put("checkpointunclaimed", new BlockCheckpoint("images/blocks/checkpoint/checkpointnew"));

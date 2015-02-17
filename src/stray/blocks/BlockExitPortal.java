@@ -63,8 +63,8 @@ public class BlockExitPortal extends Block {
 	}
 	
 	@Override
-	public int getRenderLevel(){
-		return 1;
+	public boolean isRenderedFront(){
+		return true;
 	}
 
 	private void save(World world) {

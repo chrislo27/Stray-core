@@ -16,8 +16,8 @@ public class BlockCheckpoint extends Block {
 	}
 
 	@Override
-	public int getRenderLevel() {
-		return 1;
+	public boolean isRenderedFront() {
+		return true;
 	}
 
 	@Override
