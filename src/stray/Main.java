@@ -620,7 +620,7 @@ public class Main extends Game implements Consumer {
 		manager.load(AssetMap.add("entityshield", "images/entity/shield.png"), Texture.class);
 		manager.load(AssetMap.add("levelselectbg", "images/levelselect/levelselectbg.png"), Texture.class);
 		manager.load(AssetMap.add("levelselectdot", "images/levelselect/levelselectdot.png"), Texture.class);
-		manager.load(AssetMap.add("levelselectdottime", "images/levelselect/levelselectdottime.png"), Texture.class);
+		manager.load(AssetMap.add("levelselectdotvoid", "images/levelselect/levelselectdottime.png"), Texture.class);
 		manager.load(AssetMap.add("levelselected", "images/levelselect/levelselected.png"), Texture.class);
 		manager.load(AssetMap.add("glintsquare", "images/item/glintsquare.png"), Texture.class);
 		manager.load(AssetMap.add("voidend", "images/voidend.png"), Texture.class);
