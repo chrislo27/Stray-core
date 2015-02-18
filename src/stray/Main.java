@@ -352,13 +352,14 @@ public class Main extends Game implements Consumer {
 				tickUpdate();
 				deltaUntilTick -= (1.0f / TICKS);
 			}
-
 			if (getScreen() != null) {
 				((Updateable) getScreen()).renderUpdate();
 			}
+			
 			preRender();
 			super.render();
 			postRender();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 
