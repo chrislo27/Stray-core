@@ -303,14 +303,19 @@ public class WorldRenderer {
 		batch.setColor(1, 1, 1, 1);
 
 		for (int i = 0; i < augments; i++) {
-			batch.setColor(0, 0, 0, 0.5f);
-			if (i == world.currentAugment) batch.setColor(Augments.getAugment(world.currentAugment)
-					.getColor());
-			if (i == 3) batch.setColor(1, 0, 0, 1);
+			batch.setColor(Augments.getAugment(i).getColor());
 			Utils.drawRotated(batch, main.textures.get("gear"), 135 + (i * 32) - (i * 3),
 					5 + (i % 2 != 0 ? 7 : 0), 32, 32,
 					MathHelper.getNumberFromTime(((world.augmentActivate) ? 0.75f : 5f)) * 360,
 					i % 2 == 0);
+			
+			if(i != world.currentAugment){
+				batch.setColor(0, 0, 0, 0.6f);
+				Utils.drawRotated(batch, main.textures.get("gear"), 135 + (i * 32) - (i * 3),
+						5 + (i % 2 != 0 ? 7 : 0), 32, 32,
+						MathHelper.getNumberFromTime(((world.augmentActivate) ? 0.75f : 5f)) * 360,
+						i % 2 == 0);
+			}
 		}
 		batch.setColor(1, 1, 1, 1);
 
