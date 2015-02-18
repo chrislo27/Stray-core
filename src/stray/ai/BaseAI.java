@@ -5,9 +5,9 @@ import stray.entity.Entity;
 
 public abstract class BaseAI {
 
-	Entity e;
+	Entity entity;
 	public BaseAI(Entity e){
-		this.e = e;
+		this.entity = e;
 	}
 	
 	public abstract void tickUpdate();

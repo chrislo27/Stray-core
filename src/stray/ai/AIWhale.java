@@ -21,23 +21,23 @@ public class AIWhale extends AIDumbEnemy {
 	public void tickUpdate() {
 		super.tickUpdate();
 
-		if (((EntityLiving) e).facing == Direction.RIGHT) {
-			if (e.world.getPlayer().x >= e.x + e.sizex
-					&& Math.abs(e.world.getPlayer().x - (e.x + e.sizex)) < 10f) {
-				EntityFlame flame = new EntityFlame(e.world, e.x + 8.703125f, e.y + 3.9375f);
-				flame.velox = (e.world.getPlayer().x - flame.x) * 2f;
-				flame.veloy = ((e.world.getPlayer().y + e.world.getPlayer().sizex) - flame.y) * 1.25f;
+		if (((EntityLiving) entity).facing == Direction.RIGHT) {
+			if (entity.world.getPlayer().x >= entity.x + entity.sizex
+					&& Math.abs(entity.world.getPlayer().x - (entity.x + entity.sizex)) < 10f) {
+				EntityFlame flame = new EntityFlame(entity.world, entity.x + 8.703125f, entity.y + 3.9375f);
+				flame.velox = (entity.world.getPlayer().x - flame.x) * 2f;
+				flame.veloy = ((entity.world.getPlayer().y + entity.world.getPlayer().sizex) - flame.y) * 1.25f;
 
-				e.world.entities.add(flame);
+				entity.world.entities.add(flame);
 			}
-		} else if (((EntityLiving) e).facing == Direction.LEFT) {
-			if (e.world.getPlayer().x + e.world.getPlayer().sizex <= e.x
-					&& Math.abs((e.world.getPlayer().x + e.world.getPlayer().sizex) - e.x) < 10f) {
-				EntityFlame flame = new EntityFlame(e.world, e.x + 0.875f, e.y + 3.9375f);
-				flame.velox = (e.world.getPlayer().x - flame.x) * 2f;
-				flame.veloy = ((e.world.getPlayer().y + e.world.getPlayer().sizex) - flame.y) * 1.25f;
+		} else if (((EntityLiving) entity).facing == Direction.LEFT) {
+			if (entity.world.getPlayer().x + entity.world.getPlayer().sizex <= entity.x
+					&& Math.abs((entity.world.getPlayer().x + entity.world.getPlayer().sizex) - entity.x) < 10f) {
+				EntityFlame flame = new EntityFlame(entity.world, entity.x + 0.875f, entity.y + 3.9375f);
+				flame.velox = (entity.world.getPlayer().x - flame.x) * 2f;
+				flame.veloy = ((entity.world.getPlayer().y + entity.world.getPlayer().sizex) - flame.y) * 1.25f;
 
-				e.world.entities.add(flame);
+				entity.world.entities.add(flame);
 			}
 		}
 
