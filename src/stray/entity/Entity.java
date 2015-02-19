@@ -114,49 +114,51 @@ public abstract class Entity implements EntityMover, Sizeable {
 			if (velox > 0) velox = 0;
 		}
 
-		if (getBlockCollidingDown() == null) {
+		if (getBlockCollidingDown() == null && getEntityCollidingDown() == null) {
 			veloy += (world.gravity / Main.TICKS) * gravityCoefficient;
 		}
 
-		
 		if (veloy != 0) {
 			int velo = (int) (veloy / Main.TICKS * World.tilesizey);
-			
+
 			if (velo > 0) {
 				Coordinate c = getBlockCollidingDown();
-				if (c != null) {
+				if (c != null || getEntityCollidingDown() != null) {
 					veloy = 0;
 					velo = 0;
 					onCollideDown();
-					
-					world.getBlock(c.getX(), c.getY()).onCollideUpFace(world, c.getX(), c.getY(), this);
+					if (c != null) world.getBlock(c.getX(), c.getY()).onCollideUpFace(world,
+							c.getX(), c.getY(), this);
 				}
 			} else if (velo < 0) {
 				Coordinate c = getBlockCollidingUp();
-				if (c != null) {
+				if (c != null || getEntityCollidingUp() != null) {
 					veloy = 0;
 					velo = 0;
 					onCollideUp();
-					world.getBlock(c.getX(), c.getY()).onCollideDownFace(world, c.getX(), c.getY(), this);
+					if (c != null) world.getBlock(c.getX(), c.getY()).onCollideDownFace(world,
+							c.getX(), c.getY(), this);
 				}
 			}
 			for (int i = 0; i < Math.abs(velo); i++) {
 				if (velo > 0) {
 					y += World.tileparty;
 					Coordinate c = getBlockCollidingDown();
-					if (c != null) {
+					if (c != null || getEntityCollidingDown() != null) {
 						veloy = 0;
 						onCollideDown();
-						world.getBlock(c.getX(), c.getY()).onCollideUpFace(world, c.getX(), c.getY(), this);
+						if (c != null) world.getBlock(c.getX(), c.getY()).onCollideUpFace(world,
+								c.getX(), c.getY(), this);
 						break;
 					}
 				} else if (velo < 0) {
 					y -= World.tileparty;
 					Coordinate c = getBlockCollidingUp();
-					if (c != null) {
+					if (c != null || getEntityCollidingUp() != null) {
 						veloy = 0;
 						onCollideUp();
-						world.getBlock(c.getX(), c.getY()).onCollideDownFace(world, c.getX(), c.getY(), this);
+						if (c != null) world.getBlock(c.getX(), c.getY()).onCollideDownFace(world,
+								c.getX(), c.getY(), this);
 						break;
 					}
 				}
@@ -169,38 +171,42 @@ public abstract class Entity implements EntityMover, Sizeable {
 
 			if (velo > 0) {
 				Coordinate c = getBlockCollidingRight();
-				if (c != null) {
+				if (c != null || getEntityCollidingRight() != null) {
 					velox = 0;
 					velo = 0;
 					onCollideRight();
-					world.getBlock(c.getX(), c.getY()).onCollideLeftFace(world, c.getX(), c.getY(), this);
+					if (c != null) world.getBlock(c.getX(), c.getY()).onCollideLeftFace(world,
+							c.getX(), c.getY(), this);
 				}
 			} else if (velo < 0) {
 				Coordinate c = getBlockCollidingLeft();
-				if (c != null) {
+				if (c != null || getEntityCollidingLeft() != null) {
 					velox = 0;
 					velo = 0;
 					onCollideLeft();
-					world.getBlock(c.getX(), c.getY()).onCollideRightFace(world, c.getX(), c.getY(), this);
+					if (c != null) world.getBlock(c.getX(), c.getY()).onCollideRightFace(world,
+							c.getX(), c.getY(), this);
 				}
 			}
 			for (int i = 0; i < Math.abs(velo); i++) {
 				if (velo > 0) {
 					x += World.tilepartx;
 					Coordinate c = getBlockCollidingRight();
-					if (c != null) {
+					if (c != null || getEntityCollidingRight() != null) {
 						velox = 0;
 						onCollideRight();
-						world.getBlock(c.getX(), c.getY()).onCollideLeftFace(world, c.getX(), c.getY(), this);
+						if (c != null) world.getBlock(c.getX(), c.getY()).onCollideLeftFace(world,
+								c.getX(), c.getY(), this);
 						break;
 					}
 				} else if (velo < 0) {
 					x -= World.tilepartx;
 					Coordinate c = getBlockCollidingLeft();
-					if (c != null) {
+					if (c != null || getEntityCollidingLeft() != null) {
 						velox = 0;
 						onCollideLeft();
-						world.getBlock(c.getX(), c.getY()).onCollideRightFace(world, c.getX(), c.getY(), this);
+						if (c != null) world.getBlock(c.getX(), c.getY()).onCollideRightFace(world,
+								c.getX(), c.getY(), this);
 						break;
 					}
 				}
@@ -276,7 +282,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 		return false;
 	}
 
-	public Coordinate collidingAnywhere() {
+	public Coordinate collidingAnyBlock() {
 		Coordinate c = null;
 
 		c = getBlockCollidingUp();
@@ -290,6 +296,76 @@ public abstract class Entity implements EntityMover, Sizeable {
 
 		c = getBlockCollidingRight();
 		if (c != null) return c;
+
+		return null;
+	}
+
+	public Entity getEntityCollidingUp() {
+		for (Entity e : world.entities) {
+			if (e != this && e.hasEntityCollision) {
+				if (((int) (x * World.tilesizex + sizex * World.tilesizex)) >= ((int) (e.x * World.tilesizex))
+						&& ((int) (x * World.tilesizex)) <= ((int) (e.x * World.tilesizex + e.sizex
+								* World.tilesizex))) {
+					if (((int) (this.y * World.tilesizey)) == ((int) (e.y * World.tilesizey + e.sizey
+							* World.tilesizey))) {
+						return e;
+					}
+				}
+			}
+		}
+
+		return null;
+	}
+
+	public Entity getEntityCollidingDown() {
+		for (Entity e : world.entities) {
+			if (e != this && e.hasEntityCollision) {
+				if (((int) (x * World.tilesizex + sizex * World.tilesizex)) >= ((int) (e.x * World.tilesizex))
+						&& ((int) (x * World.tilesizex)) <= ((int) (e.x * World.tilesizex + e.sizex
+								* World.tilesizex))) {
+					if (((int) (e.y * World.tilesizey)) == ((int) (this.y * World.tilesizey + this.sizey
+							* World.tilesizey))) {
+						return e;
+					}
+				}
+			}
+		}
+
+		return null;
+	}
+
+	public Entity getEntityCollidingLeft() {
+
+		for (Entity e : world.entities) {
+			if (e != this && e.hasEntityCollision) {
+				if (((int) (y * World.tilesizey + sizey * World.tilesizey)) >= ((int) (e.y * World.tilesizey))
+						&& ((int) (y * World.tilesizey)) <= ((int) (e.y * World.tilesizey + e.sizey
+								* World.tilesizey))) {
+					if (((int) (this.x * World.tilesizex)) == ((int) (e.x * World.tilesizex + e.sizex
+							* World.tilesizex))) {
+						return e;
+					}
+				}
+			}
+		}
+
+		return null;
+	}
+
+	public Entity getEntityCollidingRight() {
+
+		for (Entity e : world.entities) {
+			if (e != this && e.hasEntityCollision) {
+				if (((int) (y * World.tilesizey + sizey * World.tilesizey)) >= ((int) (e.y * World.tilesizey))
+						&& ((int) (y * World.tilesizey)) <= ((int) (e.y * World.tilesizey + e.sizey
+								* World.tilesizey))) {
+					if (((int) (e.x * World.tilesizex)) == ((int) (this.x * World.tilesizex + this.sizex
+							* World.tilesizex))) {
+						return e;
+					}
+				}
+			}
+		}
 
 		return null;
 	}
