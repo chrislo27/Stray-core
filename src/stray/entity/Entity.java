@@ -26,10 +26,16 @@ public abstract class Entity implements EntityMover, Sizeable {
 	 * collides with blocks
 	 */
 	public boolean hasBlockCollision = true;
+	
 	/**
 	 * collides with other entities with this flag as true
 	 */
 	public boolean hasEntityCollision = false;
+	
+	/**
+	 * indicates that entities that hit this other entity will shift velocity*forceTransfer to this entity (and stop)
+	 */
+	public float forceTransfer = 0f;
 
 	public float dragCoefficient = 1;
 	public float gravityCoefficient = 1;
@@ -118,42 +124,60 @@ public abstract class Entity implements EntityMover, Sizeable {
 
 			if (velo > 0) {
 				Coordinate c = getBlockCollidingDown();
-				if (c != null || getEntityCollidingDown() != null) {
+				Entity en = getEntityCollidingDown();
+				if (c != null) {
 					veloy = 0;
 					velo = 0;
 					onCollideDown();
-					if (c != null) world.getBlock(c.getX(), c.getY()).onCollideUpFace(world,
+					world.getBlock(c.getX(), c.getY()).onCollideUpFace(world,
 							c.getX(), c.getY(), this);
+				}else if(en != null){
+					onCollideDown();
+					velo = 0;
 				}
 			} else if (velo < 0) {
 				Coordinate c = getBlockCollidingUp();
-				if (c != null || getEntityCollidingUp() != null) {
+				Entity en = getEntityCollidingUp();
+				if (c != null) {
 					veloy = 0;
 					velo = 0;
 					onCollideUp();
-					if (c != null) world.getBlock(c.getX(), c.getY()).onCollideDownFace(world,
+					world.getBlock(c.getX(), c.getY()).onCollideDownFace(world,
 							c.getX(), c.getY(), this);
+				}else if(en != null){
+					onCollideUp();
+					velo = 0;
 				}
 			}
 			for (int i = 0; i < Math.abs(velo); i++) {
 				if (velo > 0) {
 					y += World.tileparty;
 					Coordinate c = getBlockCollidingDown();
-					if (c != null || getEntityCollidingDown() != null) {
+					Entity en = getEntityCollidingDown();
+					if (c != null) {
 						veloy = 0;
 						onCollideDown();
-						if (c != null) world.getBlock(c.getX(), c.getY()).onCollideUpFace(world,
+						world.getBlock(c.getX(), c.getY()).onCollideUpFace(world,
 								c.getX(), c.getY(), this);
+						break;
+					}else if(en != null){
+						onCollideDown();
+						en.veloy += this.veloy * en.forceTransfer;
 						break;
 					}
 				} else if (velo < 0) {
 					y -= World.tileparty;
 					Coordinate c = getBlockCollidingUp();
-					if (c != null || getEntityCollidingUp() != null) {
+					Entity en = getEntityCollidingUp();
+					if (c != null) {
 						veloy = 0;
 						onCollideUp();
-						if (c != null) world.getBlock(c.getX(), c.getY()).onCollideDownFace(world,
+						world.getBlock(c.getX(), c.getY()).onCollideDownFace(world,
 								c.getX(), c.getY(), this);
+						break;
+					}else if(en != null){
+						onCollideUp();
+						en.veloy += this.veloy * en.forceTransfer;
 						break;
 					}
 				}
@@ -166,42 +190,60 @@ public abstract class Entity implements EntityMover, Sizeable {
 
 			if (velo > 0) {
 				Coordinate c = getBlockCollidingRight();
-				if (c != null || getEntityCollidingRight() != null) {
+				Entity en = getEntityCollidingRight();
+				if (c != null) {
 					velox = 0;
 					velo = 0;
 					onCollideRight();
-					if (c != null) world.getBlock(c.getX(), c.getY()).onCollideLeftFace(world,
+					world.getBlock(c.getX(), c.getY()).onCollideLeftFace(world,
 							c.getX(), c.getY(), this);
+				}else if(en != null){
+					onCollideRight();
+					velo = 0;
 				}
 			} else if (velo < 0) {
 				Coordinate c = getBlockCollidingLeft();
-				if (c != null || getEntityCollidingLeft() != null) {
+				Entity en = getEntityCollidingLeft();
+				if (c != null) {
 					velox = 0;
 					velo = 0;
 					onCollideLeft();
-					if (c != null) world.getBlock(c.getX(), c.getY()).onCollideRightFace(world,
+					world.getBlock(c.getX(), c.getY()).onCollideRightFace(world,
 							c.getX(), c.getY(), this);
+				}else if(en != null){
+					onCollideLeft();
+					velo = 0;
 				}
 			}
 			for (int i = 0; i < Math.abs(velo); i++) {
 				if (velo > 0) {
 					x += World.tilepartx;
 					Coordinate c = getBlockCollidingRight();
-					if (c != null || getEntityCollidingRight() != null) {
+					Entity en = getEntityCollidingRight();
+					if (c != null) {
 						velox = 0;
 						onCollideRight();
-						if (c != null) world.getBlock(c.getX(), c.getY()).onCollideLeftFace(world,
+						world.getBlock(c.getX(), c.getY()).onCollideLeftFace(world,
 								c.getX(), c.getY(), this);
+						break;
+					}else if(en != null){
+						onCollideRight();
+						en.velox += this.velox * en.forceTransfer;
 						break;
 					}
 				} else if (velo < 0) {
 					x -= World.tilepartx;
 					Coordinate c = getBlockCollidingLeft();
-					if (c != null || getEntityCollidingLeft() != null) {
+					Entity en = getEntityCollidingLeft();
+					if (c != null) {
 						velox = 0;
 						onCollideLeft();
-						if (c != null) world.getBlock(c.getX(), c.getY()).onCollideRightFace(world,
+						world.getBlock(c.getX(), c.getY()).onCollideRightFace(world,
 								c.getX(), c.getY(), this);
+						break;
+					}else if(en != null){
+						onCollideLeft();
+						en.velox += this.velox * en.forceTransfer;
 						break;
 					}
 				}
