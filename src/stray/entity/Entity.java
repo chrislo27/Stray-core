@@ -163,6 +163,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 					}else if(en != null){
 						onCollideDown();
 						en.veloy += this.veloy * en.forceTransfer;
+						this.veloy -= this.veloy * en.forceTransfer;
 						break;
 					}
 				} else if (velo < 0) {
@@ -178,6 +179,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 					}else if(en != null){
 						onCollideUp();
 						en.veloy += this.veloy * en.forceTransfer;
+						this.veloy -= this.veloy * en.forceTransfer;
 						break;
 					}
 				}
@@ -229,6 +231,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 					}else if(en != null){
 						onCollideRight();
 						en.velox += this.velox * en.forceTransfer;
+						this.velox -= this.velox * en.forceTransfer;
 						break;
 					}
 				} else if (velo < 0) {
@@ -244,6 +247,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 					}else if(en != null){
 						onCollideLeft();
 						en.velox += this.velox * en.forceTransfer;
+						this.velox -= this.velox * en.forceTransfer;
 						break;
 					}
 				}
