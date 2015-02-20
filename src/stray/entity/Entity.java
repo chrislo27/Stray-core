@@ -30,11 +30,6 @@ public abstract class Entity implements EntityMover, Sizeable {
 	 * collides with other entities with this flag as true
 	 */
 	public boolean hasEntityCollision = false;
-	/**
-	 * if it can collide with other members of the same class
-	 */
-	public boolean canCollideItself = true;
-	public Array<Class<? extends Entity>> ignoreCollision = new Array();
 
 	public float dragCoefficient = 1;
 	public float gravityCoefficient = 1;
@@ -523,9 +518,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 		for (Entity e : world.entities) {
 			if (intersectingOther(e)) {
 				if (!e.hasEntityCollision) continue;
-				if (e.getClass().isInstance(this) && !canCollideItself) continue;
 				if (e == this) continue;
-				if (ignoreCollision.contains(e.getClass(), true)) continue;
 				return e;
 			}
 		}
