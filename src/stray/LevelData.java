@@ -2,15 +2,15 @@ package stray;
 
 public class LevelData {
 
-	public String name = "level.unknown";
+	public String path = "level.unknown";
 	public String cutscene = null;
 	public long bestTime = Long.MAX_VALUE;
 	public int augment = 0;
 	public LevelType leveltype = LevelType.NORMAL;
 	public int difficulty = 0;
 
-	public LevelData(String name, int augment) {
-		this.name = name;
+	public LevelData(String path, int augment) {
+		this.path = path;
 		this.augment = augment;
 	}
 

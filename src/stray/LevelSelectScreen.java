@@ -84,9 +84,9 @@ public class LevelSelectScreen extends Updateable {
 				main.drawCentered(Levels.getLevelName(i), (Settings.DEFAULT_WIDTH / 2)
 						+ ((i - offset) * DISTANCE), Gdx.graphics.getHeight() / 2 + 64);
 				if (getCurrent() == i) {
-					long millis = main.progress.getLong(Levels.instance().levels.get(i).name
+					long millis = main.progress.getLong(Levels.instance().levels.get(i).path
 							+ "-besttime", -1);
-					long lastms = main.progress.getLong(Levels.instance().levels.get(i).name
+					long lastms = main.progress.getLong(Levels.instance().levels.get(i).path
 							+ "-latesttime", -1);
 					main.font.setScale(1);
 					main.drawCentered(Translator.getMsg("menu.bestleveltime") + ": "
@@ -160,8 +160,8 @@ public class LevelSelectScreen extends Updateable {
 	}
 
 	public void goToLevel(int level) {
-		Main.BACKSTORY.prepare(Levels.instance().levels.get(level).name,
-				Gdx.files.internal("levels/" + Levels.instance().levels.get(level).name + ".xml"));
+		Main.BACKSTORY.prepare(Levels.instance().levels.get(level).path,
+				Gdx.files.internal("levels/" + Levels.instance().levels.get(level).path + ".xml"));
 		if (Levels.instance().levels.get(level).cutscene != null) {
 			Main.CUTSCENE.prepare(Conversations.instance().convs.get(Levels.instance().levels
 					.get(level).cutscene), new FadeIn(), new FadeOut(), (Main.BACKSTORY));

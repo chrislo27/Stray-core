@@ -25,14 +25,14 @@ public class Levels {
 	private void loadResources() {
 		levels.clear();
 		
-		add(new LevelData("level1-1", 0).setCutscene("controls"));
-		add(new LevelData("level1-2", 0));
-		add(new LevelData("level1-3", 0));
-		add(new LevelData("level1-4", 1));
-		add(new LevelData("level1-5", 1));
-		add(new LevelData("level1-6", 1));
-		add(new LevelData("level1-7", 1));
-		add(new LevelData("level1-8", 1));
+		add(new LevelData("chapter1/level1-1", 0).setCutscene("controls"));
+		add(new LevelData("chapter1/level1-2", 0));
+		add(new LevelData("chapter1/level1-3", 0));
+		add(new LevelData("chapter1/level1-4", 1));
+		add(new LevelData("chapter1/level1-5", 1));
+		add(new LevelData("chapter1/level1-6", 1));
+		add(new LevelData("chapter1/level1-7", 1));
+		add(new LevelData("chapter1/level1-8", 1));
 	}
 	
 	private int num = 0;
@@ -53,7 +53,7 @@ public class Levels {
 	
 	public int getNumFromLevelFile(String file){
 		for(int i = 0; i < levels.size(); i++){
-			if(levels.get(i).name.equals(file)) return i;
+			if(levels.get(i).path.equals(file)) return i;
 		}
 		
 		return -1;
@@ -61,7 +61,7 @@ public class Levels {
 	
 	public LevelData getLevelData(String file){
 		for(int i = 0; i < levels.size(); i++){
-			if(levels.get(i).name.equals(file)) return levels.get(i);
+			if(levels.get(i).path.equals(file)) return levels.get(i);
 		}
 		
 		return null;
