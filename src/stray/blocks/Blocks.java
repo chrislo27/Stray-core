@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import stray.Main;
 import stray.entity.Entity;
+import stray.entity.EntityBall;
 import stray.entity.EntityWhale;
 import stray.entity.EntityZaborinox;
 import stray.world.World;
@@ -105,6 +106,11 @@ public class Blocks {
 		put("spawnerwhale", new BlockSpawner("images/entity/whale"){
 			public Entity getEntity(World world, int x, int y){
 				return new EntityWhale(world, x, y);
+			}
+		});
+		put("spawnerball", new BlockSpawner("images/entity/ball"){
+			public Entity getEntity(World world, int x, int y){
+				return new EntityBall(world, x, y);
 			}
 		});
 		
