@@ -45,6 +45,29 @@ public abstract class EntityLiving extends Entity {
 	public void prepare() {
 		ai = getNewAI();
 	}
+	
+	/**
+	 * also handles invuln flashing
+	 * 
+	 * @param sprite
+	 * @param x
+	 * @param y
+	 */
+	public void drawSpriteWithFacing(Texture sprite, float x, float y) {
+		world.batch.setColor(1, 1, 1,
+				(invincibility > 0 ? (System.currentTimeMillis() / 100 % 2 == 0 ? 0.25f : 0.5f)
+						: world.batch.getColor().a));
+		// world.batch.draw(sprite, x - (sprite.getWidth() - (sizex *
+		// World.tilesizex)) / 2, y
+		// - World.tilesizey + (sprite.getHeight() - (sizey * World.tilesizey))
+		// / 2,
+		// sprite.getWidth(), sprite.getHeight(), 0, 0, sprite.getWidth(),
+		// sprite.getHeight(),
+		// (facing != Direction.RIGHT), false);
+		world.batch.draw(sprite, x, y - sizey * World.tilesizey, sprite.getWidth(),
+				sprite.getHeight(), 0, 0, sprite.getWidth(), sprite.getHeight(),
+				(facing != Direction.RIGHT), false);
+	}
 
 	public abstract BaseAI getNewAI();
 
@@ -138,28 +161,7 @@ public abstract class EntityLiving extends Entity {
 		}
 	}
 
-	/**
-	 * also handles invuln flashing
-	 * 
-	 * @param sprite
-	 * @param x
-	 * @param y
-	 */
-	public void drawSpriteWithFacing(Texture sprite, float x, float y) {
-		world.batch.setColor(1, 1, 1,
-				(invincibility > 0 ? (System.currentTimeMillis() / 100 % 2 == 0 ? 0.25f : 0.5f)
-						: world.batch.getColor().a));
-		// world.batch.draw(sprite, x - (sprite.getWidth() - (sizex *
-		// World.tilesizex)) / 2, y
-		// - World.tilesizey + (sprite.getHeight() - (sizey * World.tilesizey))
-		// / 2,
-		// sprite.getWidth(), sprite.getHeight(), 0, 0, sprite.getWidth(),
-		// sprite.getHeight(),
-		// (facing != Direction.RIGHT), false);
-		world.batch.draw(sprite, x, y - sizey * World.tilesizey, sprite.getWidth(),
-				sprite.getHeight(), 0, 0, sprite.getWidth(), sprite.getHeight(),
-				(facing != Direction.RIGHT), false);
-	}
+	
 
 	public void poof() {
 		// centre
