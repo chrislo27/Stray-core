@@ -62,12 +62,15 @@ public abstract class EntityLiving extends Entity {
 					((MathHelper.clampNumberFromTime(1.5f) - 0.25f) * 30), true);
 			world.batch.setColor(1, 1, 1, 1);
 
-			world.batch.draw(
-					star,
-					(x * World.tilesizex) - world.camera.camerax + ((sizex / 4f) * World.tilesizex)
-							- ((MathHelper.clampNumberFromTime(3f) - 0.25f) * star.getWidth() * 4f),
-					Main.convertY((y * World.tilesizey) - world.camera.cameray
-							+ (star.getHeight() / 4f)));
+			world.batch
+					.draw(star,
+							(x * World.tilesizex)
+									- world.camera.camerax
+									+ ((sizex / 4f) * World.tilesizex)
+									- ((MathHelper.clampNumberFromTime(3f) - 0.25f)
+											* star.getWidth() * 4f),
+							Main.convertY((y * World.tilesizey) - world.camera.cameray
+									+ (star.getHeight() / 4f)));
 
 			if (MathHelper.getNumberFromTime(1.5f) >= 0.5f) {
 
@@ -76,7 +79,8 @@ public abstract class EntityLiving extends Entity {
 								(x * World.tilesizex)
 										- world.camera.camerax
 										+ ((sizex / 4f) * World.tilesizex)
-										- ((MathHelper.clampNumberFromTime(1.5f) - 0.25f) * star.getWidth() * 3f),
+										- ((MathHelper.clampNumberFromTime(1.5f) - 0.25f)
+												* star.getWidth() * 3f),
 								Main.convertY((y * World.tilesizey) - world.camera.cameray
 										+ (star.getHeight() / 4f))
 										- ((star.getHeight() / 3f)
@@ -87,7 +91,8 @@ public abstract class EntityLiving extends Entity {
 								(x * World.tilesizex)
 										- world.camera.camerax
 										+ ((sizex / 4f) * World.tilesizex)
-										+ ((MathHelper.clampNumberFromTime(1.5f) - 0.25f) * star.getWidth() * 3f),
+										+ ((MathHelper.clampNumberFromTime(1.5f) - 0.25f)
+												* star.getWidth() * 3f),
 								Main.convertY((y * World.tilesizey) - world.camera.cameray
 										+ (star.getHeight() / 4f))
 										+ ((star.getHeight() / 3f)
@@ -98,7 +103,8 @@ public abstract class EntityLiving extends Entity {
 								(x * World.tilesizex)
 										- world.camera.camerax
 										+ ((sizex / 4f) * World.tilesizex)
-										+ ((MathHelper.clampNumberFromTime(1.5f) - 0.25f) * star.getWidth() * 3f),
+										+ ((MathHelper.clampNumberFromTime(1.5f) - 0.25f)
+												* star.getWidth() * 3f),
 								Main.convertY((y * World.tilesizey) - world.camera.cameray
 										+ (star.getHeight() / 4f))
 										+ ((star.getHeight() / 3f)
@@ -109,7 +115,8 @@ public abstract class EntityLiving extends Entity {
 								(x * World.tilesizex)
 										- world.camera.camerax
 										+ ((sizex / 4f) * World.tilesizex)
-										- ((MathHelper.clampNumberFromTime(1.5f) - 0.25f) * star.getWidth() * 3f),
+										- ((MathHelper.clampNumberFromTime(1.5f) - 0.25f)
+												* star.getWidth() * 3f),
 								Main.convertY((y * World.tilesizey) - world.camera.cameray
 										+ (star.getHeight() / 4f))
 										- ((star.getHeight() / 3f)
@@ -122,8 +129,11 @@ public abstract class EntityLiving extends Entity {
 
 		if (fireTime > 0 && !(this instanceof Inflammable)) {
 			world.batch.setColor(1, 1, 1, 0.9f);
-			world.batch.draw(world.main.animations.get("fire").getCurrentFrame(), (x * World.tilesizex) - world.camera.camerax,
-					Main.convertY((y * World.tilesizey) - world.camera.cameray) - (sizey * World.tilesizex), sizex * World.tilesizex, sizey * World.tilesizey);
+			world.batch.draw(world.main.animations.get("fire").getCurrentFrame(),
+					(x * World.tilesizex) - world.camera.camerax,
+					Main.convertY((y * World.tilesizey) - world.camera.cameray)
+							- (sizey * World.tilesizex), sizex * World.tilesizex, sizey
+							* World.tilesizey);
 			world.batch.setColor(1, 1, 1, 1);
 		}
 	}
@@ -139,12 +149,15 @@ public abstract class EntityLiving extends Entity {
 		world.batch.setColor(1, 1, 1,
 				(invincibility > 0 ? (System.currentTimeMillis() / 100 % 2 == 0 ? 0.25f : 0.5f)
 						: world.batch.getColor().a));
-//		world.batch.draw(sprite, x - (sprite.getWidth() - (sizex * World.tilesizex)) / 2, y
-//				- World.tilesizey + (sprite.getHeight() - (sizey * World.tilesizey)) / 2,
-//				sprite.getWidth(), sprite.getHeight(), 0, 0, sprite.getWidth(), sprite.getHeight(),
-//				(facing != Direction.RIGHT), false);
-		world.batch.draw(sprite, x, y - sizey * World.tilesizey,
-				sprite.getWidth(), sprite.getHeight(), 0, 0, sprite.getWidth(), sprite.getHeight(),
+		// world.batch.draw(sprite, x - (sprite.getWidth() - (sizex *
+		// World.tilesizex)) / 2, y
+		// - World.tilesizey + (sprite.getHeight() - (sizey * World.tilesizey))
+		// / 2,
+		// sprite.getWidth(), sprite.getHeight(), 0, 0, sprite.getWidth(),
+		// sprite.getHeight(),
+		// (facing != Direction.RIGHT), false);
+		world.batch.draw(sprite, x, y - sizey * World.tilesizey, sprite.getWidth(),
+				sprite.getHeight(), 0, 0, sprite.getWidth(), sprite.getHeight(),
 				(facing != Direction.RIGHT), false);
 	}
 
@@ -226,12 +239,12 @@ public abstract class EntityLiving extends Entity {
 	 * @return false if cancelled
 	 */
 	public boolean damage(float dmg, DamageSource source) {
-		if (dmg <= 0 || health <= 0 || invincibility > 0){
+		if (dmg <= 0 || health <= 0 || invincibility > 0) {
 			return false;
 		}
 		health = MathUtils.clamp(health - dmg, 0f, maxhealth);
 		lastDmg = source;
-		if (dmg > 0){
+		if (dmg > 0) {
 			invincibility = Math.round(invulnTime * Main.TICKS);
 		}
 		return true;
@@ -261,7 +274,8 @@ public abstract class EntityLiving extends Entity {
 	public float jump = 3f;
 
 	public void jump() {
-		if (getBlockCollidingUp() == null && getBlockCollidingDown() != null) {
+		if ((getBlockCollidingUp() == null && getEntityCollidingUp() == null)
+				&& (getBlockCollidingDown() != null || getEntityCollidingDown() != null)) {
 			veloy = -jump;
 		}
 	}
@@ -283,8 +297,8 @@ public abstract class EntityLiving extends Entity {
 	public boolean isDead() {
 		return health <= 0;
 	}
-	
-	public DamageSource getLastDamageSource(){
+
+	public DamageSource getLastDamageSource() {
 		return lastDmg;
 	}
 
