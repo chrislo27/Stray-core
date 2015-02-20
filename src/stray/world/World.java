@@ -24,6 +24,7 @@ import stray.util.KeyBinds;
 import stray.util.MathHelper;
 import stray.util.Particle;
 import stray.util.ParticlePool;
+import stray.util.QuadTree;
 import stray.util.Sizeable;
 import stray.util.Utils;
 import stray.util.render.SmoothCamera;
@@ -33,9 +34,9 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
@@ -207,7 +208,7 @@ public class World implements TileBasedMap {
 	public void inputUpdate() {
 		if (main.getConv() != null) return;
 		if (getPlayer() == null) return;
-		
+
 		if (getPlayer().health > 0 && getPlayer().stunTime <= 0) {
 
 			if (Gdx.input.isKeyPressed(KeyBinds.MOVEMENT_JUMP)) {
@@ -227,7 +228,7 @@ public class World implements TileBasedMap {
 			} else {
 
 			}
-			
+
 			if (getAugmentsUnlocked() > 0) {
 				if (getAugmentsUnlocked() > 1) {
 					if (Gdx.input.isKeyJustPressed(KeyBinds.AUGMENT_PREV)) {
@@ -522,6 +523,7 @@ public class World implements TileBasedMap {
 				Augments.getAugment(currentAugment).onActivateTick(this);
 			}
 		}
+
 	}
 
 	/**
