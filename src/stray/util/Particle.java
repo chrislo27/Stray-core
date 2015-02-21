@@ -14,6 +14,7 @@ public class Particle implements Poolable {
 	float y = 0;
 	float velox = 0;
 	float veloy = 0;
+	float gravity = 0;
 	public float lifetime = -1;
 	private float startTime = -1;
 	float prelife = 0;
@@ -105,6 +106,11 @@ public class Particle implements Poolable {
 		endScale = end;
 		return this;
 	}
+	
+	public Particle setGravity(float gr){
+		gravity = gr;
+		return this;
+	}
 
 	@Override
 	public void reset() {
@@ -122,6 +128,7 @@ public class Particle implements Poolable {
 		setTint(Color.WHITE);
 		startScale = 1f;
 		endScale = 1f;
+		gravity = 0;
 	}
 	
 	private float getModifiedScale(){
@@ -189,6 +196,7 @@ public class Particle implements Poolable {
 	private void update(float delta) {
 		x += velox * delta;
 		y += veloy * delta;
+		y += gravity * delta;
 	}
 
 }
