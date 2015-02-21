@@ -33,6 +33,7 @@ public class EntityBall extends Entity implements Weighted {
 	}
 	
 	private float circumference = MathUtils.PI;
+	private float rotationManipulative = MathUtils.random(9001f);
 
 	@Override
 	public void renderSelf(float x, float y) {
@@ -42,7 +43,7 @@ public class EntityBall extends Entity implements Weighted {
 	}
 	
 	private float getRotationFromX(){
-		return ((this.x % circumference) / circumference) * 360f;
+		return (((this.x + rotationManipulative) % circumference) / circumference) * 360f;
 	}
 
 }
