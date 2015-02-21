@@ -540,9 +540,7 @@ public class World implements TileBasedMap {
 
 	public long getVoidMSFromDistance(float distance) {
 		if (voidTime <= 0) return System.currentTimeMillis();
-		return (System.currentTimeMillis() - Math.round((voidTime * 1000d) * (distance / sizex))); // return
-																									// starting
-																									// ms
+		return (System.currentTimeMillis() - Math.round((voidTime * 1000d) * (distance / sizex)));
 	}
 
 	public void executeBlockUpdates() {
