@@ -616,6 +616,25 @@ public class World implements TileBasedMap {
 		particles.add(ParticlePool.obtain().setPosition(x, y).setLifetime(0.2f)
 				.setTexture("particleshockwave").setRotation(1f, MathUtils.randomBoolean())
 				.setStartScale(0.25f).setEndScale(1.5f));
+		particles.add(ParticlePool
+				.obtain()
+				.setPosition(x, y)
+				.setLifetime(0.25f)
+				.setTexture("particleflash" + MathUtils.random(3))
+				.setStartScale(0.9f)
+				.setEndScale(1.1f)
+				.setTint(1f, (204f + MathUtils.random(-16, 16)) / 255f,
+						(34f + MathUtils.random(-16, 16)) / 255f, 0.75f));
+		particles.add(ParticlePool
+				.obtain()
+				.setPosition(x, y)
+				.setLifetime(0.2f)
+				.setTexture("particleflame" + MathUtils.random(3))
+				.setStartScale(1.75f)
+				.setEndScale(2.0f)
+				.setTint(1f, (204f + MathUtils.random(-16, 16)) / 255f,
+						(34f + MathUtils.random(-16, 16)) / 255f, 0.5f)
+				.setRotation(0.1f, MathUtils.randomBoolean()));
 	}
 
 	public void show() {
