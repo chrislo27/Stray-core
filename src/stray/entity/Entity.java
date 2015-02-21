@@ -134,6 +134,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 				}else if(en != null){
 					onCollideDown();
 					velo = 0;
+					en.veloy += this.veloy * en.forceTransfer;
+					this.veloy -= this.veloy * en.forceTransfer;
 				}
 			} else if (velo < 0) {
 				Coordinate c = getBlockCollidingUp();
@@ -147,6 +149,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 				}else if(en != null){
 					onCollideUp();
 					velo = 0;
+					en.veloy += this.veloy * en.forceTransfer;
+					this.veloy -= this.veloy * en.forceTransfer;
 				}
 			}
 			for (int i = 0; i < Math.abs(velo); i++) {
@@ -202,6 +206,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 				}else if(en != null){
 					onCollideRight();
 					velo = 0;
+					en.velox += this.velox * en.forceTransfer;
+					this.velox -= this.velox * en.forceTransfer;
 				}
 			} else if (velo < 0) {
 				Coordinate c = getBlockCollidingLeft();
@@ -215,6 +221,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 				}else if(en != null){
 					onCollideLeft();
 					velo = 0;
+					en.velox += this.velox * en.forceTransfer;
+					this.velox -= this.velox * en.forceTransfer;
 				}
 			}
 			for (int i = 0; i < Math.abs(velo); i++) {
