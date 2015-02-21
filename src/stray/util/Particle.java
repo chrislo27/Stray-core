@@ -196,7 +196,7 @@ public class Particle implements Poolable {
 	private void update(float delta) {
 		x += velox * delta;
 		y += veloy * delta;
-		y += gravity * delta;
+		veloy += gravity * delta;
 	}
 
 }
