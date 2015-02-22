@@ -1,10 +1,11 @@
 package stray.augment;
 
-import com.badlogic.gdx.graphics.Color;
-
-import stray.Settings;
-import stray.util.render.PostProcessing;
+import stray.util.Direction;
+import stray.util.Particle;
+import stray.util.ParticlePool;
 import stray.world.World;
+
+import com.badlogic.gdx.graphics.Color;
 
 public class TelekinesisAugment extends Augment {
 
@@ -14,7 +15,7 @@ public class TelekinesisAugment extends Augment {
 
 	@Override
 	public void onActivate(World world) {
-		
+
 	}
 
 	@Override
@@ -23,6 +24,10 @@ public class TelekinesisAugment extends Augment {
 
 	@Override
 	public void onActivateTick(World world) {
+		world.particles.add(ParticlePool.obtain()
+				.setPosition(world.getPlayer().x + world.getPlayer().sizex / 2f, world.getPlayer().y + world.getPlayer().sizey / 2f).setLifetime(30)
+				.setDestroyOnBlock(true).setGravity(world.gravity).setTexture("magnetglow")
+				.setVelocity(10f * (world.getPlayer().facing == Direction.LEFT ? -1 : 1), -10f));
 	}
 
 	@Override
