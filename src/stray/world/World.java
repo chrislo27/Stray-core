@@ -352,10 +352,10 @@ public class World implements TileBasedMap {
 			camera.centerY(((p.y + (p.sizey / 2f)) * tilesizey + cameramovey) - (tilesizey * 1.5f));
 		}
 
-		for (int x = (int) (p.x - ((Settings.DEFAULT_WIDTH / 2) / tilesizex)); x < (int) (p.x + ((Gdx.graphics
-				.getWidth() / 2) / tilesizex)); x++) {
-			for (int y = (int) (p.y - ((Gdx.graphics.getHeight() / 2) / tilesizey)) - 3; y < (int) (p.y + ((Gdx.graphics
-					.getHeight() / 2) / tilesizex)) + 3; y++) {
+		for (int x = (int) (p.x - ((Settings.DEFAULT_WIDTH / 2) / tilesizex)) + 2; x < (int) (p.x + ((Gdx.graphics
+				.getWidth() / 2) / tilesizex)) - 2; x++) {
+			for (int y = (int) (p.y - ((Gdx.graphics.getHeight() / 2) / tilesizey)); y < (int) (p.y + ((Gdx.graphics
+					.getHeight() / 2) / tilesizex)); y++) {
 				if (getBlock(x, y) instanceof BlockCameraMagnet) {
 					camera.centerOn((x + 0.5f) * tilesizex, (y - 0.5f) * tilesizex);
 					camera.clamp();
