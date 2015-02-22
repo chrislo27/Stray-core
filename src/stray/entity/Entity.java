@@ -137,6 +137,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 					velo = 0;
 					en.veloy += this.veloy * en.forceTransfer;
 					this.veloy -= this.veloy * en.forceTransfer;
+					veloy = -veloy * bounceCoefficient;
 				}
 			} else if (velo < 0) {
 				Coordinate c = getBlockCollidingUp();
@@ -152,6 +153,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 					velo = 0;
 					en.veloy += this.veloy * en.forceTransfer;
 					this.veloy -= this.veloy * en.forceTransfer;
+					veloy = -veloy * bounceCoefficient;
 				}
 			}
 			for (int i = 0; i < Math.abs(velo); i++) {
@@ -169,6 +171,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 						onCollideDown();
 						en.veloy += this.veloy * en.forceTransfer;
 						this.veloy -= this.veloy * en.forceTransfer;
+						veloy = -veloy * bounceCoefficient;
 						break;
 					}
 				} else if (velo < 0) {
@@ -185,6 +188,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 						onCollideUp();
 						en.veloy += this.veloy * en.forceTransfer;
 						this.veloy -= this.veloy * en.forceTransfer;
+						veloy = -veloy * bounceCoefficient;
 						break;
 					}
 				}
@@ -209,6 +213,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 					velo = 0;
 					en.velox += this.velox * en.forceTransfer;
 					this.velox -= this.velox * en.forceTransfer;
+					velox = -velox * bounceCoefficient;
 				}
 			} else if (velo < 0) {
 				Coordinate c = getBlockCollidingLeft();
@@ -224,6 +229,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 					velo = 0;
 					en.velox += this.velox * en.forceTransfer;
 					this.velox -= this.velox * en.forceTransfer;
+					velox = -velox * bounceCoefficient;
 				}
 			}
 			for (int i = 0; i < Math.abs(velo); i++) {
@@ -241,6 +247,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 						onCollideRight();
 						en.velox += this.velox * en.forceTransfer;
 						this.velox -= this.velox * en.forceTransfer;
+						velox = -velox * bounceCoefficient;
 						break;
 					}
 				} else if (velo < 0) {
@@ -257,6 +264,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 						onCollideLeft();
 						en.velox += this.velox * en.forceTransfer;
 						this.velox -= this.velox * en.forceTransfer;
+						velox = -velox * bounceCoefficient;
 						break;
 					}
 				}
