@@ -22,8 +22,8 @@ public class EntityBall extends Entity implements Weighted {
 
 	@Override
 	public void prepare() {
-		sizex = 2f - (World.tilepartx * 3);
-		sizey = 2f - (World.tileparty * 3);
+		sizex = 1f - (World.tilepartx * 3);
+		sizey = 1f - (World.tileparty * 3);
 		this.maxspeed = 5f;
 		this.accspeed = maxspeed * maxspeed;
 		this.hasEntityCollision = true;
