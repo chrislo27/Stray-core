@@ -360,8 +360,6 @@ public class World implements TileBasedMap {
 				if (getBlock(x, y) instanceof BlockCameraMagnet) {
 					camera.centerOn((x + 0.5f) * tilesizex, (y - 0.5f) * tilesizex);
 					camera.clamp();
-					main.camera.update();
-					return;
 				}
 			}
 		}
