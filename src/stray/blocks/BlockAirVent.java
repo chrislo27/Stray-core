@@ -13,6 +13,7 @@ public class BlockAirVent extends Block {
 	}
 	
 	public static final int range = 3;
+	public static final float particleVelo = 15f;
 
 	@Override
 	public void tickUpdate(World world, int x, int y) {
@@ -34,10 +35,10 @@ public class BlockAirVent extends Block {
 		}
 
 		if (world.tickTime % 2 == 0) return;
-
+		
 		world.particles.add(ParticlePool.obtain().setTexture("airwhoosh")
 				.setPosition(x + 0.5f + MathUtils.random(-0.25f, 0.25f), y)
-				.setVelocity(MathUtils.random(-0.075f, 0.075f), -10f).setLifetime(0.33333333f)
+				.setVelocity(MathUtils.random(-0.075f, 0.075f), -(particleVelo)).setLifetime(newRange / particleVelo)
 				.setStartScale(2f).setEndScale(2f).setAlpha(0.5f).setDestroyOnBlock(true));
 	}
 
