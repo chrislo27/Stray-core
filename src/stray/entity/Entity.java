@@ -39,6 +39,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 
 	public float dragCoefficient = 1;
 	public float gravityCoefficient = 1;
+	public float bounceCoefficient = 0;
 
 	public float velox = 0; // speed blocks/sec
 	public float veloy = 0; // speed blocks/sec
@@ -126,7 +127,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 				Coordinate c = getBlockCollidingDown();
 				Entity en = getEntityCollidingDown();
 				if (c != null) {
-					veloy = 0;
+					veloy = -veloy * bounceCoefficient;
 					velo = 0;
 					onCollideDown();
 					world.getBlock(c.getX(), c.getY()).onCollideUpFace(world,
@@ -141,7 +142,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 				Coordinate c = getBlockCollidingUp();
 				Entity en = getEntityCollidingUp();
 				if (c != null) {
-					veloy = 0;
+					veloy = -veloy * bounceCoefficient;
 					velo = 0;
 					onCollideUp();
 					world.getBlock(c.getX(), c.getY()).onCollideDownFace(world,
@@ -159,7 +160,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 					Coordinate c = getBlockCollidingDown();
 					Entity en = getEntityCollidingDown();
 					if (c != null) {
-						veloy = 0;
+						veloy = -veloy * bounceCoefficient;
 						onCollideDown();
 						world.getBlock(c.getX(), c.getY()).onCollideUpFace(world,
 								c.getX(), c.getY(), this);
@@ -175,7 +176,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 					Coordinate c = getBlockCollidingUp();
 					Entity en = getEntityCollidingUp();
 					if (c != null) {
-						veloy = 0;
+						veloy = -veloy * bounceCoefficient;
 						onCollideUp();
 						world.getBlock(c.getX(), c.getY()).onCollideDownFace(world,
 								c.getX(), c.getY(), this);
@@ -198,7 +199,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 				Coordinate c = getBlockCollidingRight();
 				Entity en = getEntityCollidingRight();
 				if (c != null) {
-					velox = 0;
+					velox = -velox * bounceCoefficient;
 					velo = 0;
 					onCollideRight();
 					world.getBlock(c.getX(), c.getY()).onCollideLeftFace(world,
@@ -213,7 +214,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 				Coordinate c = getBlockCollidingLeft();
 				Entity en = getEntityCollidingLeft();
 				if (c != null) {
-					velox = 0;
+					velox = -velox * bounceCoefficient;
 					velo = 0;
 					onCollideLeft();
 					world.getBlock(c.getX(), c.getY()).onCollideRightFace(world,
@@ -231,7 +232,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 					Coordinate c = getBlockCollidingRight();
 					Entity en = getEntityCollidingRight();
 					if (c != null) {
-						velox = 0;
+						velox = -velox * bounceCoefficient;
 						onCollideRight();
 						world.getBlock(c.getX(), c.getY()).onCollideLeftFace(world,
 								c.getX(), c.getY(), this);
@@ -247,7 +248,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 					Coordinate c = getBlockCollidingLeft();
 					Entity en = getEntityCollidingLeft();
 					if (c != null) {
-						velox = 0;
+						velox = -velox * bounceCoefficient;
 						onCollideLeft();
 						world.getBlock(c.getX(), c.getY()).onCollideRightFace(world,
 								c.getX(), c.getY(), this);

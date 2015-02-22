@@ -29,6 +29,7 @@ public class EntityBall extends Entity implements Weighted {
 		this.hasEntityCollision = true;
 		this.forceTransfer = 0.75f;
 		this.dragCoefficient = 0.125f;
+		this.bounceCoefficient = 0.5f;
 		
 		circumference = MathUtils.PI * (((sizex) + (sizey)) / 2f);
 	}
