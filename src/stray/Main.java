@@ -697,6 +697,8 @@ public class Main extends Game implements Consumer {
 		animations.put("accelerationpad", new LoopingAnimation(0.5f, 2,
 				"images/blocks/accpad/accelerationpad.png", true).setRegionTile(64, 64)
 				.setVertical(false));
+		animations.put("airvent", new LoopingAnimation(0.05f, 4,
+				"images/blocks/airvent/airvent.png", true).setRegionTile(64, 64).setVertical(false));
 
 		// load animations
 		Iterator it = animations.entrySet().iterator();

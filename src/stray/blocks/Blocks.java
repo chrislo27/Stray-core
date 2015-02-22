@@ -84,6 +84,7 @@ public class Blocks {
 		put("cameramagnet", new BlockCameraMagnet("images/blocks/magnet"));
 		put("electrode", new BlockElectrode("images/blocks/electrode/electrode"));
 		put("fire", new BlockFire(null).setAnimation("fire"));
+		put("airvent", new BlockAirVent(null).solidify().setAnimation("airvent"));
 		
 		put("checkpointclaimed", new Block("images/blocks/checkpoint/checkpointclaimed"){
 			@Override
