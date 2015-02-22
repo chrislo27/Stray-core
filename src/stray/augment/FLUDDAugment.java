@@ -35,6 +35,7 @@ public class FLUDDAugment extends Augment {
 		
 		if(player.gravityCoefficient > 0) return;
 		
+		
 		for (int i = 0; i < 1; i++) {
 			createParticle(world, player.x + (player.sizex / 4f), player.y + (player.sizey - 0.2f)
 					+ (i * 8), "magnetglow");
@@ -67,7 +68,7 @@ public class FLUDDAugment extends Augment {
 
 	@Override
 	public void onActivateTick(World world) {
-
+		world.getPlayer().veloy /= 2;
 	}
 	
 	@Override
