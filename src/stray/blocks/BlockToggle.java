@@ -1,5 +1,6 @@
 package stray.blocks;
 
+import stray.LevelEditor;
 import stray.Main;
 import stray.util.AssetMap;
 import stray.world.World;
@@ -13,6 +14,7 @@ public class BlockToggle extends BlockFadeable {
 		super(null);
 		renderColour = c;
 		switchColour = switc;
+		levelEditorGroup = LevelEditor.EditorGroup.TOGGLE;
 	}
 
 	String switchColour = "";

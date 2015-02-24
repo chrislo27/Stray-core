@@ -28,6 +28,7 @@ public class LevelEditor extends Updateable {
 		while (it.hasNext()) {
 			blocks.add(((Entry<String, Block>) it.next()).getKey());
 		}
+		blocks.sort();
 
 		iothread = new Thread() {
 
@@ -331,4 +332,13 @@ public class LevelEditor extends Updateable {
 		}
 	}
 
+	
+	public static class EditorGroup{
+		
+		public static final int TOGGLE = 5;
+		public static final int BUTTON = 6;
+		public static final int TIMER = 7;
+		public static final int SPAWNER = 8;
+		
+	}
 }

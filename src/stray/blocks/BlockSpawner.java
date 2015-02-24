@@ -3,6 +3,7 @@ package stray.blocks;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 
+import stray.LevelEditor;
 import stray.Main;
 import stray.entity.Entity;
 import stray.util.AssetMap;
@@ -12,6 +13,7 @@ public abstract class BlockSpawner extends Block {
 
 	public BlockSpawner(String path) {
 		super(path);
+		this.levelEditorGroup = LevelEditor.EditorGroup.SPAWNER;
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package stray.blocks;
 
+import stray.LevelEditor;
 import stray.Main;
 import stray.Translator;
 import stray.conversation.Conversations;
@@ -17,6 +18,7 @@ public class BlockTimer extends Block implements AffectsColour {
 		super(null);
 		switchColour = col;
 		renderColour = c;
+		levelEditorGroup = LevelEditor.EditorGroup.TIMER;
 	}
 
 	String switchColour = "";

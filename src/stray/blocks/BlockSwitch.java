@@ -1,5 +1,6 @@
 package stray.blocks;
 
+import stray.LevelEditor;
 import stray.Main;
 import stray.entity.Entity;
 import stray.entity.types.Weighted;
@@ -16,6 +17,7 @@ public class BlockSwitch extends Block implements AffectsColour {
 		super(null);
 		this.switchColour = colour;
 		renderColour = c;
+		levelEditorGroup = LevelEditor.EditorGroup.BUTTON;
 	}
 
 	Color renderColour = Color.WHITE;

@@ -13,11 +13,9 @@ import stray.world.World;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class Block {
+public class Block implements Comparable<Block>{
 	
 	/**
 	 * 
@@ -36,6 +34,8 @@ public class Block {
 	protected int varianttypes = 4;
 	protected boolean solid = false;
 	protected boolean usingMissingTex = false;
+	
+	public int levelEditorGroup = 0;
 
 	public void tickUpdate(World world, int x, int y) {
 
@@ -106,6 +106,11 @@ public class Block {
 	public Block useConTextures() {
 		connectedTextures = true;
 
+		return this;
+	}
+	
+	public Block setEditorGroup(int i){
+		levelEditorGroup = i;
 		return this;
 	}
 
@@ -427,6 +432,14 @@ public class Block {
 	public static boolean playSound(int x, int y, float camx, float camy, Sound sound, float vol,
 			float pitch) {
 		return playSound(x, y, camx, camy, sound, vol, pitch, true);
+	}
+
+	@Override
+	public int compareTo(Block b) {
+		if(levelEditorGroup < b.levelEditorGroup) return -1;
+		if(levelEditorGroup > b.levelEditorGroup) return 1;
+		
+		return 0;
 	}
 
 }
