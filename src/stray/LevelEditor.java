@@ -120,6 +120,15 @@ public class LevelEditor extends Updateable {
 		}
 		world.entities.clear();
 	}
+	
+	private void setToGroup(int group){
+		for(int i = 0; i < blocks.size; i++){
+			if(Blocks.instance().getBlock(blocks.get(i)).levelEditorGroup == group){
+				blocksel = i;
+				return;
+			}
+		}
+	}
 
 	@Override
 	public void render(float delta) {
@@ -146,6 +155,8 @@ public class LevelEditor extends Updateable {
 				Gdx.graphics.getHeight() - 95);
 		main.drawInverse("- / + - ADJUST VOID TIME (" + world.voidTime + " s)",
 				Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 110);
+		main.drawInverse("0-START, 1-TOGGLES, 2-BUTTONS, 3-TIMERS, 4-SPAWNERS",
+				Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 125);
 		main.batch.end();
 
 		world.camera.clamp();
@@ -256,6 +267,17 @@ public class LevelEditor extends Updateable {
 				}
 			}
 		}
+		
+		if(Gdx.input.isKeyJustPressed(Keys.NUM_0)){
+			setToGroup(0);
+		}else{
+			for(int i = 0; i < 9; i++){
+				if(Gdx.input.isKeyJustPressed(Keys.NUM_1 + i)){
+					setToGroup(i + 1);
+					break;
+				}
+			}
+		}
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			main.setScreen(Main.MAINMENU);
@@ -335,10 +357,10 @@ public class LevelEditor extends Updateable {
 	
 	public static class EditorGroup{
 		
-		public static final int TOGGLE = 5;
-		public static final int BUTTON = 6;
-		public static final int TIMER = 7;
-		public static final int SPAWNER = 8;
+		public static final int TOGGLE = 1;
+		public static final int BUTTON = 2;
+		public static final int TIMER = 3;
+		public static final int SPAWNER = 4;
 		
 	}
 }
