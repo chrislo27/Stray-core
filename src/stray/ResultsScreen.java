@@ -136,22 +136,6 @@ public class ResultsScreen extends Updateable {
 				renderDeaths(Settings.DEFAULT_WIDTH / 2 - ((icons.size / 2f) * 35),
 						Main.convertY(375));
 			}
-
-			main.drawCentered(Translator.getMsg("menu.results.verdict"),
-					Settings.DEFAULT_WIDTH / 2, Main.convertY(400));
-			if (voidPresent) {
-				if (main.progress.getLong(levelfile + "-latesttime") <= Levels.instance().levels
-						.get(levelname).bestTime) {
-					main.drawCentered("\"" + Translator.getMsg("menu.results.good" + resultsPick)
-							+ "\"", Settings.DEFAULT_WIDTH / 2, Main.convertY(415));
-				} else {
-					main.drawCentered("\"" + Translator.getMsg("menu.results.bad" + resultsPick)
-							+ "\"", Settings.DEFAULT_WIDTH / 2, Main.convertY(415));
-				}
-			} else {
-				main.drawCentered("\"" + Translator.getMsg("menu.results.good" + resultsPick)
-						+ "\"", Settings.DEFAULT_WIDTH / 2, Main.convertY(415));
-			}
 		}
 
 		container.render(main);
