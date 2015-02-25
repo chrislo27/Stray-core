@@ -155,7 +155,7 @@ public class LevelEditor extends Updateable {
 				Gdx.graphics.getHeight() - 95);
 		main.drawInverse("- / + - ADJUST VOID TIME (" + world.voidTime + " s)",
 				Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 110);
-		main.drawInverse("0-START, 1-TOGGLES, 2-BUTTONS, 3-TIMERS, 4-SPAWNERS",
+		main.drawInverse("0-START, 1-TOGGLES, 2-BUTTONS, 3-TIMERS, 4-SPAWNERS, 5-COLLECT.",
 				Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 125);
 		main.batch.end();
 
