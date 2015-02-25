@@ -1,8 +1,6 @@
 package stray.blocks;
 
-import stray.entity.Entity;
-import stray.entity.EntityLiving;
-import stray.util.MathHelper;
+import stray.LevelEditor.EditorGroup;
 import stray.world.World;
 
 
@@ -11,6 +9,7 @@ public class BlockCollectible extends Block{
 	public BlockCollectible(String path, String col) {
 		super(path);
 		collectible = col;
+		this.levelEditorGroup = EditorGroup.COLLECTIBLE;
 	}
 	
 	String collectible = "COLLECTIBLE BULEAH";

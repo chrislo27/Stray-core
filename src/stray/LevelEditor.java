@@ -361,6 +361,7 @@ public class LevelEditor extends Updateable {
 		public static final int BUTTON = 2;
 		public static final int TIMER = 3;
 		public static final int SPAWNER = 4;
+		public static final int COLLECTIBLE = 5;
 		
 	}
 }
