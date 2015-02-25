@@ -35,6 +35,8 @@ public class Conversations {
 
 	private void loadResources() {
 		convs = new HashMap<String, Conversation>();
+		
+		long timeTaken = System.currentTimeMillis();
 
 		FileHandle h = Gdx.files.internal("localization/conversation.xml");
 		XmlReader reader = new XmlReader();
@@ -54,14 +56,16 @@ public class Conversations {
 				if(speaker != null) if(speaker.equals("")) speaker = null;
 				if(cutscenepic != null) if(cutscenepic.equals("")) cutscenepic = null;
 
-				Main.logger.info("Adding speech for " + e.getAttribute("id") + ": speaker: "
-						+ speaker + ", text: " + text + ", cutscene: " + cutscenepic + ", voice: "
-						+ voice);
+//				Main.logger.info("Adding speech for " + e.getAttribute("id") + ": speaker: "
+//						+ speaker + ", text: " + text + ", cutscene: " + cutscenepic + ", voice: "
+//						+ voice);
 
 				speeches.add(new Speech(speaker, text, cutscenepic).setVoice(voice));
 			}
 			convs.put(e.getAttribute("id"),
 					new Conversation((Speech[]) speeches.toArray(Speech.class)));
 		}
+		
+		Main.logger.info("Finished loading conversation file, took " + (System.currentTimeMillis() - timeTaken) + " ms");
 	}
 }
