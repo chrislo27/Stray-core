@@ -9,10 +9,8 @@ import stray.Settings;
 import stray.augment.Augments;
 import stray.blocks.Block;
 import stray.blocks.BlockCameraMagnet;
-import stray.blocks.BlockExitPortal;
 import stray.blocks.BlockPlayerSpawner;
 import stray.blocks.Blocks;
-import stray.blocks.fluid.BlockFluid;
 import stray.entity.Entity;
 import stray.entity.EntityPlayer;
 import stray.pathfinding.Mover;
@@ -24,7 +22,6 @@ import stray.util.KeyBinds;
 import stray.util.MathHelper;
 import stray.util.Particle;
 import stray.util.ParticlePool;
-import stray.util.QuadTree;
 import stray.util.Sizeable;
 import stray.util.Utils;
 import stray.util.render.SmoothCamera;
@@ -36,7 +33,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
@@ -454,8 +450,7 @@ public class World implements TileBasedMap {
 		renderer.tickUpdate();
 
 		for (int y = sizey - 1; y >= 0; y--) {
-			for (int x = (BlockFluid.movementDirection() ? 0 : sizex - 1); (BlockFluid
-					.movementDirection() ? x++ < sizex : --x >= 0);) {
+			for (int x = 0; x++ < sizex;) {
 				executeBlockUpdates();
 				if (getBlock(x, y).getTickRate() < 1) continue;
 				if (getBlock(x, y).getTickRate() > 1) if (tickTime % getBlock(x, y).getTickRate() != 0) continue;
