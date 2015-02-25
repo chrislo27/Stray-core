@@ -17,9 +17,7 @@ public class BlockGearCollectible extends BlockCollectible{
 			return;
 		}
 		
-		//super.render(world, x, y);
-		
-		super.renderWithOffset(world, x, y, 0, (World.tilesizey / 2f) * (MathHelper.clampNumberFromTime(2.5f) - 0.5f));
+		super.renderWithOffset(world, x, y, 0, (World.tilesizey / 8f) * ((MathHelper.clampNumberFromTime(2.5f) * 2f) - 0.5f));
 	}
 
 }
