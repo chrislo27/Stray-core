@@ -450,7 +450,7 @@ public class World implements TileBasedMap {
 		renderer.tickUpdate();
 
 		for (int y = sizey - 1; y >= 0; y--) {
-			for (int x = 0; x++ < sizex;) {
+			for (int x = 0; x < sizex; x++) {
 				executeBlockUpdates();
 				if (getBlock(x, y).getTickRate() < 1) continue;
 				if (getBlock(x, y).getTickRate() > 1) if (tickTime % getBlock(x, y).getTickRate() != 0) continue;
