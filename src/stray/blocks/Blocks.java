@@ -79,7 +79,7 @@ public class Blocks {
 		put("timerpurple", new BlockTimer(PURPLE, "purple"));
 		put("timerorange", new BlockTimer(ORANGE, "orange"));
 		
-		put("exitportal", new BlockExitPortal());
+		put("exitportal", new BlockExitPortal("images/blocks/exit/exit"));
 		put("platform", new BlockPlatform("images/blocks/platform/platform").useConTextures());
 		put("cameramagnet", new BlockCameraMagnet("images/blocks/magnet"));
 		put("electrode", new BlockElectrode("images/blocks/electrode/electrode"));

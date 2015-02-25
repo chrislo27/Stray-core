@@ -14,8 +14,8 @@ import com.badlogic.gdx.Input.Keys;
 
 public class BlockExitPortal extends Block {
 
-	public BlockExitPortal() {
-		super(null);
+	public BlockExitPortal(String string) {
+		super(string);
 	}
 
 	public static final int ANIMATION_TIME = Math.round(Main.TICKS * 5f);
