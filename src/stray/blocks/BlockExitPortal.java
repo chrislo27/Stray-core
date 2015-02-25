@@ -22,13 +22,7 @@ public class BlockExitPortal extends Block {
 
 	@Override
 	public void render(World world, int x, int y) {
-		Utils.drawRotatedCentered(world.batch, world.main.textures.get("gear"), x * world.tilesizex
-				- world.camera.camerax + (World.tilesizey / 2f),
-				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey)
-						+ (World.tilesizey / 2f), World.tilesizex
-						* GearTransition.FULL_TO_MIDDLE_RATIO, World.tilesizey
-						* GearTransition.FULL_TO_MIDDLE_RATIO, world.exitRotation, y % 2 == 0
-						&& x % 2 == 0);
+		super.render(world, x, y);
 	}
 
 	@Override
@@ -36,34 +30,20 @@ public class BlockExitPortal extends Block {
 		if (Block.entityIntersects(world, x, y, world.getPlayer())) {
 			if (!world.global.getString("completedLevel").equals("done!")) {
 				world.global.setString("completedLevel", "done!");
-				world.global.setInt("exitAnimation", ANIMATION_TIME);
 
 				if (world.main.getScreen() != Main.GAME) return;
 				save(world);
 				Main.LEVELSELECT.moveNext();
+				world.main.transition(new FadeIn(), null, Main.RESULTS.setData(world.levelfile,
+						Levels.instance().getNumFromLevelFile(world.levelfile), world.voidTime > 0,
+						world.deaths));
 			}
 		}
 
-		if (world.global.getInt("exitAnimation") >= 0) world.global.setInt("exitAnimation",
-				world.global.getInt("exitAnimation") - 1);
-
-		if(world.global.getString("completedLevel").equals("done!")){
-			if (world.global.getInt("exitAnimation") < 0) {
-				if (world.main.getScreen() != Main.GAME) return;
-				world.main.transition(
-						new FadeIn(),
-						null,
-						Main.RESULTS.setData(
-								world.levelfile,
-								Levels.instance().getNumFromLevelFile(
-										world.levelfile), world.voidTime > 0, world.deaths));
-			}
-		}
-		
 	}
-	
+
 	@Override
-	public boolean isRenderedFront(){
+	public boolean isRenderedFront() {
 		return true;
 	}
 

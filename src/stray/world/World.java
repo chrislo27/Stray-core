@@ -107,8 +107,6 @@ public class World implements TileBasedMap {
 	public boolean augmentActivate = false;
 	long lastAugmentUse = System.currentTimeMillis();
 
-	public float exitRotation = 0;
-
 	public Array<DamageSource> deaths = new Array<DamageSource>(32);
 
 	public World(Main main) {
@@ -305,21 +303,6 @@ public class World implements TileBasedMap {
 		inputUpdate();
 		for (Entity e : entities) {
 			e.renderUpdate();
-		}
-		updateExitRotation();
-	}
-
-	private void updateExitRotation() {
-		exitRotation += Gdx.graphics.getDeltaTime() * calcExitRotationSpeed();
-
-		if (exitRotation > 360) exitRotation %= 360;
-	}
-
-	public float calcExitRotationSpeed() {
-		if (!global.getString("completedLevel").equals("done!")) {
-			return 10f;
-		} else {
-			return 400f - ((global.getInt("exitAnimation") / (1f * BlockExitPortal.ANIMATION_TIME)) * 400f);
 		}
 	}
 
