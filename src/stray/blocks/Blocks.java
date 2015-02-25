@@ -86,6 +86,8 @@ public class Blocks {
 		put("fire", new BlockFire(null).setAnimation("fire"));
 		put("airvent", new BlockAirVent(null).solidify().setAnimation("airvent"));
 		
+		put("gearCollectible", new BlockGearCollectible("images/blocks/collectible/gear"));
+		
 		put("checkpointclaimed", new Block("images/blocks/checkpoint/checkpointclaimed"){
 			@Override
 			public boolean isRenderedFront(){
