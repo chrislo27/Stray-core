@@ -15,8 +15,8 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class Block implements Comparable<Block>{
-	
+public class Block implements Comparable<Block> {
+
 	/**
 	 * 
 	 * @param path
@@ -34,7 +34,7 @@ public class Block implements Comparable<Block>{
 	protected int varianttypes = 4;
 	protected boolean solid = false;
 	protected boolean usingMissingTex = false;
-	
+
 	public int levelEditorGroup = 0;
 
 	public void tickUpdate(World world, int x, int y) {
@@ -44,8 +44,8 @@ public class Block implements Comparable<Block>{
 	public float getDragCoefficient(World world, int x, int y) {
 		return 1;
 	}
-	
-	public boolean isRenderedFront(){
+
+	public boolean isRenderedFront() {
 		return false;
 	}
 
@@ -53,19 +53,19 @@ public class Block implements Comparable<Block>{
 		solid = true;
 		return this;
 	}
-	
+
 	public void onCollideLeftFace(World world, int x, int y, Entity e) {
 
 	}
-	
+
 	public void onCollideRightFace(World world, int x, int y, Entity e) {
 
 	}
-	
+
 	public void onCollideUpFace(World world, int x, int y, Entity e) {
 
 	}
-	
+
 	public void onCollideDownFace(World world, int x, int y, Entity e) {
 
 	}
@@ -108,8 +108,8 @@ public class Block implements Comparable<Block>{
 
 		return this;
 	}
-	
-	public Block setEditorGroup(int i){
+
+	public Block setEditorGroup(int i) {
 		levelEditorGroup = i;
 		return this;
 	}
@@ -183,9 +183,10 @@ public class Block implements Comparable<Block>{
 		}
 	}
 
-//	protected void drawAt(Batch batch, Texture sprite, float f, float g) {
-//		batch.draw(sprite, f, Main.convertY(g + World.tilesizey), World.tilesizex, World.tilesizey);
-//	}
+	// protected void drawAt(Batch batch, Texture sprite, float f, float g) {
+	// batch.draw(sprite, f, Main.convertY(g + World.tilesizey),
+	// World.tilesizex, World.tilesizey);
+	// }
 
 	/**
 	 * only used for connected textures connected: full, corner, edgehor,
@@ -205,40 +206,44 @@ public class Block implements Comparable<Block>{
 		return ((int) time / (10000 / varianttypes));
 	}
 
-//	/**
-//	 * topleft origin!
-//	 * 
-//	 * @param batch
-//	 * @param x
-//	 * @param y
-//	 */
-//	public void renderModel(World world, int x, int y) {
-//		Batch batch = world.batch;
-//		if (path == null) return;
-//		if (usingMissingTex) {
-//			batch.draw(world.main.manager.get(AssetMap.get("blockmissingtexture"), Texture.class),
-//					x, Main.convertY(y + World.tilesizey), World.tilesizex, World.tilesizey);
-//			return;
-//		}
-//
-//		if (animationlink != null) {
-//			batch.draw(world.main.animations.get(animationlink).getCurrentFrame(), x,
-//					Main.convertY(y + World.tilesizey), World.tilesizex, World.tilesizey);
-//			return;
-//		}
-//
-//		if (!connectedTextures) {
-//			if (!variants) {
-//				drawAt(batch, world.main.manager.get(sprites.get("defaulttex"), Texture.class), x,
-//						y);
-//			} else {
-//				drawAt(batch, world.main.manager.get(sprites.get("defaulttex" + getVarFromTime()),
-//						Texture.class), x, y);
-//			}
-//		} else {
-//			drawAt(batch, world.main.manager.get(sprites.get("full"), Texture.class), x, y);
-//		}
-//	}
+	// /**
+	// * topleft origin!
+	// *
+	// * @param batch
+	// * @param x
+	// * @param y
+	// */
+	// public void renderModel(World world, int x, int y) {
+	// Batch batch = world.batch;
+	// if (path == null) return;
+	// if (usingMissingTex) {
+	// batch.draw(world.main.manager.get(AssetMap.get("blockmissingtexture"),
+	// Texture.class),
+	// x, Main.convertY(y + World.tilesizey), World.tilesizex, World.tilesizey);
+	// return;
+	// }
+	//
+	// if (animationlink != null) {
+	// batch.draw(world.main.animations.get(animationlink).getCurrentFrame(), x,
+	// Main.convertY(y + World.tilesizey), World.tilesizex, World.tilesizey);
+	// return;
+	// }
+	//
+	// if (!connectedTextures) {
+	// if (!variants) {
+	// drawAt(batch, world.main.manager.get(sprites.get("defaulttex"),
+	// Texture.class), x,
+	// y);
+	// } else {
+	// drawAt(batch, world.main.manager.get(sprites.get("defaulttex" +
+	// getVarFromTime()),
+	// Texture.class), x, y);
+	// }
+	// } else {
+	// drawAt(batch, world.main.manager.get(sprites.get("full"), Texture.class),
+	// x, y);
+	// }
+	// }
 
 	public static int variantNum(World world, int x, int y) {
 		return variantNum(world.magicnumber, x, y);
@@ -252,54 +257,64 @@ public class Block implements Comparable<Block>{
 		return variantNum(Block.globalMagicNumber, x, y);
 	}
 
-//	public void renderPlain(Main main, float camerax, float cameray, int x, int y, int magic) {
-//		if (animationlink != null) {
-//			main.batch.draw(main.animations.get(animationlink).getCurrentFrame(), x
-//					* World.tilesizex - camerax, y * World.tilesizey - cameray, World.tilesizex,
-//					World.tilesizey);
-//			return;
-//		}
-//
-//		if (usingMissingTex) {
-//			main.batch.draw(main.manager.get(AssetMap.get("blockmissingtexture"), Texture.class), x
-//					* World.tilesizex - camerax, y * World.tilesizey - cameray, World.tilesizex,
-//					World.tilesizey);
-//			return;
-//		}
-//
-//		if (path == null) return;
-//
-//		if (!connectedTextures) {
-//			if (!variants) {
-//				drawAt(main.batch, main.manager.get(sprites.get("defaulttex"), Texture.class), x
-//						* World.tilesizex - camerax, y * World.tilesizey - cameray);
-//			} else {
-//				drawAt(main.batch, main.manager.get(sprites.get("defaulttex"
-//						+ ((variantNum(magic, x, y)) & (varianttypes - 1))), Texture.class), x
-//						* World.tilesizex - camerax, y * World.tilesizey - cameray);
-//			}
-//		} else {
-//			drawAt(main.batch, main.manager.get(sprites.get("full"), Texture.class), x
-//					* World.tilesizex - camerax, y * World.tilesizey - cameray);
-//
-//		}
-//	}
+	// public void renderPlain(Main main, float camerax, float cameray, int x,
+	// int y, int magic) {
+	// if (animationlink != null) {
+	// main.batch.draw(main.animations.get(animationlink).getCurrentFrame(), x
+	// * World.tilesizex - camerax, y * World.tilesizey - cameray,
+	// World.tilesizex,
+	// World.tilesizey);
+	// return;
+	// }
+	//
+	// if (usingMissingTex) {
+	// main.batch.draw(main.manager.get(AssetMap.get("blockmissingtexture"),
+	// Texture.class), x
+	// * World.tilesizex - camerax, y * World.tilesizey - cameray,
+	// World.tilesizex,
+	// World.tilesizey);
+	// return;
+	// }
+	//
+	// if (path == null) return;
+	//
+	// if (!connectedTextures) {
+	// if (!variants) {
+	// drawAt(main.batch, main.manager.get(sprites.get("defaulttex"),
+	// Texture.class), x
+	// * World.tilesizex - camerax, y * World.tilesizey - cameray);
+	// } else {
+	// drawAt(main.batch, main.manager.get(sprites.get("defaulttex"
+	// + ((variantNum(magic, x, y)) & (varianttypes - 1))), Texture.class), x
+	// * World.tilesizex - camerax, y * World.tilesizey - cameray);
+	// }
+	// } else {
+	// drawAt(main.batch, main.manager.get(sprites.get("full"), Texture.class),
+	// x
+	// * World.tilesizex - camerax, y * World.tilesizey - cameray);
+	//
+	// }
+	// }
 
 	public void render(World world, int x, int y) {
+		renderWithOffset(world, x, y, 0, 0);
+	}
 
+	protected void renderWithOffset(World world, int x, int y, float offx, float offy) {
 		if (usingMissingTex) {
 			world.batch.draw(
-					world.main.manager.get(AssetMap.get("blockmissingtexture"), Texture.class), x
-							* world.tilesizex - world.camera.camerax,
-					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey),
-					World.tilesizex, World.tilesizey);
+					world.main.manager.get(AssetMap.get("blockmissingtexture"), Texture.class),
+					x * world.tilesizex - world.camera.camerax + offx,
+					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey
+							+ offy), World.tilesizex, World.tilesizey);
 			return;
 		}
 		if (animationlink != null) {
-			world.batch.draw(world.main.animations.get(animationlink).getCurrentFrame(), x
-					* world.tilesizex - world.camera.camerax,
-					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey),
-					World.tilesizex, World.tilesizey);
+			world.batch.draw(
+					world.main.animations.get(animationlink).getCurrentFrame(),
+					x * world.tilesizex - world.camera.camerax + offx,
+					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey
+							+ offy), World.tilesizex, World.tilesizey);
 			return;
 		}
 		if (path == null) return;
@@ -307,17 +322,19 @@ public class Block implements Comparable<Block>{
 		if (!connectedTextures) {
 			if (!variants) {
 				world.batch.draw(
-						world.main.manager.get(sprites.get("defaulttex"), Texture.class), x
-								* world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
-								- world.camera.cameray) + World.tilesizey));
+						world.main.manager.get(sprites.get("defaulttex"), Texture.class),
+						x * world.tilesizex - world.camera.camerax + offx,
+						Main.convertY((y * world.tilesizey - world.camera.cameray)
+								+ World.tilesizey + offy));
 			} else {
 				world.batch.draw(world.main.manager.get(sprites.get("defaulttex"
 						+ ((variantNum(world, x, y)) & (varianttypes - 1))), Texture.class), x
-						* world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
-								- world.camera.cameray) + World.tilesizey));
+						* world.tilesizex - world.camera.camerax + offx, Main.convertY((y
+						* world.tilesizey - world.camera.cameray)
+						+ World.tilesizey + offy));
 			}
 		} else {
-			drawConnectedTexture(world, x, y,
+			drawConnectedTexture(world, x, y, offx, offy,
 					world.main.manager.get(sprites.get("corner"), Texture.class),
 					world.main.manager.get(sprites.get("full"), Texture.class),
 					world.main.manager.get(sprites.get("edgever"), Texture.class),
@@ -325,8 +342,8 @@ public class Block implements Comparable<Block>{
 		}
 	}
 
-	public void drawConnectedTexture(World world, int x, int y, Texture corner, Texture full,
-			Texture ver, Texture hor) {
+	public void drawConnectedTexture(World world, int x, int y, float offx, float offy,
+			Texture corner, Texture full, Texture ver, Texture hor) {
 		boolean up, down, left, right;
 		up = world.getBlock(x, y - 1) == this;
 		down = world.getBlock(x, y + 1) == this;
@@ -336,24 +353,27 @@ public class Block implements Comparable<Block>{
 		if (up && down && left && right) {
 			if (world.getBlock(x + 1, y + 1) != this || world.getBlock(x + 1, y - 1) != this
 					|| world.getBlock(x - 1, y + 1) != this || world.getBlock(x - 1, y - 1) != this) {
-				world.batch.draw(corner, x * world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
-						- world.camera.cameray) + World.tilesizey));
-			} else world.batch.draw(full, x * world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
-					- world.camera.cameray) + World.tilesizey));
+				world.batch.draw(
+						corner,
+						x * world.tilesizex - world.camera.camerax + offx,
+						Main.convertY((y * world.tilesizey - world.camera.cameray)
+								+ World.tilesizey + offy));
+			} else world.batch.draw(full, x * world.tilesizex - world.camera.camerax + offx,
+					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
 		} else if (up && down && (left == false || right == false)) {
-			world.batch.draw(ver, x * world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
-					- world.camera.cameray) + World.tilesizey));
+			world.batch.draw(ver, x * world.tilesizex - world.camera.camerax + offx,
+					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
 		} else if (left && right && (up == false || down == false)) {
-			world.batch.draw(hor, x * world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
-					- world.camera.cameray) + World.tilesizey));
+			world.batch.draw(hor, x * world.tilesizex - world.camera.camerax + offx,
+					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
 		} else {
-			world.batch.draw(corner, x * world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
-					- world.camera.cameray) + World.tilesizey));
+			world.batch.draw(corner, x * world.tilesizex - world.camera.camerax + offx,
+					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
 		}
 	}
 
-	public void drawConnectedTexture(World world, int x, int y, TextureRegion corner,
-			TextureRegion full, TextureRegion ver, TextureRegion hor) {
+	public void drawConnectedTexture(World world, int x, int y, float offx, float offy,
+			TextureRegion corner, TextureRegion full, TextureRegion ver, TextureRegion hor) {
 		boolean up, down, left, right;
 		up = world.getBlock(x, y - 1) == this;
 		down = world.getBlock(x, y + 1) == this;
@@ -363,25 +383,30 @@ public class Block implements Comparable<Block>{
 		if (up && down && left && right) {
 			if (world.getBlock(x + 1, y + 1) != this || world.getBlock(x + 1, y - 1) != this
 					|| world.getBlock(x - 1, y + 1) != this || world.getBlock(x - 1, y - 1) != this) {
-				world.batch.draw(corner, x * world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
-						- world.camera.cameray) + World.tilesizey));
-			} else world.batch.draw(full, x * world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
-					- world.camera.cameray) + World.tilesizey));
+				world.batch.draw(
+						corner,
+						x * world.tilesizex - world.camera.camerax + offx,
+						Main.convertY((y * world.tilesizey - world.camera.cameray)
+								+ World.tilesizey));
+			} else world.batch.draw(full, x * world.tilesizex - world.camera.camerax + offx,
+					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
 		} else if (up && down && (left == false || right == false)) {
-			world.batch.draw(ver, x * world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
-					- world.camera.cameray) + World.tilesizey));
+			world.batch.draw(ver, x * world.tilesizex - world.camera.camerax + offx,
+					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
 		} else if (left && right && (up == false || down == false)) {
-			world.batch.draw(hor, x * world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
-					- world.camera.cameray) + World.tilesizey));
+			world.batch.draw(hor, x * world.tilesizex - world.camera.camerax + offx,
+					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
 		} else {
-			world.batch.draw(corner, x * world.tilesizex - world.camera.camerax, Main.convertY((y * world.tilesizey
-					- world.camera.cameray) + World.tilesizey));
+			world.batch.draw(corner, x * world.tilesizex - world.camera.camerax + offx,
+					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
 		}
 	}
 
-//	protected void drawAt(SpriteBatch batch, TextureRegion corner, float f, float g) {
-//		batch.draw(corner, f, Main.convertY(g + World.tilesizey), World.tilesizex, World.tilesizey);
-//	}
+	// protected void drawAt(SpriteBatch batch, TextureRegion corner, float f,
+	// float g) {
+	// batch.draw(corner, f, Main.convertY(g + World.tilesizey),
+	// World.tilesizex, World.tilesizey);
+	// }
 
 	public static boolean isEntityNear(World world, int x, int y, int rad, Class<?> cls) {
 		for (int i = 0; i < world.entities.size; i++) {
@@ -436,9 +461,9 @@ public class Block implements Comparable<Block>{
 
 	@Override
 	public int compareTo(Block b) {
-		if(levelEditorGroup < b.levelEditorGroup) return -1;
-		if(levelEditorGroup > b.levelEditorGroup) return 1;
-		
+		if (levelEditorGroup < b.levelEditorGroup) return -1;
+		if (levelEditorGroup > b.levelEditorGroup) return 1;
+
 		return 0;
 	}
 
