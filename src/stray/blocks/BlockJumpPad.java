@@ -14,7 +14,7 @@ public class BlockJumpPad extends Block {
 	@Override
 	public void tickUpdate(World world, int x, int y) {
 		for(Entity e : world.entities){
-			if(Block.entityIntersects(world, x, y, e, 1, -0.1f)){
+			if(Block.entityIntersects(world, x, y - World.tileparty, e, 1, World.tileparty)){
 				e.veloy -= 15f;
 			}
 		}
