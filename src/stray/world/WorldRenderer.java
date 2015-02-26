@@ -5,6 +5,8 @@ import stray.Settings;
 import stray.Translator;
 import stray.augment.Augments;
 import stray.blocks.Block;
+import stray.blocks.BlockExitPortal;
+import stray.blocks.BlockGearCollectible;
 import stray.blocks.Blocks;
 import stray.entity.Entity;
 import stray.util.AssetMap;
@@ -196,6 +198,47 @@ public class WorldRenderer {
 		renderAugments();
 
 		renderPlayerArrow();
+
+		renderCollectibles();
+	}
+
+	public void renderCollectibles() {
+		for (int i = 0; i < BlockExitPortal.AMOUNT_REQUIRED
+				&& i < world.global.getInt(BlockGearCollectible.collectibleName); i++) {
+			Utils.drawRotated(
+					batch,
+					main.textures.get("gear"),
+					(Settings.DEFAULT_WIDTH / 2 - (BlockExitPortal.AMOUNT_REQUIRED * 30 / 2f))
+							+ (i * 32) - (i * 3),
+					Main.convertY(64 + (i % 2 != 0 ? 7 : 0)),
+					32,
+					32,
+					MathHelper.getNumberFromTime(0.5f * world.global
+							.getInt(BlockGearCollectible.collectibleName) + 0.001f)
+							* 360, i % 2 == 0);
+		}
+		int i = 5;
+		Utils.drawRotated(
+				batch,
+				main.textures.get("gear"),
+				(Settings.DEFAULT_WIDTH / 2 - (BlockExitPortal.AMOUNT_REQUIRED * 30 / 2f))
+						+ (i * 32) - (i * 3),
+				Main.convertY(64 + (i % 2 != 0 ? 7 : 0)),
+				32,
+				32,
+				MathHelper.getNumberFromTime(0.5f * world.global
+						.getInt(BlockGearCollectible.collectibleName) + 0.001f)
+						* 360
+						* (world.global.getInt(BlockGearCollectible.collectibleName) < BlockExitPortal.AMOUNT_REQUIRED ? 0
+								: 1), i % 2 == 0);
+		batch.draw(
+				main.manager.get(
+						AssetMap.get("exit"
+								+ (world.global.getInt(BlockGearCollectible.collectibleName) >= BlockExitPortal.AMOUNT_REQUIRED ? "yes"
+										: "no")), Texture.class), Settings.DEFAULT_WIDTH / 2
+						- (BlockExitPortal.AMOUNT_REQUIRED * 30 / 2f) + (i * 32) - (i * 3) + 16,
+				Main.convertY(64 + (i % 2 != 0 ? 7 : 0)));
+
 	}
 
 	public void renderPlayerArrow() {
@@ -308,8 +351,8 @@ public class WorldRenderer {
 					5 + (i % 2 != 0 ? 7 : 0), 32, 32,
 					MathHelper.getNumberFromTime(((world.augmentActivate) ? 0.75f : 5f)) * 360,
 					i % 2 == 0);
-			
-			if(i != world.currentAugment){
+
+			if (i != world.currentAugment) {
 				batch.setColor(0, 0, 0, 0.6f);
 				Utils.drawRotated(batch, main.textures.get("gear"), 135 + (i * 32) - (i * 3),
 						5 + (i % 2 != 0 ? 7 : 0), 32, 32,

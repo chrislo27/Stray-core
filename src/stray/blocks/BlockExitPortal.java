@@ -18,7 +18,7 @@ public class BlockExitPortal extends Block {
 		super(string);
 	}
 
-	public static final int ANIMATION_TIME = Math.round(Main.TICKS * 5f);
+	public static final int AMOUNT_REQUIRED = 5;
 
 	@Override
 	public void render(World world, int x, int y) {

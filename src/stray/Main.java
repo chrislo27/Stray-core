@@ -355,11 +355,11 @@ public class Main extends Game implements Consumer {
 			if (getScreen() != null) {
 				((Updateable) getScreen()).renderUpdate();
 			}
-			
+
 			preRender();
 			super.render();
 			postRender();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -573,7 +573,9 @@ public class Main extends Game implements Consumer {
 		manager.load("images/ui/damage/theVoid.png", Texture.class);
 		manager.load(AssetMap.add("playerdirectionarrow", "images/ui/player-arrow.png"),
 				Texture.class);
-
+		manager.load(AssetMap.add("exityes", "images/ui/exitsign/exityes.png"), Texture.class);
+		manager.load(AssetMap.add("exitno", "images/ui/exitsign/exitno.png"), Texture.class);
+		
 		// particle
 		manager.load(AssetMap.add("money", "images/particle/money.png"), Texture.class);
 		manager.load(AssetMap.add("checkpoint", "images/particle/checkpoint.png"), Texture.class);
@@ -590,7 +592,8 @@ public class Main extends Game implements Consumer {
 		manager.load(AssetMap.add("airwhoosh", "images/particle/airwhoosh.png"), Texture.class);
 		manager.load(AssetMap.add("particlecircle", "images/particle/circle.png"), Texture.class);
 		manager.load(AssetMap.add("particlestar", "images/particle/star.png"), Texture.class);
-		manager.load(AssetMap.add("particleshockwave", "images/particle/explosionshockwave.png"), Texture.class);
+		manager.load(AssetMap.add("particleshockwave", "images/particle/explosionshockwave.png"),
+				Texture.class);
 		manager.load(AssetMap.add("particleflash0", "images/particle/flash0.png"), Texture.class);
 		manager.load(AssetMap.add("particleflash1", "images/particle/flash1.png"), Texture.class);
 		manager.load(AssetMap.add("particleflash2", "images/particle/flash2.png"), Texture.class);
@@ -628,10 +631,15 @@ public class Main extends Game implements Consumer {
 		// misc
 		manager.load(AssetMap.add("vignette", "images/ui/vignette.png"), Texture.class);
 		manager.load(AssetMap.add("entityshield", "images/entity/shield.png"), Texture.class);
-		manager.load(AssetMap.add("levelselectbg", "images/levelselect/levelselectbg.png"), Texture.class);
-		manager.load(AssetMap.add("levelselectdot", "images/levelselect/levelselectdot.png"), Texture.class);
-		manager.load(AssetMap.add("levelselectdotvoid", "images/levelselect/levelselectdotvoid.png"), Texture.class);
-		manager.load(AssetMap.add("levelselected", "images/levelselect/levelselected.png"), Texture.class);
+		manager.load(AssetMap.add("levelselectbg", "images/levelselect/levelselectbg.png"),
+				Texture.class);
+		manager.load(AssetMap.add("levelselectdot", "images/levelselect/levelselectdot.png"),
+				Texture.class);
+		manager.load(
+				AssetMap.add("levelselectdotvoid", "images/levelselect/levelselectdotvoid.png"),
+				Texture.class);
+		manager.load(AssetMap.add("levelselected", "images/levelselect/levelselected.png"),
+				Texture.class);
 		manager.load(AssetMap.add("glintsquare", "images/item/glintsquare.png"), Texture.class);
 		manager.load(AssetMap.add("voidend", "images/voidend.png"), Texture.class);
 		manager.load(AssetMap.add("circlegradient", "images/circlegradient.png"), Texture.class);
@@ -671,6 +679,7 @@ public class Main extends Game implements Consumer {
 	}
 
 	private void loadUnmanagedAssets() {
+		long timeTaken = System.currentTimeMillis();
 		// misc
 
 		// unmanaged textures
@@ -697,8 +706,9 @@ public class Main extends Game implements Consumer {
 		animations.put("accelerationpad", new LoopingAnimation(0.5f, 2,
 				"images/blocks/accpad/accelerationpad.png", true).setRegionTile(64, 64)
 				.setVertical(false));
-		animations.put("airvent", new LoopingAnimation(0.05f, 4,
-				"images/blocks/airvent/airvent.png", true).setRegionTile(64, 64).setVertical(false));
+		animations
+				.put("airvent", new LoopingAnimation(0.05f, 4, "images/blocks/airvent/airvent.png",
+						true).setRegionTile(64, 64).setVertical(false));
 
 		// load animations
 		Iterator it = animations.entrySet().iterator();
@@ -706,6 +716,8 @@ public class Main extends Game implements Consumer {
 			((LoopingAnimation) ((Entry) it.next()).getValue()).load();
 		}
 
+		Main.logger.info("Finished loading all unmanaged assets and animations, took "
+				+ (System.currentTimeMillis() - timeTaken) + " ms");
 	}
 
 	private void addColors() {
@@ -733,7 +745,8 @@ public class Main extends Game implements Consumer {
 	}
 
 	public static float getScaleFactorX() {
-		return (((Gdx.graphics.getWidth() - viewport.getLeftGutterWidth() - viewport.getRightGutterWidth()) * 1f) / Settings.DEFAULT_WIDTH);
+		return (((Gdx.graphics.getWidth() - viewport.getLeftGutterWidth() - viewport
+				.getRightGutterWidth()) * 1f) / Settings.DEFAULT_WIDTH);
 	}
 
 	public static float getScaleFactorY() {
