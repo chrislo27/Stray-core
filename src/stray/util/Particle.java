@@ -111,6 +111,10 @@ public class Particle implements Poolable {
 		gravity = gr;
 		return this;
 	}
+	
+	public Particle setTotalScale(float sc){
+		return setStartScale(sc).setEndScale(sc);
+	}
 
 	@Override
 	public void reset() {
