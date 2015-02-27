@@ -306,7 +306,7 @@ public class Block implements Comparable<Block> {
 					world.main.manager.get(AssetMap.get("blockmissingtexture"), Texture.class),
 					x * world.tilesizex - world.camera.camerax + offx,
 					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey
-							+ offy), World.tilesizex, World.tilesizey);
+							+ offy));
 			return;
 		}
 		if (animationlink != null) {
@@ -314,7 +314,7 @@ public class Block implements Comparable<Block> {
 					world.main.animations.get(animationlink).getCurrentFrame(),
 					x * world.tilesizex - world.camera.camerax + offx,
 					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey
-							+ offy), World.tilesizex, World.tilesizey);
+							+ offy));
 			return;
 		}
 		if (path == null) return;
