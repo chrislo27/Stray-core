@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import stray.Main;
+import stray.LevelEditor.EditorGroup;
 import stray.entity.Entity;
 import stray.entity.EntityBall;
 import stray.entity.EntityWhale;
@@ -94,7 +95,7 @@ public class Blocks {
 			public boolean isRenderedFront(){
 				return true;
 			}
-		});
+		}.setEditorGroup(EditorGroup.NOTPLACEABLE));
 		put("checkpointunclaimed", new BlockCheckpoint("images/blocks/checkpoint/checkpointnew"));
 		
 		put("jumppad", new BlockJumpPad(null).setAnimation("jumppad").solidify());

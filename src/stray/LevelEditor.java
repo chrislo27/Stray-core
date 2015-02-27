@@ -26,6 +26,7 @@ public class LevelEditor extends Updateable {
 		super(m);
 		Iterator it = Blocks.instance().getAllBlocks();
 		while (it.hasNext()) {
+			if (Blocks.instance().getBlock(((Entry<String, Block>) it.next()).getKey()).levelEditorGroup == EditorGroup.NOTPLACEABLE) continue;
 			blocks.add(((Entry<String, Block>) it.next()).getKey());
 		}
 		blocks.sort();
@@ -115,15 +116,16 @@ public class LevelEditor extends Updateable {
 		}
 		world.renderer.showGrid = true;
 		world.prepare();
-		if(world.getPlayer() != null){
-			world.setBlock(Blocks.instance().getBlock("spawnerplayer"), (int) world.getPlayer().x, (int) world.getPlayer().y);
+		if (world.getPlayer() != null) {
+			world.setBlock(Blocks.instance().getBlock("spawnerplayer"), (int) world.getPlayer().x,
+					(int) world.getPlayer().y);
 		}
 		world.entities.clear();
 	}
-	
-	private void setToGroup(int group){
-		for(int i = 0; i < blocks.size; i++){
-			if(Blocks.instance().getBlock(blocks.get(i)).levelEditorGroup == group){
+
+	private void setToGroup(int group) {
+		for (int i = 0; i < blocks.size; i++) {
+			if (Blocks.instance().getBlock(blocks.get(i)).levelEditorGroup == group) {
 				blocksel = i;
 				return;
 			}
@@ -194,7 +196,9 @@ public class LevelEditor extends Updateable {
 				Main.convertY(starting + 90));
 		main.font.draw(main.batch, "world sizex: " + world.sizex, 5, Main.convertY(starting + 120));
 		main.font.draw(main.batch, "world sizey: " + world.sizey, 5, Main.convertY(starting + 135));
-		main.font.draw(main.batch, "file location: " + (lastFile == null ? null : lastFile.getName()), 5, Main.convertY(starting + 165));
+		main.font.draw(main.batch,
+				"file location: " + (lastFile == null ? null : lastFile.getName()), 5,
+				Main.convertY(starting + 165));
 	}
 
 	@Override
@@ -267,12 +271,12 @@ public class LevelEditor extends Updateable {
 				}
 			}
 		}
-		
-		if(Gdx.input.isKeyJustPressed(Keys.NUM_0)){
+
+		if (Gdx.input.isKeyJustPressed(Keys.NUM_0)) {
 			setToGroup(0);
-		}else{
-			for(int i = 0; i < 9; i++){
-				if(Gdx.input.isKeyJustPressed(Keys.NUM_1 + i)){
+		} else {
+			for (int i = 0; i < 9; i++) {
+				if (Gdx.input.isKeyJustPressed(Keys.NUM_1 + i)) {
 					setToGroup(i + 1);
 					break;
 				}
@@ -305,9 +309,9 @@ public class LevelEditor extends Updateable {
 				world.voidTime += 5;
 			} else if (Gdx.input.isKeyJustPressed(Keys.MINUS)) {
 				world.voidTime -= 5;
-				if(world.voidTime < -1) world.voidTime = -1;
+				if (world.voidTime < -1) world.voidTime = -1;
 			}
-		}else{
+		} else {
 			if (Gdx.input.isKeyJustPressed(Keys.PLUS) || Gdx.input.isKeyJustPressed(Keys.EQUALS)) {
 				world.voidTime++;
 			} else if (Gdx.input.isKeyJustPressed(Keys.MINUS)) {
@@ -354,14 +358,14 @@ public class LevelEditor extends Updateable {
 		}
 	}
 
-	
-	public static class EditorGroup{
-		
+	public static class EditorGroup {
+
+		public static final int NOTPLACEABLE = -1;
 		public static final int TOGGLE = 1;
 		public static final int BUTTON = 2;
 		public static final int TIMER = 3;
 		public static final int SPAWNER = 4;
 		public static final int COLLECTIBLE = 5;
-		
+
 	}
 }
