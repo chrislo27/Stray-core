@@ -85,6 +85,7 @@ public class Blocks {
 		put("electrode", new BlockElectrode("images/blocks/electrode/electrode"));
 		put("fire", new BlockFire(null).setAnimation("fire"));
 		put("airvent", new BlockAirVent(null).solidify().setAnimation("airvent"));
+		put("3dblock", new Block("images/blocks/3d/3dblock").solidify());
 		
 		put("gearCollectible", new BlockGearCollectible("images/blocks/collectible/gear"));
 		
