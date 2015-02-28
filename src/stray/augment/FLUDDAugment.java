@@ -17,7 +17,7 @@ public class FLUDDAugment extends Augment {
 	private long lastUse = System.currentTimeMillis();
 
 	private float lastGravCoeff = 1f;
-	
+
 	private boolean touchedDown = false;
 
 	@Override
@@ -32,10 +32,9 @@ public class FLUDDAugment extends Augment {
 	@Override
 	public void onActivate(World world) {
 		EntityPlayer player = world.getPlayer();
-		
-		if(player.gravityCoefficient > 0) return;
-		
-		
+
+		if (player.gravityCoefficient > 0) return;
+
 		for (int i = 0; i < 1; i++) {
 			createParticle(world, player.x + (player.sizex / 4f), player.y + (player.sizey - 0.2f)
 					+ (i * 8), "magnetglow");
@@ -47,8 +46,8 @@ public class FLUDDAugment extends Augment {
 			player.health += (Gdx.graphics.getRawDeltaTime() / 32f);
 			player.health = MathUtils.clamp(player.health, 0f, player.maxhealth);
 		}
-		if(player.fireTime > 0) player.fireTime = 0;
-		
+		if (player.fireTime > 0) player.fireTime = 0;
+
 		world.camera.shake(Gdx.graphics.getDeltaTime(), 0.1f, false);
 	}
 
@@ -61,8 +60,9 @@ public class FLUDDAugment extends Augment {
 	@Override
 	public void onActivateEnd(World world) {
 		world.getPlayer().gravityCoefficient = lastGravCoeff;
-		if(touchedDown == false){
-			if(world.getPlayer().getBlockCollidingDown() != null) touchedDown = true;
+		if (touchedDown == false) {
+			if (world.getPlayer().getBlockCollidingDown() != null
+					|| world.getPlayer().getEntityCollidingDown() != null) touchedDown = true;
 		}
 	}
 
@@ -70,11 +70,11 @@ public class FLUDDAugment extends Augment {
 	public void onActivateTick(World world) {
 		world.getPlayer().veloy /= 2;
 	}
-	
+
 	@Override
-	public void renderUi(Main main, World world){
-		if(touchedDown == false){
-			if(world.getPlayer().getBlockCollidingDown() != null) touchedDown = true;
+	public void renderUi(Main main, World world) {
+		if (touchedDown == false) {
+			if (world.getPlayer().getBlockCollidingDown() != null) touchedDown = true;
 		}
 	}
 
