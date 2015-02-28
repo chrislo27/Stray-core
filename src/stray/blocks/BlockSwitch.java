@@ -58,31 +58,27 @@ public class BlockSwitch extends Block implements AffectsColour {
 		return false;
 	}
 
-	public void render(World world, int x, int y) {
+	public void renderWithOffset(World world, int x, int y, float offx, float offy) {
 		world.batch.draw(
 				world.main.textures.get("switch"), x
-						* world.tilesizex - world.camera.camerax,
-				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey),
-				World.tilesizex, World.tilesizey);
+						* world.tilesizex - world.camera.camerax + offx,
+				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
 		world.batch.setColor(renderColour);
 		world.batch.draw(
 				world.main.textures.get("switch_bg"), x
-						* world.tilesizex - world.camera.camerax,
-				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey),
-				World.tilesizex, World.tilesizey);
+						* world.tilesizex - world.camera.camerax + offx,
+				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
 		world.batch.setColor(1, 1, 1, 1);
 		world.batch.draw(
 				world.main.textures.get("toggle_warning"), x
-						* world.tilesizex - world.camera.camerax,
-				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey),
-				World.tilesizex, World.tilesizey);
+						* world.tilesizex - world.camera.camerax + offx,
+				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
 		
 		if (world.getMeta(x, y) != null) if (world.getMeta(x, y).equals("step")) {
 			world.batch.setColor(Color.YELLOW);
 			world.batch.draw(world.main.manager.get(AssetMap.get("entityshield"), Texture.class), x
-					* world.tilesizex - world.camera.camerax,
-					Main.convertY(y * world.tilesizey - world.camera.cameray + World.tilesizey),
-					World.tilesizex, World.tilesizey);
+					* world.tilesizex - world.camera.camerax + offx,
+					Main.convertY(y * world.tilesizey - world.camera.cameray + World.tilesizey + offy));
 			world.batch.setColor(1, 1, 1, 1);
 		}
 	}

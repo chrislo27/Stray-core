@@ -26,19 +26,17 @@ public class BlockToggle extends BlockFadeable {
 	}
 	
 	@Override
-	public void render(World world, int x, int y){
+	public void renderWithOffset(World world, int x, int y, float offx, float offy){
 		world.batch.setColor(renderColour.r, renderColour.g, renderColour.b, getAlpha(world, x, y));
 		world.batch.draw(
 				world.main.textures.get("toggle"), x
-						* world.tilesizex - world.camera.camerax,
-				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey),
-				World.tilesizex, World.tilesizey);
+						* world.tilesizex - world.camera.camerax + offx,
+				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
 		world.batch.setColor(1, 1, 1, world.batch.getColor().a);
 		world.batch.draw(
 				world.main.textures.get("toggle_warning"), x
-						* world.tilesizex - world.camera.camerax,
-				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey),
-				World.tilesizex, World.tilesizey);
+						* world.tilesizex - world.camera.camerax + offx,
+				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
 		world.batch.setColor(1, 1, 1, 1);
 	}
 

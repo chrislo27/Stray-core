@@ -27,18 +27,16 @@ public class BlockTimer extends Block implements AffectsColour {
 	public static final float SECONDS = 5f;
 
 	@Override
-	public void render(World world, int x, int y) {
+	public void renderWithOffset(World world, int x, int y, float offx, float offy) {
 		world.batch.draw(
 				world.main.textures.get("timer"), x
-						* world.tilesizex - world.camera.camerax,
-				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey),
-				World.tilesizex, World.tilesizey);
+						* world.tilesizex - world.camera.camerax + offx,
+				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
 		world.batch.setColor(renderColour);
 		world.batch.draw(
 				world.main.textures.get("timer_colour"), x
-						* world.tilesizex - world.camera.camerax,
-				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey),
-				World.tilesizex, World.tilesizey);
+						* world.tilesizex - world.camera.camerax + offx,
+				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
 		world.batch.setColor(1, 1, 1, 1);
 		
 		world.main.font.setColor(Color.WHITE);
@@ -46,13 +44,13 @@ public class BlockTimer extends Block implements AffectsColour {
 		if (world.getMeta(x, y) != null) {
 			world.main.drawCentered(String.format("%.1f",
 					((Integer.parseInt(world.getMeta(x, y)) * 1f) / Main.TICKS)), x
-					* world.tilesizex - world.camera.camerax + (World.tilesizex / 2), Main
-					.convertY((y * world.tilesizey - world.camera.cameray) - 30));
+					* world.tilesizex - world.camera.camerax + (World.tilesizex / 2) + offx, Main
+					.convertY((y * world.tilesizey - world.camera.cameray) - 30 + offy));
 		}
 		if (Block.entityIntersects(world, x, y, world.getPlayer())) {
 			world.main.drawCentered(Translator.getMsg("block.triggertimer"), x * world.tilesizex
-					- world.camera.camerax + (World.tilesizex / 2),
-					Main.convertY((y * world.tilesizey - world.camera.cameray) - 15));
+					- world.camera.camerax + (World.tilesizex / 2) + offx,
+					Main.convertY((y * world.tilesizey - world.camera.cameray) - 15 + offy));
 
 			if (Gdx.input.isKeyJustPressed(Keys.UP)) {
 				world.setMeta(Math.round(SECONDS * Main.TICKS) + "", x, y);

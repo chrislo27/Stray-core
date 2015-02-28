@@ -300,7 +300,7 @@ public class Block implements Comparable<Block> {
 		renderWithOffset(world, x, y, 0, 0);
 	}
 
-	protected void renderWithOffset(World world, int x, int y, float offx, float offy) {
+	public void renderWithOffset(World world, int x, int y, float offx, float offy) {
 		if (usingMissingTex) {
 			world.batch.draw(
 					world.main.manager.get(AssetMap.get("blockmissingtexture"), Texture.class),
