@@ -28,9 +28,11 @@ public class Particle implements Poolable {
 	float tintg = 1;
 	float tintb = 1;
 	float tinta = 1;
-	
+
 	float startScale = 1f;
 	float endScale = 1f;
+
+	float initialRotation = 0;
 
 	String texture = "poof";
 
@@ -97,24 +99,29 @@ public class Particle implements Poolable {
 		this.clockwise = clockwise;
 		return this;
 	}
-	
-	public Particle setStartScale(float sc){
+
+	public Particle setStartScale(float sc) {
 		startScale = sc;
 		return this;
 	}
-	
-	public Particle setEndScale(float end){
+
+	public Particle setEndScale(float end) {
 		endScale = end;
 		return this;
 	}
-	
-	public Particle setGravity(float gr){
+
+	public Particle setGravity(float gr) {
 		gravity = gr;
 		return this;
 	}
-	
-	public Particle setTotalScale(float sc){
+
+	public Particle setTotalScale(float sc) {
 		return setStartScale(sc).setEndScale(sc);
+	}
+
+	public Particle setInitRotation(float r) {
+		initialRotation = r;
+		return this;
 	}
 
 	@Override
@@ -134,9 +141,10 @@ public class Particle implements Poolable {
 		startScale = 1f;
 		endScale = 1f;
 		gravity = 0;
+		initialRotation = 0;
 	}
-	
-	private float getModifiedScale(){
+
+	private float getModifiedScale() {
 		return (((startTime - lifetime) / startTime) * (endScale - startScale)) + startScale;
 	}
 
@@ -162,19 +170,17 @@ public class Particle implements Poolable {
 
 					main.batch.setColor(tintr, tintg, tintb,
 							(lifetime <= 0.1f ? (Math.min(lifetime * 10f, tinta)) : tinta));
-					if (rotspeed > 0) {
-						Utils.drawRotatedCentered(main.batch, t, x * World.tilesizex - world.camera.camerax,
-								Main.convertY(y * World.tilesizey
-										- world.camera.cameray), t.getWidth() * getModifiedScale(),
-								t.getHeight() * getModifiedScale(), MathHelper.getNumberFromTime(rotspeed) * 360,
-								clockwise);
-					} else {
-						main.batch.draw(
-								t,
-								x * World.tilesizex - (t.getWidth() * getModifiedScale() / 2) - world.camera.camerax,
-								Main.convertY(y * World.tilesizey + (t.getHeight() * getModifiedScale() / 2)
-										- world.camera.cameray), t.getWidth() * getModifiedScale(), t.getHeight() * getModifiedScale());
-					}
+
+					Utils.drawRotatedCentered(
+							main.batch,
+							t,
+							x * World.tilesizex - world.camera.camerax,
+							Main.convertY(y * World.tilesizey - world.camera.cameray),
+							t.getWidth() * getModifiedScale(),
+							t.getHeight() * getModifiedScale(),
+							((rotspeed > 0 ? (MathHelper.getNumberFromTime(rotspeed) * 360) : 0) + initialRotation) % 360,
+							clockwise);
+
 					main.batch.setColor(Color.WHITE);
 				}
 			}

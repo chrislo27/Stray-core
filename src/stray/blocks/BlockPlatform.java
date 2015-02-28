@@ -11,7 +11,7 @@ import stray.world.World;
 public class BlockPlatform extends BlockDirectional {
 
 	public BlockPlatform(String path) {
-		super(path);
+		super(path, false);
 	}
 
 	@Override

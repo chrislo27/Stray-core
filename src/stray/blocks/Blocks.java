@@ -77,7 +77,7 @@ public class Blocks {
 		put("cameramagnet", new BlockCameraMagnet("images/blocks/magnet"));
 		put("electrode", new BlockElectrode("images/blocks/electrode/electrode").setEditorGroup(EditorGroup.HAZARD));
 		put("fire", new BlockFire(null).setAnimation("fire").setEditorGroup(EditorGroup.HAZARD));
-		put("airvent", new BlockAirVent(null).solidify(SolidFaces.ALL).setAnimation("airvent"));
+		put("airvent", new BlockAirVent("images/blocks/airvent/airvent").solidify(SolidFaces.ALL));
 		put("3dblock", new Block("images/blocks/3d/3dblock").solidify(SolidFaces.ALL));
 		
 		put("gearCollectible", new BlockGearCollectible("images/blocks/collectible/gear"));
