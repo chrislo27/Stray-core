@@ -51,7 +51,7 @@ public class EntityPlayer extends EntityLiving implements Weighted, Stunnable {
 		world.batch.setColor(Augments.getAugment(world.currentAugment).getColor().r, Augments
 				.getAugment(world.currentAugment).getColor().g,
 				Augments.getAugment(world.currentAugment).getColor().b, world.batch.getColor().a);
-		
+
 		if (world.getAugmentsUnlocked() <= 0) world.batch.setColor(1, 1, 1, 1);
 		if (facing == Direction.LEFT) {
 			Utils.drawRotated(world.batch, world.main.textures.get("gear"), x + 5, y - 29, 26, 26,
@@ -168,6 +168,28 @@ public class EntityPlayer extends EntityLiving implements Weighted, Stunnable {
 	@Override
 	public BaseAI getNewAI() {
 		return null;
+	}
+
+	@Override
+	public void onCollideEntityLeft(Entity e) {
+
+	}
+
+	@Override
+	public void onCollideEntityRight(Entity e) {
+
+	}
+
+	@Override
+	public void onCollideEntityUp(Entity e) {
+
+	}
+
+	@Override
+	public void onCollideEntityDown(Entity e) {
+		if(e instanceof EntityLiving){
+			((EntityLiving) e).stun(2f);
+		}
 	}
 
 }
