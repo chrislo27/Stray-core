@@ -73,7 +73,7 @@ public class Blocks {
 		put("timerorange", new BlockTimer(ORANGE, "orange"));
 		
 		put("exitportal", new BlockExitPortal("images/blocks/exit/exit"));
-		put("platform", new BlockPlatform("images/blocks/platform/platform").useConTextures().solidify(SolidFaces.UP));
+		put("platform", new BlockPlatform("images/blocks/platform/platform"));
 		put("cameramagnet", new BlockCameraMagnet("images/blocks/magnet"));
 		put("electrode", new BlockElectrode("images/blocks/electrode/electrode").setEditorGroup(EditorGroup.HAZARD));
 		put("fire", new BlockFire(null).setAnimation("fire").setEditorGroup(EditorGroup.HAZARD));
