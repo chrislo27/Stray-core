@@ -49,7 +49,7 @@ public class Blocks {
 		put("space", new BlockOuterSpace("images/blocks/old/space/space").hasVariants(8));
 		put("wall", new Block("images/blocks/old/dungeonwall/wall").useConTextures().solidify());
 		put("empty", new BlockEmpty());
-		put("spike", new BlockSpike("images/blocks/spike"));
+		put("spike", new BlockSpike("images/blocks/spike").setEditorGroup(EditorGroup.HAZARD));
 		put("sign", new BlockReadable("images/blocks/sign/sign"){
 			@Override
 			public void onRead(World world, int x, int y){
@@ -83,8 +83,8 @@ public class Blocks {
 		put("exitportal", new BlockExitPortal("images/blocks/exit/exit"));
 		put("platform", new BlockPlatform("images/blocks/platform/platform").useConTextures());
 		put("cameramagnet", new BlockCameraMagnet("images/blocks/magnet"));
-		put("electrode", new BlockElectrode("images/blocks/electrode/electrode"));
-		put("fire", new BlockFire(null).setAnimation("fire"));
+		put("electrode", new BlockElectrode("images/blocks/electrode/electrode").setEditorGroup(EditorGroup.HAZARD));
+		put("fire", new BlockFire(null).setAnimation("fire").setEditorGroup(EditorGroup.HAZARD));
 		put("airvent", new BlockAirVent(null).solidify().setAnimation("airvent"));
 		put("3dblock", new Block("images/blocks/3d/3dblock").solidify());
 		
@@ -95,7 +95,7 @@ public class Blocks {
 			public boolean isRenderedFront(){
 				return true;
 			}
-		}.setEditorGroup(EditorGroup.NOTPLACEABLE));
+		}.setEditorGroup(null));
 		put("checkpointunclaimed", new BlockCheckpoint("images/blocks/checkpoint/checkpointnew"));
 		
 		put("jumppad", new BlockJumpPad(null).setAnimation("jumppad").solidify());

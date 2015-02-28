@@ -2,6 +2,7 @@ package stray.blocks;
 
 import java.util.HashMap;
 
+import stray.LevelEditor.EditorGroup;
 import stray.Main;
 import stray.Settings;
 import stray.entity.Entity;
@@ -15,7 +16,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class Block implements Comparable<Block> {
+public class Block {
 
 	/**
 	 * 
@@ -35,7 +36,7 @@ public class Block implements Comparable<Block> {
 	protected boolean solid = false;
 	protected boolean usingMissingTex = false;
 
-	public int levelEditorGroup = 0;
+	public EditorGroup levelEditorGroup = EditorGroup.NORMAL;
 
 	public void tickUpdate(World world, int x, int y) {
 
@@ -109,7 +110,7 @@ public class Block implements Comparable<Block> {
 		return this;
 	}
 
-	public Block setEditorGroup(int i) {
+	public Block setEditorGroup(EditorGroup i) {
 		levelEditorGroup = i;
 		return this;
 	}
@@ -457,14 +458,6 @@ public class Block implements Comparable<Block> {
 	public static boolean playSound(int x, int y, float camx, float camy, Sound sound, float vol,
 			float pitch) {
 		return playSound(x, y, camx, camy, sound, vol, pitch, true);
-	}
-
-	@Override
-	public int compareTo(Block b) {
-		if (levelEditorGroup < b.levelEditorGroup) return -1;
-		if (levelEditorGroup > b.levelEditorGroup) return 1;
-
-		return 0;
 	}
 
 }

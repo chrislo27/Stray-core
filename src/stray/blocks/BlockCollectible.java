@@ -9,7 +9,7 @@ public class BlockCollectible extends Block{
 	public BlockCollectible(String path, String col) {
 		super(path);
 		collectible = col;
-		this.levelEditorGroup = EditorGroup.COLLECTIBLE;
+		this.levelEditorGroup = EditorGroup.COLLECT;
 	}
 	
 	String collectible = "COLLECTIBLE BULEAH";
