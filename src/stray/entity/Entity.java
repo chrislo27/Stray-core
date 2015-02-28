@@ -1,6 +1,7 @@
 package stray.entity;
 
 import stray.Main;
+import stray.blocks.Block.SolidFaces;
 import stray.blocks.BlockEmpty;
 import stray.blocks.BlockPlatform;
 import stray.util.Coordinate;
@@ -12,7 +13,6 @@ import stray.world.World;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.Array;
 
 public abstract class Entity implements EntityMover, Sizeable {
 
@@ -26,14 +26,15 @@ public abstract class Entity implements EntityMover, Sizeable {
 	 * collides with blocks
 	 */
 	public boolean hasBlockCollision = true;
-	
+
 	/**
 	 * collides with other entities with this flag as true
 	 */
 	public boolean hasEntityCollision = false;
-	
+
 	/**
-	 * indicates that entities that hit this other entity will shift velocity*forceTransfer to this entity (and stop)
+	 * indicates that entities that hit this other entity will shift
+	 * velocity*forceTransfer to this entity (and stop)
 	 */
 	public float forceTransfer = 0f;
 
@@ -130,9 +131,9 @@ public abstract class Entity implements EntityMover, Sizeable {
 					veloy = -veloy * bounceCoefficient;
 					velo = 0;
 					onCollideDown();
-					world.getBlock(c.getX(), c.getY()).onCollideUpFace(world,
-							c.getX(), c.getY(), this);
-				}else if(en != null){
+					world.getBlock(c.getX(), c.getY()).onCollideUpFace(world, c.getX(), c.getY(),
+							this);
+				} else if (en != null) {
 					onCollideDown();
 					onCollideEntityDown(en);
 					velo = 0;
@@ -147,9 +148,9 @@ public abstract class Entity implements EntityMover, Sizeable {
 					veloy = -veloy * bounceCoefficient;
 					velo = 0;
 					onCollideUp();
-					world.getBlock(c.getX(), c.getY()).onCollideDownFace(world,
-							c.getX(), c.getY(), this);
-				}else if(en != null){
+					world.getBlock(c.getX(), c.getY()).onCollideDownFace(world, c.getX(), c.getY(),
+							this);
+				} else if (en != null) {
 					onCollideUp();
 					onCollideEntityUp(en);
 					velo = 0;
@@ -166,10 +167,10 @@ public abstract class Entity implements EntityMover, Sizeable {
 					if (c != null) {
 						veloy = -veloy * bounceCoefficient;
 						onCollideDown();
-						world.getBlock(c.getX(), c.getY()).onCollideUpFace(world,
-								c.getX(), c.getY(), this);
+						world.getBlock(c.getX(), c.getY()).onCollideUpFace(world, c.getX(),
+								c.getY(), this);
 						break;
-					}else if(en != null){
+					} else if (en != null) {
 						onCollideDown();
 						onCollideEntityDown(en);
 						en.veloy += this.veloy * en.forceTransfer;
@@ -184,10 +185,10 @@ public abstract class Entity implements EntityMover, Sizeable {
 					if (c != null) {
 						veloy = -veloy * bounceCoefficient;
 						onCollideUp();
-						world.getBlock(c.getX(), c.getY()).onCollideDownFace(world,
-								c.getX(), c.getY(), this);
+						world.getBlock(c.getX(), c.getY()).onCollideDownFace(world, c.getX(),
+								c.getY(), this);
 						break;
-					}else if(en != null){
+					} else if (en != null) {
 						onCollideUp();
 						onCollideEntityUp(en);
 						en.veloy += this.veloy * en.forceTransfer;
@@ -210,9 +211,9 @@ public abstract class Entity implements EntityMover, Sizeable {
 					velox = -velox * bounceCoefficient;
 					velo = 0;
 					onCollideRight();
-					world.getBlock(c.getX(), c.getY()).onCollideLeftFace(world,
-							c.getX(), c.getY(), this);
-				}else if(en != null){
+					world.getBlock(c.getX(), c.getY()).onCollideLeftFace(world, c.getX(), c.getY(),
+							this);
+				} else if (en != null) {
 					onCollideRight();
 					onCollideEntityRight(en);
 					velo = 0;
@@ -227,9 +228,9 @@ public abstract class Entity implements EntityMover, Sizeable {
 					velox = -velox * bounceCoefficient;
 					velo = 0;
 					onCollideLeft();
-					world.getBlock(c.getX(), c.getY()).onCollideRightFace(world,
-							c.getX(), c.getY(), this);
-				}else if(en != null){
+					world.getBlock(c.getX(), c.getY()).onCollideRightFace(world, c.getX(),
+							c.getY(), this);
+				} else if (en != null) {
 					onCollideLeft();
 					onCollideEntityLeft(en);
 					velo = 0;
@@ -246,10 +247,10 @@ public abstract class Entity implements EntityMover, Sizeable {
 					if (c != null) {
 						velox = -velox * bounceCoefficient;
 						onCollideRight();
-						world.getBlock(c.getX(), c.getY()).onCollideLeftFace(world,
-								c.getX(), c.getY(), this);
+						world.getBlock(c.getX(), c.getY()).onCollideLeftFace(world, c.getX(),
+								c.getY(), this);
 						break;
-					}else if(en != null){
+					} else if (en != null) {
 						onCollideRight();
 						onCollideEntityRight(en);
 						en.velox += this.velox * en.forceTransfer;
@@ -264,10 +265,10 @@ public abstract class Entity implements EntityMover, Sizeable {
 					if (c != null) {
 						velox = -velox * bounceCoefficient;
 						onCollideLeft();
-						world.getBlock(c.getX(), c.getY()).onCollideRightFace(world,
-								c.getX(), c.getY(), this);
+						world.getBlock(c.getX(), c.getY()).onCollideRightFace(world, c.getX(),
+								c.getY(), this);
 						break;
-					}else if(en != null){
+					} else if (en != null) {
 						onCollideLeft();
 						onCollideEntityLeft(en);
 						en.velox += this.velox * en.forceTransfer;
@@ -337,11 +338,10 @@ public abstract class Entity implements EntityMover, Sizeable {
 
 	}
 
-	
 	public void onCollideDown() {
 
 	}
-	
+
 	public void onCollideEntityLeft(Entity e) {
 
 	}
@@ -460,8 +460,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 		if (y <= 0) return Coordinate.global.setPosition((int) x, (int) y);
 
 		for (int i = 0; i < boundx; i++) {
-			if (world.getBlock((posx + i) / World.tilesizex, (posy / World.tilesizey) - 1).isSolid(
-					world, (posx + i) / World.tilesizex, (posy / World.tilesizey) - 1)) {
+			if ((world.getBlock((posx + i) / World.tilesizex, (posy / World.tilesizey) - 1)
+					.isSolid(world, (posx + i) / World.tilesizex, (posy / World.tilesizey) - 1) & SolidFaces.DOWN) == SolidFaces.DOWN) {
 				return Coordinate.global.setPosition((posx + i) / World.tilesizex,
 						(posy / World.tilesizey) - 1);
 			}
@@ -480,11 +480,9 @@ public abstract class Entity implements EntityMover, Sizeable {
 		if ((y + sizey) >= world.sizey) return Coordinate.global.setPosition((int) x, (int) y);
 
 		for (int i = 0; i < boundx; i++) {
-			if (world.getBlock((posx + i) / World.tilesizex, ((posy + boundy) / World.tilesizey))
+			if ((world.getBlock((posx + i) / World.tilesizex, ((posy + boundy) / World.tilesizey))
 					.isSolid(world, (posx + i) / World.tilesizex,
-							((posy + boundy) / World.tilesizey))
-					|| world.getBlock((posx + i) / World.tilesizex,
-							((posy + boundy) / World.tilesizey)) instanceof BlockPlatform) {
+							((posy + boundy) / World.tilesizey)) & SolidFaces.UP) == SolidFaces.UP) {
 				return Coordinate.global.setPosition((posx + i) / World.tilesizex,
 						((posy + boundy) / World.tilesizey));
 			}
@@ -507,11 +505,9 @@ public abstract class Entity implements EntityMover, Sizeable {
 		float lowest = 1;
 
 		for (int i = 0; i < boundx; i++) {
-			if (world.getBlock((posx + i) / World.tilesizex, ((posy + boundy) / World.tilesizey))
+			if ((world.getBlock((posx + i) / World.tilesizex, ((posy + boundy) / World.tilesizey))
 					.isSolid(world, (posx + i) / World.tilesizex,
-							((posy + boundy) / World.tilesizey))
-					|| world.getBlock((posx + i) / World.tilesizex,
-							((posy + boundy) / World.tilesizey)) instanceof BlockPlatform) {
+							((posy + boundy) / World.tilesizey)) & SolidFaces.UP) == SolidFaces.UP) {
 				if (world.getBlock((posx + i) / World.tilesizex,
 						((posy + boundy) / World.tilesizey)).getDragCoefficient(world,
 						(posx + i) / World.tilesizex, ((posy + boundy) / World.tilesizey)) < lowest) {
@@ -539,11 +535,9 @@ public abstract class Entity implements EntityMover, Sizeable {
 		float highest = Float.MIN_NORMAL;
 
 		for (int i = 0; i < boundx; i++) {
-			if (world.getBlock((posx + i) / World.tilesizex, ((posy + boundy) / World.tilesizey))
+			if ((world.getBlock((posx + i) / World.tilesizex, ((posy + boundy) / World.tilesizey))
 					.isSolid(world, (posx + i) / World.tilesizex,
-							((posy + boundy) / World.tilesizey))
-					|| world.getBlock((posx + i) / World.tilesizex,
-							((posy + boundy) / World.tilesizey)) instanceof BlockPlatform) {
+							((posy + boundy) / World.tilesizey)) & SolidFaces.UP) == SolidFaces.UP) {
 				if (world.getBlock((posx + i) / World.tilesizex,
 						((posy + boundy) / World.tilesizey)).getDragCoefficient(world,
 						(posx + i) / World.tilesizex, ((posy + boundy) / World.tilesizey)) > highest) {
@@ -567,8 +561,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 		if (posx <= 0) return Coordinate.global.setPosition((int) x, (int) y);
 
 		for (int i = 0; i < boundy; i++) {
-			if (world.getBlock(((posx) / World.tilesizex) - 1, ((posy + i) / World.tilesizey))
-					.isSolid(world, ((posx) / World.tilesizex) - 1, ((posy + i) / World.tilesizey))) {
+			if ((world.getBlock(((posx) / World.tilesizex) - 1, ((posy + i) / World.tilesizey))
+					.isSolid(world, ((posx) / World.tilesizex) - 1, ((posy + i) / World.tilesizey)) & SolidFaces.RIGHT) == SolidFaces.RIGHT) {
 				return Coordinate.global.setPosition(((posx) / World.tilesizex) - 1,
 						((posy + i) / World.tilesizey));
 			}
@@ -587,9 +581,10 @@ public abstract class Entity implements EntityMover, Sizeable {
 		if ((x + sizex) >= (world.sizex)) return Coordinate.global.setPosition((int) x, (int) y);
 
 		for (int i = 0; i < boundy; i++) {
-			if (world.getBlock(((posx + boundx) / World.tilesizex), ((posy + i) / World.tilesizey))
+			if ((world
+					.getBlock(((posx + boundx) / World.tilesizex), ((posy + i) / World.tilesizey))
 					.isSolid(world, ((posx + boundx) / World.tilesizex),
-							((posy + i) / World.tilesizey))) {
+							((posy + i) / World.tilesizey)) & SolidFaces.LEFT) == SolidFaces.LEFT) {
 				return Coordinate.global.setPosition(((posx + boundx) / World.tilesizex),
 						((posy + i) / World.tilesizey));
 			}

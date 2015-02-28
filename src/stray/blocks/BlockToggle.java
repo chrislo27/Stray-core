@@ -21,8 +21,8 @@ public class BlockToggle extends BlockFadeable {
 	Color renderColour = Color.WHITE;
 	
 	@Override
-	public boolean isSolid(World world, int x, int y) {
-		return !world.global.getString(switchColour).equals("on");
+	public int isSolid(World world, int x, int y) {
+		return (world.global.getString(switchColour).equals("on") ? SolidFaces.ALL : SolidFaces.NONE);
 	}
 	
 	@Override

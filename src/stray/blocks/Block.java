@@ -33,7 +33,7 @@ public class Block {
 	protected boolean variants = false;
 	protected String animationlink = null;
 	protected int varianttypes = 4;
-	protected boolean solid = false;
+	protected int solidFaces = SolidFaces.NONE;
 	protected boolean usingMissingTex = false;
 
 	public EditorGroup levelEditorGroup = EditorGroup.NORMAL;
@@ -50,8 +50,8 @@ public class Block {
 		return false;
 	}
 
-	public Block solidify() {
-		solid = true;
+	public Block solidify(int faces) {
+		solidFaces = faces;
 		return this;
 	}
 
@@ -71,8 +71,8 @@ public class Block {
 
 	}
 
-	public boolean isSolid(World world, int x, int y) {
-		return solid;
+	public int isSolid(World world, int x, int y) {
+		return solidFaces;
 	}
 
 	public String getAnimation() {
@@ -460,4 +460,15 @@ public class Block {
 		return playSound(x, y, camx, camy, sound, vol, pitch, true);
 	}
 
+	public static class SolidFaces{
+		
+		public static final int NONE = 0;
+		public static final int ALL = 15;
+		public static final int LEFT = 1;
+		public static final int RIGHT = 2;
+		public static final int UP = 4;
+		public static final int DOWN = 8;
+		
+	}
+	
 }

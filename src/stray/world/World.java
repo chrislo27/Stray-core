@@ -11,6 +11,7 @@ import stray.blocks.Block;
 import stray.blocks.BlockCameraMagnet;
 import stray.blocks.BlockPlayerSpawner;
 import stray.blocks.Blocks;
+import stray.blocks.Block.SolidFaces;
 import stray.entity.Entity;
 import stray.entity.EntityPlayer;
 import stray.pathfinding.Mover;
@@ -549,7 +550,7 @@ public class World implements TileBasedMap {
 
 			for (int checkx = x; checkx < x + width; checkx++) {
 				for (int checky = y; checky < y + height; checky++) {
-					if (getBlock(checkx, checky).isSolid(this, checkx, checky)) {
+					if (getBlock(checkx, checky).isSolid(this, checkx, checky) != SolidFaces.NONE) {
 						return false;
 					}
 				}
@@ -693,7 +694,7 @@ public class World implements TileBasedMap {
 
 	@Override
 	public boolean blocked(Mover mover, int tx, int ty) {
-		return getBlock(tx, ty).isSolid(this, tx, ty);
+		return getBlock(tx, ty).isSolid(this, tx, ty) != SolidFaces.NONE;
 	}
 
 	@Override

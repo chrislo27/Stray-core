@@ -19,7 +19,7 @@ public class BlockAirVent extends Block {
 	public void tickUpdate(World world, int x, int y) {
 		float newRange = range;
 		for(int i = 0; i < range; i++){
-			if(world.getBlock(x, y - i - 1).isSolid(world, x, y - i - 1)){
+			if((world.getBlock(x, y - i - 1).isSolid(world, x, y - i - 1) & SolidFaces.DOWN) == SolidFaces.DOWN){
 				newRange = i;
 				break;
 			}

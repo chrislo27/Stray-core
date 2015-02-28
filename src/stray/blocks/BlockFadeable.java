@@ -18,7 +18,7 @@ public class BlockFadeable extends Block {
 	}
 	
 	protected float getAlpha(World world, int x, int y){
-		if(!isSolid(world, x, y)) return 0.075f;
+		if((isSolid(world, x, y)) != SolidFaces.NONE) return 0.075f;
 		if(Block.entityIntersects(world, x + World.tilepartx, y + World.tileparty,
 					world.getPlayer(), 1f - (World.tilepartx * 2), 1f - (World.tileparty * 2))) return 0.5f;
 		
