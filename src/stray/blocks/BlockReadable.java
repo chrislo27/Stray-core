@@ -1,9 +1,10 @@
 package stray.blocks;
 
+import java.util.HashMap;
+
 import stray.Main;
 import stray.Translator;
 import stray.conversation.Conversations;
-import stray.entity.EntityPlayer;
 import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
@@ -25,20 +26,42 @@ public class BlockReadable extends Block {
 					- world.camera.camerax + (World.tilesizex / 2),
 					Main.convertY((y * world.tilesizey - world.camera.cameray) - 15));
 			if (Gdx.input.isKeyJustPressed(Keys.UP)) {
-				if(world.main.getConv() == null){
-					if(world.getMeta(x, y) != 0){
-						if(Conversations.instance().convs.containsKey(world.getMeta(x, y))){
+				if (world.main.getConv() == null) {
+					if (world.getMeta(x, y) != 0) {
+						if (Conversations.instance().convs.containsKey(SignNumbers.instance().map
+								.get(world.getMeta(x, y)))) {
 							onRead(world, x, y);
-							world.main.setConv(Conversations.instance().convs.get(world.getMeta(x, y)));
+							world.main.setConv(Conversations.instance().convs.get(SignNumbers
+									.instance().map.get(world.getMeta(x, y))));
 						}
 					}
 				}
 			}
 		}
 	}
-	
-	public void onRead(World world, int x, int y){
-		
+
+	public void onRead(World world, int x, int y) {
+
 	}
-	
+
+	public static class SignNumbers {
+
+		private static BlockReadable.SignNumbers instance;
+
+		public static BlockReadable.SignNumbers instance() {
+			if (instance == null) {
+				instance = new BlockReadable.SignNumbers();
+				instance.loadResources();
+			}
+			return instance;
+		}
+
+		public HashMap<Integer, String> map = new HashMap<Integer, String>();
+
+		private void loadResources() {
+
+		}
+
+	}
+
 }
