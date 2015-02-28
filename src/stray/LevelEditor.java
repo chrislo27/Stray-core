@@ -358,6 +358,7 @@ public class LevelEditor extends Updateable {
 						}
 					}
 				}
+				defaultmeta = world.getMeta(selx, sely);
 			}
 		}
 
