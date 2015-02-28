@@ -337,20 +337,22 @@ public class LevelEditor extends Updateable {
 			main.setScreen(Main.MAINMENU);
 		}
 
-		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_8)) {
-			if(world.sizey < 50) world.sizey += 1;
-			resetWorld();
-			lastFile = null;
-		} else if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_2)) {
-			if (world.sizey > 25) world.sizey -= 2;
-			resetWorld();
-			lastFile = null;
-		} else if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_4)) {
-			if (world.sizex > 35) world.sizex -= 2;
+		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_4)) {
+			if (world.sizex > 30) world.sizex -= 2;
 			resetWorld();
 			lastFile = null;
 		} else if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_6)) {
-			if(world.sizex < 60) world.sizex += 2;
+			if(world.sizex < 80) world.sizex += 2;
+			resetWorld();
+			lastFile = null;
+		}
+		
+		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_8)) {
+			if(world.sizey < 60) world.sizey += 1;
+			resetWorld();
+			lastFile = null;
+		} else if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_2)) {
+			if (world.sizey > 20) world.sizey -= 2;
 			resetWorld();
 			lastFile = null;
 		}
