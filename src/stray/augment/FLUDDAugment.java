@@ -74,7 +74,8 @@ public class FLUDDAugment extends Augment {
 	@Override
 	public void renderUi(Main main, World world) {
 		if (touchedDown == false) {
-			if (world.getPlayer().getBlockCollidingDown() != null) touchedDown = true;
+			if (world.getPlayer().getBlockCollidingDown() != null
+					|| world.getPlayer().getEntityCollidingDown() != null) touchedDown = true;
 		}
 	}
 
