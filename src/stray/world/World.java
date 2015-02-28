@@ -60,7 +60,7 @@ public class World implements TileBasedMap {
 	public String background = "levelbgcircuit";
 
 	public Block[][] blocks;
-	public String[][] meta;
+	public int[][] meta;
 
 	public Pool<BlockUpdate> buPool = Pools.get(BlockUpdate.class);
 	public Array<BlockUpdate> scheduledUpdates = new Array<BlockUpdate>();
@@ -125,14 +125,14 @@ public class World implements TileBasedMap {
 		voidMsTime = System.currentTimeMillis();
 		global.clear();
 		blocks = new Block[sizex][sizey];
-		meta = new String[sizex][sizey];
+		meta = new int[sizex][sizey];
 
 		for (int j = 0; j < sizex; j++) {
 			for (int k = 0; k < sizey; k++) {
 				blocks[j][k] = Blocks.instance().getBlock(Blocks.defaultBlock);
 				if(j == 0 || j + 1 == sizex) blocks[j][k] = Blocks.instance().getBlock("wall");
 				if(k == 0 || k + 1 == sizey) blocks[j][k] = Blocks.instance().getBlock("wall");
-				meta[j][k] = null;
+				meta[j][k] = 0;
 			}
 		}
 
@@ -652,8 +652,8 @@ public class World implements TileBasedMap {
 		return blocks[x][y];
 	}
 
-	public String getMeta(int x, int y) {
-		if (x < 0 || y < 0 || x >= sizex || y >= sizey) return null;
+	public int getMeta(int x, int y) {
+		if (x < 0 || y < 0 || x >= sizex || y >= sizey) return 0;
 		return meta[x][y];
 	}
 
@@ -663,7 +663,7 @@ public class World implements TileBasedMap {
 
 	}
 
-	public void setMeta(String m, int x, int y) {
+	public void setMeta(int m, int x, int y) {
 		if (x < 0 || y < 0 || x >= sizex || y >= sizey) return;
 		meta[x][y] = m;
 	}
@@ -730,7 +730,7 @@ public class World implements TileBasedMap {
 					tile.attribute("x", "" + x);
 					tile.attribute("y", "" + y);
 					tile.attribute("block", Blocks.instance().getKey(getBlock(x, y)));
-					tile.attribute("meta", getMeta(x, y) == null ? "" : getMeta(x, y));
+					tile.attribute("meta", getMeta(x, y));
 					tile.pop();
 				}
 			}
@@ -778,8 +778,8 @@ public class World implements TileBasedMap {
 			setBlock(Blocks.instance().getBlock(tile.getAttribute("block")),
 					Integer.parseInt(tile.getAttribute("x")),
 					Integer.parseInt(tile.getAttribute("y")));
-			String meta = tile.getAttribute("meta");
-			setMeta(meta.equals("") ? null : meta, Integer.parseInt(tile.getAttribute("x")),
+			int meta = tile.getIntAttribute("meta", 0);
+			setMeta(meta, Integer.parseInt(tile.getAttribute("x")),
 					Integer.parseInt(tile.getAttribute("y")));
 		}
 

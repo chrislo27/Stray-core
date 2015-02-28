@@ -41,9 +41,9 @@ public class BlockTimer extends Block implements AffectsColour {
 		
 		world.main.font.setColor(Color.WHITE);
 		if (world.main.getScreen() == Main.LEVELEDITOR) return;
-		if (world.getMeta(x, y) != null) {
+		if (world.getMeta(x, y) != 0) {
 			world.main.drawCentered(String.format("%.1f",
-					((Integer.parseInt(world.getMeta(x, y)) * 1f) / Main.TICKS)), x
+					((world.getMeta(x, y) * 1f) / Main.TICKS)), x
 					* world.tilesizex - world.camera.camerax + (World.tilesizex / 2) + offx, Main
 					.convertY((y * world.tilesizey - world.camera.cameray) - 30 + offy));
 		}
@@ -53,18 +53,18 @@ public class BlockTimer extends Block implements AffectsColour {
 					Main.convertY((y * world.tilesizey - world.camera.cameray) - 15 + offy));
 
 			if (Gdx.input.isKeyJustPressed(Keys.UP)) {
-				world.setMeta(Math.round(SECONDS * Main.TICKS) + "", x, y);
+				world.setMeta(Math.round(SECONDS * Main.TICKS), x, y);
 			}
 		}
 	}
 
 	@Override
 	public void tickUpdate(World world, int x, int y) {
-		if (world.getMeta(x, y) != null) {
-			int i = Integer.parseInt(world.getMeta(x, y));
+		if (world.getMeta(x, y) != 0) {
+			int i = world.getMeta(x, y);
 
 			if (i <= 0) {
-				world.setMeta(null, x, y);
+				world.setMeta(0, x, y);
 				if (!world.global.getString(switchColour).equals("") && !BlockSwitch.areOtherBlocksOn(world, x, y, switchColour)) {
 					world.global.setString(switchColour, "");
 					Block.playSound(x, y, world.camera.camerax, world.camera.cameray,
@@ -85,13 +85,13 @@ public class BlockTimer extends Block implements AffectsColour {
 			}
 
 			i--;
-			if (world.getMeta(x, y) != null) world.setMeta(i + "", x, y);
+			if (world.getMeta(x, y) != 0) world.setMeta(i, x, y);
 		}
 	}
 
 	@Override
 	public boolean colourOn(World world, int x, int y) {
-		return world.getMeta(x, y) != null;
+		return world.getMeta(x, y) != 0;
 	}
 
 	@Override

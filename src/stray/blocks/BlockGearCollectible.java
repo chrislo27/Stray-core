@@ -17,7 +17,7 @@ public class BlockGearCollectible extends BlockCollectible {
 
 	@Override
 	public void render(World world, int x, int y) {
-		if (world.getMeta(x, y) != null) return;
+		if (world.getMeta(x, y) != 0) return;
 
 		super.renderWithOffset(
 				world,

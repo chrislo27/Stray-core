@@ -109,7 +109,7 @@ public class LevelEditor extends Updateable {
 	int sely = 0;
 
 	int blocksel = 0;
-	String defaultmeta = null;
+	int defaultmeta = 0;
 
 	World world;
 
@@ -321,7 +321,7 @@ public class LevelEditor extends Updateable {
 				world.setMeta(defaultmeta, selx, sely);
 			} else if (Gdx.input.isButtonPressed(Buttons.RIGHT)) {
 				world.setBlock(Blocks.instance().getBlock(Blocks.defaultBlock), selx, sely);
-				world.setMeta(null, selx, sely);
+				world.setMeta(0, selx, sely);
 			} else if (Gdx.input.isButtonPressed(Buttons.MIDDLE)) {
 				if (!Blocks.instance().getKey(world.getBlock(selx, sely))
 						.equals(blocks.get(blocksel))) {
@@ -374,14 +374,6 @@ public class LevelEditor extends Updateable {
 			if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
 				if (Gdx.input.isKeyJustPressed(Keys.S)) {
 					iothreadtodo = 1;
-				} else if (Gdx.input.isKeyJustPressed(Keys.D)) {
-					String result = (String) JOptionPane.showInputDialog(null,
-							"Current default meta: " + defaultmeta, "Editing default meta",
-							JOptionPane.PLAIN_MESSAGE, null, null, (defaultmeta == null ? ""
-									: defaultmeta));
-					if (result != null) {
-						defaultmeta = (result.equals("") ? null : result);
-					}
 				}
 			} else {
 				if (Gdx.input.isKeyJustPressed(Keys.O)) {
@@ -395,9 +387,9 @@ public class LevelEditor extends Updateable {
 							+ world.getMeta(x, y),
 							"Editing tiledata (" + Blocks.instance().getKey(world.getBlock(x, y))
 									+ ") at " + x + ", " + y, JOptionPane.PLAIN_MESSAGE, null,
-							null, (world.getMeta(x, y) == null ? "" : world.getMeta(x, y)));
+							null, world.getMeta(x, y));
 					if (result != null) {
-						world.setMeta(result.equals("") ? null : result, x, y);
+						world.setMeta(result.equals("") ? 0 : Integer.parseInt(result), x, y);
 					}
 				} else if (Gdx.input.isKeyJustPressed(Keys.T)) {
 					if (lastFile != null) {

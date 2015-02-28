@@ -51,16 +51,7 @@ public class Blocks {
 		put("wall", new Block("images/blocks/old/dungeonwall/wall").useConTextures().solidify(SolidFaces.ALL));
 		put("empty", new BlockEmpty());
 		put("spike", new BlockSpike("images/blocks/spike").setEditorGroup(EditorGroup.HAZARD));
-		put("sign", new BlockReadable("images/blocks/sign/sign"){
-			@Override
-			public void onRead(World world, int x, int y){
-				if(world.getMeta(x, y) != null){
-					if(world.getMeta(x, y).equalsIgnoreCase("secretexit")){
-						world.main.awardAchievement("secretexit");
-					}
-				}
-			}
-		}.hasVariants(4));
+		put("sign", new BlockReadable("images/blocks/sign/sign").hasVariants(4));
 		put("ice", new BlockIce("images/blocks/ice/ice").solidify(SolidFaces.ALL));
 		
 		put("switchred", new BlockSwitch(RED, "red").solidify(SolidFaces.ALL));

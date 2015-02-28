@@ -30,12 +30,12 @@ public class BlockSwitch extends Block implements AffectsColour {
 				Block.playSound(x, y, world.camera.camerax, world.camera.cameray,
 						world.main.manager.get(AssetMap.get("switchsfx"), Sound.class), 1, 1);
 			}
-			world.setMeta("step", x, y);
+			world.setMeta(1, x, y);
 			return;
 		}
 
-		if (!world.global.getString(switchColour).equals("") && world.getMeta(x, y) != null) {
-			world.setMeta(null, x, y);
+		if (!world.global.getString(switchColour).equals("") && world.getMeta(x, y) != 0) {
+			world.setMeta(0, x, y);
 			
 			if(!areOtherBlocksOn(world, x, y, switchColour)){
 				world.global.setString(switchColour, "");
@@ -74,7 +74,7 @@ public class BlockSwitch extends Block implements AffectsColour {
 						* world.tilesizex - world.camera.camerax + offx,
 				Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
 		
-		if (world.getMeta(x, y) != null) if (world.getMeta(x, y).equals("step")) {
+		if (world.getMeta(x, y) != 0) if (world.getMeta(x, y) >= 1) {
 			world.batch.setColor(Color.YELLOW);
 			world.batch.draw(world.main.manager.get(AssetMap.get("entityshield"), Texture.class), x
 					* world.tilesizex - world.camera.camerax + offx,

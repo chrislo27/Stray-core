@@ -12,13 +12,13 @@ public class BlockUpdate implements Poolable{
 	protected int y = 0;
 	
 	protected Block block = Blocks.defaultBlock();
-	protected String meta = null;
+	protected int meta = 0;
 	
 	public BlockUpdate(){
 		
 	}
 	
-	public BlockUpdate init(int x, int y, Block b, String m){
+	public BlockUpdate init(int x, int y, Block b, int m){
 		this.x = x;
 		this.y = y;
 		block = b;
@@ -29,7 +29,7 @@ public class BlockUpdate implements Poolable{
 
 	@Override
 	public void reset() {
-		meta = null;
+		meta = 0;
 		block = Blocks.defaultBlock();
 		x = y = 0;
 	}

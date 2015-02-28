@@ -26,7 +26,7 @@ public class BlockReadable extends Block {
 					Main.convertY((y * world.tilesizey - world.camera.cameray) - 15));
 			if (Gdx.input.isKeyJustPressed(Keys.UP)) {
 				if(world.main.getConv() == null){
-					if(world.getMeta(x, y) != null){
+					if(world.getMeta(x, y) != 0){
 						if(Conversations.instance().convs.containsKey(world.getMeta(x, y))){
 							onRead(world, x, y);
 							world.main.setConv(Conversations.instance().convs.get(world.getMeta(x, y)));
@@ -40,5 +40,5 @@ public class BlockReadable extends Block {
 	public void onRead(World world, int x, int y){
 		
 	}
-
+	
 }

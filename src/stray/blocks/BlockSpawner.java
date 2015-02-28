@@ -18,11 +18,11 @@ public abstract class BlockSpawner extends Block {
 
 	@Override
 	public void tickUpdate(World world, int x, int y) {
-		if (world.getMeta(x, y) != null) return;
+		if (world.getMeta(x, y) != 0) return;
 		Entity e = getEntity(world, x, y);
 		world.entities.add(e);
 
-		world.setMeta("spawned", x, y);
+		world.setMeta(1, x, y);
 	}
 
 	@Override
