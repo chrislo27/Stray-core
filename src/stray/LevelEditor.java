@@ -11,6 +11,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import stray.blocks.Block;
 import stray.blocks.Blocks;
+import stray.blocks.Block.SolidFaces;
 import stray.entity.Entity;
 import stray.world.World;
 
@@ -161,6 +162,8 @@ public class LevelEditor extends Updateable {
 				Gdx.graphics.getHeight() - 125);
 		main.drawInverse("ALT+N - force save in new file", Settings.DEFAULT_WIDTH - 5,
 				Gdx.graphics.getHeight() - 140);
+		main.drawInverse("IJKL - XOR bit, O to reset", Settings.DEFAULT_WIDTH - 5,
+				Gdx.graphics.getHeight() - 155);
 
 		main.batch.end();
 
@@ -251,7 +254,8 @@ public class LevelEditor extends Updateable {
 				Main.convertY(starting + 30));
 		main.font.draw(main.batch, "block selected: " + blocks.get(blocksel), 5,
 				Main.convertY(starting + 60));
-		main.font.draw(main.batch, "default meta: " + defaultmeta, 5, Main.convertY(starting + 75));
+		main.font.draw(main.batch, "default meta: " + defaultmeta + ", "
+				+ getOrientationsFromMeta(), 5, Main.convertY(starting + 75));
 		main.font.draw(main.batch, "block meta: " + world.getMeta(selx, sely), 5,
 				Main.convertY(starting + 90));
 		main.font.draw(main.batch, "world sizex: " + world.sizex, 5, Main.convertY(starting + 120));
@@ -259,6 +263,13 @@ public class LevelEditor extends Updateable {
 		main.font.draw(main.batch,
 				"file location: " + (lastFile == null ? null : lastFile.getName()), 5,
 				Main.convertY(starting + 165));
+	}
+
+	private String getOrientationsFromMeta() {
+		return "" + ((defaultmeta & SolidFaces.UP) == SolidFaces.UP ? "I" : "")
+				+ ((defaultmeta & SolidFaces.LEFT) == SolidFaces.LEFT ? "J" : "")
+				+ ((defaultmeta & SolidFaces.DOWN) == SolidFaces.DOWN ? "K" : "")
+				+ ((defaultmeta & SolidFaces.RIGHT) == SolidFaces.RIGHT ? "L" : "");
 	}
 
 	@Override
@@ -313,6 +324,20 @@ public class LevelEditor extends Updateable {
 					|| Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT) ? 32 : 16)
 					* (Gdx.graphics.getDeltaTime() * World.tilesizex);
 			world.camera.clamp();
+		}
+
+		if (Gdx.input.isKeyJustPressed(Keys.I)) {
+			defaultmeta ^= SolidFaces.UP;
+		} else if (Gdx.input.isKeyJustPressed(Keys.K)) {
+			defaultmeta ^= SolidFaces.DOWN;
+		}
+		if (Gdx.input.isKeyJustPressed(Keys.J)) {
+			defaultmeta ^= SolidFaces.LEFT;
+		} else if (Gdx.input.isKeyJustPressed(Keys.L)) {
+			defaultmeta ^= SolidFaces.RIGHT;
+		}
+		if (Gdx.input.isKeyJustPressed(Keys.O)) {
+			defaultmeta = 0;
 		}
 
 		if (!Gdx.input.isKeyPressed(Keys.TAB)) {
@@ -385,7 +410,7 @@ public class LevelEditor extends Updateable {
 						Main.TESTLEVEL.world.load(new FileHandle(lastFile));
 						main.setScreen(Main.TESTLEVEL);
 					}
-				}else if(Gdx.input.isKeyJustPressed(Keys.N)){
+				} else if (Gdx.input.isKeyJustPressed(Keys.N)) {
 					lastFile = null;
 				}
 			}
