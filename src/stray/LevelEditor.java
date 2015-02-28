@@ -380,17 +380,6 @@ public class LevelEditor extends Updateable {
 					iothreadtodo = 2;
 				} else if (Gdx.input.isKeyJustPressed(Keys.S)) {
 					save();
-				} else if (Gdx.input.isKeyJustPressed(Keys.D)) {
-					int x = selx;
-					int y = sely;
-					String result = (String) JOptionPane.showInputDialog(null, "Current metadata: "
-							+ world.getMeta(x, y),
-							"Editing tiledata (" + Blocks.instance().getKey(world.getBlock(x, y))
-									+ ") at " + x + ", " + y, JOptionPane.PLAIN_MESSAGE, null,
-							null, world.getMeta(x, y));
-					if (result != null) {
-						world.setMeta(result.equals("") ? 0 : Integer.parseInt(result), x, y);
-					}
 				} else if (Gdx.input.isKeyJustPressed(Keys.T)) {
 					if (lastFile != null) {
 						Main.TESTLEVEL.world.load(new FileHandle(lastFile));
