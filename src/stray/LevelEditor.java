@@ -27,7 +27,7 @@ public class LevelEditor extends Updateable {
 		Iterator it = Blocks.instance().getAllBlocks();
 		while (it.hasNext()) {
 			String b = ((Entry<String, Block>) it.next()).getKey();
-			if (Blocks.instance().getBlock(b).levelEditorGroup == EditorGroup.NOTPLACEABLE) {
+			if (Blocks.instance().getBlock(b).levelEditorGroup == null) {
 				continue;
 			}
 			blocks.add(b);
@@ -126,15 +126,6 @@ public class LevelEditor extends Updateable {
 		world.entities.clear();
 	}
 
-	private void setToGroup(int group) {
-		for (int i = 0; i < blocks.size; i++) {
-			if (Blocks.instance().getBlock(blocks.get(i)).levelEditorGroup == group) {
-				blocksel = i;
-				return;
-			}
-		}
-	}
-
 	@Override
 	public void render(float delta) {
 		world.renderOnly();
@@ -143,13 +134,14 @@ public class LevelEditor extends Updateable {
 		sely = world.getRoomY(Main.getInputY());
 
 		main.batch.begin();
-		if (Gdx.input.isKeyPressed(Keys.TAB)) {
-			renderPalette();
-		}
-		
+
 		main.batch.setColor(1, 1, 1, 0.5f);
 		Blocks.instance().getBlock(blocks.get(blocksel)).render(world, selx, sely);
 		main.batch.setColor(1, 1, 1, 1);
+
+		if (Gdx.input.isKeyPressed(Keys.TAB)) {
+			renderPalette();
+		}
 
 		main.drawInverse("DEBUG MODE RECOMMENDED - F12", Settings.DEFAULT_WIDTH - 5,
 				Gdx.graphics.getHeight() - 5);
@@ -165,8 +157,8 @@ public class LevelEditor extends Updateable {
 				Gdx.graphics.getHeight() - 95);
 		main.drawInverse("- / + - ADJUST VOID TIME (" + world.voidTime + " s)",
 				Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 110);
-		main.drawInverse("hold TAB - block picker",
-				Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 125);
+		main.drawInverse("hold TAB - block picker", Settings.DEFAULT_WIDTH - 5,
+				Gdx.graphics.getHeight() - 125);
 
 		main.batch.end();
 
@@ -174,14 +166,14 @@ public class LevelEditor extends Updateable {
 	}
 
 	private void renderPalette() {
-		for (int i = 0; i < EditorGroup.GROUP_NUMBERS; i++) {
+		for (int i = 0; i < EditorGroup.values().length; i++) {
 			main.batch.setColor(0, 0, 0, 0.5f);
 			main.fillRect(0, i * 64, Settings.DEFAULT_WIDTH, 64);
 			main.batch.setColor(1, 1, 1, 1);
 
 			int blockiter = 0;
 			for (String b : blocks) {
-				if (Blocks.instance().getBlock(b).levelEditorGroup == i) {
+				if (Blocks.instance().getBlock(b).levelEditorGroup == EditorGroup.values()[i]) {
 					Blocks.instance()
 							.getBlock(b)
 							.renderWithOffset(
@@ -191,27 +183,43 @@ public class LevelEditor extends Updateable {
 									world.camera.camerax + (blockiter * 64) + 64,
 									world.camera.cameray + Settings.DEFAULT_HEIGHT
 											- World.tilesizey - (i * 64));
-					if (Gdx.input.getX() >= (blockiter * 64) + World.tilesizex
-							&& Gdx.input.getX() <= (blockiter * 64) + (World.tilesizex * 2)) {
-						if (Gdx.input.getY() >= Settings.DEFAULT_HEIGHT - World.tilesizey
-								- (i * 64)
-								&& Gdx.input.getY() <= Settings.DEFAULT_HEIGHT - World.tilesizey
-										- (i * 64) + World.tilesizey) {
-							blocksel = Math.max(0, blocks.lastIndexOf(b, false));
-						}
-					}
 
 					blockiter++;
 				}
 			}
 
 			main.font.setScale(2.5f);
-			main.drawCentered("" + i, 32, i * 64 - 16 + 64);
-			main.font.setScale(1f);
+			main.drawCentered("" + i, 32, i * 64 - 8 + 64);
+			main.font.setScale(1);
+			main.drawScaled(EditorGroup.values()[i].name(), 32, i * 64 - 48 + 64, 64, 2);
+			main.font.setScale(1);
 			main.fillRect(0, i * 64 + 62, Settings.DEFAULT_WIDTH, 2);
 			main.fillRect(64, i * 64, 2, 64);
 		}
+
 		main.batch.setColor(1, 1, 1, 1);
+
+		for (int i = 0; i < EditorGroup.values().length; i++) {
+
+			int blockiter = 0;
+			for (String b : blocks) {
+				if (Blocks.instance().getBlock(b).levelEditorGroup == EditorGroup.values()[i]) {
+					if (Gdx.input.getX() >= (blockiter * 64) + World.tilesizex
+							&& Gdx.input.getX() <= (blockiter * 64) + (World.tilesizex * 2)) {
+						if (Gdx.input.getY() >= Settings.DEFAULT_HEIGHT - World.tilesizey
+								- (i * 64)
+								&& Gdx.input.getY() <= Settings.DEFAULT_HEIGHT - World.tilesizey
+										- (i * 64) + World.tilesizey) {
+							if (Gdx.input.isButtonPressed(Buttons.LEFT)) blocksel = Math.max(0,
+									blocks.lastIndexOf(b, false));
+							main.drawTextBg(b, Gdx.input.getX(), Main.convertY(Gdx.input.getY()));
+						}
+					}
+
+					blockiter++;
+				}
+			}
+		}
 	}
 
 	private void save() {
@@ -305,30 +313,23 @@ public class LevelEditor extends Updateable {
 			world.camera.clamp();
 		}
 
-		if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
-			world.setBlock(Blocks.instance().getBlock(blocks.get(blocksel)), selx, sely);
-			world.setMeta(defaultmeta, selx, sely);
-		} else if (Gdx.input.isButtonPressed(Buttons.RIGHT)) {
-			world.setBlock(Blocks.instance().getBlock(Blocks.defaultBlock), selx, sely);
-			world.setMeta(null, selx, sely);
-		} else if (Gdx.input.isButtonPressed(Buttons.MIDDLE)) {
-			if (!Blocks.instance().getKey(world.getBlock(selx, sely)).equals(blocks.get(blocksel))) {
-				for (int i = 0; i < blocks.size; i++) {
-					if (blocks.get(i).equals(Blocks.instance().getKey(world.getBlock(selx, sely)))) {
-						blocksel = i;
-						break;
+		if (!Gdx.input.isKeyPressed(Keys.TAB)) {
+			if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
+				world.setBlock(Blocks.instance().getBlock(blocks.get(blocksel)), selx, sely);
+				world.setMeta(defaultmeta, selx, sely);
+			} else if (Gdx.input.isButtonPressed(Buttons.RIGHT)) {
+				world.setBlock(Blocks.instance().getBlock(Blocks.defaultBlock), selx, sely);
+				world.setMeta(null, selx, sely);
+			} else if (Gdx.input.isButtonPressed(Buttons.MIDDLE)) {
+				if (!Blocks.instance().getKey(world.getBlock(selx, sely))
+						.equals(blocks.get(blocksel))) {
+					for (int i = 0; i < blocks.size; i++) {
+						if (blocks.get(i).equals(
+								Blocks.instance().getKey(world.getBlock(selx, sely)))) {
+							blocksel = i;
+							break;
+						}
 					}
-				}
-			}
-		}
-
-		if (Gdx.input.isKeyJustPressed(Keys.NUM_0)) {
-			setToGroup(0);
-		} else {
-			for (int i = 0; i < 9; i++) {
-				if (Gdx.input.isKeyJustPressed(Keys.NUM_1 + i)) {
-					setToGroup(i + 1);
-					break;
 				}
 			}
 		}
@@ -340,21 +341,17 @@ public class LevelEditor extends Updateable {
 		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_4)) {
 			if (world.sizex > 30) world.sizex -= 2;
 			resetWorld();
-			lastFile = null;
 		} else if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_6)) {
-			if(world.sizex < 80) world.sizex += 2;
+			if (world.sizex < 80) world.sizex += 2;
 			resetWorld();
-			lastFile = null;
 		}
-		
+
 		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_8)) {
-			if(world.sizey < 60) world.sizey += 1;
+			if (world.sizey < 60) world.sizey += 1;
 			resetWorld();
-			lastFile = null;
 		} else if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_2)) {
 			if (world.sizey > 20) world.sizey -= 2;
 			resetWorld();
-			lastFile = null;
 		}
 		if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
 			if (Gdx.input.isKeyJustPressed(Keys.PLUS) || Gdx.input.isKeyJustPressed(Keys.EQUALS)) {
@@ -410,16 +407,9 @@ public class LevelEditor extends Updateable {
 		}
 	}
 
-	public static class EditorGroup {
+	public static enum EditorGroup {
 
-		public static final int NOTPLACEABLE = -1;
-		public static final int TOGGLE = 1;
-		public static final int BUTTON = 2;
-		public static final int TIMER = 3;
-		public static final int SPAWNER = 4;
-		public static final int COLLECTIBLE = 5;
-
-		public static final int GROUP_NUMBERS = 6;
+		NORMAL, HAZARD, TOGGLE, BUTTON, TIMER, SPAWNER, COLLECT;
 
 	}
 }
