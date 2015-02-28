@@ -26,10 +26,13 @@ public class LevelEditor extends Updateable {
 		super(m);
 		Iterator it = Blocks.instance().getAllBlocks();
 		while (it.hasNext()) {
-			if (Blocks.instance().getBlock(((Entry<String, Block>) it.next()).getKey()).levelEditorGroup == EditorGroup.NOTPLACEABLE) continue;
-			blocks.add(((Entry<String, Block>) it.next()).getKey());
+			String b = ((Entry<String, Block>) it.next()).getKey();
+			if (Blocks.instance().getBlock(b).levelEditorGroup == EditorGroup.NOTPLACEABLE) {
+				continue;
+			}
+			blocks.add(b);
 		}
-		blocks.sort();
+		// blocks.sort();
 
 		iothread = new Thread() {
 
@@ -140,9 +143,14 @@ public class LevelEditor extends Updateable {
 		sely = world.getRoomY(Main.getInputY());
 
 		main.batch.begin();
+		if (Gdx.input.isKeyPressed(Keys.TAB)) {
+			renderPalette();
+		}
+		
 		main.batch.setColor(1, 1, 1, 0.5f);
 		Blocks.instance().getBlock(blocks.get(blocksel)).render(world, selx, sely);
 		main.batch.setColor(1, 1, 1, 1);
+
 		main.drawInverse("DEBUG MODE RECOMMENDED - F12", Settings.DEFAULT_WIDTH - 5,
 				Gdx.graphics.getHeight() - 5);
 		main.drawInverse("ALT+S - SAVE", Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 20);
@@ -159,9 +167,51 @@ public class LevelEditor extends Updateable {
 				Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 110);
 		main.drawInverse("0-START, 1-TOGGLES, 2-BUTTONS, 3-TIMERS, 4-SPAWNERS, 5-COLLECT.",
 				Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 125);
+
 		main.batch.end();
 
 		world.camera.clamp();
+	}
+
+	private void renderPalette() {
+		for (int i = 0; i < EditorGroup.GROUP_NUMBERS; i++) {
+			main.batch.setColor(0, 0, 0, 0.5f);
+			main.fillRect(0, i * 64, Settings.DEFAULT_WIDTH, 64);
+			main.batch.setColor(1, 1, 1, 1);
+
+			int blockiter = 0;
+			for (String b : blocks) {
+				if (Blocks.instance().getBlock(b).levelEditorGroup == i) {
+					Blocks.instance()
+							.getBlock(b)
+							.renderWithOffset(
+									world,
+									0,
+									0,
+									world.camera.camerax + (blockiter * 64) + 64,
+									world.camera.cameray + Settings.DEFAULT_HEIGHT
+											- World.tilesizey - (i * 64));
+					if (Gdx.input.getX() >= (blockiter * 64) + World.tilesizex
+							&& Gdx.input.getX() <= (blockiter * 64) + (World.tilesizex * 2)) {
+						if (Gdx.input.getY() >= Settings.DEFAULT_HEIGHT - World.tilesizey
+								- (i * 64)
+								&& Gdx.input.getY() <= Settings.DEFAULT_HEIGHT - World.tilesizey
+										- (i * 64) + World.tilesizey) {
+							blocksel = Math.max(0, blocks.lastIndexOf(b, false));
+						}
+					}
+
+					blockiter++;
+				}
+			}
+
+			main.font.setScale(2.5f);
+			main.drawCentered("" + i, 32, i * 64 - 16 + 64);
+			main.font.setScale(1f);
+			main.fillRect(0, i * 64 + 62, Settings.DEFAULT_WIDTH, 2);
+			main.fillRect(64, i * 64, 2, 64);
+		}
+		main.batch.setColor(1, 1, 1, 1);
 	}
 
 	private void save() {
@@ -366,6 +416,8 @@ public class LevelEditor extends Updateable {
 		public static final int TIMER = 3;
 		public static final int SPAWNER = 4;
 		public static final int COLLECTIBLE = 5;
+
+		public static final int GROUP_NUMBERS = 6;
 
 	}
 }
