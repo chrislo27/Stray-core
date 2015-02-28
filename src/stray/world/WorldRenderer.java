@@ -60,7 +60,7 @@ public class WorldRenderer {
 		main.font.setColor(Color.WHITE);
 		for (int level = 0; level < 2; level++) {
 			for (int x = prex; x < postx; x++) {
-				for (int y = posty - 1; y > prey; y--) {
+				for (int y = posty; y >= prey; y--) {
 					if (world.getBlock(x, y).isRenderedFront() != (level != 0)) continue;
 					if (world.getBlock(x, y) != null) {
 						world.getBlock(x, y).render(world, x, y);
