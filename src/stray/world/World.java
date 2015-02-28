@@ -334,7 +334,7 @@ public class World implements TileBasedMap {
 		int halfScreenWidth = ((Settings.DEFAULT_WIDTH / 2) / tilesizex);
 		int halfScreenHeight = ((Settings.DEFAULT_HEIGHT / 2) / tilesizey);
 
-		for (int x = (int) (p.x - halfScreenWidth) + 4; x < (int) (p.x + halfScreenWidth) - 4; x++) {
+		for (int x = (int) (p.x - halfScreenWidth) + 2; x < (int) (p.x + halfScreenWidth) - 2; x++) {
 			for (int y = (int) (p.y - halfScreenHeight) + 1; y < (int) (p.y + halfScreenHeight) + 1; y++) {
 				if (getBlock(x, y) instanceof BlockCameraMagnet) {
 					camera.centerOn((x + 0.5f) * tilesizex, (y - 0.5f) * tilesizex);
