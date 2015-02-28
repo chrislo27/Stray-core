@@ -129,7 +129,6 @@ public class World implements TileBasedMap {
 		for (int j = 0; j < sizex; j++) {
 			for (int k = 0; k < sizey; k++) {
 				blocks[j][k] = Blocks.instance().getBlock(Blocks.defaultBlock);
-				if (k >= sizey - 8) blocks[j][k] = Blocks.instance().getBlock("wall");
 				if(j == 0 || j + 1 == sizex) blocks[j][k] = Blocks.instance().getBlock("wall");
 				if(k == 0 || k + 1 == sizey) blocks[j][k] = Blocks.instance().getBlock("wall");
 				meta[j][k] = null;
