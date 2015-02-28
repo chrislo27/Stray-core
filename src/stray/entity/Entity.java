@@ -134,6 +134,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 							c.getX(), c.getY(), this);
 				}else if(en != null){
 					onCollideDown();
+					onCollideEntityDown(en);
 					velo = 0;
 					en.veloy += this.veloy * en.forceTransfer;
 					this.veloy -= this.veloy * en.forceTransfer;
@@ -150,6 +151,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 							c.getX(), c.getY(), this);
 				}else if(en != null){
 					onCollideUp();
+					onCollideEntityUp(en);
 					velo = 0;
 					en.veloy += this.veloy * en.forceTransfer;
 					this.veloy -= this.veloy * en.forceTransfer;
@@ -169,6 +171,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 						break;
 					}else if(en != null){
 						onCollideDown();
+						onCollideEntityDown(en);
 						en.veloy += this.veloy * en.forceTransfer;
 						this.veloy -= this.veloy * en.forceTransfer;
 						veloy = -veloy * bounceCoefficient;
@@ -186,6 +189,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 						break;
 					}else if(en != null){
 						onCollideUp();
+						onCollideEntityUp(en);
 						en.veloy += this.veloy * en.forceTransfer;
 						this.veloy -= this.veloy * en.forceTransfer;
 						veloy = -veloy * bounceCoefficient;
@@ -210,6 +214,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 							c.getX(), c.getY(), this);
 				}else if(en != null){
 					onCollideRight();
+					onCollideEntityRight(en);
 					velo = 0;
 					en.velox += this.velox * en.forceTransfer;
 					this.velox -= this.velox * en.forceTransfer;
@@ -226,6 +231,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 							c.getX(), c.getY(), this);
 				}else if(en != null){
 					onCollideLeft();
+					onCollideEntityLeft(en);
 					velo = 0;
 					en.velox += this.velox * en.forceTransfer;
 					this.velox -= this.velox * en.forceTransfer;
@@ -245,6 +251,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 						break;
 					}else if(en != null){
 						onCollideRight();
+						onCollideEntityRight(en);
 						en.velox += this.velox * en.forceTransfer;
 						this.velox -= this.velox * en.forceTransfer;
 						velox = -velox * bounceCoefficient;
@@ -262,6 +269,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 						break;
 					}else if(en != null){
 						onCollideLeft();
+						onCollideEntityLeft(en);
 						en.velox += this.velox * en.forceTransfer;
 						this.velox -= this.velox * en.forceTransfer;
 						velox = -velox * bounceCoefficient;
@@ -329,10 +337,24 @@ public abstract class Entity implements EntityMover, Sizeable {
 
 	}
 
-	/**
-	 * called AFTER velocity has been altered after collision
-	 */
+	
 	public void onCollideDown() {
+
+	}
+	
+	public void onCollideEntityLeft(Entity e) {
+
+	}
+
+	public void onCollideEntityRight(Entity e) {
+
+	}
+
+	public void onCollideEntityUp(Entity e) {
+
+	}
+
+	public void onCollideEntityDown(Entity e) {
 
 	}
 
@@ -361,8 +383,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 	public Entity getEntityCollidingUp() {
 		for (Entity e : world.entities) {
 			if (e != this && e.hasEntityCollision) {
-				if (((int) (x * World.tilesizex + sizex * World.tilesizex)) >= ((int) (e.x * World.tilesizex))
-						&& ((int) (x * World.tilesizex)) <= ((int) (e.x * World.tilesizex + e.sizex
+				if (((int) (x * World.tilesizex + sizex * World.tilesizex)) > ((int) (e.x * World.tilesizex))
+						&& ((int) (x * World.tilesizex)) < ((int) (e.x * World.tilesizex + e.sizex
 								* World.tilesizex))) {
 					if (((int) (this.y * World.tilesizey)) == ((int) (e.y * World.tilesizey + e.sizey
 							* World.tilesizey))) {
@@ -378,8 +400,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 	public Entity getEntityCollidingDown() {
 		for (Entity e : world.entities) {
 			if (e != this && e.hasEntityCollision) {
-				if (((int) (x * World.tilesizex + sizex * World.tilesizex)) >= ((int) (e.x * World.tilesizex))
-						&& ((int) (x * World.tilesizex)) <= ((int) (e.x * World.tilesizex + e.sizex
+				if (((int) (x * World.tilesizex + sizex * World.tilesizex)) > ((int) (e.x * World.tilesizex))
+						&& ((int) (x * World.tilesizex)) < ((int) (e.x * World.tilesizex + e.sizex
 								* World.tilesizex))) {
 					if (((int) (e.y * World.tilesizey)) == ((int) (this.y * World.tilesizey + this.sizey
 							* World.tilesizey))) {
@@ -396,8 +418,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 
 		for (Entity e : world.entities) {
 			if (e != this && e.hasEntityCollision) {
-				if (((int) (y * World.tilesizey + sizey * World.tilesizey)) >= ((int) (e.y * World.tilesizey))
-						&& ((int) (y * World.tilesizey)) <= ((int) (e.y * World.tilesizey + e.sizey
+				if (((int) (y * World.tilesizey + sizey * World.tilesizey)) > ((int) (e.y * World.tilesizey))
+						&& ((int) (y * World.tilesizey)) < ((int) (e.y * World.tilesizey + e.sizey
 								* World.tilesizey))) {
 					if (((int) (this.x * World.tilesizex)) == ((int) (e.x * World.tilesizex + e.sizex
 							* World.tilesizex))) {
@@ -414,8 +436,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 
 		for (Entity e : world.entities) {
 			if (e != this && e.hasEntityCollision) {
-				if (((int) (y * World.tilesizey + sizey * World.tilesizey)) >= ((int) (e.y * World.tilesizey))
-						&& ((int) (y * World.tilesizey)) <= ((int) (e.y * World.tilesizey + e.sizey
+				if (((int) (y * World.tilesizey + sizey * World.tilesizey)) > ((int) (e.y * World.tilesizey))
+						&& ((int) (y * World.tilesizey)) < ((int) (e.y * World.tilesizey + e.sizey
 								* World.tilesizey))) {
 					if (((int) (e.x * World.tilesizex)) == ((int) (this.x * World.tilesizex + this.sizex
 							* World.tilesizex))) {
