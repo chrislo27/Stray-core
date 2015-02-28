@@ -159,6 +159,8 @@ public class LevelEditor extends Updateable {
 				Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 110);
 		main.drawInverse("hold TAB - block picker", Settings.DEFAULT_WIDTH - 5,
 				Gdx.graphics.getHeight() - 125);
+		main.drawInverse("ALT+N - force save in new file", Settings.DEFAULT_WIDTH - 5,
+				Gdx.graphics.getHeight() - 140);
 
 		main.batch.end();
 
@@ -402,6 +404,8 @@ public class LevelEditor extends Updateable {
 						Main.TESTLEVEL.world.load(new FileHandle(lastFile));
 						main.setScreen(Main.TESTLEVEL);
 					}
+				}else if(Gdx.input.isKeyJustPressed(Keys.N)){
+					lastFile = null;
 				}
 			}
 		}
