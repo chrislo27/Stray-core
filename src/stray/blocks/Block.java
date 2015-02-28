@@ -464,10 +464,10 @@ public class Block {
 		
 		public static final int NONE = 0;
 		public static final int ALL = 15;
-		public static final int LEFT = 1;
-		public static final int RIGHT = 2;
-		public static final int UP = 4;
-		public static final int DOWN = 8;
+		public static final int UP = 1;
+		public static final int DOWN = 2;
+		public static final int LEFT = 4;
+		public static final int RIGHT = 8;
 		
 	}
 	
