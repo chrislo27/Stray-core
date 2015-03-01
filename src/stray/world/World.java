@@ -84,8 +84,6 @@ public class World implements TileBasedMap {
 	 * millisecond time since show() was called
 	 */
 	public long msTime = 0;
-	private long voidMsTime = System.currentTimeMillis();
-	public int voidTime = -1;
 
 	public WorldRenderer renderer;
 
@@ -95,10 +93,7 @@ public class World implements TileBasedMap {
 
 	public String levelfile = null;
 
-	public float checkpointx, checkpointy, checkpointvoid;
-
-	private float voidTimer = 0;
-	private static final float VOID_LENGTH = 6f;
+	public float checkpointx, checkpointy;
 
 	public int currentAugment = 0;
 	public boolean augmentActivate = false;
@@ -122,7 +117,6 @@ public class World implements TileBasedMap {
 
 	public void prepare() {
 		msTime = System.currentTimeMillis();
-		voidMsTime = System.currentTimeMillis();
 		global.clear();
 		blocks = new Block[sizex][sizey];
 		meta = new int[sizex][sizey];
@@ -397,22 +391,6 @@ public class World implements TileBasedMap {
 		renderOnly();
 
 		batch.begin();
-		if (voidTime > 0 && getVoidDistance() > 0f
-				&& (camera.camerax / World.tilesizex) - getVoidDistance() < 8) {
-			renderer.renderVoid();
-			if ((camera.camerax / World.tilesizex) - getVoidDistance() < 4) {
-				if ((voidTimer += Gdx.graphics.getDeltaTime()) >= VOID_LENGTH) {
-					main.manager.get(AssetMap.get("voidambient"), Sound.class).play(
-							Settings.soundVolume, 1f, getPan(getVoidDistance()));
-					voidTimer -= VOID_LENGTH;
-				}
-			} else {
-				if (voidTimer != 0) {
-					main.manager.get(AssetMap.get("voidambient"), Sound.class).stop();
-					voidTimer = 0;
-				}
-			}
-		}
 		renderer.renderUi();
 		batch.end();
 
@@ -439,7 +417,6 @@ public class World implements TileBasedMap {
 	public void setCheckpoint(float x, float y) {
 		checkpointx = x;
 		checkpointy = y;
-		checkpointvoid = getVoidDistance();
 	}
 
 	public void attemptCheckpoint() {
@@ -471,7 +448,6 @@ public class World implements TileBasedMap {
 				getPlayer().health = getPlayer().maxhealth;
 				getPlayer().invincibility = Main.TICKS;
 				getPlayer().gravityCoefficient = 1;
-				voidMsTime = getVoidMSFromDistance(checkpointvoid);
 				deaths.add(getPlayer().getLastDamageSource());
 			} else {
 				getPlayer().gravityCoefficient = 0;
@@ -493,33 +469,11 @@ public class World implements TileBasedMap {
 		camera.update();
 
 		if (getPlayer() != null) {
-			if (getVoidDistance() > (getPlayer().x) && voidTime > 0) {
-				getPlayer()
-						.heal(-((1f / (Main.TICKS * 2f)) * Math.max(getVoidDistance()
-								- getPlayer().x, 1f)), DamageSource.theVoid);
-			}
 			if (augmentActivate) {
 				Augments.getAugment(currentAugment).onActivateTick(this);
 			}
 		}
 
-	}
-
-	/**
-	 * 
-	 * @return -1 if void time is 0 or less, the distance in blocks of the void
-	 *         otherwise
-	 */
-	public float getVoidDistance() {
-		if (voidTime <= 0) return -1;
-		return MathUtils.clamp(
-				((((System.currentTimeMillis() - voidMsTime) / 1000f) / voidTime) * sizex), -1,
-				sizex);
-	}
-
-	public long getVoidMSFromDistance(float distance) {
-		if (voidTime <= 0) return System.currentTimeMillis();
-		return (System.currentTimeMillis() - Math.round((voidTime * 1000d) * (distance / sizex)));
 	}
 
 	public void executeBlockUpdates() {
@@ -620,11 +574,11 @@ public class World implements TileBasedMap {
 
 	public void hide() {
 		main.manager.get(AssetMap.get("voidambient"), Sound.class).stop();
-		voidTimer = 0;
+		
 	}
 
 	public void dispose() {
-		voidTimer = 0;
+		
 	}
 
 	/**
@@ -720,7 +674,6 @@ public class World implements TileBasedMap {
 			essentials.attribute("sizex", "" + sizex);
 			essentials.attribute("sizey", "" + sizey);
 			essentials.attribute("bg", background);
-			essentials.attribute("voidTime", "" + voidTime);
 			essentials.pop();
 
 			XmlWriter tiles = writer.element("tiles");
@@ -766,7 +719,6 @@ public class World implements TileBasedMap {
 		Element essentials = root.getChildByName("essentials");
 		sizex = Integer.parseInt(essentials.getAttribute("sizex"));
 		sizey = Integer.parseInt(essentials.getAttribute("sizey"));
-		voidTime = Integer.parseInt(essentials.getAttribute("voidTime", "-1"));
 		tickTime = -1;
 		background = essentials.getAttribute("bg", "levelbgcircuit");
 

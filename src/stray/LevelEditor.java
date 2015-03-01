@@ -156,14 +156,13 @@ public class LevelEditor extends Updateable {
 				Gdx.graphics.getHeight() - 80);
 		main.drawInverse("ALT+T - TEST LEVEL", Settings.DEFAULT_WIDTH - 5,
 				Gdx.graphics.getHeight() - 95);
-		main.drawInverse("- / + - ADJUST VOID TIME (" + world.voidTime + " s)",
-				Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 110);
+		main.drawInverse("IJKL - XOR bit, O to reset", Settings.DEFAULT_WIDTH - 5,
+				Gdx.graphics.getHeight() - 110);
 		main.drawInverse("hold TAB - block picker", Settings.DEFAULT_WIDTH - 5,
 				Gdx.graphics.getHeight() - 125);
 		main.drawInverse("ALT+N - force save in new file", Settings.DEFAULT_WIDTH - 5,
 				Gdx.graphics.getHeight() - 140);
-		main.drawInverse("IJKL - XOR bit, O to reset", Settings.DEFAULT_WIDTH - 5,
-				Gdx.graphics.getHeight() - 155);
+		
 
 		main.batch.end();
 
@@ -380,20 +379,6 @@ public class LevelEditor extends Updateable {
 		} else if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_2)) {
 			if (world.sizey > 20) world.sizey -= 2;
 			resetWorld();
-		}
-		if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
-			if (Gdx.input.isKeyJustPressed(Keys.PLUS) || Gdx.input.isKeyJustPressed(Keys.EQUALS)) {
-				world.voidTime += 5;
-			} else if (Gdx.input.isKeyJustPressed(Keys.MINUS)) {
-				world.voidTime -= 5;
-				if (world.voidTime < -1) world.voidTime = -1;
-			}
-		} else {
-			if (Gdx.input.isKeyJustPressed(Keys.PLUS) || Gdx.input.isKeyJustPressed(Keys.EQUALS)) {
-				world.voidTime++;
-			} else if (Gdx.input.isKeyJustPressed(Keys.MINUS)) {
-				if (world.voidTime > -1) world.voidTime--;
-			}
 		}
 
 		if (Gdx.input.isKeyPressed(Keys.ALT_LEFT) || Gdx.input.isKeyPressed(Keys.ALT_RIGHT)) {

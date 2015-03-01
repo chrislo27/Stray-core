@@ -59,16 +59,14 @@ public class ResultsScreen extends Updateable {
 
 	private String levelfile = null;
 	private int levelname = 0;
-	private boolean voidPresent = false;
 	private int resultsPick = MathUtils.random(0, 3);
 	private Array<DamageSource> deaths = new Array<DamageSource>(1);
 	private Array<DeathIcon> icons = new Array<DeathIcon>(64);
 
-	public ResultsScreen setData(String levelf, int levelid, boolean voidChasing,
+	public ResultsScreen setData(String levelf, int levelid, 
 			Array<DamageSource> deaths) {
 		levelfile = levelf;
 		levelname = levelid;
-		voidPresent = voidChasing;
 		this.deaths = deaths;
 		groupDeaths();
 

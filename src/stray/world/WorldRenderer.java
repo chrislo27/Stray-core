@@ -107,42 +107,42 @@ public class WorldRenderer {
 				Settings.DEFAULT_WIDTH, -Gdx.graphics.getHeight());
 	}
 
-	public void renderVoid() {
-		batch.setColor(0, 0, 0, 1);
-		main.fillRect(0, 0, ((world.getVoidDistance() * World.tilesizex) - world.camera.camerax),
-				Gdx.graphics.getHeight());
-		batch.draw(main.manager.get(AssetMap.get("voidend"), Texture.class),
-				((world.getVoidDistance() * World.tilesizex) - world.camera.camerax), 0,
-				main.manager.get(AssetMap.get("voidend"), Texture.class).getWidth(),
-				Gdx.graphics.getHeight());
-
-		int ylevel = MathUtils.random(-World.tilesizex, Gdx.graphics.getHeight() + World.tilesizey);
-
-		if (MathUtils.random(1, 3) < 3) world.particles.add(ParticlePool
-				.obtain()
-				.setTexture("magnetglow")
-				.setTint(batch.getColor())
-				.setLifetime(1.25f)
-				.setVelocity(
-						-2,
-						((ylevel > Gdx.graphics.getHeight() / 2f) ? MathUtils.clamp(
-								-(((ylevel - (Gdx.graphics.getHeight() / 2f)) / (Gdx.graphics
-										.getHeight() / 2f)) * 4), -4f, 4f) : MathUtils.clamp(
-								4 - ((ylevel / (Gdx.graphics.getHeight() / 2f)) * 4), -4f, 4f)))
-				.setPosition((((world.getVoidDistance())) + 2 + MathUtils.random(0.5f, 1.5f)),
-						(world.camera.cameray + ylevel) / World.tilesizey));
-
-		batch.setColor(1, 1, 1, 1);
-		if (MathUtils.random(1, 6) == 1) {
-			float location = MathUtils.random(1, Gdx.graphics.getHeight());
-			ElectricityRenderer.drawP2PLightning(batch,
-					((world.getVoidDistance() * World.tilesizex) - world.camera.camerax), location,
-					((world.getVoidDistance() * World.tilesizex) - world.camera.camerax)
-							+ MathUtils.random(World.tilesizex * 0.75f, World.tilesizex * 2.75f),
-					location + MathUtils.random(-64, 64), 24, 1.5f, 3, 3, Colors.get("VOID_PURPLE")
-							.toFloatBits());
-		}
-	}
+//	public void renderVoid() {
+//		batch.setColor(0, 0, 0, 1);
+//		main.fillRect(0, 0, ((world.getVoidDistance() * World.tilesizex) - world.camera.camerax),
+//				Gdx.graphics.getHeight());
+//		batch.draw(main.manager.get(AssetMap.get("voidend"), Texture.class),
+//				((world.getVoidDistance() * World.tilesizex) - world.camera.camerax), 0,
+//				main.manager.get(AssetMap.get("voidend"), Texture.class).getWidth(),
+//				Gdx.graphics.getHeight());
+//
+//		int ylevel = MathUtils.random(-World.tilesizex, Gdx.graphics.getHeight() + World.tilesizey);
+//
+//		if (MathUtils.random(1, 3) < 3) world.particles.add(ParticlePool
+//				.obtain()
+//				.setTexture("magnetglow")
+//				.setTint(batch.getColor())
+//				.setLifetime(1.25f)
+//				.setVelocity(
+//						-2,
+//						((ylevel > Gdx.graphics.getHeight() / 2f) ? MathUtils.clamp(
+//								-(((ylevel - (Gdx.graphics.getHeight() / 2f)) / (Gdx.graphics
+//										.getHeight() / 2f)) * 4), -4f, 4f) : MathUtils.clamp(
+//								4 - ((ylevel / (Gdx.graphics.getHeight() / 2f)) * 4), -4f, 4f)))
+//				.setPosition((((world.getVoidDistance())) + 2 + MathUtils.random(0.5f, 1.5f)),
+//						(world.camera.cameray + ylevel) / World.tilesizey));
+//
+//		batch.setColor(1, 1, 1, 1);
+//		if (MathUtils.random(1, 6) == 1) {
+//			float location = MathUtils.random(1, Gdx.graphics.getHeight());
+//			ElectricityRenderer.drawP2PLightning(batch,
+//					((world.getVoidDistance() * World.tilesizex) - world.camera.camerax), location,
+//					((world.getVoidDistance() * World.tilesizex) - world.camera.camerax)
+//							+ MathUtils.random(World.tilesizex * 0.75f, World.tilesizex * 2.75f),
+//					location + MathUtils.random(-64, 64), 24, 1.5f, 3, 3, Colors.get("VOID_PURPLE")
+//							.toFloatBits());
+//		}
+//	}
 
 	private void renderEntities() {
 		for (Entity e : world.entities) {
@@ -399,9 +399,7 @@ public class WorldRenderer {
 				Main.convertY(starting + 120));
 		main.font.draw(batch, "time: " + Utils.formatMs(System.currentTimeMillis() - world.msTime),
 				5, Main.convertY(starting + 135));
-		main.font.draw(batch, "voidDistance: " + String.format("%.3f", world.getVoidDistance()), 5,
-				Main.convertY(starting + 150));
-		main.font.draw(batch, "deaths: " + world.deaths.size, 5, Main.convertY(starting + 165));
+		main.font.draw(batch, "deaths: " + world.deaths.size, 5, Main.convertY(starting + 150));
 
 	}
 
