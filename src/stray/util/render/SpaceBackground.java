@@ -117,22 +117,6 @@ public class SpaceBackground {
 		if (Gdx.input.isButtonPressed(Buttons.LEFT) && cooldown == 0) {
 			if (krakenx < Settings.DEFAULT_WIDTH && krakenx > -Settings.DEFAULT_WIDTH) {
 				main.awardAchievement("kraken");
-			} else {
-				for (VisualAsteroid ast : asteroids) {
-					if (Main.getInputX() >= ast.x && Main.getInputX() <= (ast.x + (ast.size * 32))) {
-						if (Main.getInputY() <= ast.y
-								&& Main.getInputY() >= (ast.y - (ast.size * 32))) {
-							if (ast.colour) {
-								main.awardAchievement("secret");
-								ast.colour = false;
-								cooldown = (int) (Gdx.graphics.getFramesPerSecond() * 1.5f);
-								main.transition(new Spiral(3), new FadeOut(), Main.COLOUR);
-
-								return;
-							}
-						}
-					}
-				}
 			}
 		}
 
@@ -187,10 +171,10 @@ class VisualAsteroid {
 		size = 0.75f + Main.getRandom().nextFloat();
 		speed = 0.75f + Main.getRandom().nextFloat();
 		colour = false;
-		if ((MathUtils.random(1, Math.round(SpaceBackground.maxAsteroids * 32)) == 1)
-				&& !SpaceBackground.instance().containsSpecial()) {
-			colour = true;
-		}
+//		if ((MathUtils.random(1, Math.round(SpaceBackground.maxAsteroids * 32)) == 1)
+//				&& !SpaceBackground.instance().containsSpecial()) {
+//			colour = true;
+//		}
 	}
 
 	public void renderPlain(Main main) {

@@ -110,7 +110,6 @@ public class Main extends Game implements Consumer {
 	public static HelpScreen HELP = null;
 	public static GameScreen GAME = null;
 	public static TransitionScreen TRANSITION = null;
-	public static ColourScreen COLOUR = null;
 	public static CutsceneScreen CUTSCENE = null;
 	public static MiscLoadingScreen MISCLOADING = null;
 	public static LevelSelectScreen LEVELSELECT = null;
@@ -269,7 +268,6 @@ public class Main extends Game implements Consumer {
 		MAINMENU = new MainMenuScreen(this);
 		HELP = new HelpScreen(this);
 		GAME = new GameScreen(this);
-		COLOUR = new ColourScreen(this);
 		TRANSITION = new TransitionScreen(this);
 		CUTSCENE = new CutsceneScreen(this);
 		MISCLOADING = new MiscLoadingScreen(this);
@@ -320,7 +318,6 @@ public class Main extends Game implements Consumer {
 		MAINMENU.dispose();
 		HELP.dispose();
 		GAME.dispose();
-		COLOUR.dispose();
 		TRANSITION.dispose();
 		CUTSCENE.dispose();
 		MISCLOADING.dispose();
@@ -645,34 +642,15 @@ public class Main extends Game implements Consumer {
 		// level backgrounds
 		manager.load(AssetMap.add("levelbgcity", "images/levelbg/city.png"), Texture.class);
 		manager.load(AssetMap.add("levelbgcircuit", "images/levelbg/circuit.png"), Texture.class);
-
-		// colour
-		manager.load(AssetMap.add("colourblue", "images/colour/blue.png"), Texture.class);
-		manager.load(AssetMap.add("colourred", "images/colour/red.png"), Texture.class);
-		manager.load(AssetMap.add("colourorange", "images/colour/orange.png"), Texture.class);
-		manager.load(AssetMap.add("colourgreen", "images/colour/green.png"), Texture.class);
-		manager.load(AssetMap.add("colourpurple", "images/colour/purple.png"), Texture.class);
-		manager.load(AssetMap.add("colouryellow", "images/colour/yellow.png"), Texture.class);
-		manager.load(AssetMap.add("colourmetal", "images/colour/metal_back.jpg"), Texture.class);
-		manager.load(AssetMap.add("colourpointer1", "images/colour/pointer1.png"), Texture.class);
-		manager.load(AssetMap.add("colourpointer2", "images/colour/pointer2.png"), Texture.class);
-		manager.load(AssetMap.add("colournuclear", "images/colour/radioactiveFull.png"),
-				Texture.class);
+		
 
 		// sfx
 		manager.load(AssetMap.add("questcomplete", "sounds/questcomplete.ogg"), Sound.class);
 		manager.load(AssetMap.add("switchsfx", "sounds/switch.ogg"), Sound.class);
 		manager.load(AssetMap.add("voidambient", "sounds/ambient/void.ogg"), Sound.class);
 
-		// voice (assetmap -> "voice-<voice in convs>")
-
 		// music
-
-		// colour
-		manager.load(AssetMap.add("colour200pts", "sounds/colour/200pts.ogg"), Sound.class);
-		manager.load(AssetMap.add("colourswap", "sounds/colour/apocalypseSwap.ogg"), Sound.class);
-		manager.load(AssetMap.add("colourcoverup", "sounds/colour/coverUpAndLand.ogg"), Sound.class);
-		manager.load(AssetMap.add("colourincorrect", "sounds/colour/incorrect.ogg"), Sound.class);
+		
 	}
 
 	private void loadUnmanagedAssets() {
