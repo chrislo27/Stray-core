@@ -4,15 +4,14 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import stray.blocks.Block;
-import stray.blocks.Blocks;
 import stray.blocks.Block.SolidFaces;
+import stray.blocks.Blocks;
 import stray.entity.Entity;
+import stray.world.LevelEditorWorld;
 import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
@@ -110,13 +109,13 @@ public class LevelEditor extends Updateable {
 	int sely = 0;
 
 	int blocksel = 0;
-	int defaultmeta = 0;
+	public int defaultmeta = 0;
 
-	World world;
+	LevelEditorWorld world;
 
 	public void resetWorld() {
 		if (world == null) {
-			world = new World(main);
+			world = new LevelEditorWorld(main);
 		}
 		world.renderer.showGrid = true;
 		world.prepare();
@@ -137,7 +136,10 @@ public class LevelEditor extends Updateable {
 		main.batch.begin();
 
 		main.batch.setColor(1, 1, 1, 0.5f);
-		Blocks.instance().getBlock(blocks.get(blocksel)).render(world, selx, sely);
+		Blocks.instance()
+				.getBlock(blocks.get(blocksel))
+				.renderWithOffset(world, -1337, -1337, ((selx + 1337) * World.tilesizex),
+						((sely + 1337) * World.tilesizey));
 		main.batch.setColor(1, 1, 1, 1);
 
 		if (Gdx.input.isKeyPressed(Keys.TAB)) {
@@ -156,13 +158,12 @@ public class LevelEditor extends Updateable {
 				Gdx.graphics.getHeight() - 80);
 		main.drawInverse("ALT+T - TEST LEVEL", Settings.DEFAULT_WIDTH - 5,
 				Gdx.graphics.getHeight() - 95);
-		main.drawInverse("IJKL - XOR bit, O to reset", Settings.DEFAULT_WIDTH - 5,
-				Gdx.graphics.getHeight() - 110);
+		main.drawInverse("IJKL - XOR bit, O to reset, hold SHIFT to overlap",
+				Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 110);
 		main.drawInverse("hold TAB - block picker", Settings.DEFAULT_WIDTH - 5,
 				Gdx.graphics.getHeight() - 125);
 		main.drawInverse("ALT+N - force save in new file", Settings.DEFAULT_WIDTH - 5,
 				Gdx.graphics.getHeight() - 140);
-		
 
 		main.batch.end();
 
@@ -326,13 +327,29 @@ public class LevelEditor extends Updateable {
 		}
 
 		if (Gdx.input.isKeyJustPressed(Keys.I)) {
+			if (!Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)
+					&& !Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
+				defaultmeta = 0;
+			}
 			defaultmeta ^= SolidFaces.UP;
 		} else if (Gdx.input.isKeyJustPressed(Keys.K)) {
+			if (!Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)
+					&& !Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
+				defaultmeta = 0;
+			}
 			defaultmeta ^= SolidFaces.DOWN;
 		}
 		if (Gdx.input.isKeyJustPressed(Keys.J)) {
+			if (!Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)
+					&& !Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
+				defaultmeta = 0;
+			}
 			defaultmeta ^= SolidFaces.LEFT;
 		} else if (Gdx.input.isKeyJustPressed(Keys.L)) {
+			if (!Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)
+					&& !Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
+				defaultmeta = 0;
+			}
 			defaultmeta ^= SolidFaces.RIGHT;
 		}
 		if (Gdx.input.isKeyJustPressed(Keys.O)) {
