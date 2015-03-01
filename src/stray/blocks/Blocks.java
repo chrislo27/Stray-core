@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 
 import stray.Main;
 import stray.LevelEditor.EditorGroup;
-import stray.blocks.Block.SolidFaces;
+import stray.blocks.Block.BlockFaces;
 import stray.entity.Entity;
 import stray.entity.EntityBall;
 import stray.entity.EntityWhale;
@@ -48,23 +48,23 @@ public class Blocks {
 		oldLookup = new HashMap<String, String>();
 
 		put("space", new BlockOuterSpace("images/blocks/old/space/space").hasVariants(8));
-		put("wall", new Block("images/blocks/old/dungeonwall/wall").useConTextures().solidify(SolidFaces.ALL));
+		put("wall", new Block("images/blocks/old/dungeonwall/wall").useConTextures().solidify(BlockFaces.ALL));
 		put("empty", new BlockEmpty());
 		put("spike", new BlockSpike("images/blocks/spike").setEditorGroup(EditorGroup.HAZARD));
 		put("sign", new BlockReadable("images/blocks/sign/sign").hasVariants(4));
-		put("ice", new BlockIce("images/blocks/ice/ice").solidify(SolidFaces.ALL));
+		put("ice", new BlockIce("images/blocks/ice/ice").solidify(BlockFaces.ALL));
 		
-		put("switchred", new BlockSwitch(RED, "red").solidify(SolidFaces.ALL));
-		put("switchgreen", new BlockSwitch(GREEN, "green").solidify(SolidFaces.ALL));
-		put("switchblue", new BlockSwitch(BLUE, "blue").solidify(SolidFaces.ALL));
-		put("switchpurple", new BlockSwitch(PURPLE, "purple").solidify(SolidFaces.ALL));
-		put("switchorange", new BlockSwitch(ORANGE, "orange").solidify(SolidFaces.ALL));
+		put("switchred", new BlockSwitch(RED, "red").solidify(BlockFaces.ALL));
+		put("switchgreen", new BlockSwitch(GREEN, "green").solidify(BlockFaces.ALL));
+		put("switchblue", new BlockSwitch(BLUE, "blue").solidify(BlockFaces.ALL));
+		put("switchpurple", new BlockSwitch(PURPLE, "purple").solidify(BlockFaces.ALL));
+		put("switchorange", new BlockSwitch(ORANGE, "orange").solidify(BlockFaces.ALL));
  		
-		put("togglered", new BlockToggle(RED, "red").solidify(SolidFaces.ALL));
-		put("togglegreen", new BlockToggle(GREEN, "green").solidify(SolidFaces.ALL));
-		put("toggleblue", new BlockToggle(BLUE, "blue").solidify(SolidFaces.ALL));
-		put("togglepurple", new BlockToggle(PURPLE, "purple").solidify(SolidFaces.ALL));
-		put("toggleorange", new BlockToggle(ORANGE, "orange").solidify(SolidFaces.ALL));
+		put("togglered", new BlockToggle(RED, "red").solidify(BlockFaces.ALL));
+		put("togglegreen", new BlockToggle(GREEN, "green").solidify(BlockFaces.ALL));
+		put("toggleblue", new BlockToggle(BLUE, "blue").solidify(BlockFaces.ALL));
+		put("togglepurple", new BlockToggle(PURPLE, "purple").solidify(BlockFaces.ALL));
+		put("toggleorange", new BlockToggle(ORANGE, "orange").solidify(BlockFaces.ALL));
 		
 		put("timerred", new BlockTimer(RED, "red"));
 		put("timergreen", new BlockTimer(GREEN, "green"));
@@ -77,8 +77,8 @@ public class Blocks {
 		put("cameramagnet", new BlockCameraMagnet("images/blocks/magnet"));
 		put("electrode", new BlockElectrode("images/blocks/electrode/electrode").setEditorGroup(EditorGroup.HAZARD));
 		put("fire", new BlockFire(null).setAnimation("fire").setEditorGroup(EditorGroup.HAZARD));
-		put("airvent", new BlockAirVent("images/blocks/airvent/airvent").solidify(SolidFaces.ALL));
-		put("3dblock", new Block("images/blocks/3d/3dblock").solidify(SolidFaces.ALL));
+		put("airvent", new BlockAirVent("images/blocks/airvent/airvent").solidify(BlockFaces.ALL));
+		put("3dblock", new Block("images/blocks/3d/3dblock").solidify(BlockFaces.ALL));
 		
 		put("gearCollectible", new BlockGearCollectible("images/blocks/collectible/gear"));
 		
@@ -90,8 +90,8 @@ public class Blocks {
 		}.setEditorGroup(null));
 		put("checkpointunclaimed", new BlockCheckpoint("images/blocks/checkpoint/checkpointnew"));
 		
-		put("jumppad", new BlockJumpPad(null).setAnimation("jumppad").solidify(SolidFaces.ALL));
-		put("accelerationpad", new BlockAccPad(null).setAnimation("accelerationpad").solidify(SolidFaces.ALL));
+		put("jumppad", new BlockJumpPad(null).setAnimation("jumppad").solidify(BlockFaces.ALL));
+		put("accelerationpad", new BlockAccPad(null).setAnimation("accelerationpad").solidify(BlockFaces.ALL));
 		
 		// spawners
 		put("spawnerplayer", new BlockPlayerSpawner("images/entity/player/player"));

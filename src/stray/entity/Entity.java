@@ -1,7 +1,7 @@
 package stray.entity;
 
 import stray.Main;
-import stray.blocks.Block.SolidFaces;
+import stray.blocks.Block.BlockFaces;
 import stray.blocks.BlockEmpty;
 import stray.blocks.BlockPlatform;
 import stray.util.Coordinate;
@@ -469,7 +469,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 
 		for (int i = 0; i < boundx; i++) {
 			if ((world.getBlock((posx + i) / World.tilesizex, (posy / World.tilesizey) - 1)
-					.isSolid(world, (posx + i) / World.tilesizex, (posy / World.tilesizey) - 1) & SolidFaces.DOWN) == SolidFaces.DOWN) {
+					.isSolid(world, (posx + i) / World.tilesizex, (posy / World.tilesizey) - 1) & BlockFaces.DOWN) == BlockFaces.DOWN) {
 				return Coordinate.global.setPosition((posx + i) / World.tilesizex,
 						(posy / World.tilesizey) - 1);
 			}
@@ -490,7 +490,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 		for (int i = 0; i < boundx; i++) {
 			if ((world.getBlock((posx + i) / World.tilesizex, ((posy + boundy) / World.tilesizey))
 					.isSolid(world, (posx + i) / World.tilesizex,
-							((posy + boundy) / World.tilesizey)) & SolidFaces.UP) == SolidFaces.UP) {
+							((posy + boundy) / World.tilesizey)) & BlockFaces.UP) == BlockFaces.UP) {
 				return Coordinate.global.setPosition((posx + i) / World.tilesizex,
 						((posy + boundy) / World.tilesizey));
 			}
@@ -515,7 +515,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 		for (int i = 0; i < boundx; i++) {
 			if ((world.getBlock((posx + i) / World.tilesizex, ((posy + boundy) / World.tilesizey))
 					.isSolid(world, (posx + i) / World.tilesizex,
-							((posy + boundy) / World.tilesizey)) & SolidFaces.UP) == SolidFaces.UP) {
+							((posy + boundy) / World.tilesizey)) & BlockFaces.UP) == BlockFaces.UP) {
 				if (world.getBlock((posx + i) / World.tilesizex,
 						((posy + boundy) / World.tilesizey)).getDragCoefficient(world,
 						(posx + i) / World.tilesizex, ((posy + boundy) / World.tilesizey)) < lowest) {
@@ -545,7 +545,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 		for (int i = 0; i < boundx; i++) {
 			if ((world.getBlock((posx + i) / World.tilesizex, ((posy + boundy) / World.tilesizey))
 					.isSolid(world, (posx + i) / World.tilesizex,
-							((posy + boundy) / World.tilesizey)) & SolidFaces.UP) == SolidFaces.UP) {
+							((posy + boundy) / World.tilesizey)) & BlockFaces.UP) == BlockFaces.UP) {
 				if (world.getBlock((posx + i) / World.tilesizex,
 						((posy + boundy) / World.tilesizey)).getDragCoefficient(world,
 						(posx + i) / World.tilesizex, ((posy + boundy) / World.tilesizey)) > highest) {
@@ -570,7 +570,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 
 		for (int i = 0; i < boundy; i++) {
 			if ((world.getBlock(((posx) / World.tilesizex) - 1, ((posy + i) / World.tilesizey))
-					.isSolid(world, ((posx) / World.tilesizex) - 1, ((posy + i) / World.tilesizey)) & SolidFaces.RIGHT) == SolidFaces.RIGHT) {
+					.isSolid(world, ((posx) / World.tilesizex) - 1, ((posy + i) / World.tilesizey)) & BlockFaces.RIGHT) == BlockFaces.RIGHT) {
 				return Coordinate.global.setPosition(((posx) / World.tilesizex) - 1,
 						((posy + i) / World.tilesizey));
 			}
@@ -592,7 +592,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 			if ((world
 					.getBlock(((posx + boundx) / World.tilesizex), ((posy + i) / World.tilesizey))
 					.isSolid(world, ((posx + boundx) / World.tilesizex),
-							((posy + i) / World.tilesizey)) & SolidFaces.LEFT) == SolidFaces.LEFT) {
+							((posy + i) / World.tilesizey)) & BlockFaces.LEFT) == BlockFaces.LEFT) {
 				return Coordinate.global.setPosition(((posx + boundx) / World.tilesizex),
 						((posy + i) / World.tilesizey));
 			}

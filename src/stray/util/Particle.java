@@ -1,7 +1,7 @@
 package stray.util;
 
 import stray.Main;
-import stray.blocks.Block.SolidFaces;
+import stray.blocks.Block.BlockFaces;
 import stray.world.World;
 
 import com.badlogic.gdx.Gdx;
@@ -194,7 +194,7 @@ public class Particle implements Poolable {
 		}
 
 		if (destroyOnBlock) {
-			if ((world.getBlock((int) x, (int) y).isSolid(world, (int) x, (int) y) != SolidFaces.NONE)) if (MathHelper
+			if ((world.getBlock((int) x, (int) y).isSolid(world, (int) x, (int) y) != BlockFaces.NONE)) if (MathHelper
 					.intersects((int) x, (int) y, 1, 1, x - (4 * World.tilepartx), y
 							- (4 * World.tileparty), 8 * World.tilepartx, 8 * World.tileparty)) {
 				lifetime = -1;

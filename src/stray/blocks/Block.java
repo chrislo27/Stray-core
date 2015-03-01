@@ -33,7 +33,7 @@ public class Block {
 	protected boolean variants = false;
 	protected String animationlink = null;
 	protected int varianttypes = 4;
-	protected int solidFaces = SolidFaces.NONE;
+	protected int solidFaces = BlockFaces.NONE;
 	protected boolean usingMissingTex = false;
 
 	public EditorGroup levelEditorGroup = EditorGroup.NORMAL;
@@ -359,17 +359,29 @@ public class Block {
 						x * world.tilesizex - world.camera.camerax + offx,
 						Main.convertY((y * world.tilesizey - world.camera.cameray)
 								+ World.tilesizey + offy));
-			} else world.batch.draw(full, x * world.tilesizex - world.camera.camerax + offx,
-					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
+			} else world.batch.draw(
+					full,
+					x * world.tilesizex - world.camera.camerax + offx,
+					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey
+							+ offy));
 		} else if (up && down && (left == false || right == false)) {
-			world.batch.draw(ver, x * world.tilesizex - world.camera.camerax + offx,
-					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
+			world.batch.draw(
+					ver,
+					x * world.tilesizex - world.camera.camerax + offx,
+					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey
+							+ offy));
 		} else if (left && right && (up == false || down == false)) {
-			world.batch.draw(hor, x * world.tilesizex - world.camera.camerax + offx,
-					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
+			world.batch.draw(
+					hor,
+					x * world.tilesizex - world.camera.camerax + offx,
+					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey
+							+ offy));
 		} else {
-			world.batch.draw(corner, x * world.tilesizex - world.camera.camerax + offx,
-					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
+			world.batch.draw(
+					corner,
+					x * world.tilesizex - world.camera.camerax + offx,
+					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey
+							+ offy));
 		}
 	}
 
@@ -389,17 +401,29 @@ public class Block {
 						x * world.tilesizex - world.camera.camerax + offx,
 						Main.convertY((y * world.tilesizey - world.camera.cameray)
 								+ World.tilesizey));
-			} else world.batch.draw(full, x * world.tilesizex - world.camera.camerax + offx,
-					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
+			} else world.batch.draw(
+					full,
+					x * world.tilesizex - world.camera.camerax + offx,
+					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey
+							+ offy));
 		} else if (up && down && (left == false || right == false)) {
-			world.batch.draw(ver, x * world.tilesizex - world.camera.camerax + offx,
-					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
+			world.batch.draw(
+					ver,
+					x * world.tilesizex - world.camera.camerax + offx,
+					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey
+							+ offy));
 		} else if (left && right && (up == false || down == false)) {
-			world.batch.draw(hor, x * world.tilesizex - world.camera.camerax + offx,
-					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
+			world.batch.draw(
+					hor,
+					x * world.tilesizex - world.camera.camerax + offx,
+					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey
+							+ offy));
 		} else {
-			world.batch.draw(corner, x * world.tilesizex - world.camera.camerax + offx,
-					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey + offy));
+			world.batch.draw(
+					corner,
+					x * world.tilesizex - world.camera.camerax + offx,
+					Main.convertY((y * world.tilesizey - world.camera.cameray) + World.tilesizey
+							+ offy));
 		}
 	}
 
@@ -460,15 +484,15 @@ public class Block {
 		return playSound(x, y, camx, camy, sound, vol, pitch, true);
 	}
 
-	public static class SolidFaces{
-		
+	public static class BlockFaces {
+
 		public static final int NONE = 0;
 		public static final int ALL = 15;
 		public static final int UP = 1;
 		public static final int DOWN = 2;
 		public static final int LEFT = 4;
 		public static final int RIGHT = 8;
-		
+
 	}
-	
+
 }

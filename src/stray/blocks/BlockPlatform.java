@@ -16,7 +16,7 @@ public class BlockPlatform extends BlockDirectional {
 
 	@Override
 	public int isSolid(World world, int x, int y) {
-		return MathUtils.clamp(world.getMeta(x, y), SolidFaces.NONE, SolidFaces.ALL);
+		return MathUtils.clamp(world.getMeta(x, y), BlockFaces.NONE, BlockFaces.ALL);
 	}
 
 	

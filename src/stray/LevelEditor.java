@@ -8,7 +8,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import stray.blocks.Block;
-import stray.blocks.Block.SolidFaces;
+import stray.blocks.Block.BlockFaces;
 import stray.blocks.Blocks;
 import stray.entity.Entity;
 import stray.world.LevelEditorWorld;
@@ -266,10 +266,10 @@ public class LevelEditor extends Updateable {
 	}
 
 	private String getOrientationsFromMeta() {
-		return "" + ((defaultmeta & SolidFaces.UP) == SolidFaces.UP ? "I" : "")
-				+ ((defaultmeta & SolidFaces.LEFT) == SolidFaces.LEFT ? "J" : "")
-				+ ((defaultmeta & SolidFaces.DOWN) == SolidFaces.DOWN ? "K" : "")
-				+ ((defaultmeta & SolidFaces.RIGHT) == SolidFaces.RIGHT ? "L" : "");
+		return "" + ((defaultmeta & BlockFaces.UP) == BlockFaces.UP ? "I" : "")
+				+ ((defaultmeta & BlockFaces.LEFT) == BlockFaces.LEFT ? "J" : "")
+				+ ((defaultmeta & BlockFaces.DOWN) == BlockFaces.DOWN ? "K" : "")
+				+ ((defaultmeta & BlockFaces.RIGHT) == BlockFaces.RIGHT ? "L" : "");
 	}
 
 	@Override
@@ -331,26 +331,26 @@ public class LevelEditor extends Updateable {
 					&& !Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
 				defaultmeta = 0;
 			}
-			defaultmeta ^= SolidFaces.UP;
+			defaultmeta ^= BlockFaces.UP;
 		} else if (Gdx.input.isKeyJustPressed(Keys.K)) {
 			if (!Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)
 					&& !Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
 				defaultmeta = 0;
 			}
-			defaultmeta ^= SolidFaces.DOWN;
+			defaultmeta ^= BlockFaces.DOWN;
 		}
 		if (Gdx.input.isKeyJustPressed(Keys.J)) {
 			if (!Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)
 					&& !Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
 				defaultmeta = 0;
 			}
-			defaultmeta ^= SolidFaces.LEFT;
+			defaultmeta ^= BlockFaces.LEFT;
 		} else if (Gdx.input.isKeyJustPressed(Keys.L)) {
 			if (!Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)
 					&& !Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
 				defaultmeta = 0;
 			}
-			defaultmeta ^= SolidFaces.RIGHT;
+			defaultmeta ^= BlockFaces.RIGHT;
 		}
 		if (Gdx.input.isKeyJustPressed(Keys.O)) {
 			defaultmeta = 0;
