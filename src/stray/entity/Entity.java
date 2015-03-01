@@ -221,7 +221,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 					onCollideRight();
 					onCollideEntityRight(en);
 					velo = 0;
-					float delta = Math.abs(this.velox - en.velox);
+					float delta = this.velox - en.velox;
 					en.velox += delta * en.forceTransfer;
 					this.velox -= delta * en.forceTransfer;
 					velox = -velox * bounceCoefficient;
@@ -239,7 +239,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 					onCollideLeft();
 					onCollideEntityLeft(en);
 					velo = 0;
-					float delta = Math.abs(this.velox - en.velox);
+					float delta = this.velox - en.velox;
 					en.velox += delta * en.forceTransfer;
 					this.velox -= delta * en.forceTransfer;
 					velox = -velox * bounceCoefficient;
@@ -259,7 +259,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 					} else if (en != null) {
 						onCollideRight();
 						onCollideEntityRight(en);
-						float delta = Math.abs(this.velox - en.velox);
+						float delta = this.velox - en.velox;
 						en.velox += delta * en.forceTransfer;
 						this.velox -= delta * en.forceTransfer;
 						velox = -velox * bounceCoefficient;
@@ -278,7 +278,7 @@ public abstract class Entity implements EntityMover, Sizeable {
 					} else if (en != null) {
 						onCollideLeft();
 						onCollideEntityLeft(en);
-						float delta = Math.abs(this.velox - en.velox);
+						float delta = this.velox - en.velox;
 						en.velox += delta * en.forceTransfer;
 						this.velox -= delta * en.forceTransfer;
 						velox = -velox * bounceCoefficient;
