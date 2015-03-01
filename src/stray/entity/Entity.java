@@ -137,8 +137,9 @@ public abstract class Entity implements EntityMover, Sizeable {
 					onCollideDown();
 					onCollideEntityDown(en);
 					velo = 0;
-					en.veloy += this.veloy * en.forceTransfer;
-					this.veloy -= this.veloy * en.forceTransfer;
+					float delta = Math.abs(this.veloy - en.veloy);
+					en.veloy += delta * en.forceTransfer;
+					this.veloy -= delta * en.forceTransfer;
 					veloy = -veloy * bounceCoefficient;
 				}
 			} else if (velo < 0) {
@@ -154,8 +155,9 @@ public abstract class Entity implements EntityMover, Sizeable {
 					onCollideUp();
 					onCollideEntityUp(en);
 					velo = 0;
-					en.veloy += this.veloy * en.forceTransfer;
-					this.veloy -= this.veloy * en.forceTransfer;
+					float delta = Math.abs(this.veloy - en.veloy);
+					en.veloy += delta * en.forceTransfer;
+					this.veloy -= delta * en.forceTransfer;
 					veloy = -veloy * bounceCoefficient;
 				}
 			}
@@ -173,8 +175,9 @@ public abstract class Entity implements EntityMover, Sizeable {
 					} else if (en != null) {
 						onCollideDown();
 						onCollideEntityDown(en);
-						en.veloy += this.veloy * en.forceTransfer;
-						this.veloy -= this.veloy * en.forceTransfer;
+						float delta = Math.abs(this.veloy - en.veloy);
+						en.veloy += delta * en.forceTransfer;
+						this.veloy -= delta * en.forceTransfer;
 						veloy = -veloy * bounceCoefficient;
 						break;
 					}
@@ -191,8 +194,9 @@ public abstract class Entity implements EntityMover, Sizeable {
 					} else if (en != null) {
 						onCollideUp();
 						onCollideEntityUp(en);
-						en.veloy += this.veloy * en.forceTransfer;
-						this.veloy -= this.veloy * en.forceTransfer;
+						float delta = Math.abs(this.veloy - en.veloy);
+						en.veloy += delta * en.forceTransfer;
+						this.veloy -= delta * en.forceTransfer;
 						veloy = -veloy * bounceCoefficient;
 						break;
 					}
@@ -217,8 +221,9 @@ public abstract class Entity implements EntityMover, Sizeable {
 					onCollideRight();
 					onCollideEntityRight(en);
 					velo = 0;
-					en.velox += this.velox * en.forceTransfer;
-					this.velox -= this.velox * en.forceTransfer;
+					float delta = Math.abs(this.velox - en.velox);
+					en.velox += delta * en.forceTransfer;
+					this.velox -= delta * en.forceTransfer;
 					velox = -velox * bounceCoefficient;
 				}
 			} else if (velo < 0) {
@@ -234,8 +239,9 @@ public abstract class Entity implements EntityMover, Sizeable {
 					onCollideLeft();
 					onCollideEntityLeft(en);
 					velo = 0;
-					en.velox += this.velox * en.forceTransfer;
-					this.velox -= this.velox * en.forceTransfer;
+					float delta = Math.abs(this.velox - en.velox);
+					en.velox += delta * en.forceTransfer;
+					this.velox -= delta * en.forceTransfer;
 					velox = -velox * bounceCoefficient;
 				}
 			}
@@ -253,8 +259,9 @@ public abstract class Entity implements EntityMover, Sizeable {
 					} else if (en != null) {
 						onCollideRight();
 						onCollideEntityRight(en);
-						en.velox += this.velox * en.forceTransfer;
-						this.velox -= this.velox * en.forceTransfer;
+						float delta = Math.abs(this.velox - en.velox);
+						en.velox += delta * en.forceTransfer;
+						this.velox -= delta * en.forceTransfer;
 						velox = -velox * bounceCoefficient;
 						break;
 					}
@@ -271,8 +278,9 @@ public abstract class Entity implements EntityMover, Sizeable {
 					} else if (en != null) {
 						onCollideLeft();
 						onCollideEntityLeft(en);
-						en.velox += this.velox * en.forceTransfer;
-						this.velox -= this.velox * en.forceTransfer;
+						float delta = Math.abs(this.velox - en.velox);
+						en.velox += delta * en.forceTransfer;
+						this.velox -= delta * en.forceTransfer;
 						velox = -velox * bounceCoefficient;
 						break;
 					}
