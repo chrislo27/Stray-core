@@ -25,14 +25,14 @@ public class Levels {
 	private void loadResources() {
 		levels.clear();
 		
-		add(new LevelData("chapter1/level1-1", 0).setCutscene("controls"));
-		add(new LevelData("chapter1/level1-2", 0));
-		add(new LevelData("chapter1/level1-3", 0));
-		add(new LevelData("chapter1/level1-4", 1));
-		add(new LevelData("chapter1/level1-5", 1));
-		add(new LevelData("chapter1/level1-6", 1));
-		add(new LevelData("chapter1/level1-7", 1));
-		add(new LevelData("chapter1/level1-8", 1));
+		add(new LevelData("chapter1/level1-1").setCutscene("controls"));
+		add(new LevelData("chapter1/level1-2"));
+		add(new LevelData("chapter1/level1-3"));
+		add(new LevelData("chapter1/level1-4"));
+		add(new LevelData("chapter1/level1-5"));
+		add(new LevelData("chapter1/level1-6"));
+		add(new LevelData("chapter1/level1-7"));
+		add(new LevelData("chapter1/level1-8"));
 	}
 	
 	private int num = 0;

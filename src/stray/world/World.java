@@ -6,12 +6,11 @@ import java.util.Random;
 import stray.Levels;
 import stray.Main;
 import stray.Settings;
-import stray.augment.Augments;
 import stray.blocks.Block;
+import stray.blocks.Block.BlockFaces;
 import stray.blocks.BlockCameraMagnet;
 import stray.blocks.BlockPlayerSpawner;
 import stray.blocks.Blocks;
-import stray.blocks.Block.BlockFaces;
 import stray.entity.Entity;
 import stray.entity.EntityPlayer;
 import stray.pathfinding.Mover;
@@ -95,10 +94,6 @@ public class World implements TileBasedMap {
 
 	public float checkpointx, checkpointy;
 
-	public int currentAugment = 0;
-	public boolean augmentActivate = false;
-	long lastAugmentUse = System.currentTimeMillis();
-
 	public Array<DamageSource> deaths = new Array<DamageSource>(32);
 
 	public World(Main main) {
@@ -124,8 +119,8 @@ public class World implements TileBasedMap {
 		for (int j = 0; j < sizex; j++) {
 			for (int k = 0; k < sizey; k++) {
 				blocks[j][k] = Blocks.instance().getBlock(Blocks.defaultBlock);
-				if(j == 0 || j + 1 == sizex) blocks[j][k] = Blocks.instance().getBlock("wall");
-				if(k == 0 || k + 1 == sizey) blocks[j][k] = Blocks.instance().getBlock("wall");
+				if (j == 0 || j + 1 == sizex) blocks[j][k] = Blocks.instance().getBlock("wall");
+				if (k == 0 || k + 1 == sizey) blocks[j][k] = Blocks.instance().getBlock("wall");
 				meta[j][k] = 0;
 			}
 		}
@@ -181,20 +176,6 @@ public class World implements TileBasedMap {
 		setVignette(alpha);
 	}
 
-	private int augmentsUnlocked = -1;
-
-	public int getAugmentsUnlocked() {
-		if (Settings.debug) return Augments.getList().size;
-		if (augmentsUnlocked == -1) {
-			if (Levels.instance().getNumFromLevelFile(levelfile) != -1) {
-				augmentsUnlocked = Math.min(0, Math.min(Augments.getList().size, Levels.instance()
-						.getLevelData(levelfile).augment));
-			} else augmentsUnlocked = 0;
-		}
-
-		return augmentsUnlocked;
-	}
-
 	public void inputUpdate() {
 		if (main.getConv() != null) return;
 		if (getPlayer() == null) return;
@@ -217,52 +198,6 @@ public class World implements TileBasedMap {
 				getPlayer().moveRight();
 			} else {
 
-			}
-
-			if (getAugmentsUnlocked() > 0) {
-				if (getAugmentsUnlocked() > 1) {
-					if (Gdx.input.isKeyJustPressed(KeyBinds.AUGMENT_PREV)) {
-						currentAugment--;
-						if (currentAugment < 0) currentAugment = getAugmentsUnlocked() - 1;
-						renderer.lastAugmentSwitch = System.currentTimeMillis();
-					} else if (Gdx.input.isKeyJustPressed(KeyBinds.AUGMENT_NEXT)) {
-						currentAugment++;
-						if (currentAugment >= Augments.getList().size) currentAugment = 0;
-						renderer.lastAugmentSwitch = System.currentTimeMillis();
-					}
-				}
-
-				if (Gdx.input.isKeyJustPressed(KeyBinds.AUGMENT_ACTIVATE)
-						&& (Augments.getAugment(currentAugment).canUse(this))) {
-					Augments.getAugment(currentAugment).onActivateStart(this);
-					augmentActivate = true;
-					lastAugmentUse = System.currentTimeMillis();
-				}
-
-				if (Gdx.input.isKeyPressed(KeyBinds.AUGMENT_ACTIVATE)
-						&& (System.currentTimeMillis() - lastAugmentUse <= Augments.getAugment(
-								currentAugment).getUseTime())) {
-					Augments.getAugment(currentAugment).onActivate(this);
-					augmentActivate = true;
-				} else if ((!Gdx.input.isKeyPressed(KeyBinds.AUGMENT_ACTIVATE) && augmentActivate)
-						|| ((System.currentTimeMillis() - lastAugmentUse > Augments.getAugment(
-								currentAugment).getUseTime() || !Augments
-								.getAugment(currentAugment).isInUse(this)) && (Gdx.input
-								.isKeyPressed(KeyBinds.AUGMENT_ACTIVATE) && augmentActivate))) {
-					augmentActivate = false;
-					Augments.getAugment(currentAugment).onActivateEnd(this);
-				}
-			}
-		} else {
-			if (getPlayer().health <= 0) {
-				if ((!Gdx.input.isKeyPressed(KeyBinds.AUGMENT_ACTIVATE) && augmentActivate)
-						|| ((System.currentTimeMillis() - lastAugmentUse > Augments.getAugment(
-								currentAugment).getUseTime() || !Augments
-								.getAugment(currentAugment).isInUse(this)) && (Gdx.input
-								.isKeyPressed(KeyBinds.AUGMENT_ACTIVATE) && augmentActivate))) {
-					augmentActivate = false;
-					Augments.getAugment(currentAugment).onActivateEnd(this);
-				}
 			}
 		}
 
@@ -468,12 +403,6 @@ public class World implements TileBasedMap {
 		centerCamera();
 		camera.update();
 
-		if (getPlayer() != null) {
-			if (augmentActivate) {
-				Augments.getAugment(currentAugment).onActivateTick(this);
-			}
-		}
-
 	}
 
 	public void executeBlockUpdates() {
@@ -574,11 +503,11 @@ public class World implements TileBasedMap {
 
 	public void hide() {
 		main.manager.get(AssetMap.get("voidambient"), Sound.class).stop();
-		
+
 	}
 
 	public void dispose() {
-		
+
 	}
 
 	/**

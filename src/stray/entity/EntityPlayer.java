@@ -2,7 +2,6 @@ package stray.entity;
 
 import stray.Main;
 import stray.ai.BaseAI;
-import stray.augment.Augments;
 import stray.entity.types.Enemy;
 import stray.entity.types.Stunnable;
 import stray.entity.types.Weighted;
@@ -47,25 +46,20 @@ public class EntityPlayer extends EntityLiving implements Weighted, Stunnable {
 		drawGears(x, y);
 	}
 
-	private void drawGears(float x, float y) {
-		world.batch.setColor(Augments.getAugment(world.currentAugment).getColor().r, Augments
-				.getAugment(world.currentAugment).getColor().g,
-				Augments.getAugment(world.currentAugment).getColor().b, world.batch.getColor().a);
-
-		if (world.getAugmentsUnlocked() <= 0) world.batch.setColor(1, 1, 1, 1);
+	private void drawGears(float x, float y) {world.batch.setColor(1, 1, 1, 1);
 		if (facing == Direction.LEFT) {
 			Utils.drawRotated(world.batch, world.main.textures.get("gear"), x + 5, y - 29, 26, 26,
-					MathHelper.getNumberFromTime(((world.augmentActivate) ? 0.75f : 5f)) * 360,
+					MathHelper.getNumberFromTime(5f) * 360,
 					false);
 			Utils.drawRotated(world.batch, world.main.textures.get("gear"), x + 32, y - 25, 19, 19,
-					MathHelper.getNumberFromTime(((world.augmentActivate) ? 0.75f : 5f)) * 360,
+					MathHelper.getNumberFromTime(5f) * 360,
 					true);
 		} else if (facing == Direction.RIGHT) {
 			Utils.drawRotated(world.batch, world.main.textures.get("gear"), x + 31, y - 29, 26, 26,
-					MathHelper.getNumberFromTime(((world.augmentActivate) ? 0.75f : 5f)) * 360,
+					MathHelper.getNumberFromTime(5f) * 360,
 					true);
 			Utils.drawRotated(world.batch, world.main.textures.get("gear"), x + 12, y - 25, 19, 19,
-					MathHelper.getNumberFromTime(((world.augmentActivate) ? 0.75f : 5f)) * 360,
+					MathHelper.getNumberFromTime(5f) * 360,
 					false);
 		}
 		world.batch.setColor(1, 1, 1, 1);

@@ -3,29 +3,20 @@ package stray.world;
 import stray.Main;
 import stray.Settings;
 import stray.Translator;
-import stray.augment.Augments;
-import stray.blocks.Block;
 import stray.blocks.BlockExitPortal;
 import stray.blocks.BlockGearCollectible;
 import stray.blocks.Blocks;
 import stray.entity.Entity;
 import stray.util.AssetMap;
 import stray.util.MathHelper;
-import stray.util.ParticlePool;
 import stray.util.Utils;
-import stray.util.render.ElectricityRenderer;
-import stray.util.render.PostProcessing;
 import stray.util.render.SpaceBackground;
-import stray.util.render.StencilMaskUtil;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 
 public class WorldRenderer {
@@ -195,8 +186,6 @@ public class WorldRenderer {
 
 		renderHealth();
 
-		renderAugments();
-
 		renderPlayerArrow();
 
 		renderCollectibles();
@@ -329,49 +318,6 @@ public class WorldRenderer {
 		originalhealth = original;
 		timeUntilOrig = 0.5f;
 		world.vignettecolour.set(1, 0, 0, 1f);
-	}
-
-	public void renderAugments() {
-		int augments = world.getAugmentsUnlocked();
-
-		if (augments <= 0) return;
-
-		batch.setColor(0, 0, 0, 0.3f);
-		main.fillRect(128, 0, 16 + (augments * 29), 50);
-		batch.setColor(1, 1, 1, 1);
-
-		for (int i = 0; i < augments; i++) {
-			batch.setColor(Augments.getAugment(i).getColor());
-			Utils.drawRotated(batch, main.textures.get("gear"), 135 + (i * 32) - (i * 3),
-					5 + (i % 2 != 0 ? 7 : 0), 32, 32,
-					MathHelper.getNumberFromTime(((world.augmentActivate) ? 0.75f : 5f)) * 360,
-					i % 2 == 0);
-
-			if (i != world.currentAugment) {
-				batch.setColor(0, 0, 0, 0.6f);
-				Utils.drawRotated(batch, main.textures.get("gear"), 135 + (i * 32) - (i * 3),
-						5 + (i % 2 != 0 ? 7 : 0), 32, 32,
-						MathHelper.getNumberFromTime(((world.augmentActivate) ? 0.75f : 5f)) * 360,
-						i % 2 == 0);
-			}
-		}
-		batch.setColor(1, 1, 1, 1);
-
-		if (System.currentTimeMillis() - lastAugmentSwitch <= 2500) {
-			long timeSinceSwitch = (System.currentTimeMillis() - lastAugmentSwitch);
-			float alpha = ((timeSinceSwitch > 2500 - 250) ? ((250 - (timeSinceSwitch - (2500 - 250))) / 250f)
-					: 1);
-			main.font.setColor(1, 1, 1, alpha);
-			batch.setColor(1, 1, 1, alpha);
-			String text = Translator.getMsg("ui.currentaugment")
-					+ Translator.getMsg(Augments.getAugment(world.currentAugment).getName());
-			main.drawTextBg(text, Settings.DEFAULT_WIDTH / 2
-					- (main.font.getBounds(text).width / 2), 50);
-		}
-		batch.setColor(1, 1, 1, 1);
-		main.font.setColor(1, 1, 1, 1);
-
-		Augments.getAugment(world.currentAugment).renderUi(main, world);
 	}
 
 	public void renderDebug(int starting) {
