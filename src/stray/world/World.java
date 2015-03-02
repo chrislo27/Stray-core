@@ -97,10 +97,10 @@ public class World implements TileBasedMap {
 	public Array<DamageSource> deaths = new Array<DamageSource>(32);
 
 	public World(Main main) {
-		this(main, 32, 24, System.currentTimeMillis());
+		this(main, 32, 24);
 	}
 
-	public World(Main main, int x, int y, long seed) {
+	public World(Main main, int x, int y) {
 		this.main = main;
 		batch = main.batch;
 		sizex = x;

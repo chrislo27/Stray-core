@@ -5,8 +5,8 @@ import stray.Main;
 
 public class LevelEditorWorld extends World{
 
-	public LevelEditorWorld(Main main, int x, int y, long seed) {
-		super(main, x, y, seed);
+	public LevelEditorWorld(Main main, int x, int y) {
+		super(main, x, y);
 	}
 	
 	public LevelEditorWorld(Main main){
