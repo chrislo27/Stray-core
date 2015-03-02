@@ -97,7 +97,7 @@ public class World implements TileBasedMap {
 	public Array<DamageSource> deaths = new Array<DamageSource>(32);
 
 	public World(Main main) {
-		this(main, 32, 24, Main.getRandom().nextLong());
+		this(main, 32, 24, System.currentTimeMillis());
 	}
 
 	public World(Main main, int x, int y, long seed) {
