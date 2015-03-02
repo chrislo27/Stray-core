@@ -108,29 +108,6 @@ public class LevelSelectScreen extends Updateable {
 				(Settings.DEFAULT_WIDTH / 2 - 32), Gdx.graphics.getHeight() / 2 - 96, 64, 128);
 		main.batch.setColor(Color.WHITE);
 
-		if (Settings.debug) {
-			LevelType[] types = LevelType.values();
-
-			for (int i = 0; i < types.length; i++) {
-				main.batch.setColor(0.5f, 0.5f, 0.5f, 0.25f);
-				main.font.setColor(0.5f, 0.5f, 0.5f, 0.25f);
-				if (getCurrent() != -1) {
-					if (Levels.instance().levels.get(getCurrent()) != null) if (types[i] == Levels
-							.instance().levels.get(getCurrent()).leveltype) {
-						main.font.setColor(0, 0, 0, 1);
-						main.batch.setColor(1, 1, 1, 1);
-					}
-				}
-				main.batch.draw(main.manager.get(AssetMap.get("levelselectdot" + types[i].image),
-						Texture.class), 8, 8 + (50 * i), 48, 48);
-				main.font.draw(main.batch, Translator.getMsg("menu.leveltype." + types[i].text),
-						60, 40 + (50 * i));
-
-				main.font.setColor(0, 0, 0, 1);
-				main.batch.setColor(1, 1, 1, 1);
-			}
-		}
-
 		container.render(main);
 		main.batch.end();
 
