@@ -140,7 +140,8 @@ public class LevelSelectScreen extends Updateable {
 
 	public void goToLevel(int level) {
 		Main.BACKSTORY.prepare(Levels.instance().levels.get(level).path,
-				Gdx.files.internal("levels/" + Levels.instance().levels.get(level).path + ".xml"));
+				Gdx.files.internal("levels/" + Levels.instance().levels.get(level).path + ".xml"),
+				Levels.instance().levels.get(level).leveltype);
 		if (Levels.instance().levels.get(level).cutscene != null) {
 			Main.CUTSCENE.prepare(Conversations.instance().convs.get(Levels.instance().levels
 					.get(level).cutscene), new FadeIn(), new FadeOut(), (Main.BACKSTORY));

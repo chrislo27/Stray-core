@@ -3,6 +3,7 @@ package stray.world;
 import java.io.IOException;
 import java.util.Random;
 
+import stray.LevelData.LevelType;
 import stray.Levels;
 import stray.Main;
 import stray.Settings;
@@ -69,7 +70,7 @@ public class World implements TileBasedMap {
 
 	public Array<Particle> particles;
 
-	public int magicnumber;
+	public LevelType levelType = LevelType.NORMAL;
 
 	public SmoothCamera camera;
 	private float cameramovex = 0, cameramovey = 0;
@@ -97,10 +98,10 @@ public class World implements TileBasedMap {
 	public Array<DamageSource> deaths = new Array<DamageSource>(32);
 
 	public World(Main main) {
-		this(main, 32, 24);
+		this(main, 32, 24, LevelType.NORMAL);
 	}
 
-	public World(Main main, int x, int y) {
+	public World(Main main, int x, int y, LevelType type) {
 		this.main = main;
 		batch = main.batch;
 		sizex = x;
@@ -108,6 +109,7 @@ public class World implements TileBasedMap {
 		camera = new SmoothCamera(this);
 		prepare();
 		renderer = new WorldRenderer(this);
+		levelType = type;
 	}
 
 	public void prepare() {
@@ -124,8 +126,6 @@ public class World implements TileBasedMap {
 				meta[j][k] = 0;
 			}
 		}
-
-		magicnumber = new Random().nextInt();
 		deaths.clear();
 
 		entities = new Array<Entity>(32);

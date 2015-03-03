@@ -247,10 +247,10 @@ public class Block {
 	// }
 
 	public static int variantNum(World world, int x, int y) {
-		return variantNum(world.magicnumber, x, y);
+		return variantNum(world.msTime, x, y);
 	}
 
-	public static int variantNum(int magic, int x, int y) {
+	public static int variantNum(long magic, int x, int y) {
 		return ((int) ((magic + (x + 17) * (y + 53) * 214013L + 2531011L) >> 16) & 0x7fff);
 	}
 

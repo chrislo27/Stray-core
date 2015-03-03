@@ -1,12 +1,13 @@
 package stray.world;
 
 import stray.Main;
+import stray.LevelData.LevelType;
 
 
 public class LevelEditorWorld extends World{
 
 	public LevelEditorWorld(Main main, int x, int y) {
-		super(main, x, y);
+		super(main, x, y, LevelType.NORMAL);
 	}
 	
 	public LevelEditorWorld(Main main){

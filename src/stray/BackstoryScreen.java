@@ -1,5 +1,6 @@
 package stray;
 
+import stray.LevelData.LevelType;
 import stray.transition.FadeIn;
 import stray.transition.FadeOut;
 
@@ -17,6 +18,7 @@ public class BackstoryScreen extends MiscLoadingScreen {
 	private String story = "";
 	private Updateable next;
 	private FileHandle level;
+	private LevelType nextType = LevelType.NORMAL;
 	private boolean loaded = false;
 
 	public void render(float delta) {
@@ -40,6 +42,8 @@ public class BackstoryScreen extends MiscLoadingScreen {
 
 		if (!loaded) {
 			Main.GAME.world.load(level);
+			Main.GAME.world.levelType = nextType;
+			
 			loaded = true;
 			if(story != null){
 				if(Translator.getMsg("backstory." + story).equals("")){
@@ -51,11 +55,12 @@ public class BackstoryScreen extends MiscLoadingScreen {
 		}
 	}
 
-	public void prepare(String st, FileHandle level) {
+	public void prepare(String st, FileHandle level, LevelType t) {
 		story = st;
 		next = Main.GAME;
 		this.level = level;
 		loaded = false;
+		nextType = t;
 	}
 
 	public void renderUpdate() {
