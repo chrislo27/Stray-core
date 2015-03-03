@@ -44,24 +44,4 @@ public class BlockReadable extends Block {
 
 	}
 
-	public static class SignNumbers {
-
-		private static BlockReadable.SignNumbers instance;
-
-		public static BlockReadable.SignNumbers instance() {
-			if (instance == null) {
-				instance = new BlockReadable.SignNumbers();
-				instance.loadResources();
-			}
-			return instance;
-		}
-
-		public HashMap<Integer, String> map = new HashMap<Integer, String>();
-
-		private void loadResources() {
-
-		}
-
-	}
-
 }

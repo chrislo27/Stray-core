@@ -23,6 +23,10 @@
 	<conversation id="secretexit">
         <speech speaker="sign" text="conv.secretexit"  />
     </conversation>
+    
+	<conversation id="missing_sign">
+        <speech speaker="" text="conv.missingsign"  />
+    </conversation>
 
 	<conversation id="controls">
 		<speech speaker="" text="conv.controls0" cutscene="controls0" />
