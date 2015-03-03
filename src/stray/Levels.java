@@ -2,6 +2,8 @@ package stray;
 
 import java.util.HashMap;
 
+import stray.LevelData.LevelType;
+
 public class Levels {
 	
 	public static final int LEVELS_PER_CHAPTER = 8;
@@ -25,14 +27,14 @@ public class Levels {
 	private void loadResources() {
 		levels.clear();
 		
-		add(new LevelData("chapter1/level1-1").setCutscene("controls"));
-		add(new LevelData("chapter1/level1-2"));
-		add(new LevelData("chapter1/level1-3"));
-		add(new LevelData("chapter1/level1-4"));
-		add(new LevelData("chapter1/level1-5"));
-		add(new LevelData("chapter1/level1-6"));
-		add(new LevelData("chapter1/level1-7"));
-		add(new LevelData("chapter1/level1-8"));
+		add(new LevelData("chapter1/level1-1").setType(LevelType.GEARS).setCutscene("controls"));
+		add(new LevelData("chapter1/level1-2").setType(LevelType.GEARS));
+		add(new LevelData("chapter1/level1-3").setType(LevelType.GEARS));
+		add(new LevelData("chapter1/level1-4").setType(LevelType.GEARS));
+		add(new LevelData("chapter1/level1-5").setType(LevelType.GEARS));
+		add(new LevelData("chapter1/level1-6").setType(LevelType.GEARS));
+		add(new LevelData("chapter1/level1-7").setType(LevelType.GEARS));
+		add(new LevelData("chapter1/level1-8").setType(LevelType.GEARS));
 	}
 	
 	private int num = 0;
