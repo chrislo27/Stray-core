@@ -188,41 +188,22 @@ public class WorldRenderer {
 
 		renderPlayerArrow();
 
-		renderCollectibles();
+		renderForLevelType();
 	}
 
-	public void renderCollectibles() {
-		for (int i = 0; i < BlockExitPortal.AMOUNT_REQUIRED
-				&& i < world.global.getInt(BlockGearCollectible.collectibleName); i++) {
-			Utils.drawRotated(batch, main.textures.get("gear"),
-					(Settings.DEFAULT_WIDTH / 2 - (BlockExitPortal.AMOUNT_REQUIRED * 30 / 2f))
-							+ (i * 32) - (i * 3), Main.convertY(64 + (i % 2 != 0 ? 7 : 0)), 32, 32,
-					MathHelper.getNumberFromTime(0.5f * world.global
-							.getInt(BlockGearCollectible.collectibleName) + 0.001f) * 360,
-					i % 2 == 0);
+	public void renderForLevelType() {
+		
+		switch(world.levelType){
+		case GEARS:
+			renderLevelTypeGears();
+			break;
+		case NORMAL:
+			break;
+		default:
+			break;
+		
 		}
-		int i = 5;
-		Utils.drawRotated(
-				batch,
-				main.textures.get("gear"),
-				(Settings.DEFAULT_WIDTH / 2 - (BlockExitPortal.AMOUNT_REQUIRED * 30 / 2f))
-						+ (i * 32) - (i * 3),
-				Main.convertY(64 + (i % 2 != 0 ? 7 : 0)),
-				32,
-				32,
-				MathHelper.getNumberFromTime(0.5f * world.global
-						.getInt(BlockGearCollectible.collectibleName) + 0.001f)
-						* 360
-						* (world.global.getInt(BlockGearCollectible.collectibleName) < BlockExitPortal.AMOUNT_REQUIRED ? 0
-								: 1), i % 2 == 0);
-		batch.draw(
-				main.manager.get(
-						AssetMap.get("exit"
-								+ (world.global.getInt(BlockGearCollectible.collectibleName) >= BlockExitPortal.AMOUNT_REQUIRED ? "yes"
-										: "no")), Texture.class), Settings.DEFAULT_WIDTH / 2
-						- (BlockExitPortal.AMOUNT_REQUIRED * 30 / 2f) + (i * 32) - (i * 3) + 16,
-				Main.convertY(64 + (i % 2 != 0 ? 7 : 0)));
-
+		
 	}
 
 	public void renderPlayerArrow() {
@@ -347,6 +328,39 @@ public class WorldRenderer {
 				5, Main.convertY(starting + 135));
 		main.font.draw(batch, "deaths: " + world.deaths.size, 5, Main.convertY(starting + 150));
 
+	}
+	
+	public void renderLevelTypeGears(){
+		for (int i = 0; i < BlockExitPortal.AMOUNT_REQUIRED
+				&& i < world.global.getInt(BlockGearCollectible.collectibleName); i++) {
+			Utils.drawRotated(batch, main.textures.get("gear"),
+					(Settings.DEFAULT_WIDTH / 2 - (BlockExitPortal.AMOUNT_REQUIRED * 30 / 2f))
+							+ (i * 32) - (i * 3), Main.convertY(64 + (i % 2 != 0 ? 7 : 0)), 32, 32,
+					MathHelper.getNumberFromTime(0.5f * world.global
+							.getInt(BlockGearCollectible.collectibleName) + 0.001f) * 360,
+					i % 2 == 0);
+		}
+		int i = 5;
+		Utils.drawRotated(
+				batch,
+				main.textures.get("gear"),
+				(Settings.DEFAULT_WIDTH / 2 - (BlockExitPortal.AMOUNT_REQUIRED * 30 / 2f))
+						+ (i * 32) - (i * 3),
+				Main.convertY(64 + (i % 2 != 0 ? 7 : 0)),
+				32,
+				32,
+				MathHelper.getNumberFromTime(0.5f * world.global
+						.getInt(BlockGearCollectible.collectibleName) + 0.001f)
+						* 360
+						* (world.global.getInt(BlockGearCollectible.collectibleName) < BlockExitPortal.AMOUNT_REQUIRED ? 0
+								: 1), i % 2 == 0);
+		batch.draw(
+				main.manager.get(
+						AssetMap.get("exit"
+								+ (world.global.getInt(BlockGearCollectible.collectibleName) >= BlockExitPortal.AMOUNT_REQUIRED ? "yes"
+										: "no")), Texture.class), Settings.DEFAULT_WIDTH / 2
+						- (BlockExitPortal.AMOUNT_REQUIRED * 30 / 2f) + (i * 32) - (i * 3) + 16,
+				Main.convertY(64 + (i % 2 != 0 ? 7 : 0)));
 	}
 
 }
