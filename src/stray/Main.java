@@ -547,6 +547,7 @@ public class Main extends Game implements Consumer {
 
 		// ui
 		manager.load(AssetMap.add("spacekraken", "images/ui/misc.png"), Texture.class);
+		manager.load(AssetMap.add("achievementui", "images/ui/achievement.png"), Texture.class);
 		manager.load(AssetMap.add("guilanguage", "images/ui/button/language.png"), Texture.class);
 		manager.load(AssetMap.add("guisettings", "images/ui/button/settings.png"), Texture.class);
 		manager.load(AssetMap.add("guibg", "images/ui/button/bg.png"), Texture.class);
