@@ -81,42 +81,20 @@ public strictfp class MainMenuScreen extends Updateable {
 		main.font.setScale(1);
 
 		main.drawInverse(Main.version, Settings.DEFAULT_WIDTH - 5, 20);
-		if (!Main.latestVersion.equals("")) {
-			switch(VersionGetter.getDiff()){
-			case EQUAL:
+		if (Main.serverVersion == null) {
+			main.drawInverse(Translator.getMsg("menu.checkingversion"),
+					Settings.DEFAULT_WIDTH - 5, 35);
+		} else {
+			if(Main.serverVersion.equals(Main.version)){
 				main.font.setColor(0, 1, 0, 1);
 				main.drawInverse(Translator.getMsg("menu.uptodate"), Settings.DEFAULT_WIDTH - 5,
 						35);
 				main.font.setColor(1, 1, 1, 1);
-				break;
-			case FUTURE:
-				main.font.setColor(Color.CYAN);
-				main.drawInverse(Translator.getMsg("menu.versionahead") + Main.latestVersion + ")",
+			}else{
+				main.font.setColor(1, 0, 0, 1);
+				main.drawInverse(Translator.getMsg("menu.newversion") + Main.serverVersion,
 						Settings.DEFAULT_WIDTH - 5, 35);
 				main.font.setColor(1, 1, 1, 1);
-				break;
-			case OUTDATED:
-				main.font.setColor(1, 0, 0, 1);
-				main.drawInverse(Translator.getMsg("menu.newversion") + Main.latestVersion,
-						Settings.DEFAULT_WIDTH - 5, 35);
-				main.font.setColor(1, 1, 1, 1);
-				break;
-			default:
-				break;
-			}
-		} else {
-			switch(VersionGetter.getDiff()){
-			case CHECKING:
-				main.drawInverse(Translator.getMsg("menu.checkingversion"),
-						Settings.DEFAULT_WIDTH - 5, 35);
-				break;
-			case INVALID:
-				main.font.setColor(1, 0, 0, 1);
-				main.drawInverse(Translator.getMsg("menu.versioncheckfail"),
-						Settings.DEFAULT_WIDTH - 5, 35);
-				break;
-			default:
-				break;
 			}
 		}
 		container.render(main);

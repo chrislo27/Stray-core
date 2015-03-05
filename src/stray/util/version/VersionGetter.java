@@ -11,7 +11,6 @@ import stray.Settings;
 
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-import com.github.zafarkhaja.semver.Version;
 
 public class VersionGetter {
 
@@ -28,14 +27,8 @@ public class VersionGetter {
 		return instance;
 	}
 
-	private VersionDiff difference = VersionDiff.CHECKING;
-
 	private void loadResources() {
 
-	}
-
-	public static VersionDiff getDiff() {
-		return instance().difference;
 	}
 
 	/**
@@ -58,33 +51,15 @@ public class VersionGetter {
 			Main.logger.info("Finished getting version, took "
 					+ (System.currentTimeMillis() - start) + " ms");
 
-			JsonValue value = new JsonReader().parse(file.toString());
-
-			Main.latestVersion = value.getString("version", "");
 			
-			Version current = Version.valueOf(Main.version.replace("v", ""));
-			Version server = Version.valueOf(Main.latestVersion.replace("v", ""));
-
-			int diff = current.compareTo(server);
+			Main.serverVersion = file.toString();
 			
-			if(diff == 0){
-				difference = VersionDiff.EQUAL;
-			}else if(diff < 0){
-				difference = VersionDiff.OUTDATED;
-			}else if(diff > 0){
-				difference = VersionDiff.FUTURE;
-			}else difference = VersionDiff.INVALID;
-
-			if (Settings.debug) Main.logger.debug("JSON obtained from host: " + file.toString());
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
-			difference = VersionDiff.INVALID;
 		} catch (IOException e) {
 			e.printStackTrace();
-			difference = VersionDiff.INVALID;
 		} catch (NullPointerException e) {
 			Main.logger.error("Failed to parse/get latest version info", e);
-			difference = VersionDiff.INVALID;
 		}
 	}
 }

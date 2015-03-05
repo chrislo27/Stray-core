@@ -100,8 +100,8 @@ public class Main extends Game implements Consumer {
 
 	Matrix4 normalProjection;
 
-	public static final String version = "v0.4.2-alpha";
-	public static String latestVersion = "";
+	public static final String version = "v0.5.0-alpha";
+	public static String serverVersion = null;
 
 	public AssetManager manager;
 
@@ -464,7 +464,7 @@ public class Main extends Game implements Consumer {
 				.getUsedMemory();
 		font.setColor(Color.WHITE);
 		font.draw(batch, "version: " + Main.version
-				+ (latestVersion.equals("") ? "" : "; server: " + Main.latestVersion), 5,
+				+ (serverVersion.equals("") ? "" : "; server: " + Main.serverVersion), 5,
 				Main.convertY(30 + offset));
 		font.draw(batch, "Memory: "
 				+ NumberFormat.getInstance().format(MemoryUtils.getUsedMemory()) + " KB / "
@@ -632,7 +632,7 @@ public class Main extends Game implements Consumer {
 				Texture.class);
 		manager.load(AssetMap.add("levelselectdot", "images/levelselect/levelselectdot.png"),
 				Texture.class);
-		manager.load(AssetMap.add("levelselectdotgears", "images/levelselect/levelselectgears.png"),
+		manager.load(AssetMap.add("levelselectdotgears", "images/levelselect/levelselectdotgears.png"),
 				Texture.class);
 		manager.load(AssetMap.add("levelselected", "images/levelselect/levelselected.png"),
 				Texture.class);
