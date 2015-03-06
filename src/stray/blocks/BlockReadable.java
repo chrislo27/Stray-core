@@ -5,6 +5,7 @@ import java.util.HashMap;
 import stray.Main;
 import stray.Translator;
 import stray.conversation.Conversations;
+import stray.world.MetaStrings;
 import stray.world.World;
 
 import com.badlogic.gdx.Gdx;

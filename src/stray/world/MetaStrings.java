@@ -1,4 +1,4 @@
-package stray.blocks;
+package stray.world;
 
 import java.util.HashMap;
 
