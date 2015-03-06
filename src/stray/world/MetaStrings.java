@@ -25,7 +25,11 @@ public class MetaStrings {
 	public HashMap<Integer, String> map = new HashMap<Integer, String>();
 	
 	private void loadResources() {
-		map.put(0, "missing_sign");
+		// objectives index (positive numbers)
+		
+		// readables index (negative numbers)
+		map.put(0, "missing_meta");
+		
 	}
 	
 }

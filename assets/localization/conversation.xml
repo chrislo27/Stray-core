@@ -24,7 +24,7 @@
         <speech speaker="sign" text="conv.secretexit"  />
     </conversation>
     
-	<conversation id="missing_sign">
+	<conversation id="missing">
         <speech speaker="" text="conv.missingsign"  />
     </conversation>
 
