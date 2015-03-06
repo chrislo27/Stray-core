@@ -28,10 +28,10 @@ public class BlockReadable extends Block {
 			if (Gdx.input.isKeyJustPressed(Keys.UP)) {
 				if (world.main.getConv() == null) {
 					if (world.getMeta(x, y) != 0) {
-						if (Conversations.instance().convs.containsKey(SignNumbers.instance().map
+						if (Conversations.instance().convs.containsKey(MetaStrings.instance().map
 								.get(world.getMeta(x, y)))) {
 							onRead(world, x, y);
-							world.main.setConv(Conversations.instance().convs.get(SignNumbers
+							world.main.setConv(Conversations.instance().convs.get(MetaStrings
 									.instance().map.get(world.getMeta(x, y))));
 						}
 					}

@@ -3,20 +3,20 @@ package stray.blocks;
 import java.util.HashMap;
 
 /**
- * correlates an integer with a string for BlockReadable
+ * correlates a block metadata integer with a string
  * 
  *
  */
-public class SignNumbers {
+public class MetaStrings {
 	
-	private static SignNumbers instance;
+	private static MetaStrings instance;
 
-	private SignNumbers() {
+	private MetaStrings() {
 	}
 
-	public static SignNumbers instance() {
+	public static MetaStrings instance() {
 		if (instance == null) {
-			instance = new SignNumbers();
+			instance = new MetaStrings();
 			instance.loadResources();
 		}
 		return instance;

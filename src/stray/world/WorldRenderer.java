@@ -81,7 +81,7 @@ public class WorldRenderer {
 	}
 
 	public void renderBackground() {
-		if (world.background.equalsIgnoreCase("spacebackground")) {
+		if (world.background.equals("spacebackground")) {
 			SpaceBackground.instance().render(main);
 		} else {
 			main.batch.draw(main.manager.get(AssetMap.get(world.background), Texture.class), 0, 0,
@@ -97,43 +97,6 @@ public class WorldRenderer {
 		batch.draw(main.buffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(),
 				Settings.DEFAULT_WIDTH, -Gdx.graphics.getHeight());
 	}
-
-//	public void renderVoid() {
-//		batch.setColor(0, 0, 0, 1);
-//		main.fillRect(0, 0, ((world.getVoidDistance() * World.tilesizex) - world.camera.camerax),
-//				Gdx.graphics.getHeight());
-//		batch.draw(main.manager.get(AssetMap.get("voidend"), Texture.class),
-//				((world.getVoidDistance() * World.tilesizex) - world.camera.camerax), 0,
-//				main.manager.get(AssetMap.get("voidend"), Texture.class).getWidth(),
-//				Gdx.graphics.getHeight());
-//
-//		int ylevel = MathUtils.random(-World.tilesizex, Gdx.graphics.getHeight() + World.tilesizey);
-//
-//		if (MathUtils.random(1, 3) < 3) world.particles.add(ParticlePool
-//				.obtain()
-//				.setTexture("magnetglow")
-//				.setTint(batch.getColor())
-//				.setLifetime(1.25f)
-//				.setVelocity(
-//						-2,
-//						((ylevel > Gdx.graphics.getHeight() / 2f) ? MathUtils.clamp(
-//								-(((ylevel - (Gdx.graphics.getHeight() / 2f)) / (Gdx.graphics
-//										.getHeight() / 2f)) * 4), -4f, 4f) : MathUtils.clamp(
-//								4 - ((ylevel / (Gdx.graphics.getHeight() / 2f)) * 4), -4f, 4f)))
-//				.setPosition((((world.getVoidDistance())) + 2 + MathUtils.random(0.5f, 1.5f)),
-//						(world.camera.cameray + ylevel) / World.tilesizey));
-//
-//		batch.setColor(1, 1, 1, 1);
-//		if (MathUtils.random(1, 6) == 1) {
-//			float location = MathUtils.random(1, Gdx.graphics.getHeight());
-//			ElectricityRenderer.drawP2PLightning(batch,
-//					((world.getVoidDistance() * World.tilesizex) - world.camera.camerax), location,
-//					((world.getVoidDistance() * World.tilesizex) - world.camera.camerax)
-//							+ MathUtils.random(World.tilesizex * 0.75f, World.tilesizex * 2.75f),
-//					location + MathUtils.random(-64, 64), 24, 1.5f, 3, 3, Colors.get("VOID_PURPLE")
-//							.toFloatBits());
-//		}
-//	}
 
 	private void renderEntities() {
 		for (Entity e : world.entities) {
@@ -192,8 +155,8 @@ public class WorldRenderer {
 	}
 
 	public void renderForLevelType() {
-		
-		switch(world.levelType){
+
+		switch (world.levelType) {
 		case GEARS:
 			renderLevelTypeGears();
 			break;
@@ -201,9 +164,9 @@ public class WorldRenderer {
 			break;
 		default:
 			break;
-		
+
 		}
-		
+
 	}
 
 	public void renderPlayerArrow() {
@@ -329,8 +292,8 @@ public class WorldRenderer {
 		main.font.draw(batch, "deaths: " + world.deaths.size, 5, Main.convertY(starting + 150));
 
 	}
-	
-	public void renderLevelTypeGears(){
+
+	public void renderLevelTypeGears() {
 		for (int i = 0; i < BlockExitPortal.AMOUNT_REQUIRED
 				&& i < world.global.getInt(BlockGearCollectible.collectibleName); i++) {
 			Utils.drawRotated(batch, main.textures.get("gear"),
