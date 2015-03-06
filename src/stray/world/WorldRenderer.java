@@ -152,21 +152,12 @@ public class WorldRenderer {
 		renderPlayerArrow();
 
 		renderForLevelType();
+		
+		renderObjectives();
 	}
-
-	public void renderForLevelType() {
-
-		switch (world.levelType) {
-		case GEARS:
-			renderLevelTypeGears();
-			break;
-		case NORMAL:
-			break;
-		default:
-			break;
-
-		}
-
+	
+	public void renderObjectives(){
+		
 	}
 
 	public void renderPlayerArrow() {
@@ -290,6 +281,22 @@ public class WorldRenderer {
 		main.font.draw(batch, "time: " + Utils.formatMs(System.currentTimeMillis() - world.msTime),
 				5, Main.convertY(starting + 135));
 		main.font.draw(batch, "deaths: " + world.deaths.size, 5, Main.convertY(starting + 150));
+
+	}
+	
+
+	public void renderForLevelType() {
+
+		switch (world.levelType) {
+		case GEARS:
+			renderLevelTypeGears();
+			break;
+		case NORMAL:
+			break;
+		default:
+			break;
+
+		}
 
 	}
 

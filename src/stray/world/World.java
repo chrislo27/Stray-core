@@ -1,10 +1,8 @@
 package stray.world;
 
 import java.io.IOException;
-import java.util.Random;
 
 import stray.LevelData.LevelType;
-import stray.Levels;
 import stray.Main;
 import stray.Settings;
 import stray.blocks.Block;
@@ -14,6 +12,7 @@ import stray.blocks.BlockPlayerSpawner;
 import stray.blocks.Blocks;
 import stray.entity.Entity;
 import stray.entity.EntityPlayer;
+import stray.objective.Objective;
 import stray.pathfinding.Mover;
 import stray.pathfinding.TileBasedMap;
 import stray.util.AssetMap;
@@ -96,7 +95,9 @@ public class World implements TileBasedMap {
 	public float checkpointx, checkpointy;
 
 	public Array<DamageSource> deaths = new Array<DamageSource>(32);
-
+	
+	public Array<Objective> objectives = new Array<Objective>();
+	
 	public World(Main main) {
 		this(main, 32, 24, LevelType.NORMAL);
 	}
