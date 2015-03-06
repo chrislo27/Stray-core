@@ -486,12 +486,12 @@ public class Block {
 
 	public static class BlockFaces {
 
-		public static final int NONE = 0;
-		public static final int ALL = 15;
-		public static final int UP = 1;
-		public static final int DOWN = 2;
-		public static final int LEFT = 4;
-		public static final int RIGHT = 8;
+		public static final int NONE = 0x0;
+		public static final int ALL = 0xF;
+		public static final int UP = 0x1;
+		public static final int DOWN = 0x2;
+		public static final int LEFT = 0x4;
+		public static final int RIGHT = 0x8;
 
 	}
 
