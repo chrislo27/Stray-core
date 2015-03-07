@@ -21,7 +21,7 @@ public class AIDumbEnemy extends BaseAI {
 
 	@Override
 	public void renderUpdate() {
-		if (entity.getBlockCollidingLeft() != null && entity.getBlockCollidingRight() != null){
+		if (entity.getBlockCollidingLeft() != null && entity.getBlockCollidingRight() != null) {
 			return;
 		}
 
@@ -30,11 +30,11 @@ public class AIDumbEnemy extends BaseAI {
 		} else {
 			entity.moveLeft();
 		}
-		
-		if(direction){
-			if(entity.getBlockCollidingRight() != null) direction = false;
-		}else{
-			if(entity.getBlockCollidingLeft() != null) direction = true;
+
+		if (direction) {
+			if (entity.getBlockCollidingRight() != null || entity.getEntityCollidingRight() != null) direction = false;
+		} else {
+			if (entity.getBlockCollidingLeft() != null || entity.getEntityCollidingLeft() != null) direction = true;
 		}
 	}
 
