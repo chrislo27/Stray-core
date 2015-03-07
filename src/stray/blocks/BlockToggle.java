@@ -22,7 +22,7 @@ public class BlockToggle extends BlockFadeable {
 	
 	@Override
 	public int isSolid(World world, int x, int y) {
-		return (world.global.getString(switchColour).equals("on") ? BlockFaces.ALL : BlockFaces.NONE);
+		return (world.global.getInt(switchColour) == 0 ? BlockFaces.ALL : BlockFaces.NONE);
 	}
 	
 	@Override
