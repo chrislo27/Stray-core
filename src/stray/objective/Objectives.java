@@ -22,6 +22,7 @@ public class Objectives {
 
 	private void loadResources() {
 		put(0, "complete_level");
+		put(1, "begin_accelerator");
 
 	}
 

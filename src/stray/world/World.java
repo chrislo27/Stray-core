@@ -137,8 +137,6 @@ public class World implements TileBasedMap {
 		setCheckpoint();
 		objectives.clear();
 		addObjective("complete_level");
-		addObjective("complete_level1");
-		addObjective("complete_level2");
 	}
 
 	public void addPlayer() {
