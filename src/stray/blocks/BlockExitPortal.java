@@ -32,6 +32,7 @@ public class BlockExitPortal extends Block {
 			if (!world.global.getString("completedLevel").equals("done!")) {
 				world.global.setString("completedLevel", "done!");
 				world.completeObjective("complete_level", false);
+				world.completeObjective(null, false);
 				
 				if (world.main.getScreen() != Main.GAME) return;
 				save(world);

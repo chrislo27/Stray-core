@@ -31,7 +31,7 @@ public class WorldRenderer {
 
 	public boolean showGrid = false;
 
-	protected long lastAugmentSwitch = 0;
+	protected float newObjective = 0;
 
 	public WorldRenderer(World world) {
 		this.world = world;
@@ -159,12 +159,29 @@ public class WorldRenderer {
 	}
 
 	public void renderObjectives() {
+
 		if (world.objectives.size <= 0) return;
+
+		if (newObjective > 0 && world.objectives.size > 0) {
+			main.font
+					.setColor(1, 1, 1, 1 - (1.0f - (newObjective <= 0.25f ? newObjective * 4 : 1)));
+
+			main.font.setScale(2f);
+			main.drawCentered(Translator.getMsg("objectives.ui.newobj"),
+					Settings.DEFAULT_WIDTH / 2, Main.convertY(128));
+			main.font.setScale(1.25f);
+			main.drawCentered(Translator.getMsg("objectives." + world.objectives.peek().id),
+					Settings.DEFAULT_WIDTH / 2, Main.convertY(164));
+			main.font.setScale(1);
+
+			main.font.setColor(1, 1, 1, 1);
+
+			newObjective -= Gdx.graphics.getDeltaTime();
+		}
 
 		for (int i = 0; i < world.objectives.size; i++) {
 			Objective obj = world.objectives.get(i);
-			String objmsg = Translator
-					.getMsg("objectives." + obj.id);
+			String objmsg = Translator.getMsg("objectives." + obj.id);
 			float outTime = 1f - obj.outTime;
 
 			batch.setColor(0, 0, 0, 0.25f);
@@ -176,22 +193,22 @@ public class WorldRenderer {
 						main.manager.get(AssetMap.get("objective-incomplete"), Texture.class),
 						8 - (32 * outTime), 50 + (i * 32), 32, 32);
 			} else {
-				if(obj.failed){
+				if (obj.failed) {
 					main.batch.draw(
 							main.manager.get(AssetMap.get("objective-failed"), Texture.class),
 							8 - (32 * outTime), 50 + (i * 32), 32, 32);
-				}else{
+				} else {
 					main.batch.draw(
 							main.manager.get(AssetMap.get("objective-complete"), Texture.class),
 							8 - (32 * outTime), 50 + (i * 32), 32, 32);
 				}
 			}
-			
-			if(obj.isCompleted()) main.font.setColor(Main.getRainbow(1f, 0.25f));
+
+			if (obj.isCompleted()) main.font.setColor(Main.getRainbow(1f, 0.25f));
 			main.font.draw(batch, objmsg, 48 - (main.font.getBounds(objmsg).width * outTime),
 					74 + (i * 32));
 			main.font.setColor(1, 1, 1, 1);
-			
+
 			obj.update();
 		}
 

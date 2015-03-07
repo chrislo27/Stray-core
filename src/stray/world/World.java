@@ -514,6 +514,7 @@ public class World implements TileBasedMap {
 		}
 
 		objectives.add(new Objective(objective));
+		if(renderer != null) renderer.newObjective = 2.5f;
 	}
 
 	public void addObjective(Objective obj){
