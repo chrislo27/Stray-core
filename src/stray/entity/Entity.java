@@ -389,7 +389,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 	}
 
 	public Entity getEntityCollidingUp() {
-		for (Entity e : world.entities) {
+		for (int i = 0; i < world.entities.size; i++) {
+			Entity e = world.entities.get(i);
 			if (e != this && e.hasEntityCollision) {
 				if (((int) (x * World.tilesizex + sizex * World.tilesizex)) > ((int) (e.x * World.tilesizex))
 						&& ((int) (x * World.tilesizex)) < ((int) (e.x * World.tilesizex + e.sizex
@@ -406,7 +407,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 	}
 
 	public Entity getEntityCollidingDown() {
-		for (Entity e : world.entities) {
+		for (int i = 0; i < world.entities.size; i++) {
+			Entity e = world.entities.get(i);
 			if (e != this && e.hasEntityCollision) {
 				if (((int) (x * World.tilesizex + sizex * World.tilesizex)) > ((int) (e.x * World.tilesizex))
 						&& ((int) (x * World.tilesizex)) < ((int) (e.x * World.tilesizex + e.sizex
@@ -424,7 +426,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 
 	public Entity getEntityCollidingLeft() {
 
-		for (Entity e : world.entities) {
+		for (int i = 0; i < world.entities.size; i++) {
+			Entity e = world.entities.get(i);
 			if (e != this && e.hasEntityCollision) {
 				if (((int) (y * World.tilesizey + sizey * World.tilesizey)) > ((int) (e.y * World.tilesizey))
 						&& ((int) (y * World.tilesizey)) < ((int) (e.y * World.tilesizey + e.sizey
@@ -442,7 +445,8 @@ public abstract class Entity implements EntityMover, Sizeable {
 
 	public Entity getEntityCollidingRight() {
 
-		for (Entity e : world.entities) {
+		for (int i = 0; i < world.entities.size; i++) {
+			Entity e = world.entities.get(i);
 			if (e != this && e.hasEntityCollision) {
 				if (((int) (y * World.tilesizey + sizey * World.tilesizey)) > ((int) (e.y * World.tilesizey))
 						&& ((int) (y * World.tilesizey)) < ((int) (e.y * World.tilesizey + e.sizey
