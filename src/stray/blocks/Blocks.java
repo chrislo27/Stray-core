@@ -80,7 +80,9 @@ public class Blocks {
 		put("airvent", new BlockAirVent("images/blocks/airvent/airvent").solidify(BlockFaces.ALL));
 		put("3dblock", new Block("images/blocks/3d/3dblock").solidify(BlockFaces.ALL));
 		
-		put("objectiveblock", new BlockObjective("images/blocks/objective").setEditorGroup(EditorGroup.COLLECT));
+		put("objectiveblock", new BlockObjectiveNew("images/blocks/objective/new").setEditorGroup(EditorGroup.COLLECT));
+		put("objectivecompleteblock", new BlockObjectiveFinish("images/blocks/objective/finish").setEditorGroup(EditorGroup.COLLECT));
+		
 		put("gearCollectible", new BlockGearCollectible("images/blocks/collectible/gear"));
 		
 		put("checkpointclaimed", new Block("images/blocks/checkpoint/checkpointclaimed"){
