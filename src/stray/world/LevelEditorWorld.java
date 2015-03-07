@@ -15,6 +15,12 @@ public class LevelEditorWorld extends World{
 	}
 	
 	@Override
+	public void prepare(){
+		super.prepare();
+		objectives.clear();
+	}
+	
+	@Override
 	public int getMeta(int x, int y){
 		if(x == -1337 && y == -1337){
 			return Main.LEVELEDITOR.defaultmeta;
