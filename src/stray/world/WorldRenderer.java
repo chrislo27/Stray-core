@@ -164,7 +164,7 @@ public class WorldRenderer {
 		for (int i = 0; i < world.objectives.size; i++) {
 			Objective obj = world.objectives.get(i);
 			String objmsg = Translator
-					.getMsg("objectives." + Objectives.instance().map.get(obj.id));
+					.getMsg("objectives." + obj.id);
 			float outTime = 1f - obj.outTime;
 
 			batch.setColor(0, 0, 0, 0.25f);
@@ -174,11 +174,17 @@ public class WorldRenderer {
 			if (!obj.isCompleted()) {
 				main.batch.draw(
 						main.manager.get(AssetMap.get("objective-incomplete"), Texture.class),
-						8 - (32 * outTime), 50 + (i * 48), 32, 32);
+						8 - (32 * outTime), 50 + (i * 32), 32, 32);
 			} else {
-				main.batch.draw(
-						main.manager.get(AssetMap.get("objective-complete"), Texture.class),
-						8 - (32 * outTime), 50 + (i * 48), 32, 32);
+				if(obj.failed){
+					main.batch.draw(
+							main.manager.get(AssetMap.get("objective-failed"), Texture.class),
+							8 - (32 * outTime), 50 + (i * 32), 32, 32);
+				}else{
+					main.batch.draw(
+							main.manager.get(AssetMap.get("objective-complete"), Texture.class),
+							8 - (32 * outTime), 50 + (i * 32), 32, 32);
+				}
 			}
 			
 			if(obj.isCompleted()) main.font.setColor(Main.getRainbow(1f, 0.25f));

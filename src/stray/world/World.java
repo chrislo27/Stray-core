@@ -136,7 +136,9 @@ public class World implements TileBasedMap {
 		// camera.forceCenterOn(getPlayer().x, getPlayer().y);
 		setCheckpoint();
 		objectives.clear();
-		addObjective(Objectives.instance().reverse.get("complete_level"));
+		addObjective("complete_level");
+		addObjective("complete_level1");
+		addObjective("complete_level2");
 	}
 
 	public void addPlayer() {
@@ -508,22 +510,34 @@ public class World implements TileBasedMap {
 				.setRotation(0.1f, MathUtils.randomBoolean()));
 	}
 
-	public void addObjective(int objective) {
+	public void addObjective(String objective) {
 		for (Objective o : objectives) {
-			if (o.id == objective) return;
+			if (o.id.equals(objective)) return;
 		}
 
 		objectives.add(new Objective(objective));
 	}
 
-	public void completeObjective(int obj) {
+	public void addObjective(Objective obj){
+		addObjective(obj.id);
+	}
+
+	public void completeObjective(String obj, boolean fail) {
 		for (Objective o : objectives) {
 			if (o.id == obj && !o.isCompleted()) {
-				o.complete();
+				o.complete(fail);
 
 				return;
 			}
 		}
+	}
+	
+	/**
+	 * completes the objective without a failure
+	 * @param obj
+	 */
+	public void completeObjective(String obj){
+		completeObjective(obj, false);
 	}
 
 	public void show() {

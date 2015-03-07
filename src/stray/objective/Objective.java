@@ -4,22 +4,24 @@ import com.badlogic.gdx.Gdx;
 
 public class Objective {
 
-	public int id = 0;
+	public String id = null;
 	private boolean completed = false;
 	public long completedTime = -1;
 	public float outTime = -1f;
+	public boolean failed = false;
 
 	public static final long showTimeWhenCompleted = 2500;
 
-	public Objective(int id) {
+	public Objective(String id) {
 		this.id = id;
 	}
 
-	public Objective complete() {
+	public Objective complete(boolean fail) {
 		if (completed) return this;
 
 		completedTime = System.currentTimeMillis();
 		completed = true;
+		failed = fail;
 
 		return this;
 	}

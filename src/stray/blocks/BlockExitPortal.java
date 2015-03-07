@@ -31,7 +31,7 @@ public class BlockExitPortal extends Block {
 		if (Block.entityIntersects(world, x, y, world.getPlayer())) {
 			if (!world.global.getString("completedLevel").equals("done!")) {
 				world.global.setString("completedLevel", "done!");
-				world.completeObjective(Objectives.instance().reverse.get("complete_level"));
+				world.completeObjective("complete_level", false);
 				
 				if (world.main.getScreen() != Main.GAME) return;
 				save(world);
