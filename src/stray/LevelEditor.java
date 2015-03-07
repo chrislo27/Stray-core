@@ -148,22 +148,18 @@ public class LevelEditor extends Updateable {
 
 		main.drawInverse("DEBUG MODE RECOMMENDED - F12", Settings.DEFAULT_WIDTH - 5,
 				Gdx.graphics.getHeight() - 5);
-		main.drawInverse("ALT+S - SAVE", Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 20);
-		main.drawInverse("ALT+O - OPEN", Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 35);
+		main.drawInverse("ALT+S - save", Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 20);
+		main.drawInverse("ALT+O - open", Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 35);
 		main.drawInverse("NUMPAD 8462 - change level dimensions (will reset level!)",
 				Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 50);
-		main.drawInverse("ALT+D - change metadata of selected", Settings.DEFAULT_WIDTH - 5,
+		main.drawInverse("ALT+T - test level", Settings.DEFAULT_WIDTH - 5,
 				Gdx.graphics.getHeight() - 65);
-		main.drawInverse("ALT+SHFT+D - change DEFAULT metadata", Settings.DEFAULT_WIDTH - 5,
-				Gdx.graphics.getHeight() - 80);
-		main.drawInverse("ALT+T - TEST LEVEL", Settings.DEFAULT_WIDTH - 5,
-				Gdx.graphics.getHeight() - 95);
 		main.drawInverse("IJKL - XOR bit, O to reset, hold SHIFT to overlap",
-				Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 110);
+				Settings.DEFAULT_WIDTH - 5, Gdx.graphics.getHeight() - 80);
 		main.drawInverse("hold TAB - block picker", Settings.DEFAULT_WIDTH - 5,
-				Gdx.graphics.getHeight() - 125);
+				Gdx.graphics.getHeight() - 95);
 		main.drawInverse("ALT+N - force save in new file", Settings.DEFAULT_WIDTH - 5,
-				Gdx.graphics.getHeight() - 140);
+				Gdx.graphics.getHeight() - 110);
 
 		main.batch.end();
 
