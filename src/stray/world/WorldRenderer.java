@@ -7,6 +7,8 @@ import stray.blocks.BlockExitPortal;
 import stray.blocks.BlockGearCollectible;
 import stray.blocks.Blocks;
 import stray.entity.Entity;
+import stray.objective.Objective;
+import stray.objective.Objectives;
 import stray.util.AssetMap;
 import stray.util.MathHelper;
 import stray.util.Utils;
@@ -152,12 +154,41 @@ public class WorldRenderer {
 		renderPlayerArrow();
 
 		renderForLevelType();
-		
+
 		renderObjectives();
 	}
-	
-	public void renderObjectives(){
-		
+
+	public void renderObjectives() {
+		if (world.objectives.size <= 0) return;
+
+		for (int i = 0; i < world.objectives.size; i++) {
+			Objective obj = world.objectives.get(i);
+			String objmsg = Translator
+					.getMsg("objectives." + Objectives.instance().map.get(obj.id));
+			float outTime = 1f - obj.outTime;
+
+			batch.setColor(0, 0, 0, 0.25f);
+			main.fillRect(0 - ((64 + main.font.getBounds(objmsg).width) * outTime),
+					(50 + (i * 32)), 64 + main.font.getBounds(objmsg).width, 32);
+			batch.setColor(1, 1, 1, 1);
+			if (!obj.isCompleted()) {
+				main.batch.draw(
+						main.manager.get(AssetMap.get("objective-incomplete"), Texture.class),
+						8 - (32 * outTime), 50 + (i * 48), 32, 32);
+			} else {
+				main.batch.draw(
+						main.manager.get(AssetMap.get("objective-complete"), Texture.class),
+						8 - (32 * outTime), 50 + (i * 48), 32, 32);
+			}
+			
+			if(obj.isCompleted()) main.font.setColor(Main.getRainbow(1f, 0.25f));
+			main.font.draw(batch, objmsg, 48 - (main.font.getBounds(objmsg).width * outTime),
+					74 + (i * 32));
+			main.font.setColor(1, 1, 1, 1);
+			
+			obj.update();
+		}
+
 	}
 
 	public void renderPlayerArrow() {
@@ -283,7 +314,6 @@ public class WorldRenderer {
 		main.font.draw(batch, "deaths: " + world.deaths.size, 5, Main.convertY(starting + 150));
 
 	}
-	
 
 	public void renderForLevelType() {
 

@@ -1,22 +1,17 @@
-package stray.world;
+package stray.objective;
 
 import java.util.HashMap;
 
-/**
- * correlates a block metadata integer with a string
- * 
- *
- */
-public class MetaStrings {
-	
-	private static MetaStrings instance;
+public class Objectives {
 
-	private MetaStrings() {
+	private static Objectives instance;
+
+	private Objectives() {
 	}
 
-	public static MetaStrings instance() {
+	public static Objectives instance() {
 		if (instance == null) {
-			instance = new MetaStrings();
+			instance = new Objectives();
 			instance.loadResources();
 		}
 		return instance;
@@ -24,15 +19,15 @@ public class MetaStrings {
 
 	public HashMap<Integer, String> map = new HashMap<Integer, String>();
 	public HashMap<String, Integer> reverse = new HashMap<String, Integer>();
-	
+
 	private void loadResources() {
-		put(0, "missing_meta");
-		
+		put(0, "complete_level");
+
 	}
-	
-	private void put(int index, String s){
+
+	private void put(int index, String s) {
 		map.put(index, s);
 		reverse.put(s, index);
 	}
-	
+
 }

@@ -13,6 +13,7 @@ import stray.blocks.Blocks;
 import stray.entity.Entity;
 import stray.entity.EntityPlayer;
 import stray.objective.Objective;
+import stray.objective.Objectives;
 import stray.pathfinding.Mover;
 import stray.pathfinding.TileBasedMap;
 import stray.util.AssetMap;
@@ -95,9 +96,9 @@ public class World implements TileBasedMap {
 	public float checkpointx, checkpointy;
 
 	public Array<DamageSource> deaths = new Array<DamageSource>(32);
-	
+
 	public Array<Objective> objectives = new Array<Objective>();
-	
+
 	public World(Main main) {
 		this(main, 32, 24, LevelType.NORMAL);
 	}
@@ -134,6 +135,8 @@ public class World implements TileBasedMap {
 		addPlayer();
 		// camera.forceCenterOn(getPlayer().x, getPlayer().y);
 		setCheckpoint();
+		objectives.clear();
+		addObjective(Objectives.instance().reverse.get("complete_level"));
 	}
 
 	public void addPlayer() {
@@ -231,6 +234,13 @@ public class World implements TileBasedMap {
 		inputUpdate();
 		for (Entity e : entities) {
 			e.renderUpdate();
+		}
+
+		if (objectives.size > 0) for (int i = objectives.size - 1; i >= 0; i--) {
+			if (System.currentTimeMillis() - objectives.get(i).completedTime >= Objective.showTimeWhenCompleted
+					&& objectives.get(i).completedTime != -1) {
+				objectives.removeIndex(i);
+			}
 		}
 	}
 
@@ -496,6 +506,24 @@ public class World implements TileBasedMap {
 				.setTint(1f, (204f + MathUtils.random(-16, 16)) / 255f,
 						(34f + MathUtils.random(-16, 16)) / 255f, 0.5f)
 				.setRotation(0.1f, MathUtils.randomBoolean()));
+	}
+
+	public void addObjective(int objective) {
+		for (Objective o : objectives) {
+			if (o.id == objective) return;
+		}
+
+		objectives.add(new Objective(objective));
+	}
+
+	public void completeObjective(int obj) {
+		for (Objective o : objectives) {
+			if (o.id == obj && !o.isCompleted()) {
+				o.complete();
+
+				return;
+			}
+		}
 	}
 
 	public void show() {

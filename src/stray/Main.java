@@ -573,6 +573,9 @@ public class Main extends Game implements Consumer {
 				Texture.class);
 		manager.load(AssetMap.add("exityes", "images/ui/exitsign/exityes.png"), Texture.class);
 		manager.load(AssetMap.add("exitno", "images/ui/exitsign/exitno.png"), Texture.class);
+		manager.load(AssetMap.add("objective-failed", "images/ui/objective/failed.png"), Texture.class);
+		manager.load(AssetMap.add("objective-complete", "images/ui/objective/complete.png"), Texture.class);
+		manager.load(AssetMap.add("objective-incomplete", "images/ui/objective/incomplete.png"), Texture.class);
 		
 		// particle
 		manager.load(AssetMap.add("money", "images/particle/money.png"), Texture.class);

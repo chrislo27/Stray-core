@@ -2,6 +2,7 @@ package stray.blocks;
 
 import stray.Levels;
 import stray.Main;
+import stray.objective.Objectives;
 import stray.transition.FadeIn;
 import stray.transition.FadeOut;
 import stray.transition.GearTransition;
@@ -30,7 +31,8 @@ public class BlockExitPortal extends Block {
 		if (Block.entityIntersects(world, x, y, world.getPlayer())) {
 			if (!world.global.getString("completedLevel").equals("done!")) {
 				world.global.setString("completedLevel", "done!");
-
+				world.completeObjective(Objectives.instance().reverse.get("complete_level"));
+				
 				if (world.main.getScreen() != Main.GAME) return;
 				save(world);
 				Main.LEVELSELECT.moveNext();
