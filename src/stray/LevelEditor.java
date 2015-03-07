@@ -209,15 +209,15 @@ public class LevelEditor extends Updateable {
 			int blockiter = 0;
 			for (String b : blocks) {
 				if (Blocks.instance().getBlock(b).levelEditorGroup == EditorGroup.values()[i]) {
-					if (Gdx.input.getX() >= (blockiter * 64) + World.tilesizex
-							&& Gdx.input.getX() <= (blockiter * 64) + (World.tilesizex * 2)) {
-						if (Gdx.input.getY() >= Settings.DEFAULT_HEIGHT - World.tilesizey
+					if (Main.getInputX() >= (blockiter * 64) + World.tilesizex
+							&& Main.getInputX() <= (blockiter * 64) + (World.tilesizex * 2)) {
+						if (Main.getInputY() >= Settings.DEFAULT_HEIGHT - World.tilesizey
 								- (i * 64)
-								&& Gdx.input.getY() <= Settings.DEFAULT_HEIGHT - World.tilesizey
+								&& Main.getInputY() <= Settings.DEFAULT_HEIGHT - World.tilesizey
 										- (i * 64) + World.tilesizey) {
 							if (Gdx.input.isButtonPressed(Buttons.LEFT)) blocksel = Math.max(0,
 									blocks.lastIndexOf(b, false));
-							main.drawTextBg(b, Gdx.input.getX(), Main.convertY(Gdx.input.getY()));
+							main.drawTextBg(b, Main.getInputX(), Main.convertY(Main.getInputY()));
 						}
 					}
 
