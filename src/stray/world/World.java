@@ -136,7 +136,7 @@ public class World implements TileBasedMap {
 		// camera.forceCenterOn(getPlayer().x, getPlayer().y);
 		setCheckpoint();
 		objectives.clear();
-		addObjective("complete_level");
+//		addObjective("complete_level");
 	}
 
 	public void addPlayer() {

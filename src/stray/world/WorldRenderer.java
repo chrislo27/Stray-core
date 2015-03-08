@@ -71,6 +71,12 @@ public class WorldRenderer {
 								Main.convertY((y * world.tilesizey - world.camera.cameray)
 										+ World.tilesizey), World.tilesizex, 1);
 						main.batch.setColor(1, 1, 1, 1);
+						
+						if(world.getMeta(x, y) != 0){
+							main.drawTextBg(world.getMeta(x, y) + "", x * world.tilesizex - world.camera.camerax + 4,
+									Main.convertY((y * world.tilesizey - world.camera.cameray)
+											+ World.tilesizey) + 4);
+						}
 					}
 				}
 			}
