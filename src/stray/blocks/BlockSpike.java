@@ -16,7 +16,7 @@ public class BlockSpike extends Block {
 	public void tickUpdate(World world, int x, int y) {
 		for (Entity e : world.entities) {
 			if (e instanceof EntityLiving) {
-				if (Block.entityIntersects(world, x, y + 0.75f, e, 1, 0.25f)) {
+				if (Block.entityIntersects(world, x + 0.2f, y + 0.75f, e, 0.6f, 0.25f)) {
 					if (((EntityLiving) e).invincibility == 0) ((EntityLiving) e).damage(9001, DamageSource.spikes);
 				}
 			}
