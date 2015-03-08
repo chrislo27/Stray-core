@@ -24,6 +24,10 @@ public class BlockObjectiveFinish extends Block{
 		if (Block.entityIntersects(world, x, y, world.getPlayer())) {
 			world.completeObjective(Objectives.instance().map.get(world.getMeta(x, y)));
 			world.setBlock(null, x, y);
+			
+			for(int i = 0; i < 32; i++){
+				BlockCollectible.glowyParticles(world, x, y);
+			}
 		}
 	}
 	
