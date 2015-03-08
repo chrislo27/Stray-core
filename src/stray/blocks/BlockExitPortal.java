@@ -2,16 +2,9 @@ package stray.blocks;
 
 import stray.Levels;
 import stray.Main;
-import stray.objective.Objectives;
 import stray.transition.FadeIn;
-import stray.transition.FadeOut;
-import stray.transition.GearTransition;
-import stray.util.MathHelper;
-import stray.util.Utils;
+import stray.util.ParticlePool;
 import stray.world.World;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 
 public class BlockExitPortal extends Block {
 
@@ -33,13 +26,19 @@ public class BlockExitPortal extends Block {
 				world.global.setString("completedLevel", "done!");
 				world.completeObjective("complete_level", false);
 				world.completeObjective(null, false);
-				
+
 				if (world.main.getScreen() != Main.GAME) return;
 				save(world);
 				Main.LEVELSELECT.moveNext();
 				world.main.transition(new FadeIn(), null, Main.RESULTS.setData(world.levelfile,
 						Levels.instance().getNumFromLevelFile(world.levelfile), world.deaths));
 			}
+		}
+
+		if (world.tickTime % 5 == 0) {
+			world.particles.add(ParticlePool.obtain().setTexture("teleporterring")
+					.setPosition(x + 0.5f, y + 0.7f).setLifetime(1).setVelocity(0, -0.75f)
+					.setAlpha(0.5f));
 		}
 
 	}
