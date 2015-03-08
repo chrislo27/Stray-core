@@ -35,17 +35,11 @@ public class BlockExitPortal extends Block {
 			}
 		}
 
-		if (world.tickTime % 5 == 0) {
-			world.particles.add(ParticlePool.obtain().setTexture("teleporterring")
-					.setPosition(x + 0.5f, y + 0.7f).setLifetime(1).setVelocity(0, -0.75f)
-					.setAlpha(0.5f));
-		}
-
 	}
 
 	@Override
 	public boolean isRenderedFront() {
-		return true;
+		return false;
 	}
 
 	private void save(World world) {
