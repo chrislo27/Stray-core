@@ -22,6 +22,7 @@ public class Objective {
 		completedTime = System.currentTimeMillis();
 		completed = true;
 		failed = fail;
+		outTime = 0.9999f;
 
 		return this;
 	}
