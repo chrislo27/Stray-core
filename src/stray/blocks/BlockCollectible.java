@@ -37,8 +37,6 @@ public class BlockCollectible extends Block{
 	}
 	
 	public static void glowyParticles(World world, int x, int y){
-		if (world.tickTime % 2 == 0) return;
-
 		world.particles.add(ParticlePool
 				.obtain()
 				.setTexture("checkpoint")

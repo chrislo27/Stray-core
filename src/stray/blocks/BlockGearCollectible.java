@@ -24,7 +24,7 @@ public class BlockGearCollectible extends BlockCollectible {
 	public void tickUpdate(World world, int x, int y) {
 		super.tickUpdate(world, x, y);
 
-		glowyParticles(world, x, y);
+		if(world.tickTime % 2 == 0) glowyParticles(world, x, y);
 	}
 
 }
