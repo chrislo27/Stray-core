@@ -22,7 +22,8 @@ public class Objectives {
 
 	private void loadResources() {
 		put(0, "complete_level");
-		put(1, "begin_accelerator");
+		put(1, "movehor");
+		put(2, "reversefall");
 
 	}
 
