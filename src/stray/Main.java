@@ -604,6 +604,7 @@ public class Main extends Game implements Consumer {
 		manager.load(AssetMap.add("particleflame1", "images/particle/expflame1.png"), Texture.class);
 		manager.load(AssetMap.add("particleflame2", "images/particle/expflame2.png"), Texture.class);
 		manager.load(AssetMap.add("particleflame3", "images/particle/expflame3.png"), Texture.class);
+		manager.load(AssetMap.add("teleporterring", "images/particle/teleporterring.png"), Texture.class);
 
 		// cutscene
 		manager.load("images/cutscene/stunning.png", Texture.class);
