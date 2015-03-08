@@ -336,6 +336,7 @@ public class Main extends Game implements Consumer {
 		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
 
 		camera.update();
+		batch.setProjectionMatrix(camera.combined);
 		gears.update(1);
 	}
 
