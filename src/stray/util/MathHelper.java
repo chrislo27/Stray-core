@@ -67,6 +67,7 @@ public class MathHelper {
 	}
 	
 	public static float getNumberFromTime(long time, float seconds) {
+		if(seconds == 0) throw new IllegalArgumentException("Seconds cannot be zero!");
 		return ((time % Math.round((seconds * 1000))) / (seconds * 1000f));
 	}
 	
