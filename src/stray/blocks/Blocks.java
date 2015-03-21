@@ -80,6 +80,7 @@ public class Blocks {
 		put("airvent", new BlockAirVent("images/blocks/airvent/airvent").solidify(BlockFaces.ALL));
 		put("3dblock", new Block("images/blocks/3d/3dblock").solidify(BlockFaces.ALL));
 		put("teleporter", new BlockTeleporter("images/blocks/teleporter/teleporter"));
+		put("buleahteststone", new Block("images/blocks/test/Copy of SMAhXdn").solidify(BlockFaces.ALL));
 		
 		put("objectiveblock", new BlockObjectiveNew("images/blocks/objective/new").setEditorGroup(EditorGroup.COLLECT));
 		put("objectivecompleteblock", new BlockObjectiveFinish("images/blocks/objective/finish").setEditorGroup(EditorGroup.COLLECT));
